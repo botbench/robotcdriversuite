@@ -29,7 +29,7 @@
  */
 
 
-#include "drivers/mindsensors-ps2ctrl-v4.h"
+#include "mindsensors-ps2ctrl-v4.h"
 
 #define MAXMOTORSPEED 90.0
 

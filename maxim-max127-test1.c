@@ -18,7 +18,7 @@
  * version 0.1
  */
 
-#include "drivers/maxim-max127.h"
+#include "maxim-max127.h"
 
 task main() {
   int _chVal = 0;

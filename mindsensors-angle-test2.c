@@ -26,7 +26,7 @@
 
 #define debounce() while (nNxtButtonPressed != kNoButton) EndTimeSlice()
 
-#include "drivers/mindsensors-angle.h"
+#include "mindsensors-angle.h"
 
 // This is the value when I calibrated it, yours may vary
 float gramsPerUnit = 1.084507;

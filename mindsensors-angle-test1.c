@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/mindsensors-angle.h"
+#include "mindsensors-angle.h"
 
 task main () {
   nNxtButtonTask  = -2;

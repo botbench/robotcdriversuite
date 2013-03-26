@@ -25,7 +25,7 @@
  * version 0.2
  */
 
-#include "drivers/mindsensors-pfmate.h"
+#include "mindsensors-pfmate.h"
 
 void doTest(int channel) {
   nxtDisplayTextLine(5, "Chan:  %d", channel);

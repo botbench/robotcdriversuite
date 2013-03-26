@@ -25,7 +25,7 @@
  * version 0.2
  */
 
-#include "drivers/mindsensors-rcxsensorsmux.h"
+#include "mindsensors-rcxsensorsmux.h"
 
 task main () {
 

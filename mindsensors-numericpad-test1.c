@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/mindsensors-numericpad.h"
+#include "mindsensors-numericpad.h"
 
 task main () {
 

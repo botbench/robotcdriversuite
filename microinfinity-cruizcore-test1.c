@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/microinfinity-cruizcore.h"
+#include "microinfinity-cruizcore.h"
 
 task main () {
   int _x_accel = 0;

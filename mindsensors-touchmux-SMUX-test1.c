@@ -28,8 +28,8 @@
  * version 0.1
  */
 
-#include "drivers/hitechnic-sensormux.h"
-#include "drivers/mindsensors-touchmux.h"
+#include "hitechnic-sensormux.h"
+#include "mindsensors-touchmux.h"
 
 // The sensor is connected to the first port
 // of the SMUX which is connected to the NXT port S1.

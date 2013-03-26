@@ -13,7 +13,7 @@
  * before this driver is included.
  *
  * License: You may use this code as you wish, provided you give credit where its due.
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER. 
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER.
 
  *
  * Changelog:
@@ -25,7 +25,7 @@
  * \example TMR-test1.c
  */
 
-#include "drivers/timer.h"
+#include "timer.h"
 
 task main () {
 

@@ -41,7 +41,7 @@
 #endif
 
 #ifndef __COMMON_LIGHT_H__
-#include "drivers/common-light.h"
+#include "common-light.h"
 #endif
 
 #define DLIGHT_I2C_ADDR_ALL 0xE0        /*!< dLight I2C device address for all connected devices */

@@ -25,7 +25,7 @@
  */
 
 
-#include "drivers/humarobotics-wifiblock.h";
+#include "humarobotics-wifiblock.h";
 
 #define WIFIBLOCK_IP    "192.168.43.100"
 #define WIFIBLOCK_MASK  "192.168.43.255"

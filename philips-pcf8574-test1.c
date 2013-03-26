@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/philips-pcf8574.h"
+#include "philips-pcf8574.h"
 
 task main () {
   while (true) {

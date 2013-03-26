@@ -25,7 +25,7 @@
  * version 0.2
  */
 
-#include "drivers/mindsensors-hid.h"
+#include "mindsensors-hid.h"
 
 task main () {
   //                      |

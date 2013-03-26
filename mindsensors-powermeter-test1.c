@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/mindsensors-powermeter.h"
+#include "mindsensors-powermeter.h"
 
 int voltage = 0;
 int current = 0;

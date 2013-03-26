@@ -26,7 +26,7 @@
  * version 0.4
  */
 
-#include "drivers/mindsensors-sumoeyes.h"
+#include "mindsensors-sumoeyes.h"
 
  /*
   =============================================================================

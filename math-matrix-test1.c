@@ -23,7 +23,7 @@
  * version 0.1
  */
 
-#include "drivers/math-matrix.h"
+#include "math-matrix.h"
 
 task main ()
 {

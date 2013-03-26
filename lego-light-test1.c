@@ -21,7 +21,7 @@
  * 25 November 2009
  * version 0.2
  */
-#include "drivers/lego-light.h"
+#include "lego-light.h"
 
 task main() {
   int raw = 0;

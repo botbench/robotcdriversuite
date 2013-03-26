@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/mindsensors-lightsensorarray.h"
+#include "mindsensors-lightsensorarray.h"
 
 const string frequencyNames[] = {"US", "UNI", "EU", };
 

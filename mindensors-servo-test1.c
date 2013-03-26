@@ -25,7 +25,7 @@
  * version 0.2
  */
 
-#include "drivers/mindensors-servo.h"
+#include "mindensors-servo.h"
 
 task main () {
   int voltage = 0;

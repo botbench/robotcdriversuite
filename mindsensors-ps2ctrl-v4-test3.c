@@ -29,7 +29,7 @@
  * version 0.1
  */
 
-#include "drivers/mindsensors-ps2ctrl-v4.h"
+#include "mindsensors-ps2ctrl-v4.h"
 
 #define RAW_RIGHT   0x45B
 #define RAW_LEFT    0x45A

@@ -21,7 +21,7 @@
  * version 0.1
  */
 
-#include "drivers/lego-energymeter.h"
+#include "lego-energymeter.h"
 
 task main() {
 

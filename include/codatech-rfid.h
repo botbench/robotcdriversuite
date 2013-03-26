@@ -44,7 +44,7 @@
 #pragma systemFile
 
 #ifndef __COMMON_H__
-#include "drivers/common.h"
+#include "common.h"
 #endif
 
 // I2C ADDRESS

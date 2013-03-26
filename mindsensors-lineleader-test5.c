@@ -33,8 +33,8 @@
 
 #define MSLL_I2C_ADDR 0x02
 
-#include "drivers/mindsensors-lineleader.h"
-#include "drivers/mindsensors-numericpad.h"
+#include "mindsensors-lineleader.h"
+#include "mindsensors-numericpad.h"
 
 // The PID constants and base speed
 #define DEFAULT_SP   50

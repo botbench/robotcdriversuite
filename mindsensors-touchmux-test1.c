@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/mindsensors-touchmux.h"
+#include "mindsensors-touchmux.h"
 
 task main () {
   nxtDisplayCenteredTextLine(0, "Mindsensors");

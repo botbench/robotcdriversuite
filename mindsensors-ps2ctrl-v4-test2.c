@@ -27,7 +27,7 @@
  * version 0.1
  */
 
-#include "drivers/mindsensors-ps2ctrl-v4.h"
+#include "mindsensors-ps2ctrl-v4.h"
 
 task main ()
 {

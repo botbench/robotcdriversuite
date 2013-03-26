@@ -27,7 +27,7 @@
  * version 0.4
  */
 
-#include "drivers/mindsensors-irdist.h"
+#include "mindsensors-irdist.h"
 
 task main () {
   int distance = 0;

@@ -20,7 +20,7 @@
  * version 0.1
  */
 
-#include "drivers/lego-temp.h"
+#include "lego-temp.h"
 
 void accuracyToString(tLEGOTMPAccuracy _accuracy, string &text) {
   strcpy(text, "");

@@ -26,7 +26,7 @@
  * version 0.1
  */
 
-#include "drivers/mindsensors-magicwand.h"
+#include "mindsensors-magicwand.h"
 
 task main () {
 

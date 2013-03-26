@@ -20,7 +20,7 @@
  * version 0.1
  */
 
-#include "drivers/lego-temp.h"
+#include "lego-temp.h"
 
 // Small function to convert the accuracy level into something humans can read
 void accuracyToString(tLEGOTMPAccuracy _accuracy, string &text) {

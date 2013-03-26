@@ -25,7 +25,7 @@
  * version 0.2
  */
 
-#include "drivers/mindsensors-lightsensorarray.h"
+#include "mindsensors-lightsensorarray.h"
 
 task main {
   tIntArray signalstr;

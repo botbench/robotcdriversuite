@@ -26,7 +26,7 @@
  * version 0.2
  */
 
-#include "drivers/mindsensors-accelerometer.h"
+#include "mindsensors-accelerometer.h"
 
 task main () {
   int _x_tilt = 0;

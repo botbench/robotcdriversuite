@@ -33,7 +33,7 @@
 #define MONNKEY06 "monkey06.ric"
 #define MONNKEY07 "monkey07.ric"
 
-#include "drivers/mindsensors-sensormux.h"
+#include "mindsensors-sensormux.h"
 
 tSensors disco[] = {sensorCOLORGREEN, sensorCOLORBLUE, sensorCOLORRED};
 

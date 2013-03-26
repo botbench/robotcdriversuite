@@ -22,8 +22,8 @@
  * version 0.2
  */
 
-#include "drivers/hitechnic-sensormux.h"
-#include "drivers/lego-sound.h"
+#include "hitechnic-sensormux.h"
+#include "lego-sound.h"
 
 // The sensor is connected to the first port
 // of the SMUX which is connected to the NXT port S1.

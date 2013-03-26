@@ -32,7 +32,7 @@
 
 #define MSLL_I2C_ADDR 0x02
 
-#include "drivers/mindsensors-lineleader.h"
+#include "mindsensors-lineleader.h"
 
 #define printXY nxtDisplayStringAt
 #define println nxtDisplayTextLine

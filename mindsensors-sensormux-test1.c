@@ -24,9 +24,9 @@
  * version 0.1
  */
 
-#include "drivers/mindsensors-sensormux.h"
-#include "drivers/mindsensors-angle.h"
-#include "drivers/mindsensors-accelerometer.h"
+#include "mindsensors-sensormux.h"
+#include "mindsensors-angle.h"
+#include "mindsensors-accelerometer.h"
 
 task main()
 {

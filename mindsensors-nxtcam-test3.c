@@ -28,7 +28,7 @@
  * version 0.2
  */
 
-#include "drivers/mindsensors-nxtcam.h"
+#include "mindsensors-nxtcam.h"
 
 // int xscale(int x) - Scales x values from camera coordinates to screen coordinates.
 int xscale(int x) {

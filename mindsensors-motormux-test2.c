@@ -24,8 +24,8 @@
  * version 0.1
  */
 
-#include "drivers/mindsensors-motormux.h"
-#include "drivers/mindsensors-irdist.h"
+#include "mindsensors-motormux.h"
+#include "mindsensors-irdist.h"
 
 // configure MSDIST to also be connected to S1 as well, through the MMUX
 #define MSDIST S1

@@ -26,7 +26,7 @@
  * version 0.2
  */
 
-#include "drivers/mindsensors-lineleader.h"
+#include "mindsensors-lineleader.h"
 
 task main {
   tIntArray signalstr;

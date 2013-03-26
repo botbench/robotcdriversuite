@@ -22,7 +22,7 @@
  * version 0.2
  */
 
-#include "drivers/lego-touch.h"
+#include "lego-touch.h"
 
 task main() {
   nxtDisplayCenteredTextLine(0, "Lego");

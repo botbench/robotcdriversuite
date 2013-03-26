@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/mindsensors-imu.h"
+#include "mindsensors-imu.h"
 
 task main(){
 

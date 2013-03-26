@@ -25,7 +25,7 @@
  */
 
 
-#include "drivers/mindsensors-touchpanel.h"
+#include "mindsensors-touchpanel.h"
 
 
 task main () {
