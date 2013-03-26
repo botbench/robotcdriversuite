@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/dexterind-compass.h"
+#include "dexterind-compass.h"
 
 task main(){
 

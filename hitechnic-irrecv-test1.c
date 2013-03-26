@@ -26,7 +26,7 @@
  * version 0.2
  */
 
-#include "drivers/hitechnic-irrecv.h"
+#include "hitechnic-irrecv.h"
 
 /*
   =============================================================================

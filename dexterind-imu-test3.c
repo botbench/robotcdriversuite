@@ -33,7 +33,7 @@
  * version 0.1
  */
 
-#include "drivers/dexterind-imu.h"
+#include "dexterind-imu.h"
 
 // z_val and x_val are the accel values on the Z and X axes.
 // Gforce is the total force felt along both axes.

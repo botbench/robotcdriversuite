@@ -27,7 +27,7 @@
  */
 
 
-#include "drivers/dexterind-thermalir.h"
+#include "dexterind-thermalir.h"
 
 float data[200];
 

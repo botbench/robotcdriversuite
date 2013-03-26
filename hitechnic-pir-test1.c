@@ -21,7 +21,7 @@
  * version 0.1
  */
 
-#include "drivers/hitechnic-pir.h"
+#include "hitechnic-pir.h"
 
 // Draw a little stick figure
 void drawStickFigure(int offset)

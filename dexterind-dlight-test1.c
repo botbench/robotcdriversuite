@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/dexterind-dlight.h"
+#include "dexterind-dlight.h"
 
 
 task main()

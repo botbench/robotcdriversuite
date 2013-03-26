@@ -6,8 +6,8 @@
 
 
 
-#include "drivers/common.h"
-#include "drivers/dexterind-wifi.h"
+#include "common.h"
+#include "dexterind-wifi.h"
 
 void configureWiFi(char *_ssid, char *_key)
 {

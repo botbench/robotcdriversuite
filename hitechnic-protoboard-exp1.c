@@ -25,7 +25,7 @@
  * version 0.2
  */
 
-#include "drivers/hitechnic-protoboard.h"
+#include "hitechnic-protoboard.h"
 
 task main() {
   // Local variables

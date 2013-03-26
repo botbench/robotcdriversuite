@@ -9,7 +9,7 @@ This program reads the temperature sensor and displays the value.
 
 */
 
-#include "drivers/hitechnic-superpro.h"
+#include "hitechnic-superpro.h"
 
 // This is the temperature at which we switch on the LED
 #define THRESHOLD 23

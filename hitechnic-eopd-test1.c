@@ -27,7 +27,7 @@
  * version 0.4
  */
 
-#include "drivers/hitechnic-eopd.h"
+#include "hitechnic-eopd.h"
 
  /*
   =============================================================================

@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/hitechnic-force.h"
+#include "hitechnic-force.h"
 
  /*
   =============================================================================

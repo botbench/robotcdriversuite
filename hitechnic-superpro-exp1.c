@@ -8,7 +8,7 @@ Read the status of a switch and display the status on an LED
 
 */
 
-#include "drivers/hitechnic-superpro.h"
+#include "hitechnic-superpro.h"
 
 task main() {
   int inputdata;

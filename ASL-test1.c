@@ -25,7 +25,7 @@
  * version 0.1
  */
 
-#include "drivers/ASL-driver.h"
+#include "ASL-driver.h"
 
 task main () {
   int dynval = 0;

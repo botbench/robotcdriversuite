@@ -25,7 +25,7 @@
  * version 0.2
  */
 
-#include "drivers/codatech-rfid.h"
+#include "codatech-rfid.h"
 string transponderID;
 
 task main()

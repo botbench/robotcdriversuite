@@ -28,7 +28,7 @@
  * version 0.3
  */
 
-#include "drivers/hitechnic-colour-v1.h"
+#include "hitechnic-colour-v1.h"
 
 task main () {
   // Get control over the buttons

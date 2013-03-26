@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/hitechnic-gyro.h"
+#include "hitechnic-gyro.h"
 
 task main ()
 {

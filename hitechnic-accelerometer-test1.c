@@ -29,7 +29,7 @@
  * version 0.5
  */
 
-#include "drivers/hitechnic-accelerometer.h"
+#include "hitechnic-accelerometer.h"
 
 task main () {
   int _x_axis = 0;

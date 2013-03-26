@@ -25,7 +25,7 @@
  * version 0.1
  */
 
-#include "drivers/dexterind-nxtchuck.h"
+#include "dexterind-nxtchuck.h"
 
 task main()
 {

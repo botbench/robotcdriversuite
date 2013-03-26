@@ -9,7 +9,7 @@ This program reads the analog value from a photo cell and displays the light lev
 
 */
 
-#include "drivers/hitechnic-superpro.h"
+#include "hitechnic-superpro.h"
 
 task main() {
   int inputdata;

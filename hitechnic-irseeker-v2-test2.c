@@ -26,7 +26,7 @@
  * version 0.1
  */
 
-#include "drivers/hitechnic-irseeker-v2.h"
+#include "hitechnic-irseeker-v2.h"
 
 // global variables
 long nNumbCyles;

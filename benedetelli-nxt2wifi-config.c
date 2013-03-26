@@ -23,8 +23,8 @@
  * version 0.1
  */
 #define __RS485_DEBUG__
-#include "drivers/common.h"
-#include "drivers/benedettelli-nxt2wifi.h"
+#include "common.h"
+#include "benedettelli-nxt2wifi.h"
 
 // Use DHCP? You should.
 bool useDHCP = true;

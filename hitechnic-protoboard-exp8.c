@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/hitechnic-protoboard.h"
+#include "hitechnic-protoboard.h"
 
 // This is the temperature at which we switch on the LED
 #define THRESHOLD 28

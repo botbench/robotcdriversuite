@@ -26,10 +26,10 @@
  */
 #define __RS485_DEBUG__ 1
 
-#include "drivers/common.h"
-#include "drivers/timer.h"
-#include "drivers/hitechnic-barometer.h"
-#include "drivers/benedettelli-nxt2wifi.h"
+#include "common.h"
+#include "timer.h"
+#include "hitechnic-barometer.h"
+#include "benedettelli-nxt2wifi.h"
 
 long dataTemp = 0;
 long dataPress = 0;

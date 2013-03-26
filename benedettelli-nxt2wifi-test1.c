@@ -36,10 +36,10 @@
  * version 0.1
  */
 
-#include "drivers/common.h"
-#include "drivers/timer.h"
-#include "drivers/hitechnic-barometer.h"
-#include "drivers/benedettelli-nxt2wifi.h"
+#include "common.h"
+#include "timer.h"
+#include "hitechnic-barometer.h"
+#include "benedettelli-nxt2wifi.h"
 
 // These are the ASN constants as used by SNMP
 #define ASN_INTEGER           0x02

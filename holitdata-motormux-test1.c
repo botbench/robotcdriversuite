@@ -25,7 +25,7 @@
  * version 0.2
  */
 
-#include "drivers/holitdata-motormux.h"
+#include "holitdata-motormux.h"
 
 task main () {
   long encA  = 0;

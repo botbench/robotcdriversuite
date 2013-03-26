@@ -10,7 +10,7 @@ calculates the background light level to create an ambient (background) cancelin
 
 */
 
-#include "drivers/hitechnic-superpro.h"
+#include "hitechnic-superpro.h"
 
 task main() {
   int wlight;

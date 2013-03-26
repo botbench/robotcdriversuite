@@ -9,7 +9,7 @@ This program measures the time taken to press a button switch after an LED is tu
 
 */
 
-#include "drivers/hitechnic-superpro.h"
+#include "hitechnic-superpro.h"
 
 task main() {
   ubyte buttonmask = 0;

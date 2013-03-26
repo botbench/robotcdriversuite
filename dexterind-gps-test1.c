@@ -25,7 +25,7 @@
  * version 0.2
  */
 
-#include "drivers/dexterind-gps.h"
+#include "dexterind-gps.h"
 
 task main () {
 

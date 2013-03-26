@@ -26,7 +26,7 @@
  * version 0.3
  */
 
-#include "drivers/hitechnic-irlink.h"
+#include "hitechnic-irlink.h"
 
 /*
   =============================================================================

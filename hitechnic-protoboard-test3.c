@@ -21,7 +21,7 @@
  * version 0.1
  */
 
-#include "drivers/hitechnic-protoboard.h"
+#include "hitechnic-protoboard.h"
 
 task main() {
   int adch0, adch1, adch2, adch3, adch4 = 0;

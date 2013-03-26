@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/dexterind-imu.h"
+#include "dexterind-imu.h"
 
 task main(){
 

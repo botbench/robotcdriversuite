@@ -5,8 +5,8 @@
  * $Id: hitechnic-motormux-test1.c 108 2012-09-16 09:06:13Z xander $
  */
 
-#include "drivers/common.h"
-#include "drivers/hitechnic-motormux.h"
+#include "common.h"
+#include "hitechnic-motormux.h"
 
 
 task main () {

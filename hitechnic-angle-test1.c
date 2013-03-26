@@ -25,7 +25,7 @@
  * version 0.2
  */
 
-#include "drivers/hitechnic-angle.h"
+#include "hitechnic-angle.h"
 
 task main () {
   nNxtButtonTask  = -2;

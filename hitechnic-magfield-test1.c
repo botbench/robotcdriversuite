@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/hitechnic-magfield.h"
+#include "hitechnic-magfield.h"
 
 task main () {
 

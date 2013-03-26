@@ -26,7 +26,7 @@
  * version 0.3
  */
 
-#include "drivers/hitechnic-gyro.h"
+#include "hitechnic-gyro.h"
 
 task main () {
   nxtDisplayTextLine(0, "HT Gyro");

@@ -20,7 +20,7 @@
  * version 0.1
  */
 
-#include "drivers/dexterind-pressure.h"
+#include "dexterind-pressure.h"
 
 task main() {
   float pressure;

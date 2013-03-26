@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/dexterind-flex.h"
+#include "dexterind-flex.h"
 
 task main () {
   int raw = 0;

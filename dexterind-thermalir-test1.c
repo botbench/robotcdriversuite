@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/dexterind-thermalir.h"
+#include "dexterind-thermalir.h"
 
 task main () {
   float ambient = 0;

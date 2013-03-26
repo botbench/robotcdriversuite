@@ -25,7 +25,7 @@
  * version 0.2
  */
 
-#include "drivers/hitechnic-touchmux.h"
+#include "hitechnic-touchmux.h"
 
 task main () {
   nxtDisplayCenteredTextLine(0, "HiTechnic");

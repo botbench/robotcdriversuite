@@ -14,7 +14,7 @@ Port 4 - Ultrasonic sensor
 
 */
 
-#include "drivers/hitechnic-superpro.h"
+#include "hitechnic-superpro.h"
 
 task main() {
   int sonarvalue;

@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/firgelli-linearact.h"
+#include "firgelli-linearact.h"
 
 task main () {
   tMotor testMotor = motorA;

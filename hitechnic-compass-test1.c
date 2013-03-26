@@ -22,7 +22,7 @@
  * version 0.2
  */
 
-#include "drivers/hitechnic-compass.h"
+#include "hitechnic-compass.h"
 
 task main () {
   int _target = 0;

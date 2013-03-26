@@ -6,12 +6,12 @@
 
 
 
-#include "drivers/common.h"
+#include "common.h"
 
 //tMassiveArray tmp_array;
 
-#include "drivers/dexterind-wifi.h"
-#include "drivers/dexterind-temp.h"
+#include "dexterind-wifi.h"
+#include "dexterind-temp.h"
 
 //ubyte rxbuffer[1500];
 

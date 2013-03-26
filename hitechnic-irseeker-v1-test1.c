@@ -25,7 +25,7 @@
  * version 0.2
  */
 
-#include "drivers/hitechnic-irseeker-v1.h"
+#include "hitechnic-irseeker-v1.h"
 
 task main () {
   int _dir = 0;

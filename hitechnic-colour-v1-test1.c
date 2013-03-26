@@ -27,7 +27,7 @@
  * version 0.4
  */
 
-#include "drivers/hitechnic-colour-v1.h"
+#include "hitechnic-colour-v1.h"
 
 task main () {
   int red = 0;

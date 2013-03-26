@@ -26,8 +26,8 @@
  * version 0.1
  */
 
-#include "drivers/common.h"
-#include "drivers/benedettelli-nxt2wifi.h"
+#include "common.h"
+#include "benedettelli-nxt2wifi.h"
 
 long txbytes = 0;
 long rxbytes = 0;

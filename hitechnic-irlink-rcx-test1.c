@@ -25,7 +25,7 @@
  * version 0.1
  */
 
-#include "drivers/hitechnic-irlink-rcx.h"
+#include "hitechnic-irlink-rcx.h"
 
 task main () {
   short msg = 0x00FD;

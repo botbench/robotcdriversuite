@@ -31,7 +31,7 @@
  * version 0.3
  */
 
-#include "drivers/hitechnic-compass.h"
+#include "hitechnic-compass.h"
 
 // These measurements are in milimeters.
 #define WHEELDIST 115  // distance between the wheels

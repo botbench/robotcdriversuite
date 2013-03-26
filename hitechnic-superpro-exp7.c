@@ -9,7 +9,7 @@ This program measures reads the status of the magnetic sensor and outputs the st
 
 */
 
-#include "drivers/hitechnic-superpro.h"
+#include "hitechnic-superpro.h"
 
 task main() {
   // The data to be written: 0x10 = 010000 binary,

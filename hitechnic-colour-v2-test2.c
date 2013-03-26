@@ -28,7 +28,7 @@
  * version 0.3
  */
 
-#include "drivers/hitechnic-colour-v2.h"
+#include "hitechnic-colour-v2.h"
 
 task main () {
   long red = 0;

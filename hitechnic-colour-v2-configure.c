@@ -27,7 +27,7 @@
  * version 0.2
  */
 
-#include "drivers/hitechnic-colour-v2.h"
+#include "hitechnic-colour-v2.h"
 
 task main () {
   bool selected_50hz = true;

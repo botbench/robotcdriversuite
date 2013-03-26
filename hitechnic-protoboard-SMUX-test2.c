@@ -25,8 +25,8 @@
  * version 0.2
  */
 
-#include "drivers/hitechnic-sensormux.h"
-#include "drivers/hitechnic-protoboard.h"
+#include "hitechnic-sensormux.h"
+#include "hitechnic-protoboard.h"
 
 // The sensor is connected to the first port
 // of the SMUX which is connected to the NXT port S1.

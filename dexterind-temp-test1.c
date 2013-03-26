@@ -20,7 +20,7 @@
  * version 0.1
  */
 
-#include "drivers/dexterind-temp.h"
+#include "dexterind-temp.h"
 
 task main() {
   float temp;

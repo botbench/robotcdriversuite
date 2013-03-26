@@ -25,7 +25,7 @@
  * version 0.1
  */
 
-#include "drivers/hitechnic-barometer.h"
+#include "hitechnic-barometer.h"
 
 task main () {
 

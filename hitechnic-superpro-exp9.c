@@ -27,7 +27,7 @@ notes using both O0 and O1.
 #define  TONE_C5   523
 
 
-#include "drivers/hitechnic-superpro.h"
+#include "hitechnic-superpro.h"
 
 task main() {
   HTSPBsetupIO(HTSPB, 0x10);

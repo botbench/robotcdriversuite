@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/hitechnic-protoboard.h"
+#include "hitechnic-protoboard.h"
 
 ubyte buttonmask = 0;
 

@@ -23,7 +23,7 @@
  * version 0.2
  */
 
-#include "drivers/eeprom.h"
+#include "eeprom.h"
 
 //tByteArray data;
 

@@ -24,7 +24,7 @@
  * version 0.1
  */
 
-#include "drivers/hitechnic-protoboard.h"
+#include "hitechnic-protoboard.h"
 
 task main() {
   // The data to be written: 0x10 = 010000 binary,
