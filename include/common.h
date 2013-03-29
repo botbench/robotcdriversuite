@@ -117,6 +117,16 @@
  */
 #define clip(a, b, c) min2(c, max2(b, a))
 
+typedef struct
+{
+  ubyte request[17];
+  ubyte requestLen;
+  ubyte reply[17];
+  ubyte replyLen;
+  ubyte address;
+  tSensors port;
+  TSensorTypes type;
+} tI2CData, *tI2CDataPtr;
 
 /**
  * Array of bytes as a struct, this is a work around for RobotC's inability to pass an array to
@@ -140,6 +150,30 @@ void clearI2Cbus(tSensors link);
 bool waitForI2CBus(tSensors link);
 bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, int replylen);
 bool writeI2C(tSensors link, tByteArray &request);
+
+
+/**
+ * Clear out the error state on I2C bus by sending a bunch of dummy
+ * packets.
+ * @param link the port number
+ * @param address the I2C address we're sending to
+ */
+void clearI2CError(tI2CDataPtr data) {
+  ubyte error_array[2];
+  error_array[0] = 1;           // Message size
+  error_array[1] = data->address; // I2C Address
+
+#ifdef __COMMON_H_DEBUG__
+  eraseDisplay();
+  nxtDisplayTextLine(3, "rxmit: %d", ubyteToInt(error_array[1]));
+  wait1Msec(2000);
+#endif // __COMMON_H_DEBUG__
+
+  for (int i = 0; i < 5; i++) {
+    sendI2CMsg(data->port, &error_array[0], 0);
+    wait1Msec(5);
+  }
+}
 
 
 /**
@@ -198,6 +232,99 @@ bool waitForI2CBus(tSensors link)
     }
     EndTimeSlice();
   }
+}
+
+
+/**
+ * Wait for the I2C bus to be ready for the next message
+ * @param link the port number
+ * @return true if no error occured, false if it did
+ */
+bool waitForI2CBus(tI2CDataPtr data)
+{
+  //TI2CStatus i2cstatus;
+  while (true)
+  {
+    //i2cstatus = nI2CStatus[link];
+    switch (nI2CStatus[data->port])
+    //switch(i2cstatus)
+    {
+	    case NO_ERR:
+	      return true;
+
+	    case STAT_COMM_PENDING:
+	      break;
+
+	    case ERR_COMM_CHAN_NOT_READY:
+	      break;
+
+	    case ERR_COMM_BUS_ERR:
+	#ifdef __COMMON_H_DEBUG__
+	      PlaySound(soundLowBuzz);
+	      while (bSoundActive) {}
+	#endif // __COMMON_H_DEBUG__
+        return false;
+    }
+    EndTimeSlice();
+  }
+}
+
+
+bool writeI2C(tI2CDataPtr data) {
+
+#if (__COMMON_H_SENSOR_CHECK__ == 1)
+  //TSensorTypes type = SensorType[link];
+
+  switch (SensorType[data->port])
+  {
+    case sensorI2CCustom:                 break;
+    case sensorI2CCustom9V:               break;
+    case sensorI2CCustomFast:             break;
+    case sensorI2CCustomFast9V:           break;
+    case sensorI2CCustomFastSkipStates9V: break;
+    case sensorI2CCustomFastSkipStates:   break;
+    default:
+	    hogCPU();
+	    PlaySound(soundException);
+	    eraseDisplay();
+	    nxtDisplayCenteredTextLine(0, "3rd Party Driver");
+	    nxtDisplayCenteredTextLine(1, "ERROR");
+	    nxtDisplayCenteredTextLine(2, "You have not");
+	    nxtDisplayCenteredTextLine(3, "setup the sensor");
+	    nxtDisplayCenteredTextLine(4, "port correctly. ");
+	    nxtDisplayCenteredTextLine(5, "Please refer to");
+	    nxtDisplayCenteredTextLine(6, "one of the");
+	    nxtDisplayCenteredTextLine(7, "examples.");
+	    wait1Msec(10000);
+	    StopAllTasks();
+  }
+#endif
+
+  if (!waitForI2CBus(data->port)) {
+    clearI2CError(data);
+
+    // Let's try the bus again, see if the above packets flushed it out
+    // clearI2CBus(link);
+    if (!waitForI2CBus(data->port))
+      return false;
+  }
+
+  sendI2CMsg(data->port, &data->request[0], data->replyLen);
+
+  if (!waitForI2CBus(data)) {
+    clearI2CError(data);
+    sendI2CMsg(data->port, &data->request[0], data->replyLen);
+    if (!waitForI2CBus(data))
+      return false;
+  }
+
+  if (data->replyLen == 0)
+    return true;
+
+  // ask for the input to put into the data array
+  readI2CReply(data->port, &data->reply[0], data->replyLen);
+
+  return true;
 }
 
 

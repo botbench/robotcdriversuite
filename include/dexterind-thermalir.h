@@ -1,6 +1,6 @@
 /*!@addtogroup Dexter_Industries
  * @{
- * @defgroup TIR Thermal Infrared Sensor
+ * @defgroup tirPtr Thermal Infrared Sensor
  * Dexter Industries Thermal Infrared Sensor
  * @{
  */
@@ -24,7 +24,7 @@
  *
  * License: You may use this code as you wish, provided you give credit where its due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER. 
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER.
 
  * \author Xander Soldaat (xander_at_botbench.com)
  * \date 10 June 2011
@@ -39,10 +39,10 @@
 #include "common.h"
 #endif
 
-#define TIR_I2C_ADDR        0x0E      /*!< TIR I2C device address */
+#define TIR_I2C_ADDR        0x0E      /*!< tirPtr I2C device address */
 #define TIR_AMBIENT         0x00      /*!< Thermal Infrared number */
-#define TIR_OBJECT          0x01      /*!< Red reading */
-#define TIR_SET_EMISSIVITY  0x02      /*!< Green reading */
+#define TIR_OBJECT          0x01
+#define TIR_SET_EMISSIVITY  0x02
 #define TIR_GET_EMISSIVITY  0x03
 #define TIR_CHK_EMISSIVITY  0x04
 #define TIR_RESET           0x05
@@ -53,135 +53,87 @@
 #define TIR_EM_GLASS        9200
 #define TIR_EM_CANDLE_SOOT  9500
 
-#define tempFactor 0.02
+typedef struct
+{
+  tI2CData I2CData;
+  float ambientTemp;
+  float objectTemp;
+  int emissivity;
+} tTIR, *tTIRPtr;
 
 
-float TIRreadAmbientTemp(tSensors link);
-float TIRreadObjectTemp(tSensors link);
-bool TIRsetEmissivity(tSensors link, int emissivity);
-bool TIRresetSensor(tSensors link);
+void initSensor(tTIRPtr tirPtr, tSensors port)
+{
+  memset(tirPtr, 0, sizeof(tTIR));
+  tirPtr->I2CData.address = TIR_I2C_ADDR;
+  tirPtr->I2CData.port = port;
+  tirPtr->I2CData.type = sensorI2CCustomFastSkipStates;
 
-tByteArray TIR_I2CRequest;           /*!< Array to hold I2C command data */
-tByteArray TIR_I2CReply;             /*!< Array to hold I2C reply data */
-
-/**
- * Measure the ambient temperature
- * @param link the TIR port number
- * @return the ambient temperature
- */
-float TIRreadAmbientTemp(tSensors link) {
-  float tempData;
-
-  memset(TIR_I2CRequest, 0, sizeof(tByteArray));
-
-  TIR_I2CRequest[0] = 2;            // Message size
-  TIR_I2CRequest[1] = TIR_I2C_ADDR; // I2C Address
-  TIR_I2CRequest[2] = TIR_AMBIENT;  // Start colour number register
-
-  if (!writeI2C(link, TIR_I2CRequest, TIR_I2CReply, 2))
-    return 0;
-
-  wait1Msec(1);
-
-  tempData = (float)(((TIR_I2CReply[1]) << 8) + TIR_I2CReply[0]);
-  tempData = (tempData * tempFactor) - 0.01;      // Convert to celsius
-  return tempData - 273.15;            // Convert from Kelvin to Celsius
+  // Ensure the sensor is configured correctly
+  if (SensorType[tirPtr->I2CData.port] != tirPtr->I2CData.type)
+    SensorType[tirPtr->I2CData.port] = tirPtr->I2CData.type;
 }
 
-/**
- * Measure the object temperature
- * @param link the TIR port number
- * @return The object temperature
- */
-float TIRreadObjectTemp(tSensors link) {
-  float tempData;
+bool sensorReadAll(tTIRPtr tirPtr)
+{
+  memset(tirPtr->I2CData.request, 0, sizeof(tirPtr->I2CData.request));
 
-  memset(TIR_I2CRequest, 0, sizeof(tByteArray));
+  // Read the ambient temperature
+  tirPtr->I2CData.request[0] = 2;                    // Message size
+  tirPtr->I2CData.request[1] = tirPtr->I2CData.address; // I2C Address
+  tirPtr->I2CData.request[2] = TIR_AMBIENT;
+  tirPtr->I2CData.replyLen = 2;
 
-  TIR_I2CRequest[0] = 2;            // Message size
-  TIR_I2CRequest[1] = TIR_I2C_ADDR; // I2C Address
-  TIR_I2CRequest[2] = TIR_OBJECT;  // Start colour number register
+  if (!writeI2C(&tirPtr->I2CData))
+    return false;
 
-  if (!writeI2C(link, TIR_I2CRequest, TIR_I2CReply, 2))
-    return 0;
+  tirPtr->ambientTemp = ((tirPtr->I2CData.reply[1] << 8) + tirPtr->I2CData.reply[0]) * 0.02 - 273.15;
 
-  wait1Msec(1);
-  tempData = (float)(((TIR_I2CReply[1]) << 8) + TIR_I2CReply[0]);
-  tempData = (tempData * tempFactor) - 0.01;      // Convert to celsius
-  return tempData - 273.15;            // Convert from Kelvin to Celsius
-}
+  // Now read the object temperature
+  tirPtr->I2CData.request[2] = TIR_OBJECT;
 
+  if (!writeI2C(&tirPtr->I2CData))
+    return false;
 
-/**
- * Read the current emissivity
- * @param link the TIR port number
- * @return The current emissivity
- */
-long TIRreadEmissivity(tSensors link) {
-  memset(TIR_I2CRequest, 0, sizeof(tByteArray));
+  tirPtr->objectTemp = ((tirPtr->I2CData.reply[1] << 8) + tirPtr->I2CData.reply[0]) * 0.02 - 273.15;
 
-  TIR_I2CRequest[0] = 2;            // Message size
-  TIR_I2CRequest[1] = TIR_I2C_ADDR; // I2C Address
-  TIR_I2CRequest[2] = TIR_GET_EMISSIVITY;
-
-  if (!writeI2C(link, TIR_I2CRequest, TIR_I2CReply, 2))
-    return 0;
-
-  return (long)TIR_I2CReply[0] + ((long)TIR_I2CReply[1] << 8);
-}
-
-
-/**
- * Check the emissivity
- * @param link the TIR port number
- * @return The current emissivity
- */
-long TIRcheckEmissivity(tSensors link) {
-  memset(TIR_I2CRequest, 0, sizeof(tByteArray));
-
-  TIR_I2CRequest[0] = 2;            // Message size
-  TIR_I2CRequest[1] = TIR_I2C_ADDR; // I2C Address
-  TIR_I2CRequest[2] = TIR_CHK_EMISSIVITY;
-
-  if (!writeI2C(link, TIR_I2CRequest, TIR_I2CReply, 2))
-    return 0;
-
-  return TIR_I2CReply[0] + (TIR_I2CReply[1] << 8);
+  return true;
 }
 
 
 /**
  * Set the current emissivity
- * @param link the TIR port number
+ * @param link the tirPtr port number
  * @param emissivity the emissivity of the object that is to be measured
  * @return true if no error occured, false if it did
  */
-bool TIRsetEmissivity(tSensors link, int emissivity) {
-  memset(TIR_I2CRequest, 0, sizeof(tByteArray));
+bool setEmissivity(tTIRPtr tirPtr, int emissivity) {
+  tirPtr->emissivity = emissivity;
 
-  TIR_I2CRequest[0] = 4;            // Message size
-  TIR_I2CRequest[1] = TIR_I2C_ADDR; // I2C Address
-  TIR_I2CRequest[2] = TIR_SET_EMISSIVITY;  // Start colour number register
-  TIR_I2CRequest[4] = (emissivity >> 8) & 0xFF;    // High Byte
-  TIR_I2CRequest[3] = emissivity & 0xFF; // Low Byte.
+  tirPtr->I2CData.request[0] = 4;            // Message size
+  tirPtr->I2CData.request[1] = tirPtr->I2CData.address; // I2C Address
+  tirPtr->I2CData.request[2] = TIR_SET_EMISSIVITY;
+  tirPtr->I2CData.request[4] = (tirPtr->emissivity >> 8) & 0xFF;    // High Byte
+  tirPtr->I2CData.request[3] = tirPtr->emissivity & 0xFF; // Low Byte.
+  tirPtr->I2CData.replyLen = 0;
 
-  return writeI2C(link, TIR_I2CRequest);
+  return writeI2C(&tirPtr->I2CData);
 }
 
 
 /**
  * Reset the sensor
- * @param link the TIR port number
+ * @param link the tirPtr port number
  * @return true if no error occured, false if it did
  */
-bool TIRresetSensor(tSensors link) {
-  memset(TIR_I2CRequest, 0, sizeof(tByteArray));
+bool TIRresetSensor(tTIRPtr tirPtr) {
 
-  TIR_I2CRequest[0] = 2;            // Message size
-  TIR_I2CRequest[1] = TIR_I2C_ADDR; // I2C Address
-  TIR_I2CRequest[2] = TIR_RESET;  // Start colour number register
+  tirPtr->I2CData.request[0] = 2;            // Message size
+  tirPtr->I2CData.request[1] = tirPtr->I2CData.address; // I2C Address
+  tirPtr->I2CData.request[2] = TIR_RESET;
+  tirPtr->I2CData.replyLen = 0;
 
-  return writeI2C(link, TIR_I2CRequest);
+  return writeI2C(&tirPtr->I2CData);
 }
 
 #endif // __TIR_H__
