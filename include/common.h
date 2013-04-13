@@ -287,7 +287,7 @@ bool writeI2C(tI2CDataPtr data) {
 	    hogCPU();
 	    PlaySound(soundException);
 	    eraseDisplay();
-	    nxtDisplayCenteredTextLine(0, "3rd Party Driver");
+	    nxtDisplayCenteredTextLine(0, "Driver Suite");
 	    nxtDisplayCenteredTextLine(1, "ERROR");
 	    nxtDisplayCenteredTextLine(2, "You have not");
 	    nxtDisplayCenteredTextLine(3, "setup the sensor");

@@ -24,7 +24,7 @@
 *
 * License: You may use this code as you wish, provided you give credit where its due.
 *
-* THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER. 
+* THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER.
 
 * \author Xander Soldaat (xander_at_botbench.com)
 * \date 18 March 2012
@@ -231,7 +231,7 @@ float DIMCreadHeading(tSensors link)
 
   angle = atan2(fx, fy);
   if (angle < 0) angle += 2*PI;
-  return angle * (180/PI);
+  return ((angle * (180/PI)) + 270) % 360;
 }
 
 

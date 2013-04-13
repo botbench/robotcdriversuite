@@ -17,7 +17,7 @@
  *
  * License: You may use this code as you wish, provided you give credit where it's due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER. 
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER.
 
  * Xander Soldaat (xander_at_botbench.com)
  * 14 March 2012
@@ -39,6 +39,7 @@ task main(){
   wait1Msec(2000);
   eraseDisplay();
 
+
   // Fire up the compass and initialize it. Only needs to be done once.
   if (!DIMCinit(DIMC))
     PlaySound(soundException);
@@ -48,19 +49,23 @@ task main(){
   // Just make sure the robot rotates around 2-3 times about is axis
   DIMCstartCal(DIMC);
 
-  motor[motorA] = 20;
-  motor[motorB] = 20;
-  motor[motorC] = 20;
+  nxtDisplayCenteredTextLine(1, "Calibrating...");
+  nxtDisplayCenteredTextLine(2, "Turn the sensor");
+  nxtDisplayCenteredTextLine(3, "slowly");
+
   time1[T1] = 0;
-  while(time1[T1] < 30000) DIMCreadAxes(DIMC, x_val, y_val, z_val);
-  motor[motorA] = 0;
-  motor[motorB] = 0;
-  motor[motorC] = 0;
+  while(time1[T1] < 15000)
+  {
+    DIMCreadAxes(DIMC, x_val, y_val, z_val);
+    if (time1[T1] % 1000 < 10)
+      nxtDisplayCenteredBigTextLine(5, "%d", 15 - (time1[T1]/1000));
+
+  }
 
   // Stop the calibration and store the data
   DIMCstopCal(DIMC);
 
-
+  eraseDisplay();
   wait1Msec(100);
   while (true){
 
@@ -68,7 +73,8 @@ task main(){
     DIMCreadAxes(DIMC, x_val, y_val, z_val);
     heading = DIMCreadHeading(DIMC);
 
-    nxtDisplayCenteredBigTextLine(2, "%3.2f", heading);
+    nxtDisplayCenteredBigTextLine(1, "Heading");
+    nxtDisplayCenteredBigTextLine(3, "%3.2f", heading);
 		nxtDisplayTextLine(5, "%d", x_val);
 		nxtDisplayTextLine(6, "%d", y_val);
 		nxtDisplayTextLine(7, "%d", z_val);
