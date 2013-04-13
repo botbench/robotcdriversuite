@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: maxim-max127.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: maxim-max127.h $
  */
 
 #ifndef __MAX127_H__
@@ -75,7 +75,7 @@ int MAX127readChan(tSensors link, byte i2caddress, byte adcchannel) {
 #endif // __MAX127_H__
 
 /*
- * $Id: maxim-max127.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: maxim-max127.h $
  */
 /* @} */
 /* @} */

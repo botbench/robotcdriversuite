@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-magfield.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-magfield.h $
  */
 
 #ifndef __HTMAG_H__
@@ -213,7 +213,7 @@ int HTMAGreadCal(tMUXSensor muxsensor) {
 #endif // __HTMAG_H__
 
 /*
- * $Id: hitechnic-magfield.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-magfield.h $
  */
 /* @} */
 /* @} */

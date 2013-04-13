@@ -5,7 +5,7 @@
  * @{
  */
 /*
- * $Id: hitechnic-superpro.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-superpro.h $
  */
 
 #ifndef __HTSPB_H__
@@ -244,7 +244,7 @@ bool HTSPBwriteAnalog(tSensors link, byte dac, byte mode, int freq, int volt) {
 #endif // __HTSPB_H__
 
 /*
- * $Id: hitechnic-superpro.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-superpro.h $
  */
 /* @} */
 /* @} */

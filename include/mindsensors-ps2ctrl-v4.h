@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-ps2ctrl-v4.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-ps2ctrl-v4.h $
  */
 
 #ifndef __PSPV4_H__
@@ -344,7 +344,7 @@ long PSPV4readRawRefTXValue(tSensors link, ubyte address = PSPV4_I2C_ADDR)
 #endif // __PSPV4_H__
 
 /*
- * $Id: mindsensors-ps2ctrl-v4.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-ps2ctrl-v4.h $
  */
 /* @} */
 /* @} */

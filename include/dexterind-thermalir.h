@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: dexterind-thermalir.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-thermalir.h $
  */
 
 #ifndef __TIR_H__
@@ -140,7 +140,7 @@ bool TIRresetSensor(tTIRPtr tirPtr) {
 
 
 /*
- * $Id: dexterind-thermalir.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-thermalir.h $
  */
 /* @} */
 /* @} */

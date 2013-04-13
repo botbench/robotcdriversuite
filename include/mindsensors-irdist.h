@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-irdist.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-irdist.h $
  */
 
 #ifndef __MSDIST_H__
@@ -204,7 +204,7 @@ bool MSDISTsendCmd(tSensors link, byte command, ubyte address) {
 #endif //__MSDIST_H__
 
 /*
- * $Id: mindsensors-irdist.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-irdist.h $
  */
 /* @} */
 /* @} */

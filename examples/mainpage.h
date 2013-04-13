@@ -1,5 +1,5 @@
 /*
- * $Id: mainpage.h 63 2011-08-20 15:27:52Z xander $
+ * $Id: mainpage.h $
  */
 
 /** \mainpage ROBOTC Driver Suite
@@ -46,5 +46,5 @@
  */
 
 /*
- * $Id: mainpage.h 63 2011-08-20 15:27:52Z xander $
+ * $Id: mainpage.h $
  */

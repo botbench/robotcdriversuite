@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: philips-pcf8574.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: philips-pcf8574.h $
  */
 
 #ifndef __PCF8574_H__
@@ -93,7 +93,7 @@ bool PCF8574readBytes(tSensors link, ubyte &_byte) {
 #endif //  __PCF8574_H__
 
 /*
- * $Id: philips-pcf8574.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: philips-pcf8574.h $
  */
 /* @} */
 /* @} */

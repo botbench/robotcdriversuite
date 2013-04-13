@@ -5,7 +5,7 @@
 * @{
 */
 /*
- * $Id: dexterind-nxtchuck.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-nxtchuck.h $
  */
 
 #ifndef __NXTCHUCK_H__
@@ -313,7 +313,7 @@ bool NXTChuckReadClassicController(tSensors link, tClassicCtrl &controller){
 #endif // __NXTCHUCK_H__
 
 /*
- * $Id: dexterind-nxtchuck.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-nxtchuck.h $
  */
 /* @} */
 /* @} */

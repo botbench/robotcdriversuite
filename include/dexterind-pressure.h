@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: dexterind-pressure.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-pressure.h $
  */
 
 #ifndef __DPRESS_DRIVER_H__
@@ -134,7 +134,7 @@ bool DPRESSreadPress500PSI(tSensors link, float &pressure) {
 #endif // __DPRESS_DRIVER_H__
 
 /*
- * $Id: dexterind-pressure.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-pressure.h $
  */
 /* @} */
 /* @} */

@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-motormux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-motormux.h $
  */
 
 #ifndef __HTMMUX_H__
@@ -416,7 +416,7 @@ void MMotorSetPIDSpeedCtrl(tMUXmotor muxmotor, bool constspeed) {
 #endif //  __HTMMUX_H__
 
 /*
- * $Id: hitechnic-motormux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-motormux.h $
  */
 /* @} */
 /* @} */

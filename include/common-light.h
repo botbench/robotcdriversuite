@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: common-light.h 108 2012-09-16 09:06:13Z xander $
+ * $Id: common-light.h $
  */
 
 #ifndef __LIGHT_COMMON_H__
@@ -93,7 +93,7 @@ void RGBtoHSV(float red, float green, float blue, float &hue, float &sat, float 
 #endif __LIGHT_COMMON_H__
 
 /*
- * $Id: common-light.h 108 2012-09-16 09:06:13Z xander $
+ * $Id: common-light.h $
  */
 /* @} */
 /* @} */

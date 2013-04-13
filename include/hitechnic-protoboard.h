@@ -5,7 +5,7 @@
  * @{
  */
 /*
- * $Id: hitechnic-protoboard.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-protoboard.h $
  */
 
 #ifndef __HTPB_H__
@@ -347,7 +347,7 @@ bool HTPBsetSamplingTime(tSensors link, byte interval) {
 #endif // __HTPB_H__
 
 /*
- * $Id: hitechnic-protoboard.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-protoboard.h $
  */
 /* @} */
 /* @} */

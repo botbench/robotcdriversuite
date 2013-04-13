@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-sensormux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-sensormux.h $
  */
 
 #ifndef __HTSMUX_H__
@@ -438,7 +438,7 @@ bool HTSMUXconfigChannel(tMUXSensor muxsensor, tConfigParams &configparams) {
 
 #endif // __HTSMUX_H__
 /*
- * $Id: hitechnic-sensormux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-sensormux.h $
  */
 /* @} */
 /* @} */

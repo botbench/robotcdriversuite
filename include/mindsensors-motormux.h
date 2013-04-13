@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-motormux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-motormux.h $
  */
 
 #ifndef __MSMMUX_H__
@@ -570,7 +570,7 @@ void MSMMotorSetRamping(tMUXmotor muxmotor, bool ramping) {
 #endif //  __MSMMUX_H__
 
 /*
- * $Id: mindsensors-motormux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-motormux.h $
  */
 /* @} */
 /* @} */

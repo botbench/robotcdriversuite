@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-angle.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-angle.h $
  */
 
 #ifndef __HTANG_H__
@@ -253,7 +253,7 @@ bool _HTANGsendCommand(tSensors link, byte command) {
 #endif // __HTANG_H__
 
  /*
- * $Id: hitechnic-angle.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-angle.h $
  */
 /* @} */
 /* @} */

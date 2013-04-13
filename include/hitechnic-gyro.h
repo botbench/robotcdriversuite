@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-gyro.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-gyro.h $
  */
 
 #ifndef __HTGYRO_H__
@@ -192,7 +192,7 @@ float HTGYROreadCal(tMUXSensor muxsensor) {
 #endif // __HTGYRO_H__
 
 /*
- * $Id: hitechnic-gyro.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-gyro.h $
  */
 /* @} */
 /* @} */

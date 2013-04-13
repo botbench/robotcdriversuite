@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-nxtcam.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-nxtcam.h $
  */
 
 #ifndef __NXTCAM_H__
@@ -389,7 +389,7 @@ void NXTCAMgetCenter(blob_array &blobs, int index, int &x, int &y) {
 #endif // __NXTCAM_H__
 
 /*
- * $Id: mindsensors-nxtcam.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-nxtcam.h $
  */
 /* @} */
 /* @} */

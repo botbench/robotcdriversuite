@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-irrecv.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-irrecv.h $
  */
 
 #ifndef __HTIRR_H__
@@ -113,7 +113,7 @@ bool HTIRRreadAllChannels(tSensors link, tsByteArray &motorSpeeds){
 
 #endif // __HTIRR_H__
 /*
- * $Id: hitechnic-irrecv.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-irrecv.h $
  */
 /* @} */
 /* @} */

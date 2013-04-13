@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-compass.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-compass.h $
  */
 
 /** \file hitechnic-compass.h
@@ -223,7 +223,7 @@ int HTMCsetTarget(tMUXSensor muxsensor, int offset) {
 #endif // __HTSMUX_SUPPORT__
 
 /*
- * $Id: hitechnic-compass.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-compass.h $
  */
 /* @} */
 /* @} */

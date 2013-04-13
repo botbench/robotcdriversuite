@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: dexterind-dlight.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-dlight.h $
  */
 
 #ifndef __DLIGHT_H__
@@ -202,7 +202,7 @@ bool DLIGHTdisable(tSensors link, ubyte addr)
 #endif // __DLIGHT_H__
 
 /*
- * $Id: dexterind-dlight.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-dlight.h $
  */
 /* @} */
 /* @} */

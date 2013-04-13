@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-pfmate.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-pfmate.h $
  */
 
 /** \file mindsensors-pfmate.h
@@ -145,7 +145,7 @@ bool MSPFMcontrolMotorAB(tSensors link, byte chan, byte motorA_op, byte motorA_s
 #endif // __MSPFM_H__
 
 /*
- * $Id: mindsensors-pfmate.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-pfmate.h $
  */
 /* @} */
 /* @} */

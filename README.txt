@@ -1,5 +1,5 @@
 /*
- * $Id: README.txt 133 2013-03-10 15:15:38Z xander $
+ * $Id: README.txt $
  */
 
 -= Note =-
@@ -39,5 +39,5 @@ Thanks,
 Xander Soldaat (xander@botbench.com)
 
 /*
- * $Id: README.txt 133 2013-03-10 15:15:38Z xander $
+ * $Id: README.txt $
  */

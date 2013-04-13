@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: lego-light.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: lego-light.h $
  */
 
 #ifndef __LEGOLS_H__
@@ -371,7 +371,7 @@ void _LSreadCalVals() {
 #endif // __LEGOLS_H__
 
 /*
- * $Id: lego-light.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: lego-light.h $
  */
 /* @} */
 /* @} */

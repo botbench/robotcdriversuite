@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-irseeker-v1.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-irseeker-v1.h $
  */
 
 #ifndef __HTIRS_H__
@@ -175,7 +175,7 @@ bool HTIRSreadAllStrength(tMUXSensor muxsensor, int &dcS1, int &dcS2, int &dcS3,
 #endif // __HTIRS_H__
 
 /*
- * $Id: hitechnic-irseeker-v1.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-irseeker-v1.h $
  */
 /* @} */
 /* @} */

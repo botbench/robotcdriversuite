@@ -7,7 +7,7 @@
 
 
 /*
- * $Id: common-mmux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: common-mmux.h $
  */
 
 /** \file common-MMUX.h
@@ -84,7 +84,7 @@ mmuxDataT mmuxData[4];  /*!< Holds all the MMUX info, one for each sensor port *
 #endif // __MMUX_H__
 
 /*
- * $Id: common-mmux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: common-mmux.h $
  */
 /* @} */
 /* @} */

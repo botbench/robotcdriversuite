@@ -1,5 +1,5 @@
 /*
- * $Id: DriverTemplate.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: DriverTemplate.h $
  */
 
 /** \file <template>.h
@@ -43,5 +43,5 @@ byte arbFunc(byte foo) {
 }
 
 /*
- * $Id: DriverTemplate.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: DriverTemplate.h $
  */

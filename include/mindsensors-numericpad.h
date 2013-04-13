@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-numericpad.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-numericpad.h $
  */
 
 #ifndef __MSNP_H__
@@ -176,7 +176,7 @@ int MSNPscanKeys(tSensors link) {
 #endif // __MSNP_H__
 
 /*
- * $Id: mindsensors-numericpad.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-numericpad.h $
  */
 /* @} */
 /* @} */

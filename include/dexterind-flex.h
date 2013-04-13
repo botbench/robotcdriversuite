@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: dexterind-flex.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-flex.h $
  */
 
 #ifndef __DFLEX_H__
@@ -264,7 +264,7 @@ void _DFLEXreadCalVals(int &lowval, int &highval) {
 #endif // __DFLEX_H__
 
 /*
- * $Id: dexterind-flex.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-flex.h $
  */
 /* @} */
 /* @} */

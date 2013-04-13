@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: dexterind-gps.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-gps.h $
  */
 
 #ifndef __DGPS_H__
@@ -217,7 +217,7 @@ int DGPSreadDistToDestination(tSensors link) {
 #endif // __DGPS_H__
 
 /*
- * $Id: dexterind-gps.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-gps.h $
  */
 /* @} */
 /* @} */

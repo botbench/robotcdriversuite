@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: common.h 134 2013-03-12 18:15:17Z xander $
+ * $Id: common.h $
  */
 
 /** \file common.h
@@ -582,7 +582,7 @@ bool strtok(char *buffer, char *token, char *seperator)
 #endif // __COMMON_H__
 
 /*
- * $Id: common.h 134 2013-03-12 18:15:17Z xander $
+ * $Id: common.h $
  */
 /* @} */
 /* @} */

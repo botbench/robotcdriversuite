@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-colour-v1.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-colour-v1.h $
  */
 
 #ifndef __HTCS_H__
@@ -309,7 +309,7 @@ bool HTCScalWhite(tSensors link) {
 #endif // __HTCS_H__
 
 /*
- * $Id: hitechnic-colour-v1.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-colour-v1.h $
  */
 /* @} */
 /* @} */

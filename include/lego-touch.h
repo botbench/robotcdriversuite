@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: lego-touch.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: lego-touch.h $
  */
 
 #ifndef __LEGOTS_H__
@@ -75,7 +75,7 @@ bool TSreadState(tMUXSensor muxsensor) {
 #endif // __LEGOTS_H__
 
 /*
- * $Id: lego-touch.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: lego-touch.h $
  */
 /* @} */
 /* @} */

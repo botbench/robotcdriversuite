@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: lego-temp.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: lego-temp.h $
  */
 
 #ifndef __LEGOTMP_DRIVER_H__
@@ -376,7 +376,7 @@ bool LEGOTMPsetContinuous(tSensors link) {
 #endif // __LEGOTMP_DRIVER_H__
 
 /*
- * $Id: lego-temp.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: lego-temp.h $
  */
 /* @} */
 /* @} */

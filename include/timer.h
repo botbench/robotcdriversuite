@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: timer.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: timer.h $
  */
 
 #ifndef __TMR_H__
@@ -140,7 +140,7 @@ void TMRsetup(int timerIdx, long duration) {
 #endif // __TMR_H__
 
 /*
- * $Id: timer.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: timer.h $
  */
 /* @} */
 /* @} */

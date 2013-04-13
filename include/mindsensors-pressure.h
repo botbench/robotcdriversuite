@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-pressure.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-pressure.h $
  */
 
 #ifndef __MSPPS_H__
@@ -202,7 +202,7 @@ bool MSPPSsetUnit(tSensors link, ubyte unit) {
 #endif //__MSPPS_H__
 
 /*
- * $Id: mindsensors-pressure.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-pressure.h $
  */
 /* @} */
 /* @} */

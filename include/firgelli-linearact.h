@@ -5,7 +5,7 @@
  * @{
  */
 /*
- * $Id: firgelli-linearact.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: firgelli-linearact.h $
  */
 
 #ifndef __FLAC_H__
@@ -401,7 +401,7 @@ void FLACsetInverse(tMotor _motor, bool invert)
 #endif // __FLAC_H__
 
 /*
- * $Id: firgelli-linearact.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: firgelli-linearact.h $
  */
 /* @} */
 /* @} */

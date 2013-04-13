@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: dexterind-imu.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-imu.h $
  */
 
 #ifndef __DIMU_H__
@@ -496,7 +496,7 @@ bool DIMUconfigIMU(tDIMUdataPtr sensor, ubyte accelRange, ubyte gyroRange, bool 
 #endif // __DIMU_H__
 
 /*
- * $Id: dexterind-imu.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-imu.h $
  */
 /* @} */
 /* @} */

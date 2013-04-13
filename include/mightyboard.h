@@ -1,5 +1,5 @@
 /*
- * $Id: mightyboard.h 108 2012-09-16 09:06:13Z xander $
+ * $Id: mightyboard.h $
  */
 
 #pragma systemFile            
@@ -69,6 +69,6 @@ int readSensor(tSensors _link, byte _channel, byte _precision) {
 #endif // __MIGHTYBOARD_H__
 
 /*
- * $Id: mightyboard.h 108 2012-09-16 09:06:13Z xander $
+ * $Id: mightyboard.h $
  */
 

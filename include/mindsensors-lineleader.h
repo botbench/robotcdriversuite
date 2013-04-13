@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-lineleader.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-lineleader.h $
  */
 
 #ifndef __MSLL_H__
@@ -634,7 +634,7 @@ bool LLreadBlackThresh(tSensors link, tByteArray &pMsg) {
 #endif // __MSLL_H__
 
 /*
- * $Id: mindsensors-lineleader.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-lineleader.h $
  */
 /* @} */
 /* @} */

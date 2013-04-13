@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-rcxsensorsmux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-rcxsensorsmux.h $
  */
 
 /** \file mindsensors-rcxsensorsmux.h
@@ -107,7 +107,7 @@ int MSRXMUXreadChan(tSensors link, byte chan) {
 #endif // __MSRXMUX_H__
 
 /*
- * $Id: mindsensors-rcxsensorsmux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-rcxsensorsmux.h $
  */
 /* @} */
 /* @} */

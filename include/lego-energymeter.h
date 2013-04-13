@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: lego-energymeter.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: lego-energymeter.h $
  */
 
 #ifndef __LEGOEM_DRIVER_H__
@@ -98,7 +98,7 @@ bool LEGOEMreadData(tSensors link, float &voltageIn, float &currentIn, float &vo
 #endif // __LEGOEM_DRIVER_H__
 
 /*
- * $Id: lego-energymeter.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: lego-energymeter.h $
  */
 /* @} */
 /* @} */

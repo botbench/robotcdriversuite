@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: ASL-driver.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: ASL-driver.h $
  */
 
 #ifndef __ASL_H__
@@ -187,7 +187,7 @@ int ASLcalibrateLevel(tSensors link)
 #endif // __ASL_H__
 
 /*
- * $Id: ASL-driver.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: ASL-driver.h $
  */
 /* @} */
 /* @} */

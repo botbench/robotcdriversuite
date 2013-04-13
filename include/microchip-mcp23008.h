@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: microchip-mcp23008.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: microchip-mcp23008.h $
  */
 
 
@@ -187,7 +187,7 @@ bool MCP23008writeIO(tSensors link, byte addr, byte mask) {
 #endif // __MCP23008_H__
 
 /*
- * $Id: microchip-mcp23008.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: microchip-mcp23008.h $
  */
 /* @} */
 /* @} */

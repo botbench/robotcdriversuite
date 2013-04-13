@@ -1,5 +1,5 @@
 /*
- * $Id: firgelli-linearact-ramping.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: firgelli-linearact-ramping.h $
  */
 
 #ifndef __FLAC_H__
@@ -544,5 +544,5 @@ void FLACmoveLA(tMotor _motor, int highpower, int pos) {
 #endif // __FLAC_H__
 
 /*
- * $Id: firgelli-linearact-ramping.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: firgelli-linearact-ramping.h $
  */

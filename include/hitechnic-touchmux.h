@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-touchmux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-touchmux.h $
  */
 
 #ifndef __HTTMUX_H__
@@ -81,7 +81,7 @@ bool HTTMUXisActive(tSensors link, int touch) {
 #endif // __HTTMUX_H__
 
 /*
- * $Id: hitechnic-touchmux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-touchmux.h $
  */
 /* @} */
 /* @} */

@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: dexterind-temp.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-temp.h $
  */
 
 #ifndef __DTMP_DRIVER_H__
@@ -120,7 +120,7 @@ bool DTMPreadTempF(tSensors link, float &temp) {
 #endif // __DTMP_DRIVER_H__
 
 /*
- * $Id: dexterind-temp.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: dexterind-temp.h $
  */
 /* @} */
 /* @} */

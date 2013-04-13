@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindensors-servo.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindensors-servo.h $
  */
 
 #ifndef __NXTSERVO_H__
@@ -196,7 +196,7 @@ int NXTServoReadVoltage(tSensors link, ubyte address) {
 
 #endif // __NXTSERVO_H__
 /*
- * $Id: mindensors-servo.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindensors-servo.h $
  */
 /* @} */
 /* @} */

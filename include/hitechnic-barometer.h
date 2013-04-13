@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-barometer.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-barometer.h $
  */
 
 #ifndef __HTBM_H__
@@ -135,7 +135,7 @@ float HTBMreadTempF(tSensors link) {
 #endif // __HTBM_H__
 
 /*
- * $Id: hitechnic-barometer.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-barometer.h $
  */
 /* @} */
 /* @} */

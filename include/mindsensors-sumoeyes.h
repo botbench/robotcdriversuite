@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-sumoeyes.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-sumoeyes.h $
  */
 
 #ifndef __MSSUMO_H__
@@ -110,7 +110,7 @@ void MSSUMOsetLongRange(tSensors link) {
 #endif // __MSSUMO_H__
 
 /*
- * $Id: mindsensors-sumoeyes.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-sumoeyes.h $
  */
 /* @} */
 /* @} */

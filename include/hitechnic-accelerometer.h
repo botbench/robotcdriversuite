@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-accelerometer.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-accelerometer.h $
  */
 
 #ifndef __HTAC_H__
@@ -141,7 +141,7 @@ bool HTACreadAllAxes(tMUXSensor muxsensor, int &x, int &y, int &z) {
 #endif // __HTAC_H__
 
 /*
- * $Id: hitechnic-accelerometer.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-accelerometer.h $
  */
 /* @} */
 /* @} */

@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-touchmux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-touchmux.h $
  */
 
 #ifndef __MSTMUX_HIGH___
@@ -184,7 +184,7 @@ bool MSTMUXisActive(tMUXSensor muxsensor, int touch) {
 #endif // __MSTMUX_HIGH___
 
 /*
- * $Id: mindsensors-touchmux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-touchmux.h $
  */
 /* @} */
 /* @} */

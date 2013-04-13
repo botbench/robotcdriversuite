@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: lego-sound.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: lego-sound.h $
  */
 
 /** \file lego-sound.h
@@ -82,7 +82,7 @@ void SNDsetDB(tMUXSensor muxsensor) {
 #endif // __HTSMUX_SUPPORT__
 
 /*
- * $Id: lego-sound.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: lego-sound.h $
  */
 /* @} */
 /* @} */

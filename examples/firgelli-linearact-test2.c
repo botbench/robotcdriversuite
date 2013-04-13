@@ -1,5 +1,5 @@
 /*
- * $Id: firgelli-linearact-test2.c 133 2013-03-10 15:15:38Z xander $
+ * $Id: firgelli-linearact-test2.c $
  */
 
 /**
@@ -87,5 +87,5 @@ task main () {
 }
 
 /*
- * $Id: firgelli-linearact-test2.c 133 2013-03-10 15:15:38Z xander $
+ * $Id: firgelli-linearact-test2.c $
  */

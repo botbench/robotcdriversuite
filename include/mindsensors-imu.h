@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-imu.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-imu.h $
  */
 
 #ifndef __MSIMU_H__
@@ -244,7 +244,7 @@ bool MSIMUsetGyroFilter(tSensors link, ubyte level)
 #endif // __MSIMU_H__
 
 /*
- * $Id: mindsensors-imu.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-imu.h $
  */
 /* @} */
 /* @} */

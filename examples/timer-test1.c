@@ -1,5 +1,5 @@
 /*
- * $Id: timer-test1.c 133 2013-03-10 15:15:38Z xander $
+ * $Id: timer-test1.c $
  */
 
 /** \file timer.h
@@ -62,5 +62,5 @@ task main () {
 }
 
 /*
- * $Id: timer-test1.c 133 2013-03-10 15:15:38Z xander $
+ * $Id: timer-test1.c $
  */

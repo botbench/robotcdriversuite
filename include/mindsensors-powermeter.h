@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-powermeter.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-powermeter.h $
  */
 
 #ifndef __MSPM_H__
@@ -187,7 +187,7 @@ bool MSPMresetCounters(tSensors link, ubyte address) {
 #endif // __MSLL_H__
 
 /*
- * $Id: mindsensors-powermeter.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-powermeter.h $
  */
 /* @} */
 /* @} */

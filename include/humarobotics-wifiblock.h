@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: humarobotics-wifiblock.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: humarobotics-wifiblock.h $
  */
 
 #ifndef __HRWB_H__
@@ -1039,7 +1039,7 @@ bool HRWBdoUDP(tSensors link, tUDPRequest &udprequest) {
 #endif // __HRWB_H__
 
 /*
- * $Id: humarobotics-wifiblock.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: humarobotics-wifiblock.h $
  */
 /* @} */
 /* @} */

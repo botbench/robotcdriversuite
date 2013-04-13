@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-colour-v2.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-colour-v2.h $
  */
 
 #ifndef __HTCS2_H__
@@ -406,7 +406,7 @@ bool _HTCSsendCommand(tSensors link, byte command) {
 #endif // __HTCS2_H__
 
 /*
- * $Id: hitechnic-colour-v2.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-colour-v2.h $
  */
 /* @} */
 /* @} */

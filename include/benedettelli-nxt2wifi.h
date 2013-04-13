@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: benedettelli-nxt2wifi.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: benedettelli-nxt2wifi.h $
  */
 
 #ifndef __N2W_H__
@@ -1063,7 +1063,7 @@ bool N2WclearFields() {
 #endif // __N2W_H__
 
 /*
- * $Id: benedettelli-nxt2wifi.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: benedettelli-nxt2wifi.h $
  */
 /* @} */
 /* @} */

@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-rcxmotormux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-rcxmotormux.h $
  */
 
 /** \file mindsensors-rcxmotormux.h
@@ -123,7 +123,7 @@ bool MSMTRMX_Brake(tSensors link, tMSMTRMXMotors channel, unsigned byte brakeFor
 }
 
 /*
- * $Id: mindsensors-rcxmotormux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-rcxmotormux.h $
  */
 
 /* @} */

@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-accelerometer.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-accelerometer.h $
  */
 
 #ifndef __MSAC_H__
@@ -159,7 +159,7 @@ bool MSACsetRange(tSensors link, int range) {
 #endif //__MSAC_H__
 
 /*
- * $Id: mindsensors-accelerometer.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-accelerometer.h $
  */
 /* @} */
 /* @} */

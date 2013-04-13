@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: common-rs485.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: common-rs485.h $
  */
 
 /** \file common-rs485.h
@@ -275,7 +275,7 @@ bool RS485sendString(char *data)
 #endif // __RS485_H__
 
 /*
- * $Id: common-rs485.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: common-rs485.h $
  */
 /* @} */
 /* @} */

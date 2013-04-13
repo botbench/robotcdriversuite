@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-irlink.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-irlink.h $
  */
 
 #ifndef _HTIRL_H_
@@ -429,7 +429,7 @@ void transmitIR(tSensors link, tByteArray &oBuffer, int channel) {
 #endif // _HTIRL_H_
 
 /*
- * $Id: hitechnic-irlink.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-irlink.h $
  */
 /* @} */
 /* @} */

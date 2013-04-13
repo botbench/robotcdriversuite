@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-magicwand.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-magicwand.h $
  */
 
 #ifndef __MSMW_H__
@@ -117,7 +117,7 @@ bool MSMWflashAndClear(tSensors link, int count)
 #endif //  __MSMW_H__
 
 /*
- * $Id: mindsensors-magicwand.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-magicwand.h $
  */
 /* @} */
 /* @} */

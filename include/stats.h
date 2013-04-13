@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: stats.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: stats.h $
  */
 
 #ifndef __STATS_H__
@@ -97,7 +97,7 @@ float gaussian(float mu, float sigma) {
 #endif // __STATS_H__
 
 /*
- * $Id: stats.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: stats.h $
  */
 /* @} */
 /* @} */

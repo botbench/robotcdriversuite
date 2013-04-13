@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: math-matrix.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: math-matrix.h $
  */
 
 #ifndef __MATH_MATRIX_FLOAT_H__
@@ -277,7 +277,7 @@ void matrixTransposeL(long* matrixA, int numRowsA, int numColsA, long* matrixC)
 
 #endif // __MATH_MATRIX_FLOAT_H__
 /*
- * $Id: math-matrix.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: math-matrix.h $
  */
 /* @} */
 /* @} */

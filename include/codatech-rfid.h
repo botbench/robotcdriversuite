@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: codatech-rfid.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: codatech-rfid.h $
  */
 
 #ifndef __CTRFID_driver_H__
@@ -285,7 +285,7 @@ bool CTRFIDreadTransponder(tSensors link, string &transponderID) {
 #endif // __CODATEX_RFID_driver_H__
 
 /*
- * $Id: codatech-rfid.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: codatech-rfid.h $
  */
 /* @} */
 /* @} */

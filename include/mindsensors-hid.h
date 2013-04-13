@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-hid.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-hid.h $
  */
 
 /** \file mindsensors-hid.h
@@ -170,7 +170,7 @@ bool MSHIDsendString(tSensors link, string data, ubyte address) {
 #endif // __MSHID_H__
 
 /*
- * $Id: mindsensors-hid.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-hid.h $
  */
 /* @} */
 /* @} */

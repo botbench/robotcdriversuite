@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-pir.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-pir.h $
  */
 
 /** \file hitechnic-pir.h
@@ -120,7 +120,7 @@ int HTPIRreadSensor(tMUXSensor muxsensor) {
 
 
 /*
- * $Id: hitechnic-pir.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-pir.h $
  */
 /* @} */
 /* @} */

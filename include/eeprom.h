@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: eeprom.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: eeprom.h $
  */
 
 /** \file eeprom.h
@@ -123,7 +123,7 @@ bool EEPROMwriteBytes(tSensors link, long address, tByteArray &data, int numbyte
 }
 
 /*
- * $Id: eeprom.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: eeprom.h $
  */
 /* @} */
 /* @} */

@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: holitdata-motormux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: holitdata-motormux.h $
  */
 
 #ifndef __HDMMUX_H__
@@ -449,7 +449,7 @@ void HDMMotorSetRamping(tMUXmotor muxmotor, ubyte ramping) {
 #endif //  __HDMMUX_H__
 
 /*
- * $Id: holitdata-motormux.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: holitdata-motormux.h $
  */
 /* @} */
 /* @} */

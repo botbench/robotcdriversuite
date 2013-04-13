@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: lego-ultrasound.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: lego-ultrasound.h $
  */
 
 #ifndef __LEGOUS_H__
@@ -199,7 +199,7 @@ bool USreset(tSensors link) {
 #endif // __LEGOSNR_H__
 
 /*
- * $Id: lego-ultrasound.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: lego-ultrasound.h $
  */
 /* @} */
 /* @} */

@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-sensormux.h 136 2013-03-13 18:52:29Z xander $
+ * $Id: mindsensors-sensormux.h $
  */
 
 #ifndef __MSSMUX_H__
@@ -138,7 +138,7 @@ void MSSMUXsetChan(tSensors link, int channel)
 #endif // __MSSMUX_H__
 
 /*
- * $Id: mindsensors-sensormux.h 136 2013-03-13 18:52:29Z xander $
+ * $Id: mindsensors-sensormux.h $
  */
 /* @} */
 /* @} */

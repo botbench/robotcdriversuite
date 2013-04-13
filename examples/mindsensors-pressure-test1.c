@@ -43,5 +43,5 @@ task main () {
 }
 
 /*
- * $Id: mindsensors-pressure-test1.c 108 2012-09-16 09:06:13Z xander $
+ * $Id: mindsensors-pressure-test1.c $
  */

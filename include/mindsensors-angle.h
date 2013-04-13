@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-angle.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-angle.h $
  */
 
 #ifndef __MSANG_H__
@@ -136,7 +136,7 @@ bool MSANGresetAngle(tSensors link) {
 #endif // __MSANG_H__
 
  /*
- * $Id: mindsensors-angle.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-angle.h $
  */
 /* @} */
 /* @} */

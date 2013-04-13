@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-eopd.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-eopd.h $
  */
 
 #ifndef __HTEOPD_H__
@@ -158,7 +158,7 @@ void HTEOPDsetLongRange(tMUXSensor muxsensor) {
 #endif // __HTEOPD_H__
 
 /*
- * $Id: hitechnic-eopd.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-eopd.h $
  */
 /* @} */
 /* @} */

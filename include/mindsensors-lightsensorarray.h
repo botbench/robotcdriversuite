@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: mindsensors-lightsensorarray.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-lightsensorarray.h $
  */
 
 #ifndef __MSLSA_H__
@@ -152,7 +152,7 @@ bool MSLSAreadRawSensors(tSensors link, int *values)
 #endif // __MSLSA_H__
 
 /*
- * $Id: mindsensors-lightsensorarray.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: mindsensors-lightsensorarray.h $
  */
 /* @} */
 /* @} */

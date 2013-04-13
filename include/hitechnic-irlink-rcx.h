@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-irlink-rcx.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-irlink-rcx.h $
  */
 
 #ifndef _HTRCX_H_
@@ -367,7 +367,7 @@ bool HTRCXmotorPwr(tSensors link, unsigned byte _motor, unsigned byte power) {
 #endif // _HTRCX_H_
 
 /*
- * $Id: hitechnic-irlink-rcx.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-irlink-rcx.h $
  */
 /* @} */
 /* @} */

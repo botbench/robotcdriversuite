@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: microinfinity-cruizcore.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: microinfinity-cruizcore.h $
  */
 
 #ifndef __MICC_H__
@@ -151,7 +151,7 @@ bool MICCsendCmd(tSensors link, ubyte command) {
 #endif //__MICC_H__
 
 /*
- * $Id: microinfinity-cruizcore.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: microinfinity-cruizcore.h $
  */
 /* @} */
 /* @} */

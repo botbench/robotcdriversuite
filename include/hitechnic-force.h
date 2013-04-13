@@ -6,7 +6,7 @@
  */
 
 /*
- * $Id: hitechnic-force.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-force.h $
  */
 
 #ifndef HTF
@@ -69,7 +69,7 @@ int HTFreadSensor(tMUXSensor muxsensor) {
 #endif // __HTF_H__
 
 /*
- * $Id: hitechnic-force.h 133 2013-03-10 15:15:38Z xander $
+ * $Id: hitechnic-force.h $
  */
 /* @} */
 /* @} */
