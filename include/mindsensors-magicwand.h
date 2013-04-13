@@ -27,7 +27,7 @@
  *
  * License: You may use this code as you wish, provided you give credit where its due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER. 
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.60 AND HIGHER.
 
  * \author Mike Partain a.k.a. Spiked3 (http://www.spiked3.com/)
  * \author Xander Soldaat (xander_at_botbench.com)

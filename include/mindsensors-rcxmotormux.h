@@ -15,7 +15,7 @@
  * mindsensors-rcxmotormux.h provides an API for the Mindsensors RCX Motor MUX Driver.
  * License: You may use this code as you wish, provided you give credit where its due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER. 
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.60 AND HIGHER.
 
  * \author Daniel Playfair Cal (daniel.playfair.cal_at_gmail.com)
  * \date 2011-09-20
