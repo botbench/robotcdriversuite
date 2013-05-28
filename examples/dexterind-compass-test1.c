@@ -25,11 +25,9 @@
  */
 
 #include "dexterind-compass.h"
-
+  tDIMC compass;
 task main(){
 
-  int x_val, y_val, z_val;      // Compass axes values
-  float heading;
 
   nxtDisplayCenteredTextLine(0, "Dexter Ind.");
   nxtDisplayCenteredBigTextLine(1, "dCompass");
@@ -40,20 +38,20 @@ task main(){
   eraseDisplay();
 
   // Fire up the compass and initialize it. Only needs to be done once.
-  if (!DIMCinit(DIMC))
+  if (!initSensor(&compass, DIMC))
     PlaySound(soundException);
 
   wait1Msec(100);
   while (true){
 
 		// Read the Compass
-    DIMCreadAxes(DIMC, x_val, y_val, z_val);
-    heading = DIMCreadHeading(DIMC);
+    if (!sensorReadAll(&compass))
+      PlaySound(soundException);
 
-    nxtDisplayCenteredBigTextLine(2, "%3.2f", heading);
-		nxtDisplayTextLine(5, "%d", x_val);
-		nxtDisplayTextLine(6, "%d", y_val);
-		nxtDisplayTextLine(7, "%d", z_val);
+    nxtDisplayCenteredBigTextLine(2, "%3.2f", compass.heading);
+		nxtDisplayTextLine(5, "%d", compass.axes[0]);
+		nxtDisplayTextLine(6, "%d", compass.axes[1]);
+		nxtDisplayTextLine(7, "%d", compass.axes[2]);
 		wait1Msec(50);
   }
 }

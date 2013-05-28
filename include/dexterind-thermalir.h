@@ -62,7 +62,7 @@ typedef struct
 } tTIR, *tTIRPtr;
 
 
-void initSensor(tTIRPtr tirPtr, tSensors port)
+bool initSensor(tTIRPtr tirPtr, tSensors port)
 {
   memset(tirPtr, 0, sizeof(tTIR));
   tirPtr->I2CData.address = TIR_I2C_ADDR;
@@ -72,7 +72,10 @@ void initSensor(tTIRPtr tirPtr, tSensors port)
   // Ensure the sensor is configured correctly
   if (SensorType[tirPtr->I2CData.port] != tirPtr->I2CData.type)
     SensorType[tirPtr->I2CData.port] = tirPtr->I2CData.type;
+
+  return true;
 }
+
 
 bool sensorReadAll(tTIRPtr tirPtr)
 {
@@ -126,7 +129,7 @@ bool setEmissivity(tTIRPtr tirPtr, int emissivity) {
  * @param link the tirPtr port number
  * @return true if no error occured, false if it did
  */
-bool TIRresetSensor(tTIRPtr tirPtr) {
+bool resetSensor(tTIRPtr tirPtr) {
 
   tirPtr->I2CData.request[0] = 2;            // Message size
   tirPtr->I2CData.request[1] = tirPtr->I2CData.address; // I2C Address
