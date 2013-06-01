@@ -144,11 +144,11 @@ bool _writeCalVals(tDIMCptr dimcPtr);
 
 
 /**
-* Configure the Compass
-* @param tirPtr pointer to tTIR struct holding sensor info
-* @param port the port number
-* @return true if no error occured, false if it did
-*/
+ * Configure the Compass
+ * @param tirPtr pointer to tTIR struct holding sensor info
+ * @param port the port number
+ * @return true if no error occured, false if it did
+ */
 bool initSensor(tDIMCptr dimcPtr, tSensors port)
 {
   memset(dimcPtr, 0, sizeof(tDIMC));
@@ -197,13 +197,10 @@ bool initSensor(tDIMCptr dimcPtr, tSensors port)
 
 
 /**
-* Read all three axes of the Compass
-* @param link the port number
-* @param _x data for x axis in degrees per second
-* @param _y data for y axis in degrees per second
-* @param _z data for z axis in degrees per second
-* @return true if no error occured, false if it did
-*/
+ * Read all three axes of the Compass and calculate the current heading
+ * @param tirPtr pointer to tTIR struct holding sensor info
+ * @return true if no error occured, false if it did
+ */
 bool sensorReadAll(tDIMCptr dimcPtr)
 {
   float angle;
@@ -244,11 +241,13 @@ bool sensorReadAll(tDIMCptr dimcPtr)
 
 
 /**
-* Start calibration.  The robot should be made to rotate
-* about its axis at least twice to get an accurate result.
-* Stop the calibration with stopCal()
-*/
-bool DIMCstartCal(tDIMCptr dimcPtr)
+ * Start calibration.  The robot should be made to rotate
+ * about its axis at least twice to get an accurate result.
+ * Stop the calibration with stopCal()
+ * @param tirPtr pointer to tTIR struct holding sensor info
+ * @return true if no error occured, false if it did
+ */
+bool startCal(tDIMCptr dimcPtr)
 {
   dimcPtr->_calibrating = true;
   return true;
@@ -256,15 +255,17 @@ bool DIMCstartCal(tDIMCptr dimcPtr)
 
 
 /**
-* Stop calibration.  The appropriate offsets will be calculated for all
-* the axes.
-*/
+ * Stop calibration.  The appropriate offsets will be calculated for all
+ * the axes.
+ * @param tirPtr pointer to tTIR struct holding sensor info
+ * @return true if no error occured, false if it did
+ */
 bool stopCal(tDIMCptr dimcPtr)
 {
   dimcPtr->_calibrating = false;
   for (int i = 0; i < 3; i++)
   {
-    dimcPtr->_offsets[i] = ((dimcPtr->_maxVals[0] - dimcPtr->_minVals[0]) / 2) + dimcPtr->_minVals[0];
+    dimcPtr->_offsets[i] = ((dimcPtr->_maxVals[i] - dimcPtr->_minVals[i]) / 2) + dimcPtr->_minVals[i];
   }
   _writeCalVals(dimcPtr);
   return true;
@@ -275,6 +276,8 @@ bool stopCal(tDIMCptr dimcPtr)
  * Write the calibration values to a data file.
  *
  * Note: this is an internal function and should not be called directly
+ * @param tirPtr pointer to tTIR struct holding sensor info
+ * @return true if no error occured, false if it did
  */
 bool _writeCalVals(tDIMCptr dimcPtr)
 {
@@ -330,6 +333,8 @@ bool _writeCalVals(tDIMCptr dimcPtr)
  * Read the calibration values from a data file.
  *
  * Note: this is an internal function and should not be called directly
+ * @param tirPtr pointer to tTIR struct holding sensor info
+ * @return true if no error occured, false if it did
  */
 bool _readCalVals(tDIMCptr dimcPtr)
 {
@@ -366,9 +371,6 @@ bool _readCalVals(tDIMCptr dimcPtr)
   dimcPtr->_calibrated = true;
   return true;
 }
-
-
-
 
 
 #endif // __DIMC_H__

@@ -25,9 +25,11 @@
  */
 
 #include "dexterind-compass.h"
-  tDIMC compass;
+
 task main(){
 
+  // This struct holds all the sensor related data
+  tDIMC compass;
 
   nxtDisplayCenteredTextLine(0, "Dexter Ind.");
   nxtDisplayCenteredBigTextLine(1, "dCompass");

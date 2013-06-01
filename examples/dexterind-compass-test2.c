@@ -28,8 +28,8 @@
 
 task main(){
 
-  int x_val, y_val, z_val;      // Compass axes values
-  float heading;
+  // This struct holds all the sensor related data
+  tDIMC compass;
 
   nxtDisplayCenteredTextLine(0, "Dexter Ind.");
   nxtDisplayCenteredBigTextLine(1, "dCompass");
@@ -41,13 +41,13 @@ task main(){
 
 
   // Fire up the compass and initialize it. Only needs to be done once.
-  if (!DIMCinit(DIMC))
+  if (!initSensor(&compass, DIMC))
     PlaySound(soundException);
 
   // This program uses an omniwheel platform to rotate the robot about
   // its axis a few times but you can use another robot to do this.
   // Just make sure the robot rotates around 2-3 times about is axis
-  DIMCstartCal(DIMC);
+  startCal(&compass);
 
   nxtDisplayCenteredTextLine(1, "Calibrating...");
   nxtDisplayCenteredTextLine(2, "Turn the sensor");
@@ -56,28 +56,31 @@ task main(){
   time1[T1] = 0;
   while(time1[T1] < 15000)
   {
-    DIMCreadAxes(DIMC, x_val, y_val, z_val);
+		// Read the Compass
+    if (!sensorReadAll(&compass))
+      PlaySound(soundException);
+
     if (time1[T1] % 1000 < 10)
       nxtDisplayCenteredBigTextLine(5, "%d", 15 - (time1[T1]/1000));
 
   }
 
   // Stop the calibration and store the data
-  DIMCstopCal(DIMC);
+  stopCal(&compass);
 
   eraseDisplay();
   wait1Msec(100);
   while (true){
 
 		// Read the Compass
-    DIMCreadAxes(DIMC, x_val, y_val, z_val);
-    heading = DIMCreadHeading(DIMC);
+    if (!sensorReadAll(&compass))
+      PlaySound(soundException);
 
     nxtDisplayCenteredBigTextLine(1, "Heading");
-    nxtDisplayCenteredBigTextLine(3, "%3.2f", heading);
-		nxtDisplayTextLine(5, "%d", x_val);
-		nxtDisplayTextLine(6, "%d", y_val);
-		nxtDisplayTextLine(7, "%d", z_val);
+    nxtDisplayCenteredBigTextLine(3, "%3.2f", compass.heading);
+		nxtDisplayTextLine(5, "%d", compass.axes[0]);
+		nxtDisplayTextLine(6, "%d", compass.axes[1]);
+		nxtDisplayTextLine(7, "%d", compass.axes[2]);
 		wait1Msec(50);
   }
 }

@@ -28,24 +28,26 @@
 
 task main ()
 {
+  // This struct holds all the sensor related data
+  tDIMC compass;
+
   // Our local variables
-	int fieldX = 0;
-	int fieldY = 0;
-	int fieldZ = 0;
 	int strength = 0;
 
-	// Initialise the sensor
-	DIMCinit(DIMC);
+  // Fire up the compass and initialize it. Only needs to be done once.
+  if (!initSensor(&compass, DIMC))
+    PlaySound(soundException);
 
 	// Loop forever, reading the sensor and calulating total
 	// field strength
 	while (true)
 	{
-	  // read the individual axes
-		DIMCreadAxes(DIMC, fieldX, fieldY, fieldZ);
+		// Read the Compass
+    if (!sensorReadAll(&compass))
+      PlaySound(soundException);
 
 		// calculate the field strength
-		strength = sqrt(pow(fieldX, 2) + pow(fieldY, 2) + pow(fieldZ, 2));
+		strength = sqrt(pow(compass.axes[0], 2) + pow(compass.axes[1], 2) + pow(compass.axes[2], 2));
 
 		// Play a tone of the frequency of the field strength
 		// Great for annoying the cat/dog/wife/parent
