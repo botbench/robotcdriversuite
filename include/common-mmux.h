@@ -52,7 +52,7 @@ typedef struct {
   bool brake[4];        /*!< Whether or not to use braking or floating to stop motor */
   bool pidcontrol[4];   /*!< Use constant speed or just power control */
   byte ramping[4];      /*!< Ramp the motors, can be up, down, both */
-} mmuxDataT;
+} mmuxDataT, tMMUXData;
 
 
 /*!< MUXmotor type, one for each permutation

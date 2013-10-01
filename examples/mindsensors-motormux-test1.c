@@ -61,9 +61,10 @@ task main () {
   // Specify a target for the motors to run to.  This can be number of
   // rotations, seconds or degrees (encoder count).  Rotations and seconds
   // may be specified in increments of 0.01.
-  MSMMotorSetEncoderTarget(mmotor_S1_1, 360);
-  MSMMotorSetTimeTarget(mmotor_S1_2, 3);
+  //MSMMotorSetEncoderTarget(mmotor_S1_1, 360);
+  //MSMMotorSetTimeTarget(mmotor_S1_2, 3);
 
+  //wait1Msec(2000);
   // Tell the motors to start moving.
   MSMMotor(mmotor_S1_1, 50);
   MSMMotor(mmotor_S1_2, 90);

@@ -26,7 +26,7 @@
  *
  * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.60 AND HIGHER.
 
- 
+
  * \author Xander Soldaat (xander_at_botbench.com)
  * \date 07 August 2011
  * \version 0.1
@@ -92,17 +92,14 @@
 #ifdef STRUCT_CODE_ENABLED
 typedef struct
 {
-  ubyte I2CAddress;
-  tSensors link;
-  tByteArray I2CRequest;
-  tByteArray I2CReply;
+  tI2CData I2CData;
   float gyroDivisor;
   float accelDivisor;
   float axesAccel8Bit[3];
   float axesAccel10Bit[3];
   float axesGyro8Bit[3];
   float axesGyro10Bit[3];
-} tDIMUdata, *tDIMUdataPtr;
+} tDIMU, *tDIMUptr;
 #endif
 
 float DIMU_Gyro_divisor[4] = {0.0, 0.0, 0.0, 0.0}; /*!< Array to hold divisor data for 8 bit measurements */
@@ -125,13 +122,14 @@ void DIMUcalAccel(tSensors link);
 bool DIMUconfigIMU(tSensors link, ubyte accelRange=DIMU_ACC_RANGE_8G, ubyte gyroRange=DIMU_GYRO_RANGE_250, bool lpfenable=true);
 
 #ifdef STRUCT_CODE_ENABLED
-bool DIMUconfigGyro(tDIMUdataPtr sensor, ubyte range, bool lpfenable=true);
-void DIMUreadGyroAxes(tDIMUdataPtr sensor);
-bool DIMUconfigAccel(tDIMUdataPtr sensor, ubyte range);
-void DIMUreadAccelAxes8Bit(tDIMUdataPtr sensor);
-void DIMUreadAccelAxes10Bit(tDIMUdataPtr sensor);
-void DIMUcalAccel(tDIMUdataPtr sensor);
-bool DIMUconfigIMU(tDIMUdataPtr sensor, ubyte accelRange=DIMU_ACC_RANGE_8G, ubyte gyroRange=DIMU_GYRO_RANGE_250, bool lpfenable=true);
+bool initSensor(tDIMUptr sensor, tSensors link);
+bool configGyro(tDIMUptr sensor, ubyte range, bool lpfenable=true);
+void DIMUreadGyroAxes(tDIMUptr sensor);
+bool DIMUconfigAccel(tDIMUptr sensor, ubyte range);
+void DIMUreadAccelAxes8Bit(tDIMUptr sensor);
+void DIMUreadAccelAxes10Bit(tDIMUptr sensor);
+void DIMUcalAccel(tDIMUptr sensor);
+bool DIMUconfigIMU(tDIMUptr sensor, ubyte accelRange=DIMU_ACC_RANGE_8G, ubyte gyroRange=DIMU_GYRO_RANGE_250, bool lpfenable=true);
 #endif
 
 /**
@@ -412,46 +410,44 @@ bool DIMUconfigIMU(tSensors link, ubyte accelRange, ubyte gyroRange, bool lpfena
 
 
 #ifdef STRUCT_CODE_ENABLED
-bool DIMUconfigGyro(tDIMUdataPtr sensor, ubyte range, bool lpfenable)
+bool DIMUconfigGyro(tDIMUptr sensor, ubyte range, bool lpfenable)
 {
-	memset(sensor->I2CRequest, 0, sizeof(tByteArray));
-
 	// Setup the size and address, same for all requests.
-	sensor->I2CRequest[0] = 3;    // Sending address, register, value. Optional, defaults to true
-	sensor->I2CRequest[1] = 0xD2; // I2C Address of gyro.
+	sensor->I2CData.request[0] = 3;    // Sending address, register, value. Optional, defaults to true
+	sensor->I2CData.request[1] = 0xD2; // I2C Address of gyro.
 
 	// Write CTRL_REG2
 	// No High Pass Filter
-	sensor->I2CRequest[2] = DIMU_GYRO_CTRL_REG2;
-	sensor->I2CRequest[3] = 0x00;
-	if (!writeI2C(link, sensor->I2CRequest))
+	sensor->I2CData.request[2] = DIMU_GYRO_CTRL_REG2;
+	sensor->I2CData.request[3] = 0x00;
+	if (!writeI2C(&sensor->I2CData))
 	  return false;
 
 	// Write CTRL_REG3
 	// No interrupts.  Date ready.
 	////////////////////////////////////////////////////////////////////////////
-	sensor->I2CRequest[2] = DIMU_GYRO_CTRL_REG3;      // Register address of CTRL_REG3
-	sensor->I2CRequest[3] = 0x08;      // No interrupts.  Date ready.
-	if(!writeI2C(link, sensor->I2CRequest))
+	sensor->I2CData.request[2] = DIMU_GYRO_CTRL_REG3;      // Register address of CTRL_REG3
+	sensor->I2CData.request[3] = 0x08;      // No interrupts.  Date ready.
+	if (!writeI2C(&sensor->I2CData))
 	  return false;
 
 	// Write CTRL_REG4
 	// Full scale range.
-	sensor->I2CRequest = DIMU_GYRO_CTRL_REG4;
-	sensor->I2CRequest[3] = range + DIMU_CTRL4_BLOCKDATA;
-	writeI2C(link, sensor->I2CRequest);
+	sensor->I2CData.request = DIMU_GYRO_CTRL_REG4;
+	sensor->I2CData.request[3] = range + DIMU_CTRL4_BLOCKDATA;
+	if (!writeI2C(&sensor->I2CData))
 
 	//Write CTRL_REG5
-	sensor->I2CRequest[2] = DIMU_GYRO_CTRL_REG5;      // Register address of CTRL_REG5
-	sensor->I2CRequest[3] = (lpfenable) ? 0x02 : 0x00;      // filtering - low pass
-	if (!writeI2C(link, sensor->I2CRequest))
+	sensor->I2CData.request[2] = DIMU_GYRO_CTRL_REG5;      // Register address of CTRL_REG5
+	sensor->I2CData.request[3] = (lpfenable) ? 0x02 : 0x00;      // filtering - low pass
+	if (!writeI2C(&sensor->I2CData))
 	  return false;
 
 	// Write CTRL_REG1
 	// Enable all axes. Disable power down.
-	sensor->I2CRequest[2] = DIMU_GYRO_CTRL_REG1;
-	sensor->I2CRequest[3] = 0x0F;
-	if (!writeI2C(link, sensor->I2CRequest))
+	sensor->I2CData.request[2] = DIMU_GYRO_CTRL_REG1;
+	sensor->I2CData.request[3] = 0x0F;
+	if (!writeI2C(&sensor->I2CData))
 	  return false;
 
 	// Set DIMU_Gyro_divisor so that the output of our gyro axis readings can be turned
@@ -467,27 +463,27 @@ bool DIMUconfigGyro(tDIMUdataPtr sensor, ubyte range, bool lpfenable)
 	return true;
 }
 
-void DIMUreadGyroAxes(tDIMUdataPtr sensor)
+void DIMUreadGyroAxes(tDIMUptr sensor)
 {
 
 }
-bool DIMUconfigAccel(tDIMUdataPtr sensor, ubyte range)
+bool DIMUconfigAccel(tDIMUptr sensor, ubyte range)
 {
 
 }
-void DIMUreadAccelAxes8Bit(tDIMUdataPtr sensor)
+void DIMUreadAccelAxes8Bit(tDIMUptr sensor)
 {
 
 }
-void DIMUreadAccelAxes10Bit(tDIMUdataPtr sensor)
+void DIMUreadAccelAxes10Bit(tDIMUptr sensor)
 {
 
 }
-void DIMUcalAccel(tDIMUdataPtr sensor)
+void DIMUcalAccel(tDIMUptr sensor)
 {
 
 }
-bool DIMUconfigIMU(tDIMUdataPtr sensor, ubyte accelRange, ubyte gyroRange, bool lpfenable)
+bool DIMUconfigIMU(tDIMUptr sensor, ubyte accelRange, ubyte gyroRange, bool lpfenable)
 {
 
 }

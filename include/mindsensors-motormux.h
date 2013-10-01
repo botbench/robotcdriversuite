@@ -110,6 +110,11 @@
 //#define MSMMUX_ROT_ROTATIONS    0x02
 #define MSMMUX_ROT_SECONDS      0x03  /*!< Use time target to control motor (ie run for X seconds) */
 
+typedef struct
+{
+  tI2CData I2CData;
+  tMMUXData MMUXData;
+} tMSMMUX, *tMSMMUXPtr;
 
 tByteArray MSMMUX_I2CRequest;    /*!< Array to hold I2C command data */
 tByteArray MSMMUX_I2CReply;      /*!< Array to hold I2C reply data */
