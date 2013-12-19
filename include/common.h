@@ -165,7 +165,7 @@ void clearI2CError(tI2CDataPtr data) {
 
 #ifdef __COMMON_H_DEBUG__
   eraseDisplay();
-  nxtDisplayTextLine(3, "rxmit: %d", ubyteToInt(error_array[1]));
+  nxtDisplayTextLine(3, "rxmit: %d", error_array[1]);
   wait1Msec(2000);
 #endif // __COMMON_H_DEBUG__
 
@@ -189,7 +189,7 @@ void clearI2CError(tSensors link, ubyte address) {
 
 #ifdef __COMMON_H_DEBUG__
   eraseDisplay();
-  nxtDisplayTextLine(3, "rxmit: %d", ubyteToInt(error_array[1]));
+  nxtDisplayTextLine(3, "rxmit: %d", error_array[1]);
   wait1Msec(2000);
 #endif // __COMMON_H_DEBUG__
 
