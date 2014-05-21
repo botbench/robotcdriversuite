@@ -41,7 +41,7 @@ task main() {
     soundlevel = 1023 - SensorValue[SOUND_PORT];
 
     eraseDisplay();
-    nxtDisplayTextLine(1, "%d", soundlevel);
+    displayTextLine(1, "%d", soundlevel);
 
     // Depending on the input voltage on A0,
     // turn on the corresponding LED.
@@ -54,7 +54,7 @@ task main() {
     if (soundlevel > 500) outputdata = 0x20;
 
     HTPBwriteIO(HTPB, outputdata);
-    wait1Msec(50);
+    sleep(50);
   }
 }
 

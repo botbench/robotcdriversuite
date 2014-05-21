@@ -62,7 +62,7 @@ task main ()
     // You can switch between the two different DSP modes by pressing the
     // orange enter button
 
-    PlaySound(soundBeepBeep);
+    playSound(soundBeepBeep);
     while(bSoundActive)
     {}
     eraseDisplay();
@@ -71,21 +71,21 @@ task main ()
     while (true)
     {
       if ((nNumbCyles & 0x04) == 0)
-        nxtDisplayTextLine(0, "Initializing...");
+        displayTextLine(0, "Initializing...");
       else
-        nxtDisplayTextLine(0, "");
-      nxtDisplayCenteredBigTextLine(1, "IR Seekr");
+        displayTextLine(0, "");
+      displayCenteredBigTextLine(1, "IR Seekr");
 
       // set the DSP to the new mode
       if (HTIRS2setDSPMode(HTIRS2, _mode))
         break; // Sensor initialized
 
       ++nNumbCyles;
-      PlaySound(soundShortBlip);
-      nxtDisplayTextLine(4, "Inits: %d / %d", nInits, nNumbCyles);
-      nxtDisplayCenteredTextLine(6, "Connect Sensor");
-      nxtDisplayCenteredTextLine(7, "to Port S1");
-      wait1Msec(100);
+      playSound(soundShortBlip);
+      displayTextLine(4, "Inits: %d / %d", nInits, nNumbCyles);
+      displayCenteredTextLine(6, "Connect Sensor");
+      displayCenteredTextLine(7, "to Port S1");
+      sleep(100);
     }
 
     eraseDisplay();
@@ -94,9 +94,9 @@ task main ()
 
     // display the current DSP mode
     if (_mode == DSP_1200)
-      nxtDisplayTextLine(0, "    DC 1200 Enh");
+      displayTextLine(0, "    DC 1200 Enh");
     else
-      nxtDisplayTextLine(0, "    DC  600 Enh");
+      displayTextLine(0, "    DC  600 Enh");
 
     while (true)
     {
@@ -141,7 +141,7 @@ task main ()
       displayText3(4, "2", dcS3, acS3, _strEnh);
       displayText(5, "3", dcS4, acS4);
       displayText(6, "4", dcS5, acS5);
-      nxtDisplayTextLine(7, "Enter to switch");
+      displayTextLine(7, "Enter to switch");
     }
   }
 }
@@ -149,13 +149,13 @@ task main ()
 // Display the instructions to the user
 void displayInstructions()
 {
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "IR Seekr");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Press enter to");
-  nxtDisplayCenteredTextLine(6, "switch between");
-  nxtDisplayCenteredTextLine(7, "600 and 1200 Hz");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "IR Seekr");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Press enter to");
+  displayCenteredTextLine(6, "switch between");
+  displayCenteredTextLine(7, "600 and 1200 Hz");
+  sleep(2000);
 }
 
 // Minimize LCD screen flicker by only updating LCD when data has changed
@@ -173,7 +173,7 @@ void displayText(int nLineNumber, const string cChar, int nValueDC, int nValueAC
 
     sTextLines[nLineNumber] = sTemp;
     StringFormat(sTemp2, "%s:%s", cChar, sTemp);
-    nxtDisplayTextLine(nLineNumber, sTemp2);
+    displayTextLine(nLineNumber, sTemp2);
   }
 }
 
@@ -192,7 +192,7 @@ void displayText3(int nLineNumber, const string cChar, int nValueDC, int nValueA
 
     sTextLines[nLineNumber] = sTemp;
     StringFormat(sTemp2, "%s:%s", cChar, sTemp);
-    nxtDisplayTextLine(nLineNumber, sTemp2);
+    displayTextLine(nLineNumber, sTemp2);
   }
 }
 

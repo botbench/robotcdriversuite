@@ -33,15 +33,15 @@ task main()
   int voltage = 0;
   int angle;
   int x, y, z;
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "SnsrMUX");
-  nxtDisplayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "SnsrMUX");
+  displayCenteredTextLine(3, "Test 1");
 
-  wait1Msec(2000);
+  sleep(2000);
   eraseDisplay();
 
-  nxtDisplayCenteredTextLine(0, "SensorMUX");
-  nxtDisplayCenteredTextLine(1, "Multi-test");
+  displayCenteredTextLine(0, "SensorMUX");
+  displayCenteredTextLine(1, "Multi-test");
   while(true)
   {
     // Read the voltage of the battery connected to the SMUX
@@ -53,17 +53,17 @@ task main()
 
     // We have a Mindsensors accelerometer attached to channel 1
     MSSMUXsetChan(MSSMUX, 1);
-    SetSensorType(MSSMUX, sensorI2CCustomFastSkipStates);
+    SensorType[MSSMUX] = sensorI2CCustom;
     MSACreadAccel(MSSMUX, x, y, z);
 
     // We have a Angle Sensor attached to channel 2
     MSSMUXsetChan(MSSMUX, 2);
-    SetSensorType(MSSMUX, sensorI2CCustomFastSkipStates);
+    SensorType[MSSMUX] = sensorI2CCustom;
     angle = MSANGreadAngle(MSSMUX);
 
-    nxtDisplayTextLine(3, "Batt: %d mV", voltage);
-    nxtDisplayTextLine(4, "Angle: %d deg", angle);
-    nxtDisplayTextLine(5, "Tilt: ");
-    nxtDisplayTextLine(6, "%d, %d, %d", x, y, z);
+    displayTextLine(3, "Batt: %d mV", voltage);
+    displayTextLine(4, "Angle: %d deg", angle);
+    displayTextLine(5, "Tilt: ");
+    displayTextLine(6, "%d, %d, %d", x, y, z);
   }
 }

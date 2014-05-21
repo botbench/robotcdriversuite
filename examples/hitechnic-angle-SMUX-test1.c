@@ -40,28 +40,28 @@ const tMUXSensor HTANG = msensor_S1_1;
 
 task main () {
   nNxtButtonTask  = -2;
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Angle");
-  nxtDisplayCenteredTextLine(3, "SMUX Test");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and ANG to");
-  nxtDisplayCenteredTextLine(7, "SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Angle");
+  displayCenteredTextLine(3, "SMUX Test");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and ANG to");
+  displayCenteredTextLine(7, "SMUX Port 1");
+  sleep(2000);
 
   eraseDisplay();
-  nxtDisplayCenteredTextLine(0, "HiTechnic Angle");
-  nxtDisplayTextLine(1, "-------------------");
-  nxtDisplayTextLine(5, "-------------------");
+  displayCenteredTextLine(0, "HiTechnic Angle");
+  displayTextLine(1, "-------------------");
+  displayTextLine(5, "-------------------");
 
   while (true) {
     // The accumulated angle or the zero point cannot be reset when connected
     // to a SMUX
 
     // Read the current angle, accumulated angle and RPM and display them
-    nxtDisplayTextLine(2, "Ang: %7d deg", HTANGreadAngle(HTANG));
-    nxtDisplayTextLine(3, "Tot: %7d deg", HTANGreadAccumulatedAngle(HTANG));
-    nxtDisplayTextLine(4, "RPM: %7d", HTANGreadRPM(HTANG));
-    wait1Msec(50);
+    displayTextLine(2, "Ang: %7d deg", HTANGreadAngle(HTANG));
+    displayTextLine(3, "Tot: %7d deg", HTANGreadAccumulatedAngle(HTANG));
+    displayTextLine(4, "RPM: %7d", HTANGreadRPM(HTANG));
+    sleep(50);
   }
 }
 

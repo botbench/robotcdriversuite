@@ -66,17 +66,17 @@ task main () {
       _t = yscale(_blobs[i].y1);
       _r = xscale(_blobs[i].x2);
       _b = yscale(_blobs[i].y2);
-      nxtDrawRect(_l, _t, _r, _b);
+      drawRect(_l, _t, _r, _b);
 
     }
     NXTCAMgetAverageCenter(_blobs, 3, 0, _x, _y);
     _x = xscale(_x);
     _y = yscale(_y);
-    nxtEraseRect(_x-4, _y-4, _x+4, _y+4);
-    nxtDrawLine(_x, _y+2, _x, _y-2);
-    nxtDrawLine(_x+2, _y, _x-2, _y);
-    nxtDisplayTextLine(1, "%d", _nblobs);
-    wait1Msec(100);
+    eraseRect(_x-4, _y-4, _x+4, _y+4);
+    drawLine(_x, _y+2, _x, _y-2);
+    drawLine(_x+2, _y, _x-2, _y);
+    displayTextLine(1, "%d", _nblobs);
+    sleep(100);
   }
 }
 

@@ -34,15 +34,15 @@ task main () {
   data[0] = 22;
   EEPROMwriteBytes(EEPROM, 0, data, 1);
   // After a write, you *must* wait 5 msec
-  wait1Msec(5);
+  sleep(5);
 
   eraseDisplay();
   memset(data, 0, sizeof(tByteArray));
   EEPROMreadBytes(EEPROM, 0, data, 1);
   // Make sure the string is 0 terminated.
 
-  nxtDisplayTextLine(1, "%d", data[0]);
-  wait1Msec(2000);
+  displayTextLine(1, "%d", data[0]);
+  sleep(2000);
 }
 
 /*

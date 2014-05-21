@@ -19,8 +19,8 @@ task main() {
     inputdata = HTSPBreadADC(HTSPB, 0, 10);
 
     eraseDisplay();
-    nxtDisplayTextLine(1, "Light: %d", inputdata);
+    displayTextLine(1, "Light: %d", inputdata);
 
-    wait1Msec(50);
+    sleep(50);
   }
 }

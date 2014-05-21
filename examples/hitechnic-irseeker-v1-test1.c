@@ -31,12 +31,12 @@ task main () {
   int _dir = 0;
 	int dcS1, dcS2, dcS3, dcS4, dcS5 = 0;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "IR Seekr");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "This is for the");
-  nxtDisplayCenteredTextLine(6, "v1 seeker");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "IR Seekr");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "This is for the");
+  displayCenteredTextLine(6, "v1 seeker");
+  sleep(2000);
 
   while(true) {
     eraseDisplay();
@@ -44,29 +44,29 @@ task main () {
     // read all of the sensors' values at once,
     // exit the app if an error occurs
     if (! HTIRSreadAllStrength(HTIRS, dcS1, dcS2, dcS3, dcS4, dcS5)) {
-      nxtDisplayTextLine(4, "ERROR!!");
-      wait1Msec(2000);
-      StopAllTasks();
+      displayTextLine(4, "ERROR!!");
+      sleep(2000);
+      stopAllTasks();
     }
 
     // read the direction from which the signal is coming,
     // exit the app if an error occurs
     _dir = HTIRSreadDir(HTIRS);
     if (_dir < 0) {
-      nxtDisplayTextLine(4, "ERROR!!");
-      wait1Msec(2000);
-      StopAllTasks();
+      displayTextLine(4, "ERROR!!");
+      sleep(2000);
+      stopAllTasks();
     }
 
     // display the info from the sensor
-    nxtDisplayTextLine(0,"HT IR Seeker");
-    nxtDisplayTextLine(2, "dir: %2d", _dir);
-    nxtDisplayTextLine(3, "S1: %3d", dcS1);
-    nxtDisplayTextLine(4, "S2: %3d", dcS2);
-    nxtDisplayTextLine(5, "S3: %3d", dcS3);
-    nxtDisplayTextLine(6, "S4: %3d", dcS4);
-    nxtDisplayTextLine(7, "S5: %3d", dcS5);
-    wait10Msec(100);
+    displayTextLine(0,"HT IR Seeker");
+    displayTextLine(2, "dir: %2d", _dir);
+    displayTextLine(3, "S1: %3d", dcS1);
+    displayTextLine(4, "S2: %3d", dcS2);
+    displayTextLine(5, "S3: %3d", dcS3);
+    displayTextLine(6, "S4: %3d", dcS4);
+    displayTextLine(7, "S5: %3d", dcS5);
+    sleep(100);
   }
 }
 

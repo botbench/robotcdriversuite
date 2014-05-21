@@ -222,7 +222,7 @@ bool HTSMUXsetMode(tMUXSensor muxsensor, byte mode) {
 	  // Always make sure the SMUX is in the halted state
 	  if (!HTSMUXsendCommand(link, HTSMUX_CMD_HALT))
 	    return false;
-	  wait1Msec(50);
+	  sleep(50);
 	}
 
   memset(HTSMUX_I2CRequest, 0, sizeof(tByteArray));
@@ -417,7 +417,7 @@ bool HTSMUXconfigChannel(tMUXSensor muxsensor, tConfigParams &configparams) {
   // Always make sure the SMUX is in the halted state
   if (!HTSMUXsendCommand((tSensors)SPORT(muxsensor), HTSMUX_CMD_HALT))
     return false;
-	wait1Msec(50);
+	sleep(50);
 
   HTSMUX_I2CRequest[0] = 7;               // Message size
   HTSMUX_I2CRequest[1] = HTSMUX_I2C_ADDR; // I2C Address

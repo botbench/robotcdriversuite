@@ -50,7 +50,7 @@
 #warn "-----------------------------------------"
 #endif
 
-#ifndef _COMMON_H_
+#ifndef __COMMON_H__
 #include "common.h"
 #endif
 
@@ -180,15 +180,15 @@ void debugIR(tByteArray &data) {
   string _output;
   for (int i = 0; i < MAX_ARR_SIZE; i++) {
     if ((i != 0) && (i % 8 == 0)) {
-      wait1Msec(10000);
-      PlaySound(soundBlip);
+      sleep(10000);
+      playSound(soundBlip);
       eraseDisplay();
     }
     decToBin(data[i], 8, _output);
     StringFormat(_output, "%2d %s", i, _output);
-    nxtDisplayTextLine(i % 8, "%s 0x%02x", _output, ubyteToInt(data[i]));
+    displayTextLine(i % 8, "%s 0x%02x", _output, ubyteToInt(data[i]));
   }
-  wait1Msec(10000);
+  sleep(10000);
 }
 #endif // _DEBUG_DRIVER_
 
@@ -402,27 +402,27 @@ void transmitIR(tSensors link, tByteArray &oBuffer, int channel) {
   // transmitters.
 
   // First transmission
-  wait1Msec((4 - channel) * 16);
+  sleep((4 - channel) * 16);
   starttime = nPgmTime;
   if (!writeI2C(link, oBuffer)) return;
 
   // Second transmission
-  wait1Msec(5 * 16 - (nPgmTime - starttime));
+  sleep(5 * 16 - (nPgmTime - starttime));
   starttime = nPgmTime;
   if (!writeI2C(link, oBuffer)) return;
 
   // Third transmission
-  wait1Msec(5 * 16 - (nPgmTime - starttime));
+  sleep(5 * 16 - (nPgmTime - starttime));
   starttime = nPgmTime;
   if (!writeI2C(link, oBuffer)) return;
 
   // Fourth transmission
-  wait1Msec((6 + (2*channel) * 16) - (nPgmTime - starttime));
+  sleep((6 + (2*channel) * 16) - (nPgmTime - starttime));
   starttime = nPgmTime;
   if (!writeI2C(link, oBuffer)) return;
 
   // Fifth transmission
-  wait1Msec((6 + (2*channel) * 16) - (nPgmTime - starttime));
+  sleep((6 + (2*channel) * 16) - (nPgmTime - starttime));
   if (!writeI2C(link, oBuffer)) return;
 }
 

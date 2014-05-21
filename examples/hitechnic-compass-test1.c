@@ -27,13 +27,13 @@
 task main () {
   int _target = 0;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Compass");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayTextLine(5, "Press enter");
-  nxtDisplayTextLine(6, "to set target");
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Compass");
+  displayCenteredTextLine(3, "Test 1");
+  displayTextLine(5, "Press enter");
+  displayTextLine(6, "to set target");
 
-  wait1Msec(2000);
+  sleep(2000);
   eraseDisplay();
   time1[T1] = 0;
   while(true) {
@@ -41,14 +41,14 @@ task main () {
     // This also helps with debouncing the [enter] button.
     if (time1[T1] > 1000) {
       eraseDisplay();
-      nxtDisplayTextLine(1, "Changing");
-      nxtDisplayTextLine(2, "target");
-      wait1Msec(500);
+      displayTextLine(1, "Changing");
+      displayTextLine(2, "target");
+      sleep(500);
       // Set the current heading as the value for the offset to be used as the
       // new zero-point for the relative heading returned by
       // HTMCreadRelativeHeading()
       _target = HTMCsetTarget(HTMC);
-      PlaySound(soundBlip);
+      playSound(soundBlip);
       while(bSoundActive) EndTimeSlice();
       time1[T1] = 0;
     }
@@ -57,13 +57,13 @@ task main () {
     // display them on the screen.
     while(nNxtButtonPressed != kEnterButton) {
       eraseDisplay();
-      nxtDisplayTextLine(1, "Reading");
-      nxtDisplayTextLine(2, "Target: %4d", _target);
-      nxtDisplayTextLine(4, "Abs:   %4d", HTMCreadHeading(HTMC));
-      nxtDisplayTextLine(5, "Rel:   %4d", HTMCreadRelativeHeading(HTMC));
-      nxtDisplayTextLine(6, "Press enter");
-      nxtDisplayTextLine(7, "to set target");
-      wait1Msec(100);
+      displayTextLine(1, "Reading");
+      displayTextLine(2, "Target: %4d", _target);
+      displayTextLine(4, "Abs:   %4d", HTMCreadHeading(HTMC));
+      displayTextLine(5, "Rel:   %4d", HTMCreadRelativeHeading(HTMC));
+      displayTextLine(6, "Press enter");
+      displayTextLine(7, "to set target");
+      sleep(100);
     }
   }
 }

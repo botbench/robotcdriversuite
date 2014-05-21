@@ -34,23 +34,23 @@
 const tMUXSensor LEGOTOUCH = msensor_S1_1;
 
 task main() {
-  nxtDisplayCenteredTextLine(0, "Lego");
-  nxtDisplayCenteredBigTextLine(1, "TOUCH");
-  nxtDisplayCenteredTextLine(3, "SMUX Test");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and sensor to");
-  nxtDisplayCenteredTextLine(7, "SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Lego");
+  displayCenteredBigTextLine(1, "TOUCH");
+  displayCenteredTextLine(3, "SMUX Test");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and sensor to");
+  displayCenteredTextLine(7, "SMUX Port 1");
+  sleep(2000);
 
   eraseDisplay();
 
   while (true) {
     // Check if the sensor is pressed or not.
     if (TSreadState(LEGOTOUCH))
-      nxtDisplayCenteredBigTextLine(3, "ACTIVE");
+      displayCenteredBigTextLine(3, "ACTIVE");
     else
-      nxtDisplayCenteredBigTextLine(3, "INACTIVE");
-    wait1Msec(50);
+      displayCenteredBigTextLine(3, "INACTIVE");
+    sleep(50);
   }
 }
 

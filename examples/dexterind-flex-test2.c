@@ -33,38 +33,38 @@ task main () {
   nNxtButtonTask  = -2;
 
   eraseDisplay();
-  nxtDisplayTextLine(0, "Dexter Industries");
-  nxtDisplayCenteredBigTextLine(1, "dFlex");
-  nxtDisplayCenteredTextLine(3, "Test 2");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayTextLine(0, "Dexter Industries");
+  displayCenteredBigTextLine(1, "dFlex");
+  displayCenteredTextLine(3, "Test 2");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
   eraseDisplay();
-  nxtDisplayTextLine(0, "dFlex Calibration");
-  nxtDisplayTextLine(2, "Left:  set min");
-  nxtDisplayTextLine(3, "Right: set max");
-  nxtDisplayTextLine(7, "Grey:  exit");
+  displayTextLine(0, "dFlex Calibration");
+  displayTextLine(2, "Left:  set min");
+  displayTextLine(3, "Right: set max");
+  displayTextLine(7, "Grey:  exit");
 
   while (true) {
     switch(nNxtButtonPressed) {
       // if the left button is pressed calibrate the black value for the sensor
       case kLeftButton:
                         DFLEXcalLow(DFLEX);
-                        PlaySound(soundBeepBeep);
+                        playSound(soundBeepBeep);
                         while(bSoundActive) EndTimeSlice();
                         break;
 
       // if the left button is pressed calibrate the white value for the sensor
       case kRightButton:
                         DFLEXcalHigh(DFLEX);
-                        PlaySound(soundBeepBeep);
+                        playSound(soundBeepBeep);
                         while(bSoundActive) EndTimeSlice();
                         break;
     }
 
-    nxtDisplayClearTextLine(5);
-    nxtDisplayClearTextLine(6);
+    displayClearTextLine(5);
+    displayClearTextLine(6);
 
     // Read the raw value of the sensor
     raw = DFLEXvalRaw(DFLEX);
@@ -73,11 +73,11 @@ task main () {
     nrm = DFLEXvalNorm(DFLEX);
 
     // Display the raw and normalised values
-    nxtDisplayTextLine(5, "R: %4d N: %4d", raw, nrm);
+    displayTextLine(5, "R: %4d N: %4d", raw, nrm);
 
     // Display the values for black and white
-    nxtDisplayTextLine(6, "B: %4d W: %4d", dflexlow, dflexhigh);
-    wait1Msec(50);
+    displayTextLine(6, "B: %4d W: %4d", dflexlow, dflexhigh);
+    sleep(50);
   }
 }
 

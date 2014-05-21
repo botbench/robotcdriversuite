@@ -34,19 +34,23 @@ float data[200];
 task main () {
   int X = 0;
 
+  // declare and initialise the sensor
+  tTIR tir;
+  initSensor(&tir, S1);
+
   memset(data, 0, sizeof(data));
-  TIRresetSensor(TIR);
-  nxtDisplayCenteredTextLine(0, "Dexter Industries");
-  nxtDisplayCenteredTextLine(1, "Thermal Infrared");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+
+  displayCenteredTextLine(0, "Dexter Industries");
+  displayCenteredTextLine(1, "Thermal Infrared");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
 	eraseDisplay();
 
   // set emissivity for light skin
-  TIRsetEmissivity(TIR, TIR_EM_SKIN_LIGHT);
+  setEmissivity(&tir, TIR_EM_SKIN_LIGHT);
 
   nMotorEncoderTarget[VERTICAL] = 200;
 	motor[VERTICAL] = -20;
@@ -54,25 +58,26 @@ task main () {
 	nMotorEncoderTarget[HORIZONTAL] = 360;
 	motor[HORIZONTAL] = 20;
 	while((nMotorRunState[HORIZONTAL] != runStateIdle) && (nMotorRunState[HORIZONTAL] != runStateHoldPosition)) EndTimeSlice();
-	wait1Msec(500);
+	sleep(500);
 	nMotorEncoder[HORIZONTAL] = 0;
 	nMotorEncoder[VERTICAL] = 0;
-	PlaySound(soundBeepBeep);
+	playSound(soundBeepBeep);
 	while(bSoundActive) EndTimeSlice();
   for (int i = 0; i < 80; i++) {
-    wait1Msec(500);
+    sleep(500);
     X = 0;
     memset(data, 0, sizeof(data));
 	  nMotorEncoderTarget[HORIZONTAL] = 720;
 	  motor[HORIZONTAL] = -40;
 	  time1[T1] = 0;
 	  while((nMotorRunState[HORIZONTAL] != runStateIdle) && (nMotorRunState[HORIZONTAL] != runStateHoldPosition)) {
-	    data[X] = TIRreadObjectTemp(TIR);
+	  	sensorReadAll(&tir);
+	    data[X] = tir.objectTemp;
 	    X++;
-	    wait1Msec(20);
+	    sleep(20);
 	  }
-    nxtDisplayBigTextLine(1, "X: %d", X);
-	  nxtDisplayBigTextLine(3, "T: %d", time1[T1]);
+    displayBigTextLine(1, "X: %d", X);
+	  displayBigTextLine(3, "T: %d", time1[T1]);
 	  nMotorEncoderTarget[VERTICAL] = 5;
 	  motor[VERTICAL] = 20;
 
@@ -82,7 +87,7 @@ task main () {
 	  for (int j = 0; j < 200; j++) {
 	    if (data[j] != 0) {
 	      writeDebugStream("%3.2f,", data[j]);
-	      wait1Msec(5);
+	      sleep(5);
 	    }
 	  }
 	  writeDebugStreamLine("");
@@ -91,7 +96,7 @@ task main () {
 	    EndTimeSlice();
 	}
   bFloatDuringInactiveMotorPWM = true;
-  wait1Msec(10);
+  sleep(10);
 }
 
 /*

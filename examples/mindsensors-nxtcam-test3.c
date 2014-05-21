@@ -86,7 +86,7 @@ task main () {
     // Fetch all the blobs, have the driver combine all
     // the colliding blobs.
     _nblobs = NXTCAMgetBlobs(cam, _blobs);
-    nxtDisplayTextLine(1, "%d, %f", _nblobs, perr_x);
+    displayTextLine(1, "%d, %f", _nblobs, perr_x);
 
     if (_nblobs == 0) {
       if ((perr_x > 0) && (nMotorEncoder[motorB] > 660)) {
@@ -116,15 +116,15 @@ task main () {
 
 	    _x1 = xscale(_x);
 	    _y1 = yscale(_y);
-	    nxtEraseRect(_x1-6, _y1-6, _x1+6, _y1+6);
+	    eraseRect(_x1-6, _y1-6, _x1+6, _y1+6);
 
-	    nxtDrawLine(_x1, _y1+3, _x1, _y1-3);
-	    nxtDrawLine(_x1+3, _y1, _x1-3, _y1);
+	    drawLine(_x1, _y1+3, _x1, _y1-3);
+	    drawLine(_x1+3, _y1, _x1-3, _y1);
 
 	    perr_y = err_y;
 	    perr_x = err_x;
 	  }
-	  wait1Msec(50);
+	  sleep(50);
   }
 }
 

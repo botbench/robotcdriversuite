@@ -190,7 +190,7 @@ bool DGPSsetDestination(tSensors link, long latitude, long longitude) {
   if (!writeI2C(link, DGPS_I2CRequest))
     return false;
 
-  wait1Msec(100);
+  sleep(100);
 
   // Then send longitude
   DGPS_I2CRequest[0] = 2;               // Message size

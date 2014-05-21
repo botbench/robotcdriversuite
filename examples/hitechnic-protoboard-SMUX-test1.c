@@ -40,15 +40,15 @@ const tMUXSensor HTPB = msensor_S1_1;
 task main() {
   byte inputs = 0;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Proto");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and HTPB to");
-  nxtDisplayCenteredTextLine(7, "SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Proto");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and HTPB to");
+  displayCenteredTextLine(7, "SMUX Port 1");
+  sleep(2000);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
 
   eraseDisplay();
@@ -57,8 +57,8 @@ task main() {
     // Fetch the state of the digital IO pins.  When not explicitly
     // configured as input or output, they will default to input.
     inputs = HTPBreadIO(HTPB, 0x3F);
-    nxtDisplayTextLine(4, "D: 0x%x", (int)inputs);
-    wait1Msec(10);
+    displayTextLine(4, "D: 0x%x", (int)inputs);
+    sleep(10);
   }
 }
 

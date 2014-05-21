@@ -8,6 +8,6 @@ task main () {
 
   x_Phi = Phi(X_val, X_mean, X_std);
 
-  nxtDisplayTextLine(2, "Phi(x): %f", x_Phi);
+  displayTextLine(2, "Phi(x): %f", x_Phi);
   while(nNxtButtonPressed != kEnterButton) EndTimeSlice();
 }

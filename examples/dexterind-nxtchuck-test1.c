@@ -42,21 +42,21 @@ task main()
       if (NXTChuckreadSensor(S1, chucky)) {      // Read the Nunchuk
 
 
-        nxtDisplayTextLine(0, "Stick  X  %d", chucky.stickX);
-        nxtDisplayTextLine(1, "Stick  Y  %d", chucky.stickY);
-        nxtDisplayTextLine(2, "Accel  X  %d", chucky.accelX);
-        nxtDisplayTextLine(3, "Accel  Y  %d", chucky.accelY);
-        nxtDisplayTextLine(4, "Accel  Z  %d", chucky.accelZ);
-        nxtDisplayTextLine(5, "Button C  %d", chucky.buttonC);
-        nxtDisplayTextLine(6, "Button Z  %d", chucky.buttonZ);
-        nxtDisplayTextLine(7, "Buttons   %d", chucky.buttons);
+        displayTextLine(0, "Stick  X  %d", chucky.stickX);
+        displayTextLine(1, "Stick  Y  %d", chucky.stickY);
+        displayTextLine(2, "Accel  X  %d", chucky.accelX);
+        displayTextLine(3, "Accel  Y  %d", chucky.accelY);
+        displayTextLine(4, "Accel  Z  %d", chucky.accelZ);
+        displayTextLine(5, "Button C  %d", chucky.buttonC);
+        displayTextLine(6, "Button Z  %d", chucky.buttonZ);
+        displayTextLine(7, "Buttons   %d", chucky.buttons);
       }
       else {
-        wait1Msec(100);
+        sleep(100);
         eraseDisplay();
-        nxtDisplayTextLine(0, "Failed");
+        displayTextLine(0, "Failed");
       }
     //}
-    wait1Msec(10);
+    sleep(10);
   }
 }

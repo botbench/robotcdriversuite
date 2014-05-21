@@ -33,23 +33,23 @@ task main()
 
   // Initialise all of the dLights
   DLIGHTinit(DLIGHT, DLIGHT_I2C_ADDR_ALL);
-  wait1Msec(50);
+  sleep(50);
 
   // Make all the lights white
   DLIGHTsetColor(DLIGHT, DLIGHT_I2C_ADDR_ALL, 0xFF, 0xFF, 0xFF);
-  wait1Msec(1000);
+  sleep(1000);
 
   // Make all of the lights red
   DLIGHTsetColor(DLIGHT, DLIGHT_I2C_ADDR_ALL, 0xFF, 0, 0);
-  wait1Msec(1000);
+  sleep(1000);
 
   // Make all of the lights...green
   DLIGHTsetColor(DLIGHT, DLIGHT_I2C_ADDR_ALL, 0, 0xFF, 0);
-  wait1Msec(1000);
+  sleep(1000);
 
   // Make all of the lights, you guessed it, red, no wait, blue!
   DLIGHTsetColor(DLIGHT, DLIGHT_I2C_ADDR_ALL, 0, 0, 0xFF);
-  wait1Msec(1000);
+  sleep(1000);
 
 
   // Make a nice sort of rainbow effect by cycling through colours
@@ -80,41 +80,41 @@ task main()
 		if (blue < 0 || blue > 255)
 			blue = 0;
     DLIGHTsetColor(DLIGHT, DLIGHT_I2C_ADDR_ALL, red, green, blue);
-    wait1Msec(50);
+    sleep(50);
   }
 
   // Make the lights blink!
   // Configure for 1 Hz with a 10% duty rate
   DLIGHTsetBlinking(DLIGHT, DLIGHT_I2C_ADDR_ALL, 1, 10);
-  wait1Msec(10);
+  sleep(10);
 
   // Set the colour
   DLIGHTsetColor(DLIGHT, DLIGHT_I2C_ADDR_ALL, 0, 0xFF, 0xFF);
-  wait1Msec(10);
+  sleep(10);
 
   // Start blinking!
   DLIGHTstartBlinking(DLIGHT, DLIGHT_I2C_ADDR_ALL);
-  wait1Msec(5000);
+  sleep(5000);
 
   // Stop the blinking
   DLIGHTstopBlinking(DLIGHT, DLIGHT_I2C_ADDR_ALL);
-  wait1Msec(10);
+  sleep(10);
 
   // Turn off all of the
   DLIGHTdisable(DLIGHT, DLIGHT_I2C_ADDR_ALL);
 
   //DLIGHTsetColor(DLIGHT, DLIGHT_I2C_ADDR_1, 0xFF, 0, 0);
-  //wait1Msec(500);
+  //sleep(500);
   //DLIGHTstartBlinking(DLIGHT, DLIGHT_I2C_ADDR_1);
   //DLIGHTsetColor(DLIGHT, DLIGHT_I2C_ADDR_2, 0, 0xFF, 0);
-  //wait1Msec(500);
+  //sleep(500);
   //DLIGHTstartBlinking(DLIGHT, DLIGHT_I2C_ADDR_2);
   //DLIGHTsetColor(DLIGHT, DLIGHT_I2C_ADDR_3, 0, 0, 0xFF);
-  //wait1Msec(500);
+  //sleep(500);
   //DLIGHTstartBlinking(DLIGHT, DLIGHT_I2C_ADDR_3);
   //DLIGHTsetColor(DLIGHT, DLIGHT_I2C_ADDR_4, 0xFF, 0xFF, 0xFF);
-  //wait1Msec(500);
+  //sleep(500);
   //DLIGHTstartBlinking(DLIGHT, DLIGHT_I2C_ADDR_4);
-  //wait1Msec(2000);
+  //sleep(2000);
   //DLIGHTstopBlinking(DLIGHT, DLIGHT_I2C_ADDR_ALL);
 }

@@ -34,12 +34,12 @@ task main () {
   long utc = 0;
   bool linkstatus = false;
 
-  nxtDisplayCenteredTextLine(0, "Dexter Ind.");
-  nxtDisplayCenteredBigTextLine(1, "GPS");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Dexter Ind.");
+  displayCenteredBigTextLine(1, "GPS");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
   eraseDisplay();
 
   while (true) {
@@ -49,17 +49,17 @@ task main () {
     latitude = DGPSreadLatitude(DGPS);
     linkstatus = DGPSreadStatus(DGPS);
 
-    nxtDisplayCenteredTextLine(0, "DGPS Test 1");
-    nxtDrawLine(0, 52, 99, 52);
-    nxtDisplayTextLine(2, "UTC: %d", utc);
-    nxtDisplayTextLine(3, "Lon: %d", longitude);
-    nxtDisplayTextLine(4, "Lat: %d", latitude);
+    displayCenteredTextLine(0, "DGPS Test 1");
+    drawLine(0, 52, 99, 52);
+    displayTextLine(2, "UTC: %d", utc);
+    displayTextLine(3, "Lon: %d", longitude);
+    displayTextLine(4, "Lat: %d", latitude);
     if (linkstatus)
-      nxtDisplayTextLine(7, "Link Stat: [UP]");
+      displayTextLine(7, "Link Stat: [UP]");
     else
-      nxtDisplayTextLine(7, "Link Stat: [DOWN]");
-    nxtDrawLine(0, 20, 99, 20);
-    wait1Msec(500);
+      displayTextLine(7, "Link Stat: [DOWN]");
+    drawLine(0, 20, 99, 20);
+    sleep(500);
   }
 }
 

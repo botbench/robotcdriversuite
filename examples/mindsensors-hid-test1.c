@@ -43,7 +43,7 @@ task main () {
   MSHIDsendCommand(MSHID, MSHID_XMIT);
 
   // Wait the command box to appear
-  wait1Msec(1000);
+  sleep(1000);
 
   // Set the MSHID to normal ACSII mode
   MSHIDsendCommand(MSHID, MSHID_ASCII);
@@ -52,7 +52,7 @@ task main () {
   MSHIDsendString(MSHID, msg1);
 
   // Wait for notepad to start up
-  wait1Msec(2000);
+  sleep(2000);
 
   // Send the second message "hello world"
   MSHIDsendString(MSHID, msg2);

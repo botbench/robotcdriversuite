@@ -36,25 +36,25 @@ const tMUXSensor HTPIR = msensor_S1_1;
 // Draw a little stick figure
 void drawStickFigure(int offset)
 {
-  nxtEraseRect(0, 0, 99, 50);
-  nxtDrawCircle(offset + 43, 40, 15);
-  nxtDrawLine(offset + 50,25,offset + 50,10);
-  nxtDrawLine(offset + 43, 22, offset + 58, 22);
-  nxtDrawLine(offset + 43, 0, offset + 50, 10);
-  nxtDrawLine(offset + 50, 10, offset + 58, 0);
+  eraseRect(0, 0, 99, 50);
+  drawCircle(offset + 43, 40, 15);
+  drawLine(offset + 50,25,offset + 50,10);
+  drawLine(offset + 43, 22, offset + 58, 22);
+  drawLine(offset + 43, 0, offset + 50, 10);
+  drawLine(offset + 50, 10, offset + 58, 0);
 }
 
 task main () {
   int reading = 0;
   int x = 0;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "PIR");
-  nxtDisplayCenteredTextLine(3, "SMUX Test");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and sensor to");
-  nxtDisplayCenteredTextLine(7, "SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "PIR");
+  displayCenteredTextLine(3, "SMUX Test");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and sensor to");
+  displayCenteredTextLine(7, "SMUX Port 1");
+  sleep(2000);
 
   eraseDisplay();
 
@@ -63,11 +63,11 @@ task main () {
     // Please note that you cannot change the deadband value when the
     // sensor is connected to the SMUX.
     reading = HTPIRreadSensor(HTPIR);
-    nxtDisplayTextLine(0, "HT PIR: %d", reading);
+    displayTextLine(0, "HT PIR: %d", reading);
 
     x = (40 * reading) / 100;
     drawStickFigure(x);
-    wait1Msec(50);
+    sleep(50);
   }
 }
 

@@ -41,7 +41,7 @@ task main ()
   {
     // Wait until 20ms has passed
     while (time1[T1] < 20)
-      wait1Msec(1);
+      sleep(1);
 
     // Reset the timer
     time1[T1]=0;
@@ -57,6 +57,6 @@ task main ()
     heading += rotSpeed * 0.02;
 
     // Display our current heading on the screen
-    nxtDisplayCenteredBigTextLine(3, "%2.0f", heading);
+    displayCenteredBigTextLine(3, "%2.0f", heading);
   }
 }

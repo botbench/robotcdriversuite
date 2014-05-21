@@ -36,16 +36,16 @@ task main () {
   long blue = 0;
   bool passive = false;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Color V2");
-  nxtDisplayCenteredTextLine(3, "Test 2");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  nxtDisplayCenteredTextLine(7, "[Enter] to switch");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Color V2");
+  displayCenteredTextLine(3, "Test 2");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  displayCenteredTextLine(7, "[Enter] to switch");
+  sleep(2000);
 
   eraseDisplay();
-  nxtDisplayCenteredTextLine(7, "[Enter] to switch");
+  displayCenteredTextLine(7, "[Enter] to switch");
   while (true) {
     while(nNxtButtonPressed != kEnterButton) {
 
@@ -59,29 +59,29 @@ task main () {
 
       // A return value of false implies an error has occurred
       if (!HTCS2readRawRGB(HTCS2, passive, red, green, blue)) {
-        nxtDisplayTextLine(4, "ERROR!!");
-        wait1Msec(2000);
-        StopAllTasks();
+        displayTextLine(4, "ERROR!!");
+        sleep(2000);
+        stopAllTasks();
       }
 
-      nxtDisplayBigTextLine(0, "R: %5d", red);
-      nxtDisplayBigTextLine(2, "G: %5d", green);
-      nxtDisplayBigTextLine(4, "B: %5d", blue);
-      wait1Msec(100);
+      displayBigTextLine(0, "R: %5d", red);
+      displayBigTextLine(2, "G: %5d", green);
+      displayBigTextLine(4, "B: %5d", blue);
+      sleep(100);
     }
 
     // Toggle the "passive" variable to enable or disable
     // the ambient light cancelling white LED on the sensor
     if (nNxtButtonPressed == kEnterButton) {
       passive = !passive;
-      PlaySound(soundBeepBeep);
+      playSound(soundBeepBeep);
       while (bSoundActive) {
-        wait1Msec(10);
+        sleep(10);
       }
 
       // Wait until no button is pressed (debounce)
       while (nNxtButtonPressed != kNoButton) {
-        wait1Msec(10);
+        sleep(10);
       }
     }
   }

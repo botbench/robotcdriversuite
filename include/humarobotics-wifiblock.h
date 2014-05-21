@@ -478,7 +478,7 @@ bool HRWBreadBigReg(tSensors link, int reg, int size)
 	    return false;
 	  memcpy(&HRWB_HugeArray[16 * i], HRWB_I2CReply, requestlen);
 	  bytesleft -= 16;
-	  wait1Msec(10);
+	  sleep(10);
 	}
 	return true;
 }
@@ -536,7 +536,7 @@ bool HRWBreadSensorType (tSensors link, string &sType)
   if (!HRWBreadReg(link, HRWB_SENSORTYPE, 4))
     return false;
 
-  StringFromChars(sType, &HRWB_I2CReply);
+  StringFromChars(sType, &HRWB_I2CReply[0]);
 
   return true;
 }
@@ -620,11 +620,11 @@ bool HRWBscanChannel(tSensors link, ubyte channel) {
 	  HRWBreadReg(link, HRWB_WIFI_STATUS, 1);
 	  if ((HRWB_I2CReply[0] & 0x08) == 0x08)
 	    break;
-	  wait1Msec(100);
+	  sleep(100);
 	}
 
   HRWBwriteReg(link, HRWB_WIFI_SCANSEL, channel);
-  wait1Msec(10);
+  sleep(10);
   HRWBreadBigReg(link, HRWB_WIFI_SCANSSID, 64);
   StringFromChars(tmpString, HRWB_HugeArray);
   writeDebugStream("Found [%d]: ", channel);
@@ -649,7 +649,7 @@ bool HRWBscanWifi(tSensors link)
 	  HRWBreadReg(link, HRWB_WIFI_STATUS, 1);
 	  if ((HRWB_I2CReply[0] &  HRWB_WIFI_STATUS_SCAN_DONE) == HRWB_WIFI_STATUS_SCAN_DONE)
 	    break;
-	  wait1Msec(100);
+	  sleep(100);
 	}
 
 	// Fetch number of SSIDs found.
@@ -663,7 +663,7 @@ bool HRWBscanWifi(tSensors link)
   for (int i = 0; i < SSIDcount; i++) {
     if (!HRWBscanChannel(link, i))
       return false;
-    wait1Msec(10);
+    sleep(10);
   }
   return true;
 
@@ -689,9 +689,9 @@ bool HRWBconfigNetwork(tSensors link, tNetworkInfo &netInfo) {
 
   if (!HRWBeraseConfig(link))
     return false;
-  wait1Msec(100);
+  sleep(100);
 
-  PlaySound(soundBlip);
+  playSound(soundBlip);
   memcpy(HRWB_scratch, netInfo.IP[0], sizeof(tIPaddr));
   if (!HRWBwriteReg(link, HRWB_WIFI_IP_ADDR, HRWB_scratch, sizeof(tIPaddr)))
     return false;
@@ -733,7 +733,7 @@ bool HRWBconfigNetwork(tSensors link, tNetworkInfo &netInfo) {
 	  {
 	    done = true;
 	  }
-	  wait1Msec(100);
+	  sleep(100);
 	}
 
   return true;
@@ -797,10 +797,10 @@ bool HRWBdoGET(tSensors link, tGetRequest &getrequest) {
 	    //writeDebugStreamLine("HTTP CODE: %d", getrequest.result_code);
 	    done = true;
 	  }
-	  wait1Msec(100);
+	  sleep(100);
 	}
 
-	wait1Msec(1000);
+	sleep(1000);
 	if (!HRWBreadReg(link, HRWB_GET_LENGTH, 1))
 	  return false;
   getrequest.RXDataLen = HRWB_I2CReply[0];
@@ -874,7 +874,7 @@ bool HRWBdoPOST(tSensors link, tPostRequest &postrequest) {
 	    //writeDebugStreamLine("HTTP CODE: %d", postrequest.result_code);
 	    done = true;
 	  }
-	  wait1Msec(100);
+	  sleep(100);
 	}
 	return true;
 }
@@ -935,10 +935,10 @@ bool HRWBdoTCP(tSensors link, tTCPRequest &tcprequest) {
 	    tcprequest.result_code = 0;
 	    done = true;
 	  }
-	  wait1Msec(100);
+	  sleep(100);
 	}
 
-	wait1Msec(100);
+	sleep(100);
 	if (!HRWBreadReg(link, HRWB_TCP_RX_LENGTH, 1))
 	  return false;
   tcprequest.RXDataLen = HRWB_I2CReply[0];
@@ -1017,10 +1017,10 @@ bool HRWBdoUDP(tSensors link, tUDPRequest &udprequest) {
 	    udprequest.result_code = status;
 	    done = true;
 	  }
-	  wait1Msec(100);
+	  sleep(100);
 	}
 
-	wait1Msec(100);
+	sleep(100);
 	if (!HRWBreadReg(link, HRWB_UDP_RX_LENGTH, 1))
 	  return false;
   udprequest.RXDataLen = HRWB_I2CReply[0];

@@ -46,14 +46,14 @@ task main () {
   while (true) {
     // If timer1 expires, make a small noise and reset it.
     if (TMRisExpired(timer1)) {
-      PlaySound(soundBlip);
+      playSound(soundBlip);
       while(bSoundActive) EndTimeSlice();
       TMRreset(timer1);
     }
 
     // If timer2 expires, make a small noise and reset it.
     if (TMRisExpired(timer2)) {
-      PlaySound(soundShortBlip);
+      playSound(soundShortBlip);
       while(bSoundActive) EndTimeSlice();
       TMRreset(timer2);
     }

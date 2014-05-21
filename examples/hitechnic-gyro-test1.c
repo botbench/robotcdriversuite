@@ -29,25 +29,25 @@
 #include "hitechnic-gyro.h"
 
 task main () {
-  nxtDisplayTextLine(0, "HT Gyro");
-  nxtDisplayTextLine(1, "Test 1");
-  nxtDisplayTextLine(5, "Press enter");
-  nxtDisplayTextLine(6, "to set relative");
-  nxtDisplayTextLine(7, "heading");
+  displayTextLine(0, "HT Gyro");
+  displayTextLine(1, "Test 1");
+  displayTextLine(5, "Press enter");
+  displayTextLine(6, "to set relative");
+  displayTextLine(7, "heading");
 
-  wait1Msec(2000);
+  sleep(2000);
   eraseDisplay();
   time1[T1] = 0;
   while(true) {
     if (time1[T1] > 1000) {
       eraseDisplay();
-      nxtDisplayTextLine(1, "Resetting");
-      nxtDisplayTextLine(1, "offset");
-      wait1Msec(500);
+      displayTextLine(1, "Resetting");
+      displayTextLine(1, "offset");
+      sleep(500);
 
       // Start the calibration and display the offset
-      nxtDisplayTextLine(2, "Offset: %f", HTGYROstartCal(HTGYRO));
-      PlaySound(soundBlip);
+      displayTextLine(2, "Offset: %f", HTGYROstartCal(HTGYRO));
+      playSound(soundBlip);
       while(bSoundActive) EndTimeSlice();
       time1[T1] = 0;
     }
@@ -55,16 +55,16 @@ task main () {
     while(nNxtButtonPressed != kEnterButton) {
       eraseDisplay();
 
-      nxtDisplayTextLine(1, "Reading");
+      displayTextLine(1, "Reading");
       // Read the current calibration offset and display it
-      nxtDisplayTextLine(2, "Offset: %4f", HTGYROreadCal(HTGYRO));
+      displayTextLine(2, "Offset: %4f", HTGYROreadCal(HTGYRO));
 
-      nxtDisplayClearTextLine(4);
+      displayClearTextLine(4);
       // Read the current rotational speed and display it
-      nxtDisplayTextLine(4, "Gyro:   %4f", HTGYROreadRot(HTGYRO));
-      nxtDisplayTextLine(6, "Press enter");
-      nxtDisplayTextLine(7, "to recalibrate");
-      wait1Msec(100);
+      displayTextLine(4, "Gyro:   %4f", HTGYROreadRot(HTGYRO));
+      displayTextLine(6, "Press enter");
+      displayTextLine(7, "to recalibrate");
+      sleep(100);
     }
   }
 }

@@ -26,12 +26,12 @@
 // Draw a little stick figure
 void drawStickFigure(int offset)
 {
-  nxtEraseRect(0, 0, 99, 50);
-  nxtDrawCircle(offset + 43, 40, 15);
-  nxtDrawLine(offset + 50,25,offset + 50,10);
-  nxtDrawLine(offset + 43, 22, offset + 58, 22);
-  nxtDrawLine(offset + 43, 0, offset + 50, 10);
-  nxtDrawLine(offset + 50, 10, offset + 58, 0);
+  eraseRect(0, 0, 99, 50);
+  drawCircle(offset + 43, 40, 15);
+  drawLine(offset + 50,25,offset + 50,10);
+  drawLine(offset + 43, 22, offset + 58, 22);
+  drawLine(offset + 43, 0, offset + 50, 10);
+  drawLine(offset + 50, 10, offset + 58, 0);
 }
 
 task main () {
@@ -39,13 +39,13 @@ task main () {
   int x = 0;
   int deadband = HTPIR_DEFAULT_DEADBAND;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "PIR");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(6, "L/ENTER/R");
-  nxtDisplayCenteredTextLine(7, "change deadband");
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "PIR");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(6, "L/ENTER/R");
+  displayCenteredTextLine(7, "change deadband");
 
-  wait1Msec(2000);
+  sleep(2000);
   eraseDisplay();
 
   while(true) {
@@ -70,12 +70,12 @@ task main () {
 
     // Get the IR levels from the PIR sensor
     reading = HTPIRreadSensor(HTPIR);
-    nxtDisplayTextLine(0, "HT PIR %d / %d", deadband, reading);
+    displayTextLine(0, "HT PIR %d / %d", deadband, reading);
 
     // Draw a cool little stick figure
     x = (40 * reading) / 100;
     drawStickFigure(x);
-    wait1Msec(50);
+    sleep(50);
 
   }
 }

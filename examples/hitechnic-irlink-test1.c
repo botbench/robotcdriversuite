@@ -49,19 +49,19 @@ task main {
 	byte mode = 0;  // current mode
 	byte speed = 0; // current speed
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "IRLink");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "IRLink");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
   eraseDisplay();
 
-  nxtDisplayCenteredTextLine(0, "IRLink Test 1");
-  nxtDisplayTextLine(3, "Press [ENTER]");
-  nxtDisplayTextLine(4, "to switch modes");
-  nxtDisplayTextLine(6, "Press < and >");
-  nxtDisplayTextLine(7, "to change speed");
+  displayCenteredTextLine(0, "IRLink Test 1");
+  displayTextLine(3, "Press [ENTER]");
+  displayTextLine(4, "to switch modes");
+  displayTextLine(6, "Press < and >");
+  displayTextLine(7, "to change speed");
 
   while (true) {
     // Decrease the speed when Left Button is pressed
@@ -97,20 +97,20 @@ task main {
 
 // Run the motors using the Combo PWM Mode
 void doPFcomboPwmModeTest(byte speed) {
-  nxtDisplayCenteredTextLine(1, "comboPWM %d", speed);
+  displayCenteredTextLine(1, "comboPWM %d", speed);
   PFcomboPwmMode(HTIRL, 0, (ePWMMotorCommand)speed, (ePWMMotorCommand)(15 - speed));
 }
 
 // Run the motors using the Combo Direct Mode
 void doPFcomboDirectModeTest(byte speed) {
   if (speed > 3) speed = 3;
-  nxtDisplayCenteredTextLine(1, "comboDirect %d", speed);
+  displayCenteredTextLine(1, "comboDirect %d", speed);
   PFcomboDirectMode(HTIRL, 0, (eCDMMotorCommand)speed, (eCDMMotorCommand)(3 - speed));
 }
 
 // Run the motors using the Single Pin Output Mode
 void doPFsinglePinOutputModeTest(byte speed) {
-  nxtDisplayCenteredTextLine(1, "PFMotor %d", speed);
+  displayCenteredTextLine(1, "PFMotor %d", speed);
 	PFMotor(pfmotor_S1_C1_A, (ePWMMotorCommand)speed);
 	PFMotor(pfmotor_S1_C1_B, (ePWMMotorCommand)(15 - speed));
 }

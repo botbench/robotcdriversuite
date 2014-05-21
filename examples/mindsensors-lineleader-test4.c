@@ -37,9 +37,9 @@ task main {
 
     // Display the actual signal strength for each sensor
     for (int i = 0; i < 7; i++) {
-      nxtDisplayTextLine(i, "S[%d]: %5d", i, signalstr[i]);
+      displayTextLine(i, "S[%d]: %5d", i, signalstr[i]);
     }
-    wait1Msec(50);
+    sleep(50);
   }
 }
 

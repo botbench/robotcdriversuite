@@ -44,18 +44,18 @@ task main() {
 
   nNxtButtonTask  = -2;
 
-  nxtDisplayCenteredTextLine(0, "Lego");
-  nxtDisplayCenteredBigTextLine(1, "LIGHT");
-  nxtDisplayCenteredTextLine(3, "SMUX Test");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and sensor to");
-  nxtDisplayCenteredTextLine(7, "SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Lego");
+  displayCenteredBigTextLine(1, "LIGHT");
+  displayCenteredTextLine(3, "SMUX Test");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and sensor to");
+  displayCenteredTextLine(7, "SMUX Port 1");
+  sleep(2000);
 
-  nxtDisplayClearTextLine(7);
-  nxtDisplayTextLine(5, "Press [enter]");
-  nxtDisplayTextLine(6, "to toggle light");
-  wait1Msec(2000);
+  displayClearTextLine(7);
+  displayTextLine(5, "Press [enter]");
+  displayTextLine(6, "to toggle light");
+  sleep(2000);
 
   while (true) {
     // The enter button has been pressed, switch
@@ -68,16 +68,16 @@ task main() {
         LSsetActive(LEGOLS);
 
       // wait 500ms to debounce the switch
-      wait1Msec(500);
+      sleep(500);
     }
 
-    nxtDisplayClearTextLine(5);
-    nxtDisplayClearTextLine(6);
+    displayClearTextLine(5);
+    displayClearTextLine(6);
     raw = LSvalRaw(LEGOLS);
     nrm = LSvalNorm(LEGOLS);
-    nxtDisplayTextLine(5, "Raw:  %4d", raw);
-    nxtDisplayTextLine(6, "Norm: %4d", nrm);
-    wait1Msec(50);
+    displayTextLine(5, "Raw:  %4d", raw);
+    displayTextLine(6, "Norm: %4d", nrm);
+    sleep(50);
   }
 }
 

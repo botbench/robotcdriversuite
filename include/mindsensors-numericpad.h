@@ -112,7 +112,7 @@ bool MSNPscanKeys(tSensors link, int &pressedKeys, unsigned byte &key, int &numb
   if (!_MSNPinitialised[link]) {
     _MSNPinit(link);
     _MSNPinitialised[link] = true;
-    wait1Msec(10);
+    sleep(10);
   }
 
   key = 'X';
@@ -150,7 +150,7 @@ int MSNPscanKeys(tSensors link) {
   if (!_MSNPinitialised[link]) {
     _MSNPinit(link);
     _MSNPinitialised[link] = true;
-    wait1Msec(10);
+    sleep(10);
   }
 
 

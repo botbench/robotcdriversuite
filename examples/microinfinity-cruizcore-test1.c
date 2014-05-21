@@ -37,10 +37,10 @@ task main () {
   int rotI = 0;
   float rotF = 0.0;
 
-  nxtDisplayCenteredTextLine(0, "MicroInfinity");
-  nxtDisplayTextLine(1, "CruizCore XG1300L");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "MicroInfinity");
+  displayTextLine(1, "CruizCore XG1300L");
+  displayCenteredTextLine(3, "Test 1");
+  sleep(2000);
   eraseDisplay();
 
   // There are 3 ranges the Cruizcore XG1300L can measure in
@@ -56,7 +56,7 @@ task main () {
 
   while(bSoundActive) EndTimeSlice();
 
-  nxtDisplayTextLine(0, "CruizCore XG1300L");
+  displayTextLine(0, "CruizCore XG1300L");
   while (true) {
     // Read the relative heading from the sensor.
     angleI = MICCreadRelativeHeading(MICC);
@@ -68,17 +68,17 @@ task main () {
 
     // Read the acceleration data from the sensor
     if (!MICCreadAccel(MICC, _x_accel, _y_accel, _z_accel)) {
-      nxtDisplayTextLine(4, "ERROR!!");
-      wait1Msec(2000);
-      StopAllTasks();
+      displayTextLine(4, "ERROR!!");
+      sleep(2000);
+      stopAllTasks();
     }
 
-    nxtDisplayTextLine(2, "Heading: %4.2f", angleF);
-    nxtDisplayTextLine(3, "RoT:     %4.2f", rotF);
-    nxtDisplayTextLine(5, "X:      %5.2f", _x_accel/100.0);
-    nxtDisplayTextLine(6, "Y:      %5.2f", _y_accel/100.0);
-    nxtDisplayTextLine(7, "Z:      %5.2f", _z_accel/100.0);
-    wait1Msec(50);
+    displayTextLine(2, "Heading: %4.2f", angleF);
+    displayTextLine(3, "RoT:     %4.2f", rotF);
+    displayTextLine(5, "X:      %5.2f", _x_accel/100.0);
+    displayTextLine(6, "Y:      %5.2f", _y_accel/100.0);
+    displayTextLine(7, "Z:      %5.2f", _z_accel/100.0);
+    sleep(50);
   }
 }
 

@@ -64,7 +64,7 @@
 #define AD_HOC 1
 #define INFRASTRUCTURE 0
 
-#define N2WchillOut()  wait1Msec(50)                   /*!< Wait 50ms between messages, this allows transmission to be done */
+#define N2WchillOut()  sleep(50)                   /*!< Wait 50ms between messages, this allows transmission to be done */
 #define N2WsetIPAddress(X)    _N2WsetPar("IPAD", X) /*!< Macro for setting the IP address */
 #define N2WsetMask(X)         _N2WsetPar("MASK", X) /*!< Macro for setting the netmask */
 #define N2WsetGateway(X)      _N2WsetPar("GWAY", X) /*!< Macro for setting the gateway IP address */
@@ -132,7 +132,7 @@ bool N2WsetDebug(bool en)
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -149,7 +149,7 @@ bool N2WConnect(bool custom)
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -164,7 +164,7 @@ bool N2WDisconnect() {
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -182,7 +182,7 @@ bool N2WStopConnecting()
   //memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   //if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
   //  return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -196,7 +196,7 @@ bool N2WDelete()
 {
   if(!RS485sendString("$WFKD\n"))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -208,7 +208,7 @@ bool N2WDelete()
  */
 bool N2WSave() {
   RS485sendString("$WFKS\n");
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -221,7 +221,7 @@ bool N2WSave() {
 bool N2WLoad() {
   if (!RS485sendString("$WFKL\n"))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -372,7 +372,7 @@ bool N2WsetDHCP(bool yes) {
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -385,13 +385,13 @@ bool N2WsetDHCP(bool yes) {
  */
 bool N2WsetDefaultProfile(ubyte profile)
 {
-  ubyte len;
+  long len;
   sprintf(N2WscratchString, "$COS%d\n", profile);
   writeDebugStreamLine(N2WscratchString);
   memset(RS485txbuffer, 0, sizeof(RS485txbuffer));
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   RS485write(RS485txbuffer, strlen(N2WscratchString));
-  wait1Msec(10);
+  sleep(10);
 	RS485read(RS485rxbuffer, len, 100);
 	return (N2WgetNumericResponse(RS485rxbuffer) == 1);
 }
@@ -404,9 +404,9 @@ bool N2WsetDefaultProfile(ubyte profile)
 bool N2WCustomExist()
 {
 
-  ubyte len;
+  long len;
   RS485sendString("$WFKE\n");
-  wait1Msec(100);
+  sleep(100);
 	RS485read(RS485rxbuffer, len, 100);
 	return (N2WgetNumericResponse(RS485rxbuffer) == 1);
 }
@@ -422,7 +422,7 @@ bool N2WsetHibernate(bool hibernate)
   N2WscratchString = (hibernate) ? "$WFH\n" : "WFO\n";
   if (!RS485sendString(N2WscratchString))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -439,7 +439,7 @@ bool N2WsetPowerSave(bool powersave)
   N2WscratchString = (powersave) ? "$WFP1\n" : "WFP0\n";
   if (!RS485sendString(N2WscratchString))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -450,7 +450,7 @@ bool N2WsetPowerSave(bool powersave)
  * @return true if no error occured, false if it did
  */
 int N2WStatus() {
-  ubyte len;
+  long len;
   RS485sendString("$WFGS\n");
   N2WchillOut();
 	RS485read(RS485rxbuffer, len, 100);
@@ -474,12 +474,12 @@ bool N2WConnected() {
  * @return true if no error occured, false if it did
  */
 bool N2WgetIP(string &IP) {
-  ubyte len;
+  long len;
   N2WscratchString = "$WFIP\n";
   memset(RS485txbuffer, 0, sizeof(RS485txbuffer));
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   RS485write(RS485txbuffer, strlen(N2WscratchString));
-	wait1Msec(100);
+	sleep(100);
 	RS485read(RS485rxbuffer, len, 100);
 
 	if (len < 1)
@@ -501,7 +501,7 @@ bool N2WgetIP(string &IP) {
  */
 void N2WgetMAC(string &mac)
 {
-  ubyte len;
+  long len;
   sprintf(N2WscratchString, "$MAC\n");
   memset(RS485txbuffer, 0, sizeof(RS485txbuffer));
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
@@ -530,7 +530,7 @@ void N2WgetMAC(string &mac)
 bool N2WUDPOpenClient(int id, string ip, int port) {
   int index = 0;
   int respOK = 0;
-  ubyte len;
+  long len;
   sprintf(N2WscratchString, "$UDPOC%d?", id);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
   index = RS485appendToBuff(RS485txbuffer, index, ip);
@@ -553,7 +553,7 @@ bool N2WUDPOpenClient(int id, string ip, int port) {
 bool N2WUDPOpenServer(int id, int port) {
   int index = 0;
   int respOK = 0;
-  ubyte len;
+  long len;
   sprintf(N2WscratchString, "$UDPOS%d?%d\n", id, port);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
   RS485write(RS485txbuffer, index);
@@ -571,7 +571,7 @@ bool N2WUDPOpenServer(int id, int port) {
  */
 int N2WUDPAvail(int id) {
   int index = 0;
-  ubyte len;
+  long len;
   sprintf(N2WscratchString, "$UDPL%d\n", id);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
   RS485write(RS485txbuffer, index);
@@ -579,7 +579,7 @@ int N2WUDPAvail(int id) {
 	RS485read(RS485rxbuffer, len, 100);
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -603,7 +603,7 @@ int N2WUDPRead(int id, int datalen) {
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
   RS485write(RS485txbuffer, index);
  	N2WchillOut();
- 	//wait1Msec(100);
+ 	//sleep(100);
  	RS485readLargeResponse(RS485rxbuffer, datalen, 100);
 
 
@@ -675,7 +675,7 @@ bool N2WUDPFlush(int id) {
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -691,7 +691,7 @@ bool N2WUDPFlush(int id) {
 bool N2WTCPOpenClient(int id, string host, int port) {
   int index = 0;
   int respOK = 0;
-  ubyte len;
+  long len;
   sprintf(N2WscratchString, "$TCPOC%d?", id);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
   index = RS485appendToBuff(RS485txbuffer, index, host);
@@ -716,7 +716,7 @@ bool N2WTCPOpenClient(int id, char *host, int port) {
   writeDebugStreamLine("TCPOC pointer version");
   int index = 0;
   int respOK = 0;
-  ubyte len;
+  long len;
   writeDebugStreamLine("host: %s", host);
   sprintf(N2WscratchString, "$TCPOC%d?", id);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
@@ -740,11 +740,11 @@ bool N2WTCPOpenClient(int id, char *host, int port) {
 bool N2WTCPOpenServer(int id, int port) {
   int index = 0;
   int respOK = 0;
-  ubyte len;
+  long len;
   sprintf(N2WscratchString, "$TCPOS%d?%d\n", id, port);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
   RS485write(RS485txbuffer, index);
-	wait1Msec(500);
+	sleep(500);
 	RS485read(RS485rxbuffer, len, 100);
 	respOK = N2WgetNumericResponse(RS485rxbuffer);
 	return (respOK == 1) ? true : false;
@@ -759,7 +759,7 @@ bool N2WTCPOpenServer(int id, int port) {
 bool N2WTCPDetachClient(int id) {
   int index = 0;
   int respOK = 0;
-  ubyte len;
+  long len;
   sprintf(N2WscratchString, "$TCPD%d\n", id);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
   RS485write(RS485txbuffer, index);
@@ -795,7 +795,7 @@ bool N2WTCPFlush(int id) {
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -808,7 +808,7 @@ bool N2WTCPFlush(int id) {
  */
 int N2WTCPAvail(int id) {
   int index = 0;
-  ubyte len;
+  long len;
   sprintf(N2WscratchString, "$TCPL%d\n", id);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
   RS485write(RS485txbuffer, index);
@@ -891,7 +891,7 @@ int N2WTCPWrite(int id, tHugeByteArray &data, int datalen)
  */
 void N2WTCPClientIP(int id, string &ip)
 {
-  ubyte len;
+  long len;
   sprintf(N2WscratchString, "$TCPSI%d\n", id);
   memset(RS485txbuffer, 0, sizeof(RS485txbuffer));
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
@@ -917,7 +917,7 @@ void N2WTCPClientIP(int id, string &ip)
  */
 void N2WTCPClientMAC(int id, string &mac)
 {
-  ubyte len;
+  long len;
   sprintf(N2WscratchString, "$TCPSM%d\n", id);
   memset(RS485txbuffer, 0, sizeof(RS485txbuffer));
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
@@ -947,7 +947,7 @@ bool N2WenableWS(bool enable) {
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }
@@ -1054,7 +1054,7 @@ bool N2WclearFields() {
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
   return true;
 }

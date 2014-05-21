@@ -30,33 +30,33 @@
 task main() {
   int _chVal = 0;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Proto");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect HTPB");
-  nxtDisplayCenteredTextLine(6, "to S1");
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Proto");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect HTPB");
+  displayCenteredTextLine(6, "to S1");
 
-  wait1Msec(2000);
+  sleep(2000);
   // Setup all the digital IO ports as outputs (0xFF)
   if (!HTPBsetupIO(HTPB, 0xFF)) {
-    nxtDisplayTextLine(4, "ERROR!!");
-    wait1Msec(2000);
-    StopAllTasks();
+    displayTextLine(4, "ERROR!!");
+    sleep(2000);
+    stopAllTasks();
   }
 
   while(true) {
     eraseDisplay();
     // get the value for ADC channel 0, we want a 10 bit answer
     _chVal = HTPBreadADC(HTPB, 0, 10);
-    nxtDisplayTextLine(4, "A0: %d", _chVal);
+    displayTextLine(4, "A0: %d", _chVal);
 
     // if _chVal is more than 512, turn on the LED, otherwise turn it off.
     if (_chVal > 512) {
-      if (!HTPBwriteIO(HTPB, 0xFF)) nxtDisplayTextLine(5, "ERR WRITE");
+      if (!HTPBwriteIO(HTPB, 0xFF)) displayTextLine(5, "ERR WRITE");
     } else {
-      if (!HTPBwriteIO(HTPB, 0x00)) nxtDisplayTextLine(5, "ERR WRITE");
+      if (!HTPBwriteIO(HTPB, 0x00)) displayTextLine(5, "ERR WRITE");
     }
-    wait1Msec(100);
+    sleep(100);
   }
 }
 

@@ -24,21 +24,21 @@ task main() {
   while(true) {
     // Switch off LED on port B0
     HTSPBwriteIO(HTSPB, 0x00);
-    wait1Msec(30);
+    sleep(30);
     wolight = HTSPBreadADC(HTSPB, 0, 10);
 
     // Switch on LED on port B0
     HTSPBwriteIO(HTSPB, 0x01);
-    wait1Msec(30);
+    sleep(30);
     wlight = HTSPBreadADC(HTSPB, 0, 10);
 
     // Calculate the difference
     lightdelta = wlight - wolight;
 
     eraseDisplay();
-		nxtDisplayTextLine(1, "L_On : %4d", wlight);
-		nxtDisplayTextLine(2, "L_Off: %4d", wolight);
-		nxtDisplayTextLine(4, "L_Delta: %4d", lightdelta);
-    wait1Msec(30);
+		displayTextLine(1, "L_On : %4d", wlight);
+		displayTextLine(2, "L_Off: %4d", wolight);
+		displayTextLine(4, "L_Delta: %4d", lightdelta);
+    sleep(30);
   }
 }

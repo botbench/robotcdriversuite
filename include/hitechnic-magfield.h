@@ -66,8 +66,8 @@ int HTMAG_bias[][] = {{512, 512, 512, 512}, /*!< Array for bias values.  Default
 int HTMAGreadVal(tSensors link) {
   // Make sure the sensor is configured as type sensorRawValue
   if (SensorType[link] != sensorRawValue) {
-    SetSensorType(link, sensorRawValue);
-    wait1Msec(100);
+    SensorType[link] = sensorRawValue;
+    sleep(100);
   }
 
   return (SensorValue[link] - HTMAG_bias[link][0]);
@@ -94,8 +94,8 @@ int HTMAGreadVal(tMUXSensor muxsensor) {
 int HTMAGreadRaw(tSensors link) {
   // Make sure the sensor is configured as type sensorRawValue
   if (SensorType[link] != sensorRawValue) {
-    SetSensorType(link, sensorRawValue);
-    wait1Msec(100);
+    SensorType[link] = sensorRawValue;
+    sleep(100);
   }
 
   return SensorValue[link];
@@ -124,14 +124,14 @@ int HTMAGstartCal(tSensors link) {
 
   // Make sure the sensor is configured as type sensorRawValue
   if (SensorType[link] != sensorRawValue) {
-    SetSensorType(link, sensorRawValue);
-    wait1Msec(100);
+    SensorType[link] = sensorRawValue;
+    sleep(100);
   }
 
   // Take 5 readings and average them out
   for (int i = 0; i < 5; i++) {
     _avgdata += SensorValue[link];
-    wait1Msec(50);
+    sleep(50);
   }
 
   // Store new bias
@@ -154,7 +154,7 @@ int HTMAGstartCal(tMUXSensor muxsensor) {
   // Take 5 readings and average them out
   for (int i = 0; i < 5; i++) {
     _avgdata += HTSMUXreadAnalogue(muxsensor);
-    wait1Msec(50);
+    sleep(50);
   }
 
   // Store new bias

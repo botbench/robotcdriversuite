@@ -37,30 +37,30 @@ task updateHUD () {
   int y = 0;
 
   while (true) {
-    nxtEraseRect(4,50, 44,10);
-    nxtDisplayTextLine(2, "        H: %3d", angleI/100);
-    nxtDisplayTextLine(3, "        X: %3d", x_accel/100);
-    nxtDisplayTextLine(4, "        Y: %3d", y_accel/100);
-    nxtDisplayTextLine(5, "        Z: %3d", z_accel/100);
-    nxtDrawCircle(84, 50, 4);
+    eraseRect(4,50, 44,10);
+    displayTextLine(2, "        H: %3d", angleI/100);
+    displayTextLine(3, "        X: %3d", x_accel/100);
+    displayTextLine(4, "        Y: %3d", y_accel/100);
+    displayTextLine(5, "        Z: %3d", z_accel/100);
+    drawCircle(84, 50, 4);
 
-    nxtDrawCircle(4, 50, 40);
+    drawCircle(4, 50, 40);
     x = (cosDegrees(-1 * (angleI/100 - 90)) * 20) + 24;
     y = (sinDegrees(-1 * (angleI/100 - 90)) * 20) + 30;
-    nxtDrawLine(24, 30, x, y);
-    nxtEraseRect(0,0, 99, 8);
-    nxtDrawRect(0,0, 99, 8);
-    nxtFillRect(50,0, (float)(rotI / 150)/100.0 *50 + 50, 8);
-    wait1Msec(100);
+    drawLine(24, 30, x, y);
+    eraseRect(0,0, 99, 8);
+    drawRect(0,0, 99, 8);
+    fillRect(50,0, (float)(rotI / 150)/100.0 *50 + 50, 8);
+    sleep(100);
   }
 }
 
 task main () {
 
-  nxtDisplayCenteredTextLine(0, "MicroInfinity");
-  nxtDisplayTextLine(1, "CruizCore XG1300L");
-  nxtDisplayCenteredTextLine(3, "Test 2");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "MicroInfinity");
+  displayTextLine(1, "CruizCore XG1300L");
+  displayCenteredTextLine(3, "Test 2");
+  sleep(2000);
   eraseDisplay();
 
   // There are 3 ranges the Cruizcore XG1300L can measure in
@@ -75,9 +75,9 @@ task main () {
   MICCreset(MICC);
 
   // Start the task for displaying all the sensor data.
-  StartTask(updateHUD);
+  startTask(updateHUD);
 
-  nxtDisplayTextLine(0, "CruizCore XG1300L");
+  displayTextLine(0, "CruizCore XG1300L");
   while (true) {
     // Read the relative heading from the sensor.
     angleI = MICCreadRelativeHeading(MICC);
@@ -87,14 +87,14 @@ task main () {
 
     // Read the acceleration data from the sensor
     if (!MICCreadAccel(MICC, x_accel, y_accel, z_accel)) {
-      StopTask(updateHUD);
-      wait1Msec(100);
+      stopTask(updateHUD);
+      sleep(100);
       eraseDisplay();
-      nxtDisplayTextLine(4, "ERROR!!");
-      wait1Msec(2000);
-      StopAllTasks();
+      displayTextLine(4, "ERROR!!");
+      sleep(2000);
+      stopAllTasks();
     }
-    wait1Msec(50);
+    sleep(50);
   }
 }
 

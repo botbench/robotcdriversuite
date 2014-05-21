@@ -36,7 +36,7 @@ task main ()
 
   // Fire up the compass and initialize it. Only needs to be done once.
   if (!initSensor(&compass, DIMC))
-    PlaySound(soundException);
+    playSound(soundException);
 
 	// Loop forever, reading the sensor and calulating total
 	// field strength
@@ -44,18 +44,18 @@ task main ()
 	{
 		// Read the Compass
     if (!sensorReadAll(&compass))
-      PlaySound(soundException);
+      playSound(soundException);
 
 		// calculate the field strength
 		strength = sqrt(pow(compass.axes[0], 2) + pow(compass.axes[1], 2) + pow(compass.axes[2], 2));
 
 		// Play a tone of the frequency of the field strength
 		// Great for annoying the cat/dog/wife/parent
-		PlayImmediateTone(strength, 8);
+		playImmediateTone(strength, 8);
 
 		// display on the screen
-		nxtDisplayCenteredBigTextLine(3, "%d", strength);
-		wait1Msec(50);
+		displayCenteredBigTextLine(3, "%d", strength);
+		sleep(50);
   }
 }
 

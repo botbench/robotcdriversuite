@@ -26,16 +26,16 @@ task main() {
   float temp;
   byte state = 0;
 
-  nxtDisplayTextLine(0, "Dexter Industries");
-  nxtDisplayCenteredBigTextLine(1, "T Probe");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayTextLine(0, "Dexter Industries");
+  displayCenteredBigTextLine(1, "T Probe");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
   eraseDisplay();
 
-  nxtDisplayTextLine(0, "Dexter Industries");
-  nxtDisplayCenteredTextLine(7, "< switch scale >");
+  displayTextLine(0, "Dexter Industries");
+  displayCenteredTextLine(7, "< switch scale >");
   //loop to read temp
   while (true) {
     switch(nNxtButtonPressed) {
@@ -56,26 +56,26 @@ task main() {
     }
 
 
-    nxtDisplayCenteredBigTextLine(1, "Temp:");
+    displayCenteredBigTextLine(1, "Temp:");
     switch(state) {
       // if state: 0, display temp in degrees celcius
       case 0: DTMPreadTemp(DTMP, temp);
-              nxtDisplayCenteredBigTextLine(3, "%4.2f", temp);
-              nxtDisplayCenteredBigTextLine(5, "Celcius");
+              displayCenteredBigTextLine(3, "%4.2f", temp);
+              displayCenteredBigTextLine(5, "Celcius");
               break;
 
       // if state: 1, display temp in Fahrenheit
       case 1: DTMPreadTempF(DTMP, temp);
-              nxtDisplayCenteredBigTextLine(3, "%4.2f", temp);
-              nxtDisplayCenteredBigTextLine(5, "Fahrenh.");
+              displayCenteredBigTextLine(3, "%4.2f", temp);
+              displayCenteredBigTextLine(5, "Fahrenh.");
               break;
 
       // if state: 2, display temp in Kelvin
       case 2: DTMPreadTempK(DTMP, temp);
-              nxtDisplayCenteredBigTextLine(3, "%4.2f", temp);
-              nxtDisplayCenteredBigTextLine(5, "Kelvin");
+              displayCenteredBigTextLine(3, "%4.2f", temp);
+              displayCenteredBigTextLine(5, "Kelvin");
               break;
     }
-    wait1Msec(10);
+    sleep(10);
   }
 }

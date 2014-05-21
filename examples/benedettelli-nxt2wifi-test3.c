@@ -42,15 +42,15 @@ task updateScreen()
 {
   while(true)
   {
-    nxtDisplayTextLine(0, "Stat: %s", connStatus);
-    nxtDisplayTextLine(1, "%s",dataStrings[4]);
-    nxtDisplayTextLine(2, "-------------------");
-    nxtDisplayTextLine(3, "%s", dataStrings[0]);
-		nxtDisplayTextLine(4, "%s", dataStrings[1]);
-		nxtDisplayTextLine(5, "%s", dataStrings[2]);
-		nxtDisplayTextLine(6, "%s", dataStrings[3]);
-    nxtDisplayTextLine(7, "RX/TX: %d/%d", rxbytes, txbytes);
-    wait1Msec(100);
+    displayTextLine(0, "Stat: %s", connStatus);
+    displayTextLine(1, "%s",dataStrings[4]);
+    displayTextLine(2, "-------------------");
+    displayTextLine(3, "%s", dataStrings[0]);
+		displayTextLine(4, "%s", dataStrings[1]);
+		displayTextLine(5, "%s", dataStrings[2]);
+		displayTextLine(6, "%s", dataStrings[3]);
+    displayTextLine(7, "RX/TX: %d/%d", rxbytes, txbytes);
+    sleep(100);
   }
 }
 
@@ -66,7 +66,7 @@ task main ()
 
   int avail = 0;
 
-  StartTask(updateScreen);
+  startTask(updateScreen);
 
   // initialise the port, etc
   RS485initLib();
@@ -76,36 +76,36 @@ task main ()
 
   // Disconnect if already connected
   N2WDisconnect();
-  wait1Msec(100);
+  sleep(100);
 
   if (!N2WCustomExist())
   {
-    StopTask(updateScreen);
-    wait1Msec(50);
+    stopTask(updateScreen);
+    sleep(50);
     eraseDisplay();
-    PlaySound(soundException);
-    nxtDisplayCenteredBigTextLine(1, "ERROR");
-    nxtDisplayTextLine(3, "No custom profile");
-    nxtDisplayTextLine(4, "configured!!");
+    playSound(soundException);
+    displayCenteredBigTextLine(1, "ERROR");
+    displayTextLine(3, "No custom profile");
+    displayTextLine(4, "configured!!");
     while(true) EndTimeSlice();
   }
 
   N2WLoad();
-  wait1Msec(100);
+  sleep(100);
   N2WConnect(true);
   connStatus = "connecting";
 
   while (!N2WConnected())
-    wait1Msec(1000);
+    sleep(1000);
 
   connStatus = "connected";
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
 
-  wait1Msec(3000);
+  sleep(3000);
   N2WgetIP(IPaddress);
   memcpy(dataStrings[4], IPaddress, strlen(IPaddress) + 1);
 
-  wait1Msec(1000);
+  sleep(1000);
 
   N2WTCPClose(0);
   N2WchillOut();
@@ -115,9 +115,9 @@ task main ()
   if (!N2WTCPOpenServer(1, BOFHport))
   {
     writeDebugStreamLine("Err open port %d", BOFHport);
-    PlaySound(soundException);
+    playSound(soundException);
     while(bSoundActive) EndTimeSlice();
-    StopAllTasks();
+    stopAllTasks();
   }
 
   while (true)
@@ -130,7 +130,7 @@ task main ()
       N2WchillOut();
 
 
-      PlaySound(soundFastUpwardTones);
+      playSound(soundFastUpwardTones);
 
       // Read what the client sent us
       sprintf(dataStrings[0], "%d bytes from", avail);
@@ -163,9 +163,9 @@ task main ()
       // Terminate the connection to the client
       N2WTCPDetachClient(1);
       N2WchillOut();
-      wait1Msec(1000);
+      sleep(1000);
 	  }
 	  // Wait a bit
-    wait1Msec(50);
+    sleep(50);
   }
 }

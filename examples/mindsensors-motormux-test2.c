@@ -46,7 +46,7 @@ task main () {
   MSMotorStop(mmotor_S1_1);
   MSMotorStop(mmotor_S1_2);
 
-  wait1Msec(500);
+  sleep(500);
 
   // Reset the encoders.  This can be done individually or all at once.
   // You should do this at the start of your program.
@@ -73,10 +73,10 @@ task main () {
 	  MSMMotor(mmotor_S1_2, motorSpeed);
 
 		// Display the info.
-		nxtDisplayTextLine(4, "D: %5d", distance);
-		nxtDisplayTextLine(5, "A: %5d (%3d)", encA, motorSpeed);
-		nxtDisplayTextLine(6, "B: %5d (%3d)", encB, motorSpeed);
-    wait1Msec(20);
+		displayTextLine(4, "D: %5d", distance);
+		displayTextLine(5, "A: %5d (%3d)", encA, motorSpeed);
+		displayTextLine(6, "B: %5d (%3d)", encB, motorSpeed);
+    sleep(20);
   }
 }
 

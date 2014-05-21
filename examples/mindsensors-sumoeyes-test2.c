@@ -41,18 +41,18 @@ task main() {
 
   eraseDisplay();
 
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "SumoEyes");
-  nxtDisplayCenteredTextLine(3, "Test 2");
-  nxtDisplayCenteredTextLine(5, "Press enter to");
-  nxtDisplayCenteredTextLine(6, "switch between");
-  nxtDisplayCenteredTextLine(7, "ranges");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "SumoEyes");
+  displayCenteredTextLine(3, "Test 2");
+  displayCenteredTextLine(5, "Press enter to");
+  displayCenteredTextLine(6, "switch between");
+  displayCenteredTextLine(7, "ranges");
+  sleep(2000);
   eraseDisplay();
 
   // Set the sensor to short range
   MSSUMOsetShortRange(HTMSSUMO);
-  nxtDisplayRICFile(0, 0, "sumonone.ric");
+  displayRICFile(0, 0, "sumonone.ric");
 
 
   while(true) {
@@ -60,15 +60,15 @@ task main() {
       if (shortrange == false) {
         // set the sensor to short range and display this
         MSSUMOsetShortRange(HTMSSUMO);
-        nxtDisplayCenteredTextLine(7, "Short range");
+        displayCenteredTextLine(7, "Short range");
         shortrange = true;
       } else {
         // set the sensor to long range and display this
         MSSUMOsetLongRange(HTMSSUMO);
-        nxtDisplayCenteredTextLine(7, "Long range");
+        displayCenteredTextLine(7, "Long range");
         shortrange = false;
       }
-	    PlaySound(soundBeepBeep);
+	    playSound(soundBeepBeep);
 	    while(bSoundActive)
       time1[T1] = 0;
     }
@@ -78,22 +78,22 @@ task main() {
 
 	    if (shortrange) {
 		    switch (zone) {
-		      case MSSUMO_NONE:  nxtDisplayRICFile(0, 0, "sumonone.ric");  break;
-		      case MSSUMO_FRONT: nxtDisplayRICFile(0, 0, "sumoSF.ric");  break;
-		      case MSSUMO_RIGHT:  nxtDisplayRICFile(0, 0, "sumoSL.ric");  break;
-		      case MSSUMO_LEFT: nxtDisplayRICFile(0, 0, "sumoSR.ric");  break;
+		      case MSSUMO_NONE:  displayRICFile(0, 0, "sumonone.ric");  break;
+		      case MSSUMO_FRONT: displayRICFile(0, 0, "sumoSF.ric");  break;
+		      case MSSUMO_RIGHT:  displayRICFile(0, 0, "sumoSL.ric");  break;
+		      case MSSUMO_LEFT: displayRICFile(0, 0, "sumoSR.ric");  break;
 		    }
-		    nxtDisplayCenteredTextLine(7, "Short range");
+		    displayCenteredTextLine(7, "Short range");
 	    } else {
 		    switch (zone) {
-		      case MSSUMO_NONE:  nxtDisplayRICFile(0, 0, "sumonone.ric");  break;
-		      case MSSUMO_FRONT: nxtDisplayRICFile(0, 0, "sumoLF.ric");  break;
-		      case MSSUMO_RIGHT:  nxtDisplayRICFile(0, 0, "sumoLL.ric");  break;
-		      case MSSUMO_LEFT: nxtDisplayRICFile(0, 0, "sumoLR.ric");  break;
+		      case MSSUMO_NONE:  displayRICFile(0, 0, "sumonone.ric");  break;
+		      case MSSUMO_FRONT: displayRICFile(0, 0, "sumoLF.ric");  break;
+		      case MSSUMO_RIGHT:  displayRICFile(0, 0, "sumoLL.ric");  break;
+		      case MSSUMO_LEFT: displayRICFile(0, 0, "sumoLR.ric");  break;
 		    }
-		    nxtDisplayCenteredTextLine(7, "Long range");
+		    displayCenteredTextLine(7, "Long range");
 	    }
-	    wait1Msec(10);
+	    sleep(10);
 	  }
   }
 }

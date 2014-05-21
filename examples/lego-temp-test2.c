@@ -47,12 +47,12 @@ task main() {
   tLEGOTMPAccuracy accuracy;
   string strAcc;
 
-  nxtDisplayCenteredTextLine(0, "LEGO");
-  nxtDisplayCenteredBigTextLine(1, "Temp");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "LEGO");
+  displayCenteredBigTextLine(1, "Temp");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
   eraseDisplay();
 
 
@@ -62,20 +62,20 @@ task main() {
   //setting minimum accuracy
   accuracy = A_MIN;
   if (!LEGOTMPsetAccuracy(LEGOTMP, accuracy)) {
-    nxtDisplayTextLine(0, "Error setAccuracy");
-    wait1Msec(5000);
-    StopAllTasks();
+    displayTextLine(0, "Error setAccuracy");
+    sleep(5000);
+    stopAllTasks();
   }
 
   //reads the current accuracy of the sensor
   if (!LEGOTMPreadAccuracy(LEGOTMP, accuracy)) {
-    nxtDisplayTextLine(0, "Error readAccuracy");
-    wait1Msec(5000);
-    StopAllTasks();
+    displayTextLine(0, "Error readAccuracy");
+    sleep(5000);
+    stopAllTasks();
   }
 
   accuracyToString(accuracy, strAcc);
-  nxtDisplayTextLine(0, "Accuracy: %s", strAcc);
+  displayTextLine(0, "Accuracy: %s", strAcc);
 
   //loop to read temp
   while (true) {
@@ -89,12 +89,12 @@ task main() {
           case A_MAX:   accuracy = A_MEAN2; break;
         }
         if (!LEGOTMPsetAccuracy(LEGOTMP, accuracy)) {
-          nxtDisplayTextLine(0, "Error setAccuracy");
-          wait1Msec(5000);
-          StopAllTasks();
+          displayTextLine(0, "Error setAccuracy");
+          sleep(5000);
+          stopAllTasks();
         }
         accuracyToString(accuracy, strAcc);
-        nxtDisplayTextLine(0, "Accuracy: %s", strAcc);
+        displayTextLine(0, "Accuracy: %s", strAcc);
 
         // debounce the button
         while (nNxtButtonPressed != kNoButton) EndTimeSlice();
@@ -109,12 +109,12 @@ task main() {
           case A_MAX:   accuracy = A_MIN;   break;
         }
         if (!LEGOTMPsetAccuracy(LEGOTMP, accuracy)) {
-          nxtDisplayTextLine(0, "Error setAccuracy");
-          wait1Msec(5000);
-          StopAllTasks();
+          displayTextLine(0, "Error setAccuracy");
+          sleep(5000);
+          stopAllTasks();
         }
         accuracyToString(accuracy, strAcc);
-        nxtDisplayTextLine(0, "Accuracy: %s", strAcc);
+        displayTextLine(0, "Accuracy: %s", strAcc);
 
         // debounce the button
         while (nNxtButtonPressed != kNoButton) EndTimeSlice();
@@ -122,19 +122,19 @@ task main() {
     }
     if (!LEGOTMPreadTemp(LEGOTMP, temp)) {
       eraseDisplay();
-      nxtDisplayTextLine(0, "Temp reading pb");
-      wait10Msec(100);
-      StopAllTasks();
+      displayTextLine(0, "Temp reading pb");
+      sleep(100);
+      stopAllTasks();
     }
 
-    nxtDisplayCenteredBigTextLine(2, "Temp:");
+    displayCenteredBigTextLine(2, "Temp:");
     // Depending on the level of accuracy, you need to change the
     // the formatting of the float, makes it look nicer.
     switch(accuracy) {
-      case A_MIN:   nxtDisplayCenteredBigTextLine(4, "%4.1f", temp); break;
-      case A_MEAN1: nxtDisplayCenteredBigTextLine(4, "%5.2f", temp); break;
-      case A_MEAN2: nxtDisplayCenteredBigTextLine(4, "%6.3f", temp); break;
-      case A_MAX:   nxtDisplayCenteredBigTextLine(4, "%7.4f", temp); break;
+      case A_MIN:   displayCenteredBigTextLine(4, "%4.1f", temp); break;
+      case A_MEAN1: displayCenteredBigTextLine(4, "%5.2f", temp); break;
+      case A_MEAN2: displayCenteredBigTextLine(4, "%6.3f", temp); break;
+      case A_MAX:   displayCenteredBigTextLine(4, "%7.4f", temp); break;
     }
   }
 }

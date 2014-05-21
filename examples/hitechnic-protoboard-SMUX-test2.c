@@ -40,15 +40,15 @@ const tMUXSensor HTPB = msensor_S1_1;
 task main() {
   int _chVal = 0;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Proto");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and HTPB to");
-  nxtDisplayCenteredTextLine(7, "SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Proto");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and HTPB to");
+  displayCenteredTextLine(7, "SMUX Port 1");
+  sleep(2000);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
 
   eraseDisplay();
@@ -57,9 +57,9 @@ task main() {
     eraseDisplay();
     // get the value for ADC channel 0, we want a 10 bit answer
     _chVal = HTPBreadADC(HTPB, 0, 10);
-    nxtDisplayTextLine(4, "A0: %d", _chVal);
+    displayTextLine(4, "A0: %d", _chVal);
 
-    wait1Msec(10);
+    sleep(10);
   }
 }
 

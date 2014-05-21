@@ -39,10 +39,10 @@ task main () {
 
   string _tmp;
 
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "ACCEL-Nx");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "ACCEL-Nx");
+  displayCenteredTextLine(3, "Test 1");
+  sleep(2000);
 
   // There are four ranges the ACCL-Nx can measure in
   // up to 2.5G - MSAC_RANGE_2_5
@@ -51,7 +51,7 @@ task main () {
   // up to 10G  - MSAC_RANGE_10
   MSACsetRange(MSAC, MSAC_RANGE_10);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
 
   while (true) {
@@ -60,31 +60,31 @@ task main () {
 
     // Read the tilt data from the sensor
     if (!MSACreadTilt(MSAC, _x_tilt, _y_tilt, _z_tilt)) {
-      nxtDisplayTextLine(4, "ERROR!!");
-      wait1Msec(2000);
-      StopAllTasks();
+      displayTextLine(4, "ERROR!!");
+      sleep(2000);
+      stopAllTasks();
     }
 
     // Read the acceleration data from the sensor
     if (!MSACreadAccel(MSAC, _x_accel, _y_accel, _z_accel)) {
-      nxtDisplayTextLine(4, "ERROR!!");
-      wait1Msec(2000);
-      StopAllTasks();
+      displayTextLine(4, "ERROR!!");
+      sleep(2000);
+      stopAllTasks();
     }
 
-    nxtDisplayTextLine(0,"MSAC Test 1");
+    displayTextLine(0,"MSAC Test 1");
 
-    // We can't provide more than 2 parameters to nxtDisplayTextLine(),
+    // We can't provide more than 2 parameters to displayTextLine(),
     // so we'll do in two steps using StringFormat()
-    nxtDisplayTextLine(2, "Tilt X    Y    Z");
+    displayTextLine(2, "Tilt X    Y    Z");
     StringFormat(_tmp, "  %4d %4d", _x_tilt, _y_tilt);
-    nxtDisplayTextLine(3, "%s %4d", _tmp, _z_tilt);
+    displayTextLine(3, "%s %4d", _tmp, _z_tilt);
 
-    nxtDisplayTextLine(4, "Acceleration:");
-    nxtDisplayTextLine(5, "X: %5d mG", _x_accel);
-    nxtDisplayTextLine(6, "Y: %5d mG", _y_accel);
-    nxtDisplayTextLine(7, "Z: %5d mG", _z_accel);
-    wait1Msec(100);
+    displayTextLine(4, "Acceleration:");
+    displayTextLine(5, "X: %5d mG", _x_accel);
+    displayTextLine(6, "Y: %5d mG", _y_accel);
+    displayTextLine(7, "Z: %5d mG", _z_accel);
+    sleep(100);
   }
 }
 

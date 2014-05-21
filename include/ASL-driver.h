@@ -179,7 +179,7 @@ int ASLcalibrateLevel(tSensors link)
 	    return 0;
 
 	  total += (int)ASL_I2CReply[0] & 0xFF;
-	  wait1Msec(5);
+	  sleep(5);
 	}
 	return total / 100;
 }

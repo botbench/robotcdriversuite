@@ -183,10 +183,10 @@ bool HTRCXplaySound(tSensors link, unsigned byte sound) {
   HTRCXIRMsg[2] = sound;
 
   HTRCXsendHeader(link);
-  wait1Msec(12);
+  sleep(12);
   HTRCXencode(link, HTRCXIRMsg, HTRCXI2CRequest);
   writeI2C(link, HTRCXI2CRequest);
-  wait1Msec(12);
+  sleep(12);
 
   return true;
 }
@@ -205,10 +205,10 @@ bool HTRCXsendByte(tSensors link, unsigned byte data) {
   HTRCXIRMsg[2] = data;
 
   HTRCXsendHeader(link);
-  wait1Msec(12);
+  sleep(12);
   HTRCXencode(link, HTRCXIRMsg, HTRCXI2CRequest);
   writeI2C(link, HTRCXI2CRequest);
-  wait1Msec(12);
+  sleep(12);
 
   return true;
 }
@@ -228,10 +228,10 @@ bool HTRCXsendWord(tSensors link, short data) {
   HTRCXIRMsg[3] = (data >> 8) & 0xFF;
 
   HTRCXsendHeader(link);
-  wait1Msec(12);
+  sleep(12);
   HTRCXencode(link, HTRCXIRMsg, HTRCXI2CRequest);
   writeI2C(link, HTRCXI2CRequest);
-  wait1Msec(12);
+  sleep(12);
 
   return true;
 }
@@ -253,10 +253,10 @@ bool HTRCXmotorOn(tSensors link, unsigned byte _motor) {
   HTRCXIRMsg[2] = _motor + 0x80 + 0x40;
 
   HTRCXsendHeader(link);
-  wait1Msec(12);
+  sleep(12);
   HTRCXencode(link, HTRCXIRMsg, HTRCXI2CRequest);
   writeI2C(link, HTRCXI2CRequest);
-  wait1Msec(12);
+  sleep(12);
 
   return true;
 }
@@ -278,10 +278,10 @@ bool HTRCXmotorOff(tSensors link, unsigned byte _motor) {
   HTRCXIRMsg[2] = _motor;
 
   HTRCXsendHeader(link);
-  wait1Msec(12);
+  sleep(12);
   HTRCXencode(link, HTRCXIRMsg, HTRCXI2CRequest);
   writeI2C(link, HTRCXI2CRequest);
-  wait1Msec(12);
+  sleep(12);
 
   return true;
 }
@@ -303,10 +303,10 @@ bool HTRCXmotorFwd(tSensors link, unsigned byte _motor) {
   HTRCXIRMsg[2] = _motor + 0x80;
 
   HTRCXsendHeader(link);
-  wait1Msec(12);
+  sleep(12);
   HTRCXencode(link, HTRCXIRMsg, HTRCXI2CRequest);
   writeI2C(link, HTRCXI2CRequest);
-  wait1Msec(12);
+  sleep(12);
 
   return true;
 }
@@ -328,10 +328,10 @@ bool HTRCXmotorRev(tSensors link, unsigned byte _motor) {
   HTRCXIRMsg[2] = _motor;
 
   HTRCXsendHeader(link);
-  wait1Msec(12);
+  sleep(12);
   HTRCXencode(link, HTRCXIRMsg, HTRCXI2CRequest);
   writeI2C(link, HTRCXI2CRequest);
-  wait1Msec(12);
+  sleep(12);
 
   return true;
 }
@@ -356,10 +356,10 @@ bool HTRCXmotorPwr(tSensors link, unsigned byte _motor, unsigned byte power) {
   HTRCXIRMsg[4] = power;
 
   HTRCXsendHeader(link);
-  wait1Msec(12);
+  sleep(12);
   HTRCXencode(link, HTRCXIRMsg, HTRCXI2CRequest);
   writeI2C(link, HTRCXI2CRequest);
-  wait1Msec(12);
+  sleep(12);
 
   return true;
 }

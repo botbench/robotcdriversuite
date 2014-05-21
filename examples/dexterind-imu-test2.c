@@ -32,21 +32,21 @@ float zvals[500];
 
 task main(){
 
-  nxtDisplayCenteredTextLine(0, "Dexter Ind.");
-  nxtDisplayCenteredBigTextLine(1, "IMU");
-  nxtDisplayCenteredTextLine(3, "Test 2");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Dexter Ind.");
+  displayCenteredBigTextLine(1, "IMU");
+  displayCenteredTextLine(3, "Test 2");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
   eraseDisplay();
 
   // Fire up the gyro and initialize it. Only needs to be done once.
   //DIMUconfigGyro(DIMU, DIMU_GYRO_RANGE_500);
   if (!DIMUconfigAccel(DIMU, DIMU_ACC_RANGE_2G))
-    PlaySound(soundException);
+    playSound(soundException);
 
   if(!DIMUconfigGyro(DIMU, DIMU_GYRO_RANGE_250, true))
-    PlaySound(soundException);
+    playSound(soundException);
 
   for (int i = 0; i < 500; i++){
 
@@ -55,13 +55,13 @@ task main(){
 
     // All at once, very convenient if you need all 3
     DIMUreadGyroAxes(DIMU, xvals[i], yvals[i], zvals[i]);
-    wait1Msec(5);
+    sleep(5);
   }
 
   for (int i = 0; i< 500; i++) {
     writeDebugStream("%f, %f",  xvals[i], yvals[i]);
     writeDebugStreamLine(", %f", zvals[i]);
-    wait1Msec(2);
+    sleep(2);
   }
 }
 

@@ -31,12 +31,12 @@ task main(){
   int heading;
   int x_val, y_val, z_val;      // axis values
 
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "IMU");
-  nxtDisplayCenteredTextLine(3, "Test 3");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "IMU");
+  displayCenteredTextLine(3, "Test 3");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
   eraseDisplay();
 
   while (true){
@@ -44,15 +44,15 @@ task main(){
 		// Read the Compass
     heading = MSIMUreadHeading(MSIMU);
 
-		nxtDisplayTextLine(1, "Heading: %d", heading);
+		displayTextLine(1, "Heading: %d", heading);
 
 		// Read the magnetic fields (they're used to calculate the heading)
 		MSIMUreadMagneticFields(MSIMU, x_val, y_val, z_val);
-    nxtDisplayTextLine(3, "Magnetic fields:");
-		nxtDisplayTextLine(4, "X: %d", x_val);
-		nxtDisplayTextLine(5, "Y: %d", y_val);
-		nxtDisplayTextLine(6, "Z: %d", z_val);
-		wait1Msec(50);
+    displayTextLine(3, "Magnetic fields:");
+		displayTextLine(4, "X: %d", x_val);
+		displayTextLine(5, "Y: %d", y_val);
+		displayTextLine(6, "Z: %d", z_val);
+		sleep(50);
   }
 }
 

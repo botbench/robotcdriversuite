@@ -26,30 +26,30 @@
 task main() {
   int adch0, adch1, adch2, adch3, adch4 = 0;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Proto");
-  nxtDisplayCenteredTextLine(3, "Test 3");
-  nxtDisplayCenteredTextLine(5, "Connect HTPB");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Proto");
+  displayCenteredTextLine(3, "Test 3");
+  displayCenteredTextLine(5, "Connect HTPB");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
 
   while(true) {
     // get the value for ADC channels, we want a 10 bit answer
     if (!HTPBreadAllADC(HTPB, adch0, adch1, adch2, adch3, adch4, 10)) {
       eraseDisplay();
-      PlaySound(soundException);
-      nxtDisplayTextLine(5, "ERR READING ADC");
-      wait1Msec(2000);
-      StopAllTasks();
+      playSound(soundException);
+      displayTextLine(5, "ERR READING ADC");
+      sleep(2000);
+      stopAllTasks();
     }
-    nxtDisplayBigTextLine(1, "ADC VALS");
-    nxtDisplayTextLine(3, "CH0: %4d", adch0);
-    nxtDisplayTextLine(4, "CH1: %4d", adch1);
-    nxtDisplayTextLine(5, "CH2: %4d", adch2);
-    nxtDisplayTextLine(6, "CH3: %4d", adch3);
-    nxtDisplayTextLine(7, "CH4: %4d", adch4);
-    wait1Msec(100);
+    displayBigTextLine(1, "ADC VALS");
+    displayTextLine(3, "CH0: %4d", adch0);
+    displayTextLine(4, "CH1: %4d", adch1);
+    displayTextLine(5, "CH2: %4d", adch2);
+    displayTextLine(6, "CH3: %4d", adch3);
+    displayTextLine(7, "CH4: %4d", adch4);
+    sleep(100);
   }
 }
 

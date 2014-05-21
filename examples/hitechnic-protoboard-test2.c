@@ -30,20 +30,20 @@
 task main() {
   byte inputs = 0;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Proto");
-  nxtDisplayCenteredTextLine(3, "Test 2");
-  nxtDisplayCenteredTextLine(5, "Connect HTPB");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Proto");
+  displayCenteredTextLine(3, "Test 2");
+  displayCenteredTextLine(5, "Connect HTPB");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
   while(true) {
     eraseDisplay();
     // Fetch the state of the digital IO pins.  When not explicitly
     // configured as input or output, they will default to input.
     inputs = HTPBreadIO(HTPB, 0x3F);
-    nxtDisplayTextLine(4, "D: 0x%x", inputs);
-    wait1Msec(100);
+    displayTextLine(4, "D: 0x%x", inputs);
+    sleep(100);
   }
 }
 

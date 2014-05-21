@@ -32,9 +32,9 @@ task main() {
   nNxtButtonTask  = -2;
 
   eraseDisplay();
-  nxtDisplayTextLine(0, "Light Sensor");
-  nxtDisplayTextLine(2, "Press orange");
-  nxtDisplayTextLine(3, "button to switch");
+  displayTextLine(0, "Light Sensor");
+  displayTextLine(2, "Press orange");
+  displayTextLine(3, "button to switch");
 
   while (true) {
     // The enter button has been pressed, switch
@@ -49,11 +49,11 @@ task main() {
         LSsetActive(LEGOLS);
 
       // wait 500ms to debounce the switch
-      wait1Msec(500);
+      sleep(500);
     }
 
-    nxtDisplayClearTextLine(5);
-    nxtDisplayClearTextLine(6);
+    displayClearTextLine(5);
+    displayClearTextLine(6);
 
     // Get the raw value from the sensor
     raw = LSvalRaw(LEGOLS);
@@ -61,9 +61,9 @@ task main() {
     // Get the normalised value from the sensor
     nrm = LSvalNorm(LEGOLS);
 
-    nxtDisplayTextLine(5, "Raw:  %4d", raw);
-    nxtDisplayTextLine(6, "Norm: %4d", nrm);
-    wait1Msec(50);
+    displayTextLine(5, "Raw:  %4d", raw);
+    displayTextLine(6, "Norm: %4d", nrm);
+    sleep(50);
   }
 }
 

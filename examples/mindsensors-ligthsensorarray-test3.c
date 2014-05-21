@@ -33,7 +33,7 @@ const string frequencyNames[] = {"US", "UNI", "EU", };
 // interfere with the sensor readings. This allows you to compensate for it.
 void setFrequency(int choice)
 {
-  PlaySound(soundBlip);
+  playSound(soundBlip);
   switch(choice)
   {
     case 0: MSLSAsetUS(MSLSA);  break;
@@ -53,11 +53,11 @@ task main {
       case kRightButton: choice = (choice == 2) ? 2 : (choice + 1); break;
     }
 
-    nxtDisplayCenteredTextLine(0, "LightSensorArray");
-    nxtDisplayCenteredTextLine(1, "Freq. config");
-    nxtDisplayCenteredBigTextLine(3, frequencyNames[choice]);
-    nxtDisplayCenteredTextLine(6, "[enter] to set");
-    nxtDisplayTextLine(7, "<  switch freq  >");
+    displayCenteredTextLine(0, "LightSensorArray");
+    displayCenteredTextLine(1, "Freq. config");
+    displayCenteredBigTextLine(3, frequencyNames[choice]);
+    displayCenteredTextLine(6, "[enter] to set");
+    displayTextLine(7, "<  switch freq  >");
 
     // Debounce
     while (nNxtButtonPressed != kNoButton) EndTimeSlice();

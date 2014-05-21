@@ -35,14 +35,14 @@ task main () {
   float tempC = 0.0;
   float tempF = 0.0;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "BaroTemp");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "BaroTemp");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
-  //PlaySound(soundBeepBeep);
+  //playSound(soundBeepBeep);
   //while(bSoundActive);
 
   while (true) {
@@ -55,14 +55,14 @@ task main () {
 		tempC = HTBMreadTemp(HTBM);         // Temp in Celcius
 		tempF = HTBMreadTempF(HTBM);        // Temp in Fahrenheit
 
-    nxtDisplayCenteredTextLine(0, "HTBM Test 1");
-    nxtDisplayTextLine(2, "%5d mInHg", pressmInHg);
-    nxtDisplayTextLine(3, "%5.1f hPa", presshPa);
-    nxtDisplayTextLine(4, "%5.1f PSI", pressPsi);
-    nxtDisplayTextLine(6, "%3.1f C / %3.1f F", tempC, tempF);
-    nxtDrawLine(0, 52, 99, 52);
-    nxtDrawLine(0, 20, 99, 20);
-    wait1Msec(100);
+    displayCenteredTextLine(0, "HTBM Test 1");
+    displayTextLine(2, "%5d mInHg", pressmInHg);
+    displayTextLine(3, "%5.1f hPa", presshPa);
+    displayTextLine(4, "%5.1f PSI", pressPsi);
+    displayTextLine(6, "%3.1f C / %3.1f F", tempC, tempF);
+    drawLine(0, 52, 99, 52);
+    drawLine(0, 20, 99, 20);
+    sleep(100);
   }
 }
 

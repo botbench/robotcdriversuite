@@ -56,12 +56,12 @@ task main ()
   long rawValue = 0;
   long oldRawValue = 0;
 
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "PSP-Nx");
-  nxtDisplayCenteredTextLine(3, "Test 3");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "PSP-Nx");
+  displayCenteredTextLine(3, "Test 3");
+  sleep(2000);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
 
   eraseDisplay();
@@ -79,33 +79,33 @@ task main ()
 
       if (oldRawValue != rawValue)
       {
-        PlaySound(soundShortBlip);
+        playSound(soundShortBlip);
         switch(rawValue)
         {
-          case RAW_RIGHT:   nxtDisplayCenteredBigTextLine(3, "RIGHT");
+          case RAW_RIGHT:   displayCenteredBigTextLine(3, "RIGHT");
                             goBotRight();
                             break;
-          case RAW_LEFT:    nxtDisplayCenteredBigTextLine(3, "LEFT");
+          case RAW_LEFT:    displayCenteredBigTextLine(3, "LEFT");
                             goBotLeft();
                             break;
-          case RAW_FWD:     nxtDisplayCenteredBigTextLine(3, "FWD");
+          case RAW_FWD:     displayCenteredBigTextLine(3, "FWD");
                             goBotFwd();
                             break;
-          case RAW_REV:     nxtDisplayCenteredBigTextLine(3, "REV");
+          case RAW_REV:     displayCenteredBigTextLine(3, "REV");
                             goBotRev();
                             break;
-          case RAW_STOP:    nxtDisplayCenteredBigTextLine(3, "STOP");
+          case RAW_STOP:    displayCenteredBigTextLine(3, "STOP");
                             goBotStop();
                             break;
         }
       }
-      nxtDisplayTextLine(7, "Raw:  0x%03X", rawValue);
+      displayTextLine(7, "Raw:  0x%03X", rawValue);
 
       // Update the counters and signals
       oldCounter = counter;
       oldRawValue = rawValue;
     }
-    wait1Msec(50);
+    sleep(50);
   }
 }
 

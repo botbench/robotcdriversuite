@@ -51,9 +51,9 @@ bool TSreadState(tMUXSensor muxsensor);
  */
 bool TSreadState(tSensors link) {
   if ((SensorType[link] !=  sensorTouch) && SensorMode[link] != modeBoolean) {
-    SetSensorType(link, sensorTouch);
-    SetSensorMode(link, modeBoolean);
-    wait1Msec(10);
+    SensorType[link] = sensorTouch ;
+    SensorMode[link] = modeBoolean;
+    sleep(10);
   }
 
   return (SensorRaw[link] < 500) ? true : false;

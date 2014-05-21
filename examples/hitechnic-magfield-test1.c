@@ -31,30 +31,30 @@ task main () {
   int magFieldValue = 0;
   int calibrationValue = 0;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "MAGNETIC");
-  nxtDisplayCenteredTextLine(3, "Field Sensor");
-  nxtDisplayCenteredTextLine(4, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect Sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "MAGNETIC");
+  displayCenteredTextLine(3, "Field Sensor");
+  displayCenteredTextLine(4, "Test 1");
+  displayCenteredTextLine(5, "Connect Sensor");
+  displayCenteredTextLine(6, "to S1");
 
-  wait1Msec(2000);
+  sleep(2000);
 
-  nxtDisplayCenteredTextLine(5, "Press enter");
-  nxtDisplayCenteredTextLine(6, "to set bias");
+  displayCenteredTextLine(5, "Press enter");
+  displayCenteredTextLine(6, "to set bias");
 
-  wait1Msec(2000);
+  sleep(2000);
   eraseDisplay();
   while(true) {
     eraseDisplay();
-    nxtDisplayTextLine(1, "Resetting");
-    nxtDisplayTextLine(2, "bias");
-    wait1Msec(500);
+    displayTextLine(1, "Resetting");
+    displayTextLine(2, "bias");
+    sleep(500);
 
     // Start the calibration and display the offset
     calibrationValue = HTMAGstartCal(HTMAG);
-    nxtDisplayTextLine(2, "Bias: %4d", calibrationValue);
-    PlaySound(soundBlip);
+    displayTextLine(2, "Bias: %4d", calibrationValue);
+    playSound(soundBlip);
     while(bSoundActive) EndTimeSlice();
     while(nNxtButtonPressed != kNoButton) EndTimeSlice();
 
@@ -67,16 +67,16 @@ task main () {
       // Read the current magnetic field strength
       magFieldValue = HTMAGreadVal(HTMAG);
 
-      nxtDisplayTextLine(1, "Reading");
+      displayTextLine(1, "Reading");
       // Display the current calibration value
-      nxtDisplayTextLine(2, "Bias: %4d", calibrationValue);
+      displayTextLine(2, "Bias: %4d", calibrationValue);
 
-      nxtDisplayClearTextLine(4);
+      displayClearTextLine(4);
       // Display the current magnetic field strength
-      nxtDisplayTextLine(4, "Mag:   %4d", magFieldValue);
-      nxtDisplayTextLine(6, "Press enter");
-      nxtDisplayTextLine(7, "to recalibrate");
-      wait1Msec(100);
+      displayTextLine(4, "Mag:   %4d", magFieldValue);
+      displayTextLine(6, "Press enter");
+      displayTextLine(7, "to recalibrate");
+      sleep(100);
     }
   }
 }

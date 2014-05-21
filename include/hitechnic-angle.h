@@ -35,7 +35,7 @@
  * \example hitechnic-angle-SMUX-test1.c
  */
 
-#pragma systemFile
+// #pragma systemFile
 
 #ifndef __COMMON_H__
 #include "common.h"
@@ -59,6 +59,22 @@
 #define HTANG_CMD_MEASURE      0x00      /*!< Normal angle measurement mode */
 #define HTANG_CMD_RST_ANG      0x43      /*!< Resets 0 position to current shaft angle, non-volatile setting */
 #define HTANG_CMD_RST_ACC_ANG  0x52      /*!< Resets the accumulated angle */
+
+typedef struct
+{
+  tI2CData I2CData;
+  int angle;
+  int accumlatedAngle;
+  int rpm;
+  ubyte _cmd;
+} tHTANG, *tHTANGPtr;
+
+bool initSensor(tHTANGPtr htangPtr, tSensors port);
+bool sensorReadAll(tHTANGPtr htangPtr);
+bool resetSensor(tHTANGPtr htangPtr);
+bool resetAccmulatedAngle(tHTANGPtr htangPtr);
+bool resetAngle(tHTANGPtr htangPtr);
+bool _sensorSendCommand(tHTANGPtr htangPtr);
 
 int HTANGreadAngle(tSensors link);
 long HTANGreadAccumulatedAngle(tSensors link);
@@ -249,6 +265,95 @@ bool _HTANGsendCommand(tSensors link, byte command) {
   return writeI2C(link, HTANG_I2CRequest);
 }
 
+bool initSensor(tHTANGPtr htangPtr, tSensors port)
+{
+  memset(htangPtr, 0, sizeof(tHTANGPtr));
+  htangPtr->I2CData.address = HTANG_I2C_ADDR;
+  htangPtr->I2CData.port = port;
+  htangPtr->I2CData.type = sensorI2CCustom;
+  htangPtr->_cmd = HTANG_CMD_MEASURE;
+
+  // Ensure the sensor is configured correctly
+  if (SensorType[htangPtr->I2CData.port] != htangPtr->I2CData.type)
+    SensorType[htangPtr->I2CData.port] = htangPtr->I2CData.type;
+
+  // Make sure the sensor is in the measurement mode
+  return _sensorSendCommand(htangPtr);
+}
+
+bool sensorReadAll(tHTANGPtr htangPtr)
+{
+	memset(htangPtr->I2CData.request, 0, sizeof(htangPtr->I2CData.request));
+
+  // Read all of the data available on the sensor
+  htangPtr->I2CData.request[0] = 2;                    // Message size
+  htangPtr->I2CData.request[1] = htangPtr->I2CData.address; // I2C Address
+  htangPtr->I2CData.request[2] = HTANG_ANG2;
+  htangPtr->I2CData.replyLen = 8;
+  htangPtr->I2CData.requestLen = 2;
+
+  if (!writeI2C(&htangPtr->I2CData))
+    return false;
+
+  htangPtr->angle = (htangPtr->I2CData.reply[0] * 2) + htangPtr->I2CData.reply[1];
+  htangPtr->accumlatedAngle = (htangPtr->I2CData.reply[2] << 24) +
+         											(htangPtr->I2CData.reply[3] << 16) +
+         											(htangPtr->I2CData.reply[4] <<  8) +
+          										 htangPtr->I2CData.reply[5];
+  htangPtr->rpm = (htangPtr->I2CData.reply[6] <<  8) + htangPtr->I2CData.reply[7];
+
+  return true;
+}
+
+bool resetSensor(tHTANGPtr htangPtr)
+{
+	// First reset the accumulated angle
+  if (!resetAccmulatedAngle(htangPtr))
+  	return false;
+
+ 	// Next, reset the angle
+  return resetAngle(htangPtr);
+}
+
+bool resetAccmulatedAngle(tHTANGPtr htangPtr)
+{
+  htangPtr->_cmd = HTANG_CMD_RST_ACC_ANG;
+  return _sensorSendCommand(htangPtr);
+}
+
+bool resetAngle(tHTANGPtr htangPtr)
+{
+  htangPtr->_cmd = HTANG_CMD_RST_ANG;
+  return _sensorSendCommand(htangPtr);
+}
+
+/**
+ * Send a command to the sensor
+ *
+ * Note: this is an internal function and should not be called directly.
+ * @param link the HTANG port number
+ * @param command the command to be sent to the sensor
+ * @return true if no error occured, false if it did
+ */
+bool _sensorSendCommand(tHTANGPtr htangPtr) {
+  memset(htangPtr->I2CData.request, 0, sizeof(htangPtr->I2CData.request));
+
+  htangPtr->I2CData.request[0] = 3;              // Message size
+  htangPtr->I2CData.request[1] = HTANG_I2C_ADDR; // I2C Address
+  htangPtr->I2CData.request[2] = HTANG_CMD_REG;  // Command register
+  htangPtr->I2CData.request[3] = htangPtr->_cmd;        // Command to be sent
+
+  if (!writeI2C(&htangPtr->I2CData))
+  {
+  	htangPtr->_cmd = HTANG_CMD_MEASURE;
+  	return false;
+  }
+  else
+  {
+  	htangPtr->_cmd = HTANG_CMD_MEASURE;
+  	return true;
+  }
+}
 
 #endif // __HTANG_H__
 

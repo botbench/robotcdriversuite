@@ -37,10 +37,10 @@ task main() {
     HTPBwriteIO(HTPB, 0x00);
 
     eraseDisplay();
-    nxtDisplayTextLine(2, "running");
+    displayTextLine(2, "running");
 
     // Wait a random time between 5 and 10 seconds.
-    wait1Msec(random(5000) + 5000);
+    sleep(random(5000) + 5000);
 
     // Switch on the LED and reset the timer
     HTPBwriteIO(HTPB, 0x10);
@@ -48,15 +48,15 @@ task main() {
 
     // Wait for user to press the stop button
     while (HTPBreadIO(HTPB, 0xF3) != 0x01) {
-      wait1Msec(5);
+      sleep(5);
     }
 
     eraseDisplay();
-    nxtDisplayTextLine(2, "%d", time1[T1]);
+    displayTextLine(2, "%d", time1[T1]);
 
     // Wait for user to reset
     while (HTPBreadIO(HTPB, 0xF3) != 0x03) {
-      wait1Msec(5);
+      sleep(5);
     }
   }
 }

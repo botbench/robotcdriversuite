@@ -44,15 +44,15 @@ string DNS1 = "192.168.0.1";
 string DNS2 = "192.168.0.2";
 string gateway = "192.168.0.1";
 
-string ssid = "Bazinga!";
-char *passphrase = "xammy4ever";
+const string ssid = "SSID";
+const string passphrase = "PASSWORD";
 
 task main ()
 {
   // initialise the port, etc
   RS485initLib();
-  nxtDisplayTextLine(0, "Stat: disconnected");
-  nxtDisplayTextLine(2, "-------------------");
+  displayTextLine(0, "Stat: disconnected");
+  displayTextLine(2, "-------------------");
 
   N2WchillOut();
   N2WsetDebug(true);
@@ -60,13 +60,13 @@ task main ()
 
   // Disconnect if already connected
   N2WDisconnect();
-  wait1Msec(100);
+  sleep(100);
 
   // Delete any pre-existing custom profiles and reset the device
   N2WDelete();
   N2WchillOut();
   N2WReset();
-  wait1Msec(4000);
+  sleep(4000);
 
   // enable DHCP
   if (useDHCP)
@@ -88,13 +88,13 @@ task main ()
     N2WsetGateway(gateway);
   }
 
-  wait1Msec(100);
+  sleep(100);
   // Enable or disable AdHoc
   N2WsetAdHoc(useAdHoc);
-  wait1Msec(100);
+  sleep(100);
   // SSID to connect to
   N2WsetSSID(ssid);
-  wait1Msec(100);
+  sleep(100);
 
   if (useWPA)
     N2WSecurityWPAPassphrase(passphrase);
@@ -105,32 +105,32 @@ task main ()
   else if (useOpen)
     N2WSecurityOpen();
 
-  nxtDisplayTextLine(0, "Stat: Calculating");
-  nxtDisplayTextLine(3, "This can take up");
-  nxtDisplayTextLine(4, "to 30 seconds");
-  wait1Msec(100);
+  displayTextLine(0, "Stat: Calculating");
+  displayTextLine(3, "This can take up");
+  displayTextLine(4, "to 30 seconds");
+  sleep(100);
 
   // Save this profile to the custom profile
   N2WSave();
-  wait1Msec(100);
+  sleep(100);
   // Load the custom profile
   N2WLoad();
 
-  wait1Msec(100);
+  sleep(100);
   N2WConnect(true);
-  nxtDisplayTextLine(0, "Stat: Connecting");
+  displayTextLine(0, "Stat: Connecting");
 
   while (!N2WConnected())
-    wait1Msec(500);
+    sleep(500);
 
-  wait1Msec(3000);
+  sleep(3000);
 
   N2WgetIP(ipaddress);
-  nxtDisplayTextLine(3, "My IP address is");
-  nxtDisplayTextLine(4, ipaddress);
-  nxtDisplayTextLine(0, "Stat: Configured");
+  displayTextLine(3, "My IP address is");
+  displayTextLine(4, ipaddress);
+  displayTextLine(0, "Stat: Configured");
   N2WchillOut();
   N2WSave();
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(true) EndTimeSlice();
 }

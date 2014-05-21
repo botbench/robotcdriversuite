@@ -35,12 +35,12 @@ task main () {
   int _color = 0;
   string _tmp;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Color V2");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Color V2");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
   eraseDisplay();
   while (true) {
@@ -50,30 +50,30 @@ task main () {
 
     // If colour == -1, it implies an error has occurred
     if (_color < 0) {
-      nxtDisplayTextLine(4, "ERROR!!");
-      wait1Msec(2000);
-      StopAllTasks();
+      displayTextLine(4, "ERROR!!");
+      sleep(2000);
+      stopAllTasks();
     }
 
     // Read the RGB values of the currently colour from the sensor
     // A return value of false imples an error has occurred
     if (!HTCS2readRGB(HTCS2, red, green, blue)) {
-      nxtDisplayTextLine(4, "ERROR!!");
-      wait1Msec(2000);
-      StopAllTasks();
+      displayTextLine(4, "ERROR!!");
+      sleep(2000);
+      stopAllTasks();
     }
 
-    nxtDisplayCenteredTextLine(0, "Color: %d", _color);
-    nxtDisplayCenteredBigTextLine(1, "R  G  B");
+    displayCenteredTextLine(0, "Color: %d", _color);
+    displayCenteredBigTextLine(1, "R  G  B");
 
-    nxtEraseRect(0,10, 99, 41);
-    nxtFillRect( 0, 10, 30, 10 + (red+1)/8);
-    nxtFillRect(35, 10, 65, 10 + (green+1)/8);
-    nxtFillRect(70, 10, 99, 10 + (blue+1)/8);
+    eraseRect(0,10, 99, 41);
+    fillRect( 0, 10, 30, 10 + (red+1)/8);
+    fillRect(35, 10, 65, 10 + (green+1)/8);
+    fillRect(70, 10, 99, 10 + (blue+1)/8);
     StringFormat(_tmp, " %3d   %3d", red, green);
-    nxtDisplayTextLine(7, "%s   %3d", _tmp, blue);
+    displayTextLine(7, "%s   %3d", _tmp, blue);
 
-    wait1Msec(100);
+    sleep(100);
   }
 }
 

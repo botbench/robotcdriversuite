@@ -35,29 +35,29 @@ task main () {
   nNxtButtonTask  = -2;
 
   eraseDisplay();
-  nxtDisplayTextLine(0, "HTCS Test 2");
-  nxtDisplayTextLine(2, "Press orange");
-  nxtDisplayTextLine(3, "button to start");
-  nxtDisplayTextLine(4, "calibration.");
-  nxtDisplayTextLine(5, "Press grey");
-  nxtDisplayTextLine(6, "button to exit.");
+  displayTextLine(0, "HTCS Test 2");
+  displayTextLine(2, "Press orange");
+  displayTextLine(3, "button to start");
+  displayTextLine(4, "calibration.");
+  displayTextLine(5, "Press grey");
+  displayTextLine(6, "button to exit.");
 
   while(nNxtButtonPressed != kEnterButton) EndTimeSlice();
   eraseDisplay();
-  nxtDisplayTextLine(3, "Starting");
-  nxtDisplayTextLine(4, "calibration.");
+  displayTextLine(3, "Starting");
+  displayTextLine(4, "calibration.");
 
   // This call calibrates the white value.
   if (!HTCScalWhite(HTCS)) {
     eraseDisplay();
-    PlaySound(soundException);
-    nxtDisplayTextLine(3, "ERROR!!");
-    nxtDisplayTextLine(5, "Calibration");
-    nxtDisplayTextLine(6, "failed!!");
-    wait1Msec(2000);
-    StopAllTasks();
+    playSound(soundException);
+    displayTextLine(3, "ERROR!!");
+    displayTextLine(5, "Calibration");
+    displayTextLine(6, "failed!!");
+    sleep(2000);
+    stopAllTasks();
   }
-  wait1Msec(1000);
+  sleep(1000);
 }
 
 /*

@@ -74,10 +74,10 @@ task main () {
 		motorCstatus = HDMMotorBusy(mmotor_S1_3) ? "busy" : "idle";
 
 		// Display the info.
-		nxtDisplayTextLine(5, "A: %5d (%s)", encA, motorAstatus);
-		nxtDisplayTextLine(6, "B: %5d (%s)", encB, motorBstatus);
-		nxtDisplayTextLine(7, "C: %5d (%s)", encC, motorCstatus);
-    wait1Msec(5);
+		displayTextLine(5, "A: %5d (%s)", encA, motorAstatus);
+		displayTextLine(6, "B: %5d (%s)", encB, motorBstatus);
+		displayTextLine(7, "C: %5d (%s)", encC, motorCstatus);
+    sleep(5);
   }
 }
 

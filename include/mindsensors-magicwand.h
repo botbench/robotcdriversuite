@@ -96,14 +96,14 @@ bool MSMWflashAndClear(tSensors link, int count)
       {
         return false;
       }
-      wait1Msec(30);
+      sleep(30);
     }
     for (int j = 0; j < 8; j++) {
       if (!MSMWsetLED(link, j, false))
       {
         return false;
       }
-      wait1Msec(30);
+      sleep(30);
     }
     if (!PCF8574sendBytes(link, 0xFF))
     {

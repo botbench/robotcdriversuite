@@ -38,14 +38,14 @@ task main () {
 
   string _tmp;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Accel");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Accel");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
 
   while (true) {
@@ -53,20 +53,20 @@ task main () {
 
     // Read all of the axes at once
     if (!HTACreadAllAxes(HTAC, _x_axis, _y_axis, _z_axis)) {
-      nxtDisplayTextLine(4, "ERROR!!");
-      wait1Msec(2000);
-      StopAllTasks();
+      displayTextLine(4, "ERROR!!");
+      sleep(2000);
+      stopAllTasks();
     }
 
-    nxtDisplayTextLine(0,"HTAC Test 1");
+    displayTextLine(0,"HTAC Test 1");
 
-    // We can't provide more than 2 parameters to nxtDisplayTextLine(),
+    // We can't provide more than 2 parameters to displayTextLine(),
     // so we'll do in two steps using StringFormat()
-    nxtDisplayTextLine(2, "   X    Y    Z");
+    displayTextLine(2, "   X    Y    Z");
     StringFormat(_tmp, "%4d %4d", _x_axis, _y_axis);
-    nxtDisplayTextLine(3, "%s %4d", _tmp, _z_axis);
+    displayTextLine(3, "%s %4d", _tmp, _z_axis);
 
-    wait1Msec(100);
+    sleep(100);
   }
 }
 

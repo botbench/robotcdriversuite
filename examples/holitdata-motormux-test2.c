@@ -60,7 +60,7 @@ task main () {
   // Reset the timer
   time1[T1] = 0;
   // Give the motor time to get started
-  wait1Msec(50);
+  sleep(50);
   while (!done) {
     // Retrieve the motor-MUX's status info and encoder counts
 		HDMMUXreadStatus(HDMMUX, motorStatus, encA, encB, encC);
@@ -69,15 +69,15 @@ task main () {
 	  motorAstatus = HDMMotorBusy(mmotor_S1_1) ? "busy" : "idle";
 		if (!HDMMotorBusy(mmotor_S1_1) && timer == 0) {
 		  timer = time1[T1];
-		  nxtDisplayTextLine(0,"Time: %dms", timer);
+		  displayTextLine(0,"Time: %dms", timer);
 		  done = true;
 		}
 
 		// Display the info.
-		nxtDisplayTextLine(6, "B: %5d (%s)", encB, motorAstatus);
+		displayTextLine(6, "B: %5d (%s)", encB, motorAstatus);
     EndTimeSlice();
   }
-  wait1Msec(5000);
+  sleep(5000);
 }
 
 /*

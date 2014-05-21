@@ -1,5 +1,5 @@
 #pragma config(Sensor, S1,     TOUCH,          sensorTouch)
-#pragma config(Sensor, S2,     COLOUR,         sensorCOLORFULL)
+#pragma config(Sensor, S2,     COLOUR,         sensorColorNxtFULL)
 #pragma config(Sensor, S3,     SONAR,          sensorSONAR)
 #pragma config(Sensor, S4,     NXT2WIFI,       sensorHighSpeed)
 #pragma config(Motor,  motorA,          MOT_ACTION,          tmotorNormal, PIDControl, encoder)
@@ -43,15 +43,15 @@ task updateScreen()
 {
 	while(true)
 	{
-		nxtDisplayTextLine(0, "Stat: %s", connStatus);
-		nxtDisplayTextLine(1, "%s",IPaddress);
-		nxtDisplayTextLine(2, "-------------------");
-		nxtDisplayTextLine(3, "%s", dataStrings[0]);
-		nxtDisplayTextLine(4, "%s", dataStrings[1]);
-		nxtDisplayTextLine(5, "%s", dataStrings[2]);
-		nxtDisplayTextLine(6, "%s", dataStrings[3]);
-		nxtDisplayTextLine(7, "%s", dataStrings[4]);
-		wait1Msec(100);
+		displayTextLine(0, "Stat: %s", connStatus);
+		displayTextLine(1, "%s",IPaddress);
+		displayTextLine(2, "-------------------");
+		displayTextLine(3, "%s", dataStrings[0]);
+		displayTextLine(4, "%s", dataStrings[1]);
+		displayTextLine(5, "%s", dataStrings[2]);
+		displayTextLine(6, "%s", dataStrings[3]);
+		displayTextLine(7, "%s", dataStrings[4]);
+		sleep(100);
 	}
 }
 
@@ -59,15 +59,15 @@ void handleColour(ubyte state)
 {
 	switch (state)
 	{
-	case 3: SensorType[COLOUR] = sensorCOLORFULL;
+	case 3: SensorType[COLOUR] = sensorColorNxtFULL;
 		break;
-	case 4: SensorType[COLOUR] = sensorCOLORRED;
+	case 4: SensorType[COLOUR] = sensorColorNxtRED;
 		break;
-	case 5: SensorType[COLOUR] = sensorCOLORGREEN;
+	case 5: SensorType[COLOUR] = sensorColorNxtGREEN;
 		break;
-	case 6: SensorType[COLOUR] = sensorCOLORBLUE;
+	case 6: SensorType[COLOUR] = sensorColorNxtBLUE;
 		break;
-	case 7: SensorType[COLOUR] = sensorCOLORNONE;
+	case 7: SensorType[COLOUR] = sensorColorNxtNONE;
 		break;
 	}
 }
@@ -120,41 +120,41 @@ task main ()
 	// initialise the port, etc
 	RS485initLib();
 
-	StartTask(updateScreen);
+	startTask(updateScreen);
 
 	// Disconnect if already connected
 	N2WDisconnect();
 	N2WchillOut();
-	wait1Msec(1000);
+	sleep(1000);
   if (!N2WCustomExist())
   {
-    StopTask(updateScreen);
-    wait1Msec(50);
+    stopTask(updateScreen);
+    sleep(50);
     eraseDisplay();
-    PlaySound(soundException);
-    nxtDisplayCenteredBigTextLine(1, "ERROR");
-    nxtDisplayTextLine(3, "No custom profile");
-    nxtDisplayTextLine(4, "configured!!");
+    playSound(soundException);
+    displayCenteredBigTextLine(1, "ERROR");
+    displayTextLine(3, "No custom profile");
+    displayTextLine(4, "configured!!");
     while(true) EndTimeSlice();
   }
 
   N2WLoad();
 
-	wait1Msec(100);
+	sleep(100);
 
 	N2WConnect(true);
 	connStatus = "connecting";
 
-	while (!N2WConnected()) wait1Msec(100);
-	wait1Msec(1000);
+	while (!N2WConnected()) sleep(100);
+	sleep(1000);
 
 	connStatus = "connected";
-	PlaySound(soundBeepBeep);
+	playSound(soundBeepBeep);
 
-	wait1Msec(3000);
+	sleep(3000);
 	N2WgetIP(IPaddress);
 
-	wait1Msec(1000);
+	sleep(1000);
 	//                123456789012345
 	dataStrings[0] = "Tch | Snr | Clr";
 	//                on  | 011 |   1"

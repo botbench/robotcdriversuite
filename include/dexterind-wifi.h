@@ -111,7 +111,7 @@ int checkFailure() {
   ubyte currByte[] = {0};
   ubyte prevByte[] = {0};
 
-  while (nxtGetAvailHSBytes() == 0) wait1Msec(5);
+  while (nxtGetAvailHSBytes() == 0) sleep(5);
 
   while (nxtGetAvailHSBytes() > 0) {
     nxtReadRawHS(&currByte[0], 1);
@@ -148,7 +148,7 @@ void DWIFIsetEcho(bool on)
   for(int i = 0; i < 5; i++){
     nxtWriteRawHS(&nData[i], 1);            // Send the command, byte by byte.
     nxtReadRawHS(&BytesRead[0], 8);         // Clear out the echo.
-    wait1Msec(100);
+    sleep(100);
   }
   RS485clearRead();
 }
@@ -270,7 +270,7 @@ bool DWIFIsetWPAPSK(char *ssid, char *_wpa_key)
   if (!RS485sendString(set_wpa_psk_cmd))
     return false;
   //RS485read(RS485rxbuffer, len, 50);
-  wait1Msec(100);
+  sleep(100);
   RS485clearRead();
   return DWIFIcheckResult(RS485rxbuffer, 30000, "DWIFIsetWPAPSK");
 }
@@ -335,7 +335,7 @@ bool DWIFIsaveConfig() {
   writeDebugStreamLine("save config");
   RS485sendString("AT&W0\n");
   DWIFIcheckResult(RS485rxbuffer, "DWIFIsaveConfig W0");
-  wait1Msec(500);
+  sleep(500);
   RS485sendString("AT&Y0\n");
   return DWIFIcheckResult(RS485rxbuffer, "DWIFIsaveConfig Y0");
 }
@@ -344,7 +344,7 @@ bool DWIFIsaveConfig() {
 void DWIFIresetConfig()
 {
   RS485sendString("AT&F\n");
-  wait1Msec(100);
+  sleep(100);
   RS485clearRead();
 }
 
@@ -365,16 +365,16 @@ bool checkBaudRate(long baudrate)
   string tmpString;
   writeDebugStreamLine("testing baudrate: %d", baudrate);
   nxtDisableHSPort();
-  wait1Msec(10);
+  sleep(10);
   nxtEnableHSPort();
   nxtSetHSBaudRate(baudrate);
   nxtHS_Mode = hsRawMode;
   RS485clearRead();
-  wait1Msec(100);
+  sleep(100);
   RS485sendString("+++\n");
-  wait1Msec(1000);
+  sleep(1000);
   RS485clearRead();
-  wait1Msec(100);
+  sleep(100);
   RS485sendString("AT\n");
   return DWIFIcheckResult(RS485rxbuffer, "checkBaudRate");
 }
@@ -414,15 +414,15 @@ void DWIFIsetBAUDRate(long baudrate) {
   StringFormat(baud_cmd, "ATB=%d\n", baudrate);
   RS485sendString(baud_cmd);
 
-  wait1Msec(100);
+  sleep(100);
   nxtDisableHSPort();
-  wait1Msec(10);
+  sleep(10);
   nxtEnableHSPort();
   nxtSetHSBaudRate(baudrate);
   nxtHS_Mode = hsRawMode;
-  wait1Msec(10);
+  sleep(10);
   RS485clearRead();
-  wait1Msec(10);
+  sleep(10);
 
   // Verify the speed to ensure everything went OK
   if (checkBaudRate(baudrate))
@@ -499,8 +499,8 @@ void DWIFIwaitForIP()
       }
       parsed = true;
       index = 0;
-      wait1Msec(2000);
-      PlaySound(soundBeepBeep);
+      sleep(2000);
+      playSound(soundBeepBeep);
     }
 	}
 }

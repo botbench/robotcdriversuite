@@ -31,37 +31,37 @@ task main(){
   // This struct holds all the sensor related data
   tDIMC compass;
 
-  nxtDisplayCenteredTextLine(0, "Dexter Ind.");
-  nxtDisplayCenteredBigTextLine(1, "dCompass");
-  nxtDisplayCenteredTextLine(3, "Test 2");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Dexter Ind.");
+  displayCenteredBigTextLine(1, "dCompass");
+  displayCenteredTextLine(3, "Test 2");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
   eraseDisplay();
 
 
   // Fire up the compass and initialize it. Only needs to be done once.
   if (!initSensor(&compass, DIMC))
-    PlaySound(soundException);
+    playSound(soundException);
 
   // This program uses an omniwheel platform to rotate the robot about
   // its axis a few times but you can use another robot to do this.
   // Just make sure the robot rotates around 2-3 times about is axis
   startCal(&compass);
 
-  nxtDisplayCenteredTextLine(1, "Calibrating...");
-  nxtDisplayCenteredTextLine(2, "Turn the sensor");
-  nxtDisplayCenteredTextLine(3, "slowly");
+  displayCenteredTextLine(1, "Calibrating...");
+  displayCenteredTextLine(2, "Turn the sensor");
+  displayCenteredTextLine(3, "slowly");
 
   time1[T1] = 0;
   while(time1[T1] < 15000)
   {
 		// Read the Compass
     if (!sensorReadAll(&compass))
-      PlaySound(soundException);
+      playSound(soundException);
 
     if (time1[T1] % 1000 < 10)
-      nxtDisplayCenteredBigTextLine(5, "%d", 15 - (time1[T1]/1000));
+      displayCenteredBigTextLine(5, "%d", 15 - (time1[T1]/1000));
 
   }
 
@@ -69,19 +69,19 @@ task main(){
   stopCal(&compass);
 
   eraseDisplay();
-  wait1Msec(100);
+  sleep(100);
   while (true){
 
 		// Read the Compass
     if (!sensorReadAll(&compass))
-      PlaySound(soundException);
+      playSound(soundException);
 
-    nxtDisplayCenteredBigTextLine(1, "Heading");
-    nxtDisplayCenteredBigTextLine(3, "%3.2f", compass.heading);
-		nxtDisplayTextLine(5, "%d", compass.axes[0]);
-		nxtDisplayTextLine(6, "%d", compass.axes[1]);
-		nxtDisplayTextLine(7, "%d", compass.axes[2]);
-		wait1Msec(50);
+    displayCenteredBigTextLine(1, "Heading");
+    displayCenteredBigTextLine(3, "%3.2f", compass.heading);
+		displayTextLine(5, "%d", compass.axes[0]);
+		displayTextLine(6, "%d", compass.axes[1]);
+		displayTextLine(7, "%d", compass.axes[2]);
+		sleep(50);
   }
 }
 

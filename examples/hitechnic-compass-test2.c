@@ -42,8 +42,8 @@
 // Lets you know when 20 seconds is over, can help with setting up
 // the initial timing and motor speed.
 task timeMe() {
-  wait1Msec(20000);
-  PlaySound(soundBeepBeep);
+  sleep(20000);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
 }
 
@@ -51,10 +51,10 @@ task timeMe() {
 // doing something.
 task showPulse() {
   while (true) {
-		nxtDisplayCenteredBigTextLine(6, " ");
-		wait1Msec(400);
-		nxtDisplayCenteredBigTextLine(6, "*");
-		wait1Msec(400);
+		displayCenteredBigTextLine(6, " ");
+		sleep(400);
+		displayCenteredBigTextLine(6, "*");
+		sleep(400);
   }
 }
 
@@ -69,14 +69,14 @@ int numRotations() {
 void startCalibration() {
   if (!HTMCstartCal(HTCOMPASS)) {
     eraseDisplay();
-    nxtDisplayTextLine(1, "ERROR: Couldn't");
-    nxtDisplayTextLine(2, "calibrate sensor.");
-    nxtDisplayTextLine(4, "Check connection");
-    nxtDisplayTextLine(5, "and try again.");
-    PlaySound(soundException);
+    displayTextLine(1, "ERROR: Couldn't");
+    displayTextLine(2, "calibrate sensor.");
+    displayTextLine(4, "Check connection");
+    displayTextLine(5, "and try again.");
+    playSound(soundException);
     while(bSoundActive) EndTimeSlice();
-    wait1Msec(5000);
-    StopAllTasks();
+    sleep(5000);
+    stopAllTasks();
   }
 }
 
@@ -84,48 +84,48 @@ void startCalibration() {
 void stopCalibration() {
   if (!HTMCstopCal(HTCOMPASS)) {
     eraseDisplay();
-    nxtDisplayTextLine(1, "ERROR: Calibration");
-    nxtDisplayTextLine(2, "has failed.");
-    nxtDisplayTextLine(4, "Check connection");
-    nxtDisplayTextLine(5, "and try again.");
-    PlaySound(soundException);
+    displayTextLine(1, "ERROR: Calibration");
+    displayTextLine(2, "has failed.");
+    displayTextLine(4, "Check connection");
+    displayTextLine(5, "and try again.");
+    playSound(soundException);
     while(bSoundActive) EndTimeSlice();
-    wait1Msec(5000);
-    StopAllTasks();
+    sleep(5000);
+    stopAllTasks();
   } else {
-    nxtDisplayTextLine(1, "SUCCESS: ");
-    nxtDisplayTextLine(2, "Calibr. done.");
-    PlaySound(soundUpwardTones);
+    displayTextLine(1, "SUCCESS: ");
+    displayTextLine(2, "Calibr. done.");
+    playSound(soundUpwardTones);
     while(bSoundActive) EndTimeSlice();
-    wait1Msec(5000);
+    sleep(5000);
   }
 }
 
 task main () {
   bFloatDuringInactiveMotorPWM = true;
   int numDegrees = 0;
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Compass");
-  nxtDisplayCenteredTextLine(3, "Test 2");
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Compass");
+  displayCenteredTextLine(3, "Test 2");
 
 
   nMotorEncoder[M_RIGHT] = 0;
   nMotorEncoder[M_LEFT] = 0;
   // This will make the robot spin about 1.5 times, depends on many factors, YYMV, etc
   numDegrees = ((numRotations() * 3) / 2) * 450;
-  StartTask(timeMe);
+  startTask(timeMe);
   startCalibration();
-  nxtDisplayCenteredTextLine(5, "Calibrating...");
-  StartTask(showPulse);
+  displayCenteredTextLine(5, "Calibrating...");
+  startTask(showPulse);
   motor[M_RIGHT] = MOTORSPEED;
   motor[M_LEFT] = -MOTORSPEED;
 
-  while(nMotorEncoder[M_RIGHT] < numDegrees) wait1Msec(5);
+  while(nMotorEncoder[M_RIGHT] < numDegrees) sleep(5);
   motor[M_LEFT] = 0;
   motor[M_RIGHT]= 0;
   stopCalibration();
-  nxtDisplayCenteredTextLine(5, "Calibration done");
-  wait1Msec(5000);
+  displayCenteredTextLine(5, "Calibration done");
+  sleep(5000);
 }
 
 /*

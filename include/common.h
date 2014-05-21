@@ -165,13 +165,13 @@ void clearI2CError(tI2CDataPtr data) {
 
 #ifdef __COMMON_H_DEBUG__
   eraseDisplay();
-  nxtDisplayTextLine(3, "rxmit: %d", error_array[1]);
-  wait1Msec(2000);
+  displayTextLine(3, "rxmit: %d", error_array[1]);
+  sleep(2000);
 #endif // __COMMON_H_DEBUG__
 
   for (int i = 0; i < 5; i++) {
     sendI2CMsg(data->port, &error_array[0], 0);
-    wait1Msec(5);
+    sleep(5);
   }
 }
 
@@ -189,13 +189,13 @@ void clearI2CError(tSensors link, ubyte address) {
 
 #ifdef __COMMON_H_DEBUG__
   eraseDisplay();
-  nxtDisplayTextLine(3, "rxmit: %d", error_array[1]);
-  wait1Msec(2000);
+  displayTextLine(3, "rxmit: %d", error_array[1]);
+  sleep(2000);
 #endif // __COMMON_H_DEBUG__
 
   for (int i = 0; i < 5; i++) {
     sendI2CMsg(link, &error_array[0], 0);
-    wait1Msec(5);
+    sleep(5);
   }
 }
 
@@ -225,7 +225,7 @@ bool waitForI2CBus(tSensors link)
 
 	    case ERR_COMM_BUS_ERR:
 	#ifdef __COMMON_H_DEBUG__
-	      PlaySound(soundLowBuzz);
+	      playSound(soundLowBuzz);
 	      while (bSoundActive) {}
 	#endif // __COMMON_H_DEBUG__
         return false;
@@ -260,7 +260,7 @@ bool waitForI2CBus(tI2CDataPtr data)
 
 	    case ERR_COMM_BUS_ERR:
 	#ifdef __COMMON_H_DEBUG__
-	      PlaySound(soundLowBuzz);
+	      playSound(soundLowBuzz);
 	      while (bSoundActive) {}
 	#endif // __COMMON_H_DEBUG__
         return false;
@@ -285,18 +285,18 @@ bool writeI2C(tI2CDataPtr data) {
     case sensorI2CCustomFastSkipStates:   break;
     default:
 	    hogCPU();
-	    PlaySound(soundException);
+	    playSound(soundException);
 	    eraseDisplay();
-	    nxtDisplayCenteredTextLine(0, "Driver Suite");
-	    nxtDisplayCenteredTextLine(1, "ERROR");
-	    nxtDisplayCenteredTextLine(2, "You have not");
-	    nxtDisplayCenteredTextLine(3, "setup the sensor");
-	    nxtDisplayCenteredTextLine(4, "port correctly. ");
-	    nxtDisplayCenteredTextLine(5, "Please refer to");
-	    nxtDisplayCenteredTextLine(6, "one of the");
-	    nxtDisplayCenteredTextLine(7, "examples.");
-	    wait1Msec(10000);
-	    StopAllTasks();
+	    displayCenteredTextLine(0, "Driver Suite");
+	    displayCenteredTextLine(1, "ERROR");
+	    displayCenteredTextLine(2, "You have not");
+	    displayCenteredTextLine(3, "setup the sensor");
+	    displayCenteredTextLine(4, "port correctly. ");
+	    displayCenteredTextLine(5, "Please refer to");
+	    displayCenteredTextLine(6, "one of the");
+	    displayCenteredTextLine(7, "examples.");
+	    sleep(10000);
+	    stopAllTasks();
   }
 #endif
 
@@ -308,7 +308,8 @@ bool writeI2C(tI2CDataPtr data) {
     if (!waitForI2CBus(data->port))
       return false;
   }
-
+//#ifdef DEBUG_COMMON_H
+  writeDebugStreamLine("port: %d, addr: %d, len: %d", data->port, data->address, data->requestLen);
   sendI2CMsg(data->port, &data->request[0], data->replyLen);
 
   if (!waitForI2CBus(data)) {
@@ -350,18 +351,18 @@ bool writeI2C(tSensors link, tByteArray &request) {
     case sensorI2CCustomFastSkipStates:   break;
     default:
 	    hogCPU();
-	    PlaySound(soundException);
+	    playSound(soundException);
 	    eraseDisplay();
-	    nxtDisplayCenteredTextLine(0, "3rd Party Driver");
-	    nxtDisplayCenteredTextLine(1, "ERROR");
-	    nxtDisplayCenteredTextLine(2, "You have not");
-	    nxtDisplayCenteredTextLine(3, "setup the sensor");
-	    nxtDisplayCenteredTextLine(4, "port correctly. ");
-	    nxtDisplayCenteredTextLine(5, "Please refer to");
-	    nxtDisplayCenteredTextLine(6, "one of the");
-	    nxtDisplayCenteredTextLine(7, "examples.");
-	    wait1Msec(10000);
-	    StopAllTasks();
+	    displayCenteredTextLine(0, "3rd Party Driver");
+	    displayCenteredTextLine(1, "ERROR");
+	    displayCenteredTextLine(2, "You have not");
+	    displayCenteredTextLine(3, "setup the sensor");
+	    displayCenteredTextLine(4, "port correctly. ");
+	    displayCenteredTextLine(5, "Please refer to");
+	    displayCenteredTextLine(6, "one of the");
+	    displayCenteredTextLine(7, "examples.");
+	    sleep(10000);
+	    stopAllTasks();
   }
 #endif
 
@@ -411,18 +412,18 @@ bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, int replyle
     case sensorI2CCustomFastSkipStates:   break;
     default:
 	    hogCPU();
-	    PlaySound(soundException);
+	    playSound(soundException);
 	    eraseDisplay();
-	    nxtDisplayCenteredTextLine(0, "3rd Party Driver");
-	    nxtDisplayCenteredTextLine(1, "ERROR");
-	    nxtDisplayCenteredTextLine(2, "You have not");
-	    nxtDisplayCenteredTextLine(3, "setup the sensor");
-	    nxtDisplayCenteredTextLine(4, "port correctly. ");
-	    nxtDisplayCenteredTextLine(5, "Please refer to");
-	    nxtDisplayCenteredTextLine(6, "one of the");
-	    nxtDisplayCenteredTextLine(7, "examples.");
-	    wait1Msec(10000);
-	    StopAllTasks();
+	    displayCenteredTextLine(0, "3rd Party Driver");
+	    displayCenteredTextLine(1, "ERROR");
+	    displayCenteredTextLine(2, "You have not");
+	    displayCenteredTextLine(3, "setup the sensor");
+	    displayCenteredTextLine(4, "port correctly. ");
+	    displayCenteredTextLine(5, "Please refer to");
+	    displayCenteredTextLine(6, "one of the");
+	    displayCenteredTextLine(7, "examples.");
+	    sleep(10000);
+	    stopAllTasks();
   }
 #endif
 

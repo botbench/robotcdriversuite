@@ -35,7 +35,7 @@
 
 #include "mindsensors-sensormux.h"
 
-tSensors disco[] = {sensorCOLORGREEN, sensorCOLORBLUE, sensorCOLORRED};
+tSensors disco[] = {sensorColorNxtGREEN, sensorColorNxtBLUE, sensorColorNxtRED};
 
 task danceMOnkeyDance()
 {
@@ -44,36 +44,36 @@ task danceMOnkeyDance()
   const int WAITTIME = 100;
 
   while (true) {
-    nxtDisplayRICFile(X_COORD,Y_COORD, MONNKEY01);
-    wait1Msec(WAITTIME);
-    nxtDisplayRICFile(X_COORD,Y_COORD, MONNKEY02);
-    wait1Msec(WAITTIME);
-    nxtDisplayRICFile(X_COORD,Y_COORD, MONNKEY03);
-    wait1Msec(WAITTIME);
-    nxtDisplayRICFile(X_COORD,Y_COORD, MONNKEY04);
-    wait1Msec(WAITTIME);
-    nxtDisplayRICFile(X_COORD,Y_COORD, MONNKEY05);
-    wait1Msec(WAITTIME);
-    nxtDisplayRICFile(X_COORD,Y_COORD, MONNKEY06);
-    wait1Msec(WAITTIME);
-    nxtDisplayRICFile(X_COORD,Y_COORD, MONNKEY07);
-    wait1Msec(WAITTIME);
+    displayRICFile(X_COORD,Y_COORD, MONNKEY01);
+    sleep(WAITTIME);
+    displayRICFile(X_COORD,Y_COORD, MONNKEY02);
+    sleep(WAITTIME);
+    displayRICFile(X_COORD,Y_COORD, MONNKEY03);
+    sleep(WAITTIME);
+    displayRICFile(X_COORD,Y_COORD, MONNKEY04);
+    sleep(WAITTIME);
+    displayRICFile(X_COORD,Y_COORD, MONNKEY05);
+    sleep(WAITTIME);
+    displayRICFile(X_COORD,Y_COORD, MONNKEY06);
+    sleep(WAITTIME);
+    displayRICFile(X_COORD,Y_COORD, MONNKEY07);
+    sleep(WAITTIME);
   }
 }
 
 task main()
 {
   long counter = 0;
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "SnsrMUX");
-  nxtDisplayCenteredTextLine(3, "Test 2");
-  nxtDisplayCenteredTextLine(5, "Connect LEGO");
-  nxtDisplayCenteredTextLine(6, "Color Sensors");
-  nxtDisplayCenteredTextLine(7, "to ports 1-4");
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "SnsrMUX");
+  displayCenteredTextLine(3, "Test 2");
+  displayCenteredTextLine(5, "Connect LEGO");
+  displayCenteredTextLine(6, "Color Sensors");
+  displayCenteredTextLine(7, "to ports 1-4");
 
-  wait1Msec(2000);
+  sleep(2000);
   eraseDisplay();
-  StartTask(danceMOnkeyDance);
+  startTask(danceMOnkeyDance);
 
   // Let's get the party started!
   while(true)
@@ -81,9 +81,9 @@ task main()
     // Set the channel to a random one
     MSSMUXsetChan(MSSMUX, (counter++%4) + 1);
     // Set the sensor to a random colour, R, G or B
-    SetSensorType(MSSMUX, disco[abs(rand() % 3)]);
+    SensorType[MSSMUX] = disco[abs(rand() % 3)];
     // Wait a random time before switching
-    wait1Msec(abs(rand() % 100) + 100);
+    sleep(abs(rand() % 100) + 100);
     // Do a little dance!
   }
 }

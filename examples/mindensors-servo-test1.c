@@ -30,13 +30,13 @@
 task main () {
   int voltage = 0;
 
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "NXTServo");
-  nxtDisplayCenteredTextLine(3, "Demo prog");
-  nxtDisplayCenteredTextLine(5, "Connect NXServo");
-  nxtDisplayCenteredTextLine(6, "to S1 and servo");
-  nxtDisplayCenteredTextLine(7, "to connector 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "NXTServo");
+  displayCenteredTextLine(3, "Demo prog");
+  displayCenteredTextLine(5, "Connect NXServo");
+  displayCenteredTextLine(6, "to S1 and servo");
+  displayCenteredTextLine(7, "to connector 1");
+  sleep(2000);
 
   eraseDisplay();
   while (true) {
@@ -44,16 +44,16 @@ task main () {
     // read the current voltage of the power supply for the
     // sevos
     voltage = NXTServoReadVoltage(NXTSERVO);
-    nxtDisplayCenteredBigTextLine(1, "%dmV", voltage);
+    displayCenteredBigTextLine(1, "%dmV", voltage);
 
     // Move the servo to position "500" with max speed (0)
 	  NXTServoSetPos(NXTSERVO, 1, 500, 0);
-	  wait1Msec(1000);
+	  sleep(1000);
 
 	  // Move the servo to position "2500" with speed 30
 	  NXTServoSetPos(NXTSERVO, 1, 2500, 30);
 
-	  wait1Msec(1000);
+	  sleep(1000);
   }
 }
 

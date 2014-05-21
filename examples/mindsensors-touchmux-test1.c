@@ -27,34 +27,34 @@
 #include "mindsensors-touchmux.h"
 
 task main () {
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "TMUX");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "This is for the");
-  nxtDisplayCenteredTextLine(6, "Touch MUX");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "TMUX");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "This is for the");
+  displayCenteredTextLine(6, "Touch MUX");
+  sleep(2000);
   while (true) {
     eraseDisplay();
-    nxtDisplayTextLine(0, "MS Touch MUX");
+    displayTextLine(0, "MS Touch MUX");
 
     // Get the raw data from the sensor, this is not processed
     // by the driver in any way.
-    nxtDisplayTextLine(1, "Raw: %d", SensorRaw[MSTMUX]);
+    displayTextLine(1, "Raw: %d", SensorRaw[MSTMUX]);
 
     // Go through each possible touch switch attached to the TMUX
     // and display whether or not is active (pressed)
     for (int i = 1; i < 4; i++) {
       if (MSTMUXisActive(MSTMUX, i))
-        nxtDisplayTextLine(i+2, "Touch %d: on", i);
+        displayTextLine(i+2, "Touch %d: on", i);
       else
-        nxtDisplayTextLine(i+2, "Touch %d: off", i);
+        displayTextLine(i+2, "Touch %d: off", i);
     }
 
     // Display the binary value of the active touch switches
     // 0 = no touch, 1 = touch 1 active, 2 = touch 2 active, etc.
     // touch 1 + touch 2 active = 1 + 2 = 3.
-    nxtDisplayTextLine(7, "Status: %d", MSTMUXgetActive(MSTMUX));
-    wait1Msec(50);
+    displayTextLine(7, "Status: %d", MSTMUXgetActive(MSTMUX));
+    sleep(50);
   }
 }
 

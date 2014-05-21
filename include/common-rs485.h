@@ -98,7 +98,7 @@ bool RS485read(tMassiveArray &buf, int &len, int timeout = 100) {
 
 	while(bytesAvailable == 0 && !TMRisExpired(rxTimer)) {
 		bytesAvailable = nxtGetAvailHSBytes();
-		wait1Msec(10);
+		sleep(10);
 	}
 
 	nxtReadRawHS(&buf[0], bytesAvailable);
@@ -150,7 +150,7 @@ bool RS485readLargeResponse(tMassiveArray &buf, int &len, int timeout = 100)
 		memcpy(&buf[index], tmpBuff, bytesToRead);
 		bytesleft -= bytesToRead;
 		index += bytesToRead;
-		wait1Msec(5);
+		sleep(5);
 	}
 
 #ifdef __RS485_DEBUG__
@@ -251,7 +251,7 @@ void RS485clearRead(bool sendnewline = false)
   if(sendnewline)
   {
 	  nxtWriteRawHS(&nDymmyData[0], 1);   // Send the carriage return
-	  wait1Msec(10);
+	  sleep(10);
 	}
   while(nxtGetAvailHSBytes()> 0){
     nxtReadRawHS(&nDymmyData[0], 1);    // Read the response.  Probably an error.

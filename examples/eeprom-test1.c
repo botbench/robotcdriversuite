@@ -35,7 +35,7 @@ task main () {
   memcpy(data, w_string, sizeof(w_string));
   EEPROMwriteBytes(EEPROM, 0, data, 13);
   // After a write, you *must* wait 5 msec
-  wait1Msec(5);
+  sleep(5);
 
   eraseDisplay();
   memset(data, 0, sizeof(tByteArray));
@@ -44,8 +44,8 @@ task main () {
   data[13] = 0;
   StringFromChars(r_string, &data[0]);
 
-  nxtDisplayTextLine(1, "%s", r_string);
-  wait1Msec(2000);
+  displayTextLine(1, "%s", r_string);
+  sleep(2000);
 }
 
 /*

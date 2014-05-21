@@ -194,19 +194,19 @@ bool LEGOTMPreadTemp(tSensors link, float &temp) {
     switch (_LEGOTMPconvertAccuracy(config)) {
       case A_MIN:
         // conversion takes 27.5ms
-        wait1Msec(28);
+        sleep(28);
         break;
       case A_MEAN1:
         // conversion takes 55ms
-        wait1Msec(55);
+        sleep(55);
         break;
       case A_MEAN2:
         // conversion takes 110ms
-        wait1Msec(110);
+        sleep(110);
         break;
       case A_MAX:
         // conversion takes 220ms
-        wait1Msec(220);
+        sleep(220);
         break;
     }
   }

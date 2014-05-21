@@ -41,13 +41,13 @@ task main() {
 
   eraseDisplay();
 
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "SUMO Eyes");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Press enter to");
-  nxtDisplayCenteredTextLine(6, "switch between");
-  nxtDisplayCenteredTextLine(7, "ranges");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "SUMO Eyes");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Press enter to");
+  displayCenteredTextLine(6, "switch between");
+  displayCenteredTextLine(7, "ranges");
+  sleep(2000);
   eraseDisplay();
 
   // Set the sensor to short range
@@ -58,17 +58,17 @@ task main() {
       if (shortrange == false) {
         // set the sensor to short range and display this
         MSSUMOsetShortRange(HTMSSUMO);
-        nxtDisplayClearTextLine(1);
-        nxtDisplayTextLine(1, "Short range");
+        displayClearTextLine(1);
+        displayTextLine(1, "Short range");
         shortrange = true;
       } else {
         // set the sensor to long range and display this
         MSSUMOsetLongRange(HTMSSUMO);
-        nxtDisplayClearTextLine(1);
-        nxtDisplayTextLine(1, "Long range");
+        displayClearTextLine(1);
+        displayTextLine(1, "Long range");
         shortrange = false;
       }
-	    PlaySound(soundBeepBeep);
+	    playSound(soundBeepBeep);
 	    while(bSoundActive)
       time1[T1] = 0;
     }
@@ -78,12 +78,12 @@ task main() {
       zone = MSSUMOreadZone(HTMSSUMO);
 
 	    switch (zone) {
-	      case MSSUMO_FRONT: nxtDisplayCenteredBigTextLine(4, "FRONT"); break;
-	      case MSSUMO_LEFT:  nxtDisplayCenteredBigTextLine(4, "LEFT");  break;
-	      case MSSUMO_RIGHT: nxtDisplayCenteredBigTextLine(4, "RIGHT"); break;
-	      case MSSUMO_NONE:  nxtDisplayCenteredBigTextLine(4, "NONE");  break;
+	      case MSSUMO_FRONT: displayCenteredBigTextLine(4, "FRONT"); break;
+	      case MSSUMO_LEFT:  displayCenteredBigTextLine(4, "LEFT");  break;
+	      case MSSUMO_RIGHT: displayCenteredBigTextLine(4, "RIGHT"); break;
+	      case MSSUMO_NONE:  displayCenteredBigTextLine(4, "NONE");  break;
 	    }
-      wait1Msec(50);
+      sleep(50);
     }
   }
 }

@@ -30,21 +30,21 @@ task main(){
 
   float x_val, y_val, z_val;      // Gyro axis values
 
-  nxtDisplayCenteredTextLine(0, "Dexter Ind.");
-  nxtDisplayCenteredBigTextLine(1, "IMU");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Dexter Ind.");
+  displayCenteredBigTextLine(1, "IMU");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
   eraseDisplay();
 
   // Fire up the gyro and initialize it. Only needs to be done once.
   //DIMUconfigGyro(DIMU, DIMU_GYRO_RANGE_500);
   if (!DIMUconfigAccel(DIMU, DIMU_ACC_RANGE_2G))
-    PlaySound(soundException);
+    playSound(soundException);
 
   if(!DIMUconfigGyro(DIMU, DIMU_GYRO_RANGE_500))
-    PlaySound(soundException);
+    playSound(soundException);
 
   while (true){
 
@@ -64,9 +64,9 @@ task main(){
 		// y_val = DIMUreadGyroYAxis(DIMU);    // Get y-axis in dps.
 		// z_val = DIMUreadGyroZAxis(DIMU);    // Get z-axis in dps.
 
-		nxtDisplayTextLine(1, "%f", x_val);
-		nxtDisplayTextLine(2, "%f", y_val);
-		nxtDisplayTextLine(3, "%f", z_val);
+		displayTextLine(1, "%f", x_val);
+		displayTextLine(2, "%f", y_val);
+		displayTextLine(3, "%f", z_val);
 
 		// Read the accelerometer
 		// Again, there are multiple ways to do this:
@@ -96,10 +96,10 @@ task main(){
     // y_val = DIMUreadAccelYAxis10Bit(DIMU);
     // z_val = DIMUreadAccelZAxis10Bit(DIMU);
 
-		nxtDisplayTextLine(5, "%f", x_val);
-		nxtDisplayTextLine(6, "%f", y_val);
-		nxtDisplayTextLine(7, "%f", z_val);
-		wait1Msec(50);
+		displayTextLine(5, "%f", x_val);
+		displayTextLine(6, "%f", y_val);
+		displayTextLine(7, "%f", z_val);
+		sleep(50);
   }
 }
 

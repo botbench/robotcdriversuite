@@ -78,15 +78,15 @@ void displayArrow(int degreesFromDown)
    degreesFromDown = degreesFromDown-180;
 
    //If you don't know trigonometry, you can ignore this part
-   nxtDrawLine(49,
+   drawLine(49,
                31,
                (cosDegrees(degreesFromDown     ) * 20) + 49,
                (sinDegrees(degreesFromDown     ) * 20) + 31);
-   nxtDrawLine((cosDegrees(degreesFromDown - 20) * 15) + 49,
+   drawLine((cosDegrees(degreesFromDown - 20) * 15) + 49,
                (sinDegrees(degreesFromDown - 20) * 15) + 31,
                (cosDegrees(degreesFromDown     ) * 20) + 49,
                (sinDegrees(degreesFromDown     ) * 20) + 31);
-   nxtDrawLine((cosDegrees(degreesFromDown + 20) * 15) + 49,
+   drawLine((cosDegrees(degreesFromDown + 20) * 15) + 49,
                (sinDegrees(degreesFromDown + 20) * 15) + 31,
                (cosDegrees(degreesFromDown     ) * 20) + 49,
                (sinDegrees(degreesFromDown     ) * 20) + 31);
@@ -114,20 +114,20 @@ void normalize()
  */
 task main(){
 
-  nxtDisplayCenteredTextLine(0, "Dexter Ind.");
-  nxtDisplayCenteredBigTextLine(1, "IMU");
-  nxtDisplayCenteredTextLine(3, "Test 3");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Dexter Ind.");
+  displayCenteredBigTextLine(1, "IMU");
+  displayCenteredTextLine(3, "Test 3");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
   eraseDisplay();
 
   // If configuration fails, the program ends.
   if (!DIMUconfigAccel(DIMU, DIMU_ACC_RANGE_2G))
   {
-		PlaySound(soundException);
+		playSound(soundException);
 		while(bSoundActive){}
-		StopAllTasks();
+		stopAllTasks();
   }
 
   while(nNxtButtonPressed == kNoButton)
@@ -153,7 +153,7 @@ task main(){
 		displayArrow(radiansToDegrees(match()));
 
 		// This stops the screen from flashing.
-		wait1Msec(100);
+		sleep(100);
   }
 }
 

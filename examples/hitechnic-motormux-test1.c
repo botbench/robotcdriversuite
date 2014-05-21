@@ -10,7 +10,7 @@
 
 
 task main () {
-  //wait1Msec(500);
+  //sleep(500);
   eraseDisplay();
   HTMMUXinit();
 
@@ -19,7 +19,7 @@ task main () {
   MMotorEncoderReset(mmotor_S1_2);
   MMotorEncoderReset(mmotor_S1_3);
   MMotorEncoderReset(mmotor_S1_4);
-  wait1Msec(10);
+  sleep(10);
 
   // Set the encoder targets for each motor
   MMotorEncoderTarget(mmotor_S1_1, 720);
@@ -35,11 +35,11 @@ task main () {
 
   // Wait for the motors to be done getting to their targets.
   while (MMotorBusy(mmotor_S1_1) || MMotorBusy(mmotor_S1_2)
-        || MMotorBusy(mmotor_S1_3) || MMotorBusy(mmotor_S1_4)) { wait1Msec(1); }
+        || MMotorBusy(mmotor_S1_3) || MMotorBusy(mmotor_S1_4)) { sleep(1); }
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive == true) EndTimeSlice();
-  wait1Msec(2000);
+  sleep(2000);
 }
 
 /*

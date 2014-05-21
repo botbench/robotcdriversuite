@@ -37,24 +37,24 @@ const tMUXSensor LEGOUS = msensor_S1_1;
 task main () {
   int dist = 0;
 
-  nxtDisplayCenteredTextLine(0, "Lego");
-  nxtDisplayCenteredBigTextLine(1, "US");
-  nxtDisplayCenteredTextLine(3, "SMUX Test");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and US sensor");
-  nxtDisplayCenteredTextLine(7, "to SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Lego");
+  displayCenteredBigTextLine(1, "US");
+  displayCenteredTextLine(3, "SMUX Test");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and US sensor");
+  displayCenteredTextLine(7, "to SMUX Port 1");
+  sleep(2000);
 
   eraseDisplay();
-  nxtDisplayTextLine(0, "Lego US Sensor");
+  displayTextLine(0, "Lego US Sensor");
 
   while(true) {
     // Read the current distance detected.
     dist = USreadDist(LEGOUS);
 
     // display the info from the sensor
-    nxtDisplayTextLine(3, "Dist:  %3d cm", dist);
-    wait10Msec(50);
+    displayTextLine(3, "Dist:  %3d cm", dist);
+    sleep(50);
   }
 }
 

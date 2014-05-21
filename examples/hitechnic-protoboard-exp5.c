@@ -39,22 +39,22 @@ task main() {
   while(true) {
     // Switch off LED on port B0
     HTPBwriteIO(HTPB, 0x00);
-    wait1Msec(30);
+    sleep(30);
     wolight = HTPBreadADC(HTPB, 0, 10);
 
     // Switch on LED on port B0
     HTPBwriteIO(HTPB, 0x01);
-    wait1Msec(30);
+    sleep(30);
     wlight = HTPBreadADC(HTPB, 0, 10);
 
     // Calculate the difference
     lightdelta = wlight - wolight;
 
     eraseDisplay();
-		nxtDisplayTextLine(1, "%4d", wlight);
-		nxtDisplayTextLine(2, "%4d", wolight);
-		nxtDisplayTextLine(3, "%4d", lightdelta);
-    wait1Msec(30);
+		displayTextLine(1, "%4d", wlight);
+		displayTextLine(2, "%4d", wolight);
+		displayTextLine(3, "%4d", lightdelta);
+    sleep(30);
   }
 }
 

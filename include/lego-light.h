@@ -198,7 +198,7 @@ void LScalHigh(tMUXSensor muxsensor) {
 void LSsetActive(tSensors link) {
   SensorType[link] = sensorLightActive;
   SensorMode[link] = modeRaw;
-  wait1Msec(5);
+  sleep(5);
 }
 
 
@@ -220,7 +220,7 @@ void LSsetActive(tMUXSensor muxsensor) {
 void LSsetInactive(tSensors link) {
   SensorType[link] = sensorLightInactive;
   SensorMode[link] = modeRaw;
-  wait1Msec(5);
+  sleep(5);
 }
 
 
@@ -267,11 +267,11 @@ void _LSwriteCalVals() {
   if (nIoResult != ioRsltSuccess) {
     Close(hFileHandle, nIoResult);
     eraseDisplay();
-    nxtDisplayTextLine(3, "W:can't cal file");
-    PlaySound(soundException);
+    displayTextLine(3, "W:can't cal file");
+    playSound(soundException);
     while(bSoundActive) EndTimeSlice();
-    wait1Msec(5000);
-    StopAllTasks();
+    sleep(5000);
+    stopAllTasks();
   }
 
   // Write the low calibration value
@@ -280,11 +280,11 @@ void _LSwriteCalVals() {
 	  // writeDebugStreamLine("W: lslow[%d]: %d", i, lslow[i]);
 	  if (nIoResult != ioRsltSuccess) {
 	    eraseDisplay();
-	    nxtDisplayTextLine(3, "can't write lowval");
-	    PlaySound(soundException);
+	    displayTextLine(3, "can't write lowval");
+	    playSound(soundException);
 	    while(bSoundActive) EndTimeSlice();
-	    wait1Msec(5000);
-	    StopAllTasks();
+	    sleep(5000);
+	    stopAllTasks();
 	  }
 	}
 
@@ -294,11 +294,11 @@ void _LSwriteCalVals() {
 	  // writeDebugStreamLine("W lshigh[%d]: %d", i, lshigh[i]);
 	  if (nIoResult != ioRsltSuccess) {
 	    eraseDisplay();
-	    nxtDisplayTextLine(3, "can't write highval");
-	    PlaySound(soundException);
+	    displayTextLine(3, "can't write highval");
+	    playSound(soundException);
 	    while(bSoundActive) EndTimeSlice();
-	    wait1Msec(5000);
-	    StopAllTasks();
+	    sleep(5000);
+	    stopAllTasks();
 	  }
 	}
 
@@ -306,11 +306,11 @@ void _LSwriteCalVals() {
   Close(hFileHandle, nIoResult);
   if (nIoResult != ioRsltSuccess) {
     eraseDisplay();
-    nxtDisplayTextLine(3, "Can't close");
-    PlaySound(soundException);
+    displayTextLine(3, "Can't close");
+    playSound(soundException);
     while(bSoundActive) EndTimeSlice();
-    wait1Msec(5000);
-    StopAllTasks();
+    sleep(5000);
+    stopAllTasks();
   }
 }
 
@@ -340,7 +340,7 @@ void _LSreadCalVals() {
 
   // Read the low calibration value
   for (int i = 0; i < 16; i++) {
-	  ReadShort(hFileHandle, nIoResult, lslow[i]);
+	  ReadShort(hFileHandle, nIoResult, (short)lslow[i]);
     // writeDebugStreamLine("R: lslow[%d]: %d", i, lslow[i]);
 	  if (nIoResult != ioRsltSuccess) {
 			memset(&lslow[0], 0, sizeof(lslow));
@@ -353,7 +353,7 @@ void _LSreadCalVals() {
 	}
 
   for (int i = 0; i < 16; i++) {
-	  ReadShort(hFileHandle, nIoResult, lshigh[i]);
+	  ReadShort(hFileHandle, nIoResult, (short)lshigh[i]);
 	  // writeDebugStreamLine("R lshigh[%d]: %d", i, lshigh[i]);
 	  if (nIoResult != ioRsltSuccess) {
 			memset(&lslow[0], 0, sizeof(lslow));

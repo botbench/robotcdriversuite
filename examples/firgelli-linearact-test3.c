@@ -29,34 +29,34 @@
 task main () {
   tMotor testMotor = motorA;
 
-  PlaySound(soundBeepBeep);
-  nxtDisplayBigTextLine(3, "Retract");
+  playSound(soundBeepBeep);
+  displayBigTextLine(3, "Retract");
   FLACretractLA(testMotor, 100);
-  wait1Msec(500);
+  sleep(500);
 
   // This stops the motor, handy in case of emergencies
   FLACstopLA(motorA);
-  while(!isDone(testMotor)) wait1Msec(50);
-  wait1Msec(200);
+  while(!isDone(testMotor)) sleep(50);
+  sleep(200);
   nMotorEncoder[testMotor] = 0;
-  wait1Msec(1000);
+  sleep(1000);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   eraseDisplay();
-  nxtDisplayBigTextLine(1, "Extend");
-  nxtDisplayTextLine(3, "ticks:  40");
-  nxtDisplayTextLine(4, "speed:  50");
+  displayBigTextLine(1, "Extend");
+  displayTextLine(3, "ticks:  40");
+  displayTextLine(4, "speed:  50");
   FLACextendLA(testMotor, 50, 40);
-  while(!isDone(testMotor)) wait1Msec(50);
+  while(!isDone(testMotor)) sleep(50);
   if (isStalled(testMotor))
-    nxtDisplayTextLine(7, "STALLED");
-  wait1Msec(1000);
+    displayTextLine(7, "STALLED");
+  sleep(1000);
 
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   eraseDisplay();
-  nxtDisplayBigTextLine(1, "Done");
-  wait1Msec(2000);
+  displayBigTextLine(1, "Done");
+  sleep(2000);
 }
 
 /*

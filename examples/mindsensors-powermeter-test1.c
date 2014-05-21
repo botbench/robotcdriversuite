@@ -44,23 +44,23 @@ tDisplayUnit displayUnit;
  */
 void debounce() {
   while(nNxtButtonPressed != kNoButton) {
-     wait1Msec(1);
+     sleep(1);
   }
 }
 
 void doDrawPoint(int top, int x_pos, int y_pos) {
-	nxtEraseRect(x_pos, 63, x_pos+5, 0);
+	eraseRect(x_pos, 63, x_pos+5, 0);
 	if (displayUnit == showcurrent)
-	  nxtDisplayCenteredTextLine(7, "Max: %d mA", top);
+	  displayCenteredTextLine(7, "Max: %d mA", top);
 	else if (displayUnit == showvoltage)
-	  nxtDisplayCenteredTextLine(7, "Max: %d mV", top);
-	nxtDisplayStringAt(0, 12, "0");
-	nxtDrawLine(10, 10, 10, 60);
-	nxtDrawLine(10, 10, 15, 10);
-	nxtDrawLine(10, 35, 15, 35);
-	nxtDrawLine(10, 60, 15, 60);
+	  displayCenteredTextLine(7, "Max: %d mV", top);
+	displayStringAt(0, 12, "0");
+	drawLine(10, 10, 10, 60);
+	drawLine(10, 10, 15, 10);
+	drawLine(10, 35, 15, 35);
+	drawLine(10, 60, 15, 60);
 
-	nxtSetPixel(x_pos, y_pos);
+	setPixel(x_pos, y_pos);
 }
 
 int scaleToTop() {
@@ -123,7 +123,7 @@ task displayCardio () {
         i = 100;
       } else {
 	      doDrawPoint(top, i, y_val);
-	      wait1Msec(20);
+	      sleep(20);
 	    }
     }
   }
@@ -133,27 +133,27 @@ task main {
   nNxtButtonTask = -2;
   nNxtExitClicks = 3;
 
-  nxtDisplayCenteredTextLine(0, "Mindstorms");
-  nxtDisplayCenteredBigTextLine(1, "POWER");
-  nxtDisplayCenteredTextLine(3, "Scope");
-  nxtDisplayCenteredTextLine(5, "Connect MSPM to");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindstorms");
+  displayCenteredBigTextLine(1, "POWER");
+  displayCenteredTextLine(3, "Scope");
+  displayCenteredTextLine(5, "Connect MSPM to");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
-  StartTask(displayCardio);
+  startTask(displayCardio);
   while (true) {
     // Using the function below is a much efficient way of fetching both
     // voltage and current info.  You could also fetch them separately.
     if (!MSPMreadVoltageCurrent(MSPOWER, voltage, current)) {
-      StopTask(displayCardio);
-      wait1Msec(100);
-      PlaySound(soundException);
+      stopTask(displayCardio);
+      sleep(100);
+      playSound(soundException);
       eraseDisplay();
-      nxtDisplayCenteredBigTextLine(2, "ERROR!");
-      nxtDisplayCenteredTextLine(4, "Couldn't read");
-      nxtDisplayCenteredTextLine(4, "from sensor");
-      wait1Msec(2000);
-      StopAllTasks();
+      displayCenteredBigTextLine(2, "ERROR!");
+      displayCenteredTextLine(4, "Couldn't read");
+      displayCenteredTextLine(4, "from sensor");
+      sleep(2000);
+      stopAllTasks();
     }
 
 
@@ -187,7 +187,7 @@ task main {
         debounce();
         break;
     }
-    wait1Msec(1);
+    sleep(1);
   }
 }
 

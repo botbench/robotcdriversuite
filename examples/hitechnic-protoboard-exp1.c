@@ -39,7 +39,7 @@ task main() {
     // Read a 10bit wide analogue value from A0
     inputdata = HTPBreadADC(HTPB, 0, 10);
     eraseDisplay();
-    nxtDisplayTextLine(1, "%d", inputdata);
+    displayTextLine(1, "%d", inputdata);
 
     // If A0 is less than 50% of the max value
     // turn off the LED, otherwise switch it on
@@ -48,7 +48,7 @@ task main() {
     else
       HTPBwriteIO(HTPB, 0x01);
 
-    wait1Msec(50);
+    sleep(50);
   }
 }
 

@@ -40,26 +40,26 @@ const tMUXSensor HTGYRO = msensor_S1_1;
 
 task main () {
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "GYRO");
-  nxtDisplayCenteredTextLine(3, "SMUX Test");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and sensor to");
-  nxtDisplayCenteredTextLine(7, "SMUX Port 1");
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "GYRO");
+  displayCenteredTextLine(3, "SMUX Test");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and sensor to");
+  displayCenteredTextLine(7, "SMUX Port 1");
 
-  wait1Msec(2000);
+  sleep(2000);
   eraseDisplay();
   time1[T1] = 0;
   while(true) {
     if (time1[T1] > 1000) {
       eraseDisplay();
-      nxtDisplayTextLine(1, "Resetting");
-      nxtDisplayTextLine(1, "heading");
-      wait1Msec(500);
+      displayTextLine(1, "Resetting");
+      displayTextLine(1, "heading");
+      sleep(500);
 
       // Start the calibration and display the offset
-      nxtDisplayTextLine(2, "Offset: %4d", HTGYROstartCal(HTGYRO));
-      PlaySound(soundBlip);
+      displayTextLine(2, "Offset: %4d", HTGYROstartCal(HTGYRO));
+      playSound(soundBlip);
       while(bSoundActive) EndTimeSlice();
       time1[T1] = 0;
     }
@@ -67,16 +67,16 @@ task main () {
     while(nNxtButtonPressed != kEnterButton) {
       eraseDisplay();
 
-      nxtDisplayTextLine(1, "Reading");
+      displayTextLine(1, "Reading");
       // Read the current calibration offset and display it
-      nxtDisplayTextLine(2, "Offset: %4d", HTGYROreadCal(HTGYRO));
+      displayTextLine(2, "Offset: %4d", HTGYROreadCal(HTGYRO));
 
-      nxtDisplayClearTextLine(4);
+      displayClearTextLine(4);
       // Read the current rotational speed and display it
-      nxtDisplayTextLine(4, "Gyro:   %4d", HTGYROreadRot(HTGYRO));
-      nxtDisplayTextLine(6, "Press enter");
-      nxtDisplayTextLine(7, "to recalibrate");
-      wait1Msec(100);
+      displayTextLine(4, "Gyro:   %4d", HTGYROreadRot(HTGYRO));
+      displayTextLine(6, "Press enter");
+      displayTextLine(7, "to recalibrate");
+      sleep(100);
     }
   }
 }

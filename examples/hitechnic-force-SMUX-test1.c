@@ -42,22 +42,22 @@ task main() {
   nNxtButtonTask  = -2;
 
   eraseDisplay();
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Force");
-  nxtDisplayCenteredTextLine(3, "SMUX Test");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and sensor to");
-  nxtDisplayCenteredTextLine(7, "SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Force");
+  displayCenteredTextLine(3, "SMUX Test");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and sensor to");
+  displayCenteredTextLine(7, "SMUX Port 1");
+  sleep(2000);
 
   while(true) {
     // Read the sensor value
     _force = HTFreadSensor(HTFORCE);
 
-    nxtDisplayClearTextLine(3);
-    nxtDisplayClearTextLine(4);
-    nxtDisplayTextLine(3, "Force:  %4d", _force);
-    wait1Msec(50);
+    displayClearTextLine(3);
+    displayClearTextLine(4);
+    displayTextLine(3, "Force:  %4d", _force);
+    sleep(50);
   }
 }
 

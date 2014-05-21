@@ -28,96 +28,96 @@
 #include "mindsensors-pfmate.h"
 
 void doTest(int channel) {
-  nxtDisplayTextLine(5, "Chan:  %d", channel);
+  displayTextLine(5, "Chan:  %d", channel);
 
   // -------- testing motor A -----------------------
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
-  nxtDisplayTextLine(6, "Motor: A");
-  nxtDisplayTextLine(7, "Dir:   fwd");
+  displayTextLine(6, "Motor: A");
+  displayTextLine(7, "Dir:   fwd");
   for (int speed = 1; speed < 8; speed++) {
     // Run motor A forward from speed 1 to 7
     MSPFMcontrolMotorA(MSPFM, channel, MSPFM_FORWARD, speed);
-    wait1Msec(500);
+    sleep(500);
   }
 
-  nxtDisplayTextLine(7, "Dir:   brake");
+  displayTextLine(7, "Dir:   brake");
   // Brake the motor
   MSPFMcontrolMotorA(MSPFM, channel, MSPFM_BRAKE, 0);
-  wait1Msec(500);
+  sleep(500);
 
-  nxtDisplayTextLine(7, "Dir:   rev");
+  displayTextLine(7, "Dir:   rev");
   for (int speed = 1; speed < 8; speed++) {
     // Run motor A in reverse from speed 1 to 7
     MSPFMcontrolMotorA(MSPFM, channel, MSPFM_REVERSE, speed);
-    wait1Msec(500);
+    sleep(500);
   }
 
-  nxtDisplayTextLine(7, "Dir:   float");
+  displayTextLine(7, "Dir:   float");
   // Set motor A to float
   MSPFMcontrolMotorA(MSPFM, channel, MSPFM_FLOAT, 0);
-  wait1Msec(500);
+  sleep(500);
 
   // -------- testing motor B -----------------------
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
-  nxtDisplayTextLine(6, "Motor: B");
-  nxtDisplayTextLine(7, "Dir:   fwd");
+  displayTextLine(6, "Motor: B");
+  displayTextLine(7, "Dir:   fwd");
   for (int speed = 1; speed < 8; speed++) {
     // Run motor B forward from speed 1 to 7
     MSPFMcontrolMotorB(MSPFM, channel, MSPFM_FORWARD, speed);
-    wait1Msec(500);
+    sleep(500);
   }
 
-  nxtDisplayTextLine(7, "Dir:   brake");
+  displayTextLine(7, "Dir:   brake");
   MSPFMcontrolMotorB(MSPFM, channel, MSPFM_BRAKE, 0);
-  wait1Msec(500);
+  sleep(500);
 
-  nxtDisplayTextLine(7, "Dir:   rev");
+  displayTextLine(7, "Dir:   rev");
   for (int speed = 1; speed < 8; speed++) {
     // Run motor B in reverse from speed 1 to 7
     MSPFMcontrolMotorB(MSPFM, channel, MSPFM_REVERSE, speed);
-    wait1Msec(500);
+    sleep(500);
   }
 
-  nxtDisplayTextLine(7, "Dir:   float");
+  displayTextLine(7, "Dir:   float");
   MSPFMcontrolMotorB(MSPFM, channel, MSPFM_FLOAT, 0);
-  wait1Msec(500);
+  sleep(500);
 
   // -------- testing motor A+B -----------------------
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
-  nxtDisplayTextLine(6, "Motor: A+B");
-  nxtDisplayTextLine(7, "Dir:   fwd+rev");
+  displayTextLine(6, "Motor: A+B");
+  displayTextLine(7, "Dir:   fwd+rev");
   for (int speed = 1; speed < 8; speed++) {
     // Run motor A forward and motor B in reverse from speed 1 to 7
     MSPFMcontrolMotorAB(MSPFM, channel, MSPFM_FORWARD, speed, MSPFM_REVERSE, speed);
-    wait1Msec(500);
+    sleep(500);
   }
 
-  nxtDisplayTextLine(7, "Dir:   brake");
+  displayTextLine(7, "Dir:   brake");
   // brake both motors A and B
   MSPFMcontrolMotorAB(MSPFM, channel, MSPFM_BRAKE, 0, MSPFM_BRAKE, 0);
-  wait1Msec(500);
+  sleep(500);
 
-  nxtDisplayTextLine(7, "Dir:   rev+fwd");
+  displayTextLine(7, "Dir:   rev+fwd");
   for (int speed = 1; speed < 8; speed++) {
     // Run motor A in revese and motor B forward from speed 1 to 7
     MSPFMcontrolMotorAB(MSPFM, channel, MSPFM_REVERSE, speed, MSPFM_FORWARD, speed);
-    wait1Msec(500);
+    sleep(500);
   }
 
-  nxtDisplayTextLine(7, "Dir:   float");
+  displayTextLine(7, "Dir:   float");
   // Put both motors in float
   MSPFMcontrolMotorAB(MSPFM, channel, MSPFM_FLOAT, 0, MSPFM_FLOAT, 0);
-  wait1Msec(500);
+  sleep(500);
 }
 
 task main() {
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "PFMate");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "PFMate");
+  displayCenteredTextLine(3, "Test 1");
+  sleep(2000);
 
   // Run through each channel for testing.
   for (int channel = 1; channel < 5; channel++) {

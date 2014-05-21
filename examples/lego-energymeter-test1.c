@@ -33,26 +33,26 @@ task main() {
   float _wattIn;
   float _wattOut;
 
-  nxtDisplayCenteredTextLine(0, "LEGO");
-  nxtDisplayCenteredBigTextLine(1, "Energy");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "LEGO");
+  displayCenteredBigTextLine(1, "Energy");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
   eraseDisplay();
 
-	nxtDrawLine(0, 27, 99, 27);
-	nxtDrawLine(0, 52, 99, 52);
+	drawLine(0, 27, 99, 27);
+	drawLine(0, 52, 99, 52);
 
   while (true) {
     //eraseDisplay();
     LEGOEMreadData(LEGOEM, _voltageIn, _currentIn, _voltageOut, _currentOut, _joule, _wattIn, _wattOut);
-    nxtDisplayCenteredTextLine(0, "Energy Meter");
-    nxtDisplayTextLine(2, "In:  %2.1fV|%2.3fA", _voltageIn, _currentIn);
-    nxtDisplayTextLine(3, "Out: %2.1fV|%2.3fA", _voltageOut, _currentOut);
-    nxtDisplayTextLine(5, "Pwr in:  %2.3fW", _wattIn);
-    nxtDisplayTextLine(6, "Pwr out: %2.3fW", _wattOut);
-    nxtDisplayTextLine(7, "Energy: %3dJ", _joule);
-    wait1Msec(100);
+    displayCenteredTextLine(0, "Energy Meter");
+    displayTextLine(2, "In:  %2.1fV|%2.3fA", _voltageIn, _currentIn);
+    displayTextLine(3, "Out: %2.1fV|%2.3fA", _voltageOut, _currentOut);
+    displayTextLine(5, "Pwr in:  %2.3fW", _wattIn);
+    displayTextLine(6, "Pwr out: %2.3fW", _wattOut);
+    displayTextLine(7, "Energy: %3dJ", _joule);
+    sleep(100);
   }
 }

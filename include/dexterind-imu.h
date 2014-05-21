@@ -332,7 +332,7 @@ float DIMUreadAccelAxis10Bit(tSensors link, ubyte axis, bool calibrate){
   if (calibrate == true) {
     writeDebugStreamLine("axis: %d", axis);
     DIMUsetAccelAxisOffset(link, 0x10 + axis, 0x00, 0x00);
-    wait1Msec(50);
+    sleep(50);
   }
 
   DIMU_I2CRequest[0] = 2;          // Sending address, register.
@@ -347,7 +347,7 @@ float DIMUreadAccelAxis10Bit(tSensors link, ubyte axis, bool calibrate){
   //sreading = (ureading & 0x200) ? -(((~ureading) & 0x3FF)+1) : ureading;
 
   if (calibrate == true) {
-    wait1Msec(50);
+    sleep(50);
     switch (axis) {
       case DIMU_ACC_X_AXIS: drift_offset = (  0 - sreading ) * 2; break;
       case DIMU_ACC_Y_AXIS: drift_offset = (  0 - sreading ) * 2; break;
@@ -396,7 +396,7 @@ void DIMUcalAccel(tSensors link){
   DIMUreadAccelAxis10Bit(link, DIMU_ACC_X_AXIS, true);      // Get x axis data.
 	DIMUreadAccelAxis10Bit(link, DIMU_ACC_Y_AXIS, true);      // Get y axis data.
 	DIMUreadAccelAxis10Bit(link, DIMU_ACC_Z_AXIS, true);      // Get z axis data.
-	wait1Msec(100);
+	sleep(100);
 }
 
 

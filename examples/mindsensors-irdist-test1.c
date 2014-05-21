@@ -36,13 +36,13 @@ task main () {
   int maxdist = 0;
   string type;
 
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "DIST-nx");
-  nxtDisplayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "DIST-nx");
+  displayCenteredTextLine(3, "Test 1");
 
-  wait1Msec(2000);
+  sleep(2000);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
   eraseDisplay();
 
@@ -61,9 +61,9 @@ task main () {
     case MSDIST_CUSTOM:  type = " CUSTOM"; break;
   }
 
-  nxtDisplayTextLine(5, "Type: %s", type);
-  nxtDisplayTextLine(6, "Min:   %4dmm", mindist);
-	nxtDisplayTextLine(7, "Max:   %4dmm", maxdist);
+  displayTextLine(5, "Type: %s", type);
+  displayTextLine(6, "Min:   %4dmm", mindist);
+	displayTextLine(7, "Max:   %4dmm", maxdist);
 
   while (true) {
     // Get the distance calculated based on the data from the IR Sharp module
@@ -72,14 +72,14 @@ task main () {
     // Get the raw voltage data from the Sharp IR module
     voltage = MSDISTreadVoltage(MSDIST);
     if (distance < 0) {
-      nxtDisplayTextLine(4, "ERROR!!");
-      wait1Msec(2000);
-      StopAllTasks();
+      displayTextLine(4, "ERROR!!");
+      sleep(2000);
+      stopAllTasks();
     }
 
-    nxtDisplayCenteredBigTextLine(0, "%4dmm", distance);
-    nxtDisplayCenteredBigTextLine(3, "%4dmV", voltage);
-    wait1Msec(50);
+    displayCenteredBigTextLine(0, "%4dmm", distance);
+    displayCenteredBigTextLine(3, "%4dmV", voltage);
+    sleep(50);
   }
 }
 

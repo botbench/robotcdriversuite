@@ -50,8 +50,8 @@ int HTTMUXgetActive(tSensors link) {
 
   // Make sure the sensor is configured as type sensorRawValue
   if (SensorType[link] != sensorRawValue) {
-    SetSensorType(link, sensorRawValue);
-    wait1Msec(100);
+    SensorType[link] = sensorRawValue;
+    sleep(100);
   }
 
   // Voodoo magic starts here.  This is taken straight from the Touch MUX pamphlet.

@@ -41,22 +41,22 @@ task main () {
 
   nNxtButtonTask  = -2;
 
-  nxtDisplayCenteredTextLine(0, "Lego");
-  nxtDisplayCenteredBigTextLine(1, "Sound");
-  nxtDisplayCenteredTextLine(3, "SMUX Test");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and snd sensor");
-  nxtDisplayCenteredTextLine(7, "to SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Lego");
+  displayCenteredBigTextLine(1, "Sound");
+  displayCenteredTextLine(3, "SMUX Test");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and snd sensor");
+  displayCenteredTextLine(7, "to SMUX Port 1");
+  sleep(2000);
 
   eraseDisplay();
-  nxtDisplayTextLine(0, "Lego Sound Sensor");
-  nxtDisplayTextLine(6, "[enter] to switch");
-  nxtDisplayTextLine(7, "dB and dBA mode");
+  displayTextLine(0, "Lego Sound Sensor");
+  displayTextLine(6, "[enter] to switch");
+  displayTextLine(7, "dB and dBA mode");
 
   // Set the sensor to dB mode.
   SNDsetDB(LEGOSND);
-  nxtDisplayCenteredTextLine(1, "dB mode");
+  displayCenteredTextLine(1, "dB mode");
 
   while(true) {
     // The enter button has been pressed, switch
@@ -66,15 +66,15 @@ task main () {
       if (!dba) {
         // set the sensor to DB mode
         SNDsetDB(LEGOSND);
-        nxtDisplayCenteredTextLine(1, "dB mode");
+        displayCenteredTextLine(1, "dB mode");
       } else {
         // set the sensor to dBA mode.
         SNDsetDBA(LEGOSND);
-        nxtDisplayCenteredTextLine(1, "dBA mode");
+        displayCenteredTextLine(1, "dBA mode");
       }
 
       // wait 500ms to debounce the switch
-      wait1Msec(500);
+      sleep(500);
     }
 
     // Read the normalised value of the sensor
@@ -84,9 +84,9 @@ task main () {
     soundnorm = SNDreadNorm(LEGOSND);
 
     // display the info from the sensor
-    nxtDisplayTextLine(3, "Raw:  %3d", soundraw);
-    nxtDisplayTextLine(4, "Norm: %3d", soundnorm);
-    wait10Msec(50);
+    displayTextLine(3, "Raw:  %3d", soundraw);
+    displayTextLine(4, "Norm: %3d", soundnorm);
+    sleep(50);
   }
 }
 

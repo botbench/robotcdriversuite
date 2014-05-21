@@ -31,17 +31,17 @@ string transponderID;
 task main()
 {
   nNxtButtonTask  = -2;
-  nxtDisplayCenteredTextLine(0, "Codatex");
-  nxtDisplayCenteredBigTextLine(1, "RFID");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Codatex");
+  displayCenteredBigTextLine(1, "RFID");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
   eraseDisplay();
-  nxtDisplayCenteredTextLine(3, "Start single");
-  nxtDisplayCenteredTextLine(4, "reading loop");
-  wait1Msec(2000);
+  displayCenteredTextLine(3, "Start single");
+  displayCenteredTextLine(4, "reading loop");
+  sleep(2000);
   eraseDisplay();
 
   // loop for transponder readings in single read mode
@@ -50,17 +50,17 @@ task main()
     // set, it will default to single shotting the sensor.
     if (!CTRFIDreadTransponder(CTRFID, transponderID)) {
       eraseDisplay();
-      nxtDisplayTextLine(3, "Error reading");
-      nxtDisplayTextLine(4, "from sensor!");
-      wait10Msec(5000);
-      StopAllTasks();
+      displayTextLine(3, "Error reading");
+      displayTextLine(4, "from sensor!");
+      sleep(5000);
+      stopAllTasks();
     }
-    nxtDisplayCenteredTextLine(3, "Transponder ID:");
-    nxtDisplayCenteredTextLine(4, "%s", transponderID);
+    displayCenteredTextLine(3, "Transponder ID:");
+    displayCenteredTextLine(4, "%s", transponderID);
 
     // Be sure to add about 200ms after each read
     // or you end up getting 0000000000 as a transponder address
-    wait1Msec(200);
+    sleep(200);
   }
 }
 

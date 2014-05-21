@@ -64,7 +64,7 @@ task main ()
   // display the current DSP mode
   // When connected to a SMUX, the IR Seeker V2 can only be
   // used in 1200Hz mode.
-  nxtDisplayTextLine(0, "      DC  1200");
+  displayTextLine(0, "      DC  1200");
 
   // The sensor is connected to the first port
   // of the SMUX which is connected to the NXT port S1.
@@ -98,22 +98,22 @@ task main ()
       displayText(5, "3", dcS4, acS4);
       displayText(6, "4", dcS5, acS5);
     if (HTSMUXreadPowerStatus(HTSMUX))
-      nxtDisplayTextLine(7, "Batt: bad");
+      displayTextLine(7, "Batt: bad");
     else
-      nxtDisplayTextLine(7, "Batt: good");
+      displayTextLine(7, "Batt: good");
   }
 }
 
 // Display the instructions to the user
 void displayInstructions()
 {
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "IRSeekr2");
-  nxtDisplayCenteredTextLine(3, "SMUX Test");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and sensor to");
-  nxtDisplayCenteredTextLine(7, "SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "IRSeekr2");
+  displayCenteredTextLine(3, "SMUX Test");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and sensor to");
+  displayCenteredTextLine(7, "SMUX Port 1");
+  sleep(2000);
 }
 
 // Minimize LCD screen flicker by only updating LCD when data has changed
@@ -130,7 +130,7 @@ void displayText(int nLineNumber, const string cChar, int nValueDC, int nValueAC
 
     sTextLines[nLineNumber] = sTemp;
     StringFormat(sTemp2, "%s:  %s", cChar, sTemp);
-    nxtDisplayTextLine(nLineNumber, sTemp2);
+    displayTextLine(nLineNumber, sTemp2);
   }
 }
 

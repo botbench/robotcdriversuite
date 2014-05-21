@@ -72,8 +72,8 @@ float HTGYRO_offsets[][] = {{620.0, 620.0, 620.0, 620.0}, /*!< Array for offset 
 float HTGYROreadRot(tSensors link) {
   // Make sure the sensor is configured as type sensorRawValue
   if (SensorType[link] != sensorAnalogInactive) {
-    SetSensorType(link, sensorAnalogInactive);
-    wait1Msec(100);
+    SensorType[link] = sensorAnalogInactive;
+    sleep(100);
   }
 
   return (SensorValue[link] - HTGYRO_offsets[link][0]);
@@ -102,14 +102,14 @@ float HTGYROstartCal(tSensors link) {
 
   // Make sure the sensor is configured as type sensorRawValue
   if (SensorType[link] != sensorAnalogInactive) {
-    SetSensorType(link, sensorAnalogInactive);
-    wait1Msec(100);
+    SensorType[link] = sensorAnalogInactive;
+    sleep(100);
   }
 
   // Take 50 readings and average them out
   for (int i = 0; i < 50; i++) {
     _avgdata += SensorValue[link];
-    wait1Msec(5);
+    sleep(5);
   }
 
   // Store new offset
@@ -132,7 +132,7 @@ float HTGYROstartCal(tMUXSensor muxsensor) {
   // Take 5 readings and average them out
   for (int i = 0; i < 50; i++) {
     _avgdata += HTSMUXreadAnalogue(muxsensor);
-    wait1Msec(50);
+    sleep(50);
   }
 
   // Store new offset

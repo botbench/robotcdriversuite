@@ -30,12 +30,12 @@ task main(){
 
   int x_val, y_val, z_val;      // axis values
 
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "IMU");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "IMU");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
   eraseDisplay();
 
   while (true){
@@ -43,17 +43,17 @@ task main(){
 		// Read the GYROSCOPE
     MSIMUreadGyroAxes(MSIMU, x_val, y_val, z_val);
 
-		nxtDisplayTextLine(1, "%d", x_val);
-		nxtDisplayTextLine(2, "%d", y_val);
-		nxtDisplayTextLine(3, "%d", z_val);
+		displayTextLine(1, "%d", x_val);
+		displayTextLine(2, "%d", y_val);
+		displayTextLine(3, "%d", z_val);
 
 		// Read the accelerometer
 		MSIMUreadAccelAxes(MSIMU, x_val, y_val, z_val);
 
-		nxtDisplayTextLine(5, "%d", x_val);
-		nxtDisplayTextLine(6, "%d", y_val);
-		nxtDisplayTextLine(7, "%d", z_val);
-		wait1Msec(50);
+		displayTextLine(5, "%d", x_val);
+		displayTextLine(6, "%d", y_val);
+		displayTextLine(7, "%d", z_val);
+		sleep(50);
   }
 }
 

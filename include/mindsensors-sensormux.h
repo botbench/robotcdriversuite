@@ -60,7 +60,7 @@ int MSSMUXreadBattery(tSensors link)
 {
   // Switch to the virtual channel (0)
   MSSMUXsetChan(link, 0);
-  wait1Msec(50);
+  sleep(50);
 
   SensorType[link] = sensorI2CCustomFastSkipStates;
   memset(MSMX_I2CRequest, 0, sizeof(tByteArray));
@@ -107,31 +107,31 @@ void MSSMUXsetChan(tSensors link, int channel)
   // give it a little time
   switch (previous)
   {
-    case sensorCOLORFULL:
-    case sensorCOLORRED:
-    case sensorCOLORGREEN:
-    case sensorCOLORBLUE:
-    case sensorCOLORNONE: wait1Msec(12); break;
+    case sensorColorNxtFULL:
+    case sensorColorNxtRED:
+    case sensorColorNxtGREEN:
+    case sensorColorNxtBLUE:
+    case sensorColorNxtNONE: sleep(12); break;
   }
 
   // Set both pins as output
   DigitalPinDirection[link] = 0x03;
-  wait1Msec(1);
+  sleep(1);
 
   for (int i = 0; i < 3; i++)
   {
     DigitalPinValue[link] = 0x00;
-    wait1Msec(1);
+    sleep(1);
 
     for (int j = 0; j < 8; j++) {
       if ((MUXmsg[i] >> j) & 0x01)
         DigitalPinValue[link] = 0x00;
       else
         DigitalPinValue[link] = 0x01;
-      wait1Msec(1);
+      sleep(1);
     }
     DigitalPinValue[link] = 0x01;
-    wait1Msec(1);
+    sleep(1);
   }
 }
 

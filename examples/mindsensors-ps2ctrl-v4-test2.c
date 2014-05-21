@@ -38,12 +38,12 @@ task main ()
   ubyte txType = 0;
   long rawValue = 0;
 
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "PSP-Nx");
-  nxtDisplayCenteredTextLine(3, "Test 2");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "PSP-Nx");
+  displayCenteredTextLine(3, "Test 2");
+  sleep(2000);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
 
   eraseDisplay();
@@ -72,26 +72,26 @@ task main ()
 
       if (oldRefSignal != refSignal)
       {
-	      PlaySound(soundShortBlip);
+	      playSound(soundShortBlip);
 		    switch(refSignal)
 		    {
-		      case PSPV4_SIGNAL_FAST_REWIND:   nxtDisplayCenteredBigTextLine(3,"REWIND"); break;
-		      case PSPV4_SIGNAL_FAST_FORWARD:  nxtDisplayCenteredBigTextLine(3,"FORWARD"); break;
-		      case PSPV4_SIGNAL_PLAY:          nxtDisplayCenteredBigTextLine(3,"PLAY"); break;
-		      case PSPV4_SIGNAL_STOP:          nxtDisplayCenteredBigTextLine(3,"STOP"); break;
+		      case PSPV4_SIGNAL_FAST_REWIND:   displayCenteredBigTextLine(3,"REWIND"); break;
+		      case PSPV4_SIGNAL_FAST_FORWARD:  displayCenteredBigTextLine(3,"FORWARD"); break;
+		      case PSPV4_SIGNAL_PLAY:          displayCenteredBigTextLine(3,"PLAY"); break;
+		      case PSPV4_SIGNAL_STOP:          displayCenteredBigTextLine(3,"STOP"); break;
 		    }
 		  }
 
 		  // Always display the raw value, even if it's not one of the four
 		  // referee signals.  Handy if you want to add more commands to your robot!
-	    nxtDisplayTextLine(6, "Type:  0x%02X", txType);
-	    nxtDisplayTextLine(7, "Raw:  0x%03X", rawValue);
+	    displayTextLine(6, "Type:  0x%02X", txType);
+	    displayTextLine(7, "Raw:  0x%03X", rawValue);
 
 	    // Update the counters and signals
 	    oldCounter = counter;
 	    oldRefSignal = refSignal;
 	  }
-    wait1Msec(50);
+    sleep(50);
   }
 }
 

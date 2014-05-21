@@ -38,42 +38,42 @@ const tMUXSensor HTMAG = msensor_S1_1;
 
 task main () {
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "MAGNETIC");
-  nxtDisplayCenteredTextLine(3, "Field Sensor");
-  nxtDisplayCenteredTextLine(4, "SMUX Test");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and sensor to");
-  nxtDisplayCenteredTextLine(7, "SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "MAGNETIC");
+  displayCenteredTextLine(3, "Field Sensor");
+  displayCenteredTextLine(4, "SMUX Test");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and sensor to");
+  displayCenteredTextLine(7, "SMUX Port 1");
+  sleep(2000);
 
   eraseDisplay();
   time1[T1] = 0;
   while(true) {
     eraseDisplay();
-    nxtDisplayTextLine(1, "Resetting");
-    nxtDisplayTextLine(2, "bias");
-    wait1Msec(500);
+    displayTextLine(1, "Resetting");
+    displayTextLine(2, "bias");
+    sleep(500);
 
     // Start the calibration and display the offset
-    nxtDisplayTextLine(2, "Bias: %4d", HTMAGstartCal(HTMAG));
-    PlaySound(soundBlip);
+    displayTextLine(2, "Bias: %4d", HTMAGstartCal(HTMAG));
+    playSound(soundBlip);
     while(bSoundActive) EndTimeSlice();
     while(nNxtButtonPressed != kNoButton) EndTimeSlice();
 
     while(nNxtButtonPressed != kEnterButton) {
       eraseDisplay();
 
-      nxtDisplayTextLine(1, "Reading");
+      displayTextLine(1, "Reading");
       // Read the current calibration offset and display it
-      nxtDisplayTextLine(2, "Bias: %4d", HTMAGreadCal(HTMAG));
+      displayTextLine(2, "Bias: %4d", HTMAGreadCal(HTMAG));
 
-      nxtDisplayClearTextLine(4);
+      displayClearTextLine(4);
       // Read the current rotational speed and display it
-      nxtDisplayTextLine(4, "Mag:   %4d", HTMAGreadVal(HTMAG));
-      nxtDisplayTextLine(6, "Press enter");
-      nxtDisplayTextLine(7, "to recalibrate");
-      wait1Msec(100);
+      displayTextLine(4, "Mag:   %4d", HTMAGreadVal(HTMAG));
+      displayTextLine(6, "Press enter");
+      displayTextLine(7, "to recalibrate");
+      sleep(100);
     }
   }
 }

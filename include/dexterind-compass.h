@@ -121,19 +121,25 @@
 #define DIMC_GAIN_SCALE_5_6   3.03     /*!< Ramge multiplier for ±5.6 Ga */
 #define DIMC_GAIN_SCALE_8_1   4.35     /*!< Ramge multiplier for ±8.1 Ga */
 
+// Sensors with calibration data require a <name>CalData struct
+// to make use of the generic calibration data file writing/reading
+typedef struct
+{
+	int _offsets[3];
+} tDIMCCalData, *tDIMCCalDataptr;
+
 typedef struct
 {
   tI2CData I2CData;
+  tDIMCCalData calData;
   float heading;
   int axes[3];
   int _minVals[3];
   int _maxVals[3];
-  int _offsets[3];
   bool _calibrated;
   bool _calibrating;
   string _calibrationFile;
 } tDIMC, *tDIMCptr;
-
 
 bool initSensor(tDIMCptr dimcPtr, tSensors port);
 bool sensorReadAll(tDIMCptr dimcPtr);
@@ -228,9 +234,9 @@ bool sensorReadAll(tDIMCptr dimcPtr)
     }
   }
 
-  dimcPtr->axes[0] -= dimcPtr->_offsets[0];
-  dimcPtr->axes[1] -= dimcPtr->_offsets[1];
-  dimcPtr->axes[2] -= dimcPtr->_offsets[2];
+  dimcPtr->axes[0] -= dimcPtr->calData._offsets[0];
+  dimcPtr->axes[1] -= dimcPtr->calData._offsets[1];
+  dimcPtr->axes[2] -= dimcPtr->calData._offsets[2];
 
   angle = atan2(dimcPtr->axes[0], dimcPtr->axes[1]);
   if (angle < 0) angle += 2*PI;
@@ -265,7 +271,7 @@ bool stopCal(tDIMCptr dimcPtr)
   dimcPtr->_calibrating = false;
   for (int i = 0; i < 3; i++)
   {
-    dimcPtr->_offsets[i] = ((dimcPtr->_maxVals[i] - dimcPtr->_minVals[i]) / 2) + dimcPtr->_minVals[i];
+    dimcPtr->calData._offsets[i] = ((dimcPtr->_maxVals[i] - dimcPtr->_minVals[i]) / 2) + dimcPtr->_minVals[i];
   }
   _writeCalVals(dimcPtr);
   return true;
@@ -292,24 +298,24 @@ bool _writeCalVals(tDIMCptr dimcPtr)
   {
     Close(hFileHandle, nIoResult);
     eraseDisplay();
-    nxtDisplayTextLine(3, "W:can't cal file");
-    PlaySound(soundException);
+    displayTextLine(3, "W:can't cal file");
+    playSound(soundException);
     while(bSoundActive) EndTimeSlice();
-    wait1Msec(5000);
-    StopAllTasks();
+    sleep(5000);
+    stopAllTasks();
   }
 
   for (int i = 0; i < 3; i++)
   {
-	  WriteShort(hFileHandle, nIoResult, dimcPtr->_offsets[i]);
+	  WriteShort(hFileHandle, nIoResult, dimcPtr->calData._offsets[i]);
 	  if (nIoResult != ioRsltSuccess)
 	  {
       eraseDisplay();
-	    nxtDisplayTextLine(3, "can't write offset");
-	    PlaySound(soundException);
+	    displayTextLine(3, "can't write offset");
+	    playSound(soundException);
 	    while(bSoundActive) EndTimeSlice();
-	    wait1Msec(5000);
-	    StopAllTasks();
+	    sleep(5000);
+	    stopAllTasks();
     }
   }
 
@@ -318,11 +324,11 @@ bool _writeCalVals(tDIMCptr dimcPtr)
   if (nIoResult != ioRsltSuccess)
   {
     eraseDisplay();
-    nxtDisplayTextLine(3, "Can't close");
-    PlaySound(soundException);
+    displayTextLine(3, "Can't close");
+    playSound(soundException);
     while(bSoundActive) EndTimeSlice();
-    wait1Msec(5000);
-    StopAllTasks();
+    sleep(5000);
+    stopAllTasks();
   }
   return true;
 }
@@ -349,19 +355,19 @@ bool _readCalVals(tDIMCptr dimcPtr)
     Close(hFileHandle, nIoResult);
 
     // Assign default values
-    memset(dimcPtr->_offsets, 0, 3 * sizeof(int));
+    memset(dimcPtr->calData._offsets, 0, 3 * sizeof(int));
 		_writeCalVals(dimcPtr);
     return true;
   }
 
   for (int i = 0; i < 3; i++)
   {
-	  ReadShort(hFileHandle, nIoResult, dimcPtr->_offsets[i]);
+	  ReadShort(hFileHandle, nIoResult, (short)dimcPtr->calData._offsets[i]);
 	  // writeDebugStream("R offsets[%d][%d]:", i, j);
 	  // writeDebugStreamLine(" %d", DIMCoffsets[i][j]);
 	  if (nIoResult != ioRsltSuccess)
 	  {
-	    memset(dimcPtr->_offsets, 0, 3 * sizeof(int));
+	    memset(dimcPtr->calData._offsets, 0, 3 * sizeof(int));
 		  _writeCalVals(dimcPtr);
 		  return true;
 		}

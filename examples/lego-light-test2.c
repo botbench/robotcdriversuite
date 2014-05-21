@@ -32,30 +32,30 @@ task main () {
 
   LSsetActive(LEGOLS);
   eraseDisplay();
-  nxtDisplayTextLine(0, "Light Sensor Cal.");
-  nxtDisplayTextLine(2, "Left:  set black");
-  nxtDisplayTextLine(3, "Right: set white");
-  nxtDisplayTextLine(7, "Grey:  exit");
+  displayTextLine(0, "Light Sensor Cal.");
+  displayTextLine(2, "Left:  set black");
+  displayTextLine(3, "Right: set white");
+  displayTextLine(7, "Grey:  exit");
 
   while (true) {
     switch(nNxtButtonPressed) {
       // if the left button is pressed calibrate the black value for the sensor
       case kLeftButton:
                         LScalLow(LEGOLS);
-                        PlaySound(soundBeepBeep);
+                        playSound(soundBeepBeep);
                         while(bSoundActive) EndTimeSlice();
                         break;
 
       // if the left button is pressed calibrate the white value for the sensor
       case kRightButton:
                         LScalHigh(LEGOLS);
-                        PlaySound(soundBeepBeep);
+                        playSound(soundBeepBeep);
                         while(bSoundActive) EndTimeSlice();
                         break;
     }
 
-    nxtDisplayClearTextLine(5);
-    nxtDisplayClearTextLine(6);
+    displayClearTextLine(5);
+    displayClearTextLine(6);
 
     // Read the raw value of the sensor
     raw = LSvalRaw(LEGOLS);
@@ -64,11 +64,11 @@ task main () {
     nrm = LSvalNorm(LEGOLS);
 
     // Display the raw and normalised values
-    nxtDisplayTextLine(5, "R: %4d N: %4d", raw, nrm);
+    displayTextLine(5, "R: %4d N: %4d", raw, nrm);
 
     // Display the values for black and white
-    nxtDisplayTextLine(6, "B: %4d W: %4d", lslow[LEGOLS * 4], lshigh[LEGOLS * 4]);
-    wait1Msec(50);
+    displayTextLine(6, "B: %4d W: %4d", lslow[LEGOLS * 4], lshigh[LEGOLS * 4]);
+    sleep(50);
   }
 }
 

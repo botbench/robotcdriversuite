@@ -245,7 +245,7 @@ bool CTRFIDreadTransponder(tSensors link, string &transponderID) {
   if (!CTRFIDinitialised[link]) {
     CTRFIDinit(link);
     // Wait for the initialisation to be done
-    wait1Msec(100);
+    sleep(100);
   }
 
   if(CTRFIDreadContinuous[link] == false) {
@@ -253,13 +253,13 @@ bool CTRFIDreadTransponder(tSensors link, string &transponderID) {
     CTRFIDsetSingleShot(link);
 
     // Wait for RF setup time.
-    wait1Msec(250);
+    sleep(250);
   } else {
     _CTRFIDreadStatus(link, _status);
     if (_status == 0) {
       CTRFIDsetContinuous(link);
       // Wait for RF setup time.
-      wait1Msec(250);
+      sleep(250);
     }
   }
 

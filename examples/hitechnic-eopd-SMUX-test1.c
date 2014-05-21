@@ -48,18 +48,18 @@ task main() {
   nNxtButtonTask  = -2;
 
   eraseDisplay();
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "EOPD");
-  nxtDisplayCenteredTextLine(3, "SMUX Test");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and sensor to");
-  nxtDisplayCenteredTextLine(7, "SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "EOPD");
+  displayCenteredTextLine(3, "SMUX Test");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and sensor to");
+  displayCenteredTextLine(7, "SMUX Port 1");
+  sleep(2000);
 
-  nxtDisplayCenteredTextLine(5, "Press enter to");
-  nxtDisplayCenteredTextLine(6, "switch between");
-  nxtDisplayCenteredTextLine(7, "ranges");
-  wait1Msec(2000);
+  displayCenteredTextLine(5, "Press enter to");
+  displayCenteredTextLine(6, "switch between");
+  displayCenteredTextLine(7, "ranges");
+  sleep(2000);
   eraseDisplay();
 
   // Set the sensor to short range
@@ -70,17 +70,17 @@ task main() {
       if (shortrange == false) {
         // set the sensor to short range and display this
         HTEOPDsetShortRange(HTEOPD);
-        nxtDisplayClearTextLine(1);
-        nxtDisplayTextLine(1, "Short range");
+        displayClearTextLine(1);
+        displayTextLine(1, "Short range");
         shortrange = true;
       } else {
         // set the sensor to long range and display this
         HTEOPDsetLongRange(HTEOPD);
-        nxtDisplayClearTextLine(1);
-        nxtDisplayTextLine(1, "Long range");
+        displayClearTextLine(1);
+        displayTextLine(1, "Long range");
         shortrange = false;
       }
-	    PlaySound(soundBeepBeep);
+	    playSound(soundBeepBeep);
 	    while(bSoundActive)
       time1[T1] = 0;
     }
@@ -93,11 +93,11 @@ task main() {
       // the distance detected.  Use the processed value
       // when you want to determine distance to an object
       _processed = HTEOPDreadProcessed(HTEOPD);
-      nxtDisplayClearTextLine(3);
-      nxtDisplayClearTextLine(4);
-      nxtDisplayTextLine(4, "Proc:  %4d", _processed);
-      nxtDisplayTextLine(3, "Raw :  %4d", _raw);
-      wait1Msec(50);
+      displayClearTextLine(3);
+      displayClearTextLine(4);
+      displayTextLine(4, "Proc:  %4d", _processed);
+      displayTextLine(3, "Raw :  %4d", _raw);
+      sleep(50);
     }
   }
 }

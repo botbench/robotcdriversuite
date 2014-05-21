@@ -36,27 +36,27 @@ void setHz(tSensors link, byte hertz) {
   } else if (hertz == 60) {
     msg[3] = 0x36;
   } else {
-    PlaySound(soundException);
+    playSound(soundException);
     eraseDisplay();
-    nxtDisplayCenteredTextLine(3, "Wrong freq.");
-    nxtDisplayCenteredTextLine(3, "specified");
-    wait1Msec(5000);
-    StopAllTasks();
+    displayCenteredTextLine(3, "Wrong freq.");
+    displayCenteredTextLine(3, "specified");
+    sleep(5000);
+    stopAllTasks();
   }
 
   while (nI2CStatus[link] == STAT_COMM_PENDING){
-    wait1Msec(5);
+    sleep(5);
   }
 
   sendI2CMsg(link, &msg[0], 0);
 
   if (nI2CStatus[link] == ERR_COMM_BUS_ERR) {
-    PlaySound(soundException);
+    playSound(soundException);
     eraseDisplay();
-    nxtDisplayCenteredTextLine(3, "Error setting");
-    nxtDisplayCenteredTextLine(3, "sensor to 50Hz");
-    wait1Msec(5000);
-    StopAllTasks();
+    displayCenteredTextLine(3, "Error setting");
+    displayCenteredTextLine(3, "sensor to 50Hz");
+    sleep(5000);
+    stopAllTasks();
   }
 }
 
@@ -64,51 +64,51 @@ void setHz(tSensors link, byte hertz) {
 task main () {
   bool selected_50hz = true;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Color V2");
-  nxtDisplayCenteredTextLine(4, "Config operating");
-  nxtDisplayCenteredTextLine(5, "frequency to");
-  nxtDisplayCenteredTextLine(6, "50 or 60 Hz");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Color V2");
+  displayCenteredTextLine(4, "Config operating");
+  displayCenteredTextLine(5, "frequency to");
+  displayCenteredTextLine(6, "50 or 60 Hz");
+  sleep(2000);
 
   eraseDisplay();
-  nxtDisplayCenteredTextLine(0, "Use arrow keys");
-  nxtDisplayCenteredTextLine(1, "to select a");
-  nxtDisplayCenteredTextLine(2, "frequency");
-  nxtDisplayCenteredBigTextLine(4, "50 60");
-  nxtDisplayCenteredTextLine(6, "[enter] to set");
-  nxtDisplayCenteredTextLine(7, "[exit] to cancel");
+  displayCenteredTextLine(0, "Use arrow keys");
+  displayCenteredTextLine(1, "to select a");
+  displayCenteredTextLine(2, "frequency");
+  displayCenteredBigTextLine(4, "50 60");
+  displayCenteredTextLine(6, "[enter] to set");
+  displayCenteredTextLine(7, "[exit] to cancel");
 
-  nxtDrawRect(19, 34, 44, 16);
+  drawRect(19, 34, 44, 16);
 
   while (true) {
     while (nNxtButtonPressed == kNoButton) {
-      wait1Msec(1);
+      sleep(1);
     }
 
     switch (nNxtButtonPressed) {
       // if the left button is pressed, set the sensor for 50Hz
       case kLeftButton:
             if (selected_50hz) {
-              PlaySound(soundBlip);
-              while(bSoundActive) {wait1Msec(1);}
+              playSound(soundBlip);
+              while(bSoundActive) {sleep(1);}
             } else {
               selected_50hz = true;
-              nxtEraseRect(55, 34, 80, 16);
-              nxtDisplayCenteredBigTextLine(4, "50 60");
-              nxtDrawRect(19, 34, 44, 16);
+              eraseRect(55, 34, 80, 16);
+              displayCenteredBigTextLine(4, "50 60");
+              drawRect(19, 34, 44, 16);
             }
             break;
        // if the right button is pressed, set the sensor for 60Hz
        case kRightButton:
 						if (!selected_50hz) {
-						  PlaySound(soundBlip);
-						  while(bSoundActive) {wait1Msec(1);}
+						  playSound(soundBlip);
+						  while(bSoundActive) {sleep(1);}
 						} else {
 						  selected_50hz = false;
-						  nxtEraseRect(19, 34, 44, 16);
-						  nxtDisplayCenteredBigTextLine(4, "50 60");
-						  nxtDrawRect(55, 34, 80, 16);
+						  eraseRect(19, 34, 44, 16);
+						  displayCenteredBigTextLine(4, "50 60");
+						  drawRect(55, 34, 80, 16);
 						}
             break;
         // Make the setting permanent by saving it to the sensor
@@ -120,24 +120,24 @@ task main () {
             else
               setHz(HTCS2, 60);
 
-            nxtDisplayCenteredTextLine(2, "The Sensor is");
-            nxtDisplayCenteredTextLine(3, "configured for");
+            displayCenteredTextLine(2, "The Sensor is");
+            displayCenteredTextLine(3, "configured for");
             if (selected_50hz)
-              nxtDisplayCenteredTextLine(4, "50 Hz operating");
+              displayCenteredTextLine(4, "50 Hz operating");
             else
-              nxtDisplayCenteredTextLine(4, "60 Hz operating");
-            nxtDisplayCenteredTextLine(5, "frequency");
+              displayCenteredTextLine(4, "60 Hz operating");
+            displayCenteredTextLine(5, "frequency");
             for (int i = 5; i > 0; i--) {
-              nxtDisplayCenteredTextLine(7, "Exiting in %d sec", i);
-              wait1Msec(1000);
+              displayCenteredTextLine(7, "Exiting in %d sec", i);
+              sleep(1000);
             }
-            StopAllTasks();
+            stopAllTasks();
             break;
     }
 
     // Debounce the button
     while (nNxtButtonPressed != kNoButton) {
-      wait1Msec(1);
+      sleep(1);
     }
 
   }

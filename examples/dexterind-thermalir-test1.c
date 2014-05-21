@@ -29,28 +29,28 @@ task main () {
   tTIR tir;
   initSensor(&tir, S1);
 
-  nxtDisplayCenteredTextLine(0, "Dexter Industries");
-  nxtDisplayCenteredTextLine(1, "Thermal Infrared");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Dexter Industries");
+  displayCenteredTextLine(1, "Thermal Infrared");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
 	eraseDisplay();
 
   // set emissivity for light skin
   setEmissivity(&tir, TIR_EM_SKIN_LIGHT);
 
-  wait1Msec(200);
+  sleep(200);
 
-  nxtDisplayCenteredTextLine(0, "Dexter Industries");
-  nxtDisplayCenteredTextLine(1, "Thermal Infrared");
+  displayCenteredTextLine(0, "Dexter Industries");
+  displayCenteredTextLine(1, "Thermal Infrared");
   while (true) {
     // Read the currently detected ambient and object temp from the sensor
     sensorReadAll(&tir);
 
-    nxtDisplayTextLine(3, "A: %3.2f", tir.ambientTemp);
-    nxtDisplayTextLine(4, "O: %3.2f", tir.objectTemp);
-    wait1Msec(100);
+    displayTextLine(3, "A: %3.2f", tir.ambientTemp);
+    displayTextLine(4, "O: %3.2f", tir.objectTemp);
+    sleep(100);
   }
 }

@@ -63,11 +63,11 @@ task main () {
       _t = yscale(_blobs[i].y1);
       _r = xscale(_blobs[i].x2);
       _b = yscale(_blobs[i].y2);
-      nxtFillRect(_l, _t, _r, _b);
+      fillRect(_l, _t, _r, _b);
     }
 
-    nxtDisplayTextLine(1, "%d", _nblobs);
-    wait1Msec(100);
+    displayTextLine(1, "%d", _nblobs);
+    sleep(100);
   }
 }
 

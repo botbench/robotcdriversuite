@@ -83,7 +83,7 @@ bool DLIGHTinit(tSensors link, ubyte addr){
   if (!writeI2C(link, DLIGHT_I2CRequest))
     return false;
 
-  wait1Msec(50);
+  sleep(50);
 
   DLIGHT_I2CRequest[0] = 3;
   DLIGHT_I2CRequest[1] = addr;

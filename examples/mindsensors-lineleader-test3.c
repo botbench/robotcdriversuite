@@ -34,9 +34,9 @@
 
 #include "mindsensors-lineleader.h"
 
-#define printXY nxtDisplayStringAt
-#define println nxtDisplayTextLine
-#define clearln nxtDisplayClearTextLine
+#define printXY displayStringAt
+#define println displayTextLine
+#define clearln displayClearTextLine
 
 // The PID constants and base speed
 #define DEFAULT_KP    5
@@ -101,20 +101,20 @@ tByteArray signalstr;
 task drawSensors() {
   while (keep_running == 1) {
     // This clears the entire area occupied by the small rectangles
-    nxtEraseRect(6,62, 91, 43);
+    eraseRect(6,62, 91, 43);
     for (int i = 0; i < 8; i++) {
       // Draw the rectangles for the signal strength first
-      nxtDrawRect(6+(i*11),62, 14+(i*11), 50);
-      nxtFillRect(6+(i*11),51+signalstr[i]/10, 14+(i*11), 50);
+      drawRect(6+(i*11),62, 14+(i*11), 50);
+      fillRect(6+(i*11),51+signalstr[i]/10, 14+(i*11), 50);
       // Draw a black rectangle if the sensor has detected the line,
       // a hollow one when nothing has been detected.
       if ((sensor >> i) & 1) {
-        nxtFillRect(6+(i*11),48, 14+(i*11), 43);
+        fillRect(6+(i*11),48, 14+(i*11), 43);
       } else {
-        nxtDrawRect(6+(i*11),48, 14+(i*11), 43);
+        drawRect(6+(i*11),48, 14+(i*11), 43);
       }
     }
-    wait1Msec(100);
+    sleep(100);
   }
 }
 
@@ -126,9 +126,9 @@ task followTheYellowBrickRoad () {
   byte steering = 0;
 
   eraseDisplay();
-  nxtDisplayCenteredTextLine(3, "Running...");
-  nxtDisplayCenteredTextLine(5, "Press exit");
-  nxtDisplayCenteredTextLine(6, "to stop");
+  displayCenteredTextLine(3, "Running...");
+  displayCenteredTextLine(5, "Press exit");
+  displayCenteredTextLine(6, "to stop");
 
   time1[T4] = 0;
   while (keep_running == 1) {
@@ -155,7 +155,7 @@ task followTheYellowBrickRoad () {
 
     motor[motorA] = (byte)powerA;
     motor[motorC] = (byte)powerC;
-		wait1Msec(1);
+		sleep(1);
 		if (sensor != 0xFF) {
 		  time1[T4] = 0;
 	  } else if (time1[T4] > 500) {
@@ -186,7 +186,7 @@ task redrawMenu() {
           println(i + 1, "  %s", optionMainMenu[i]);
       }
     }
-    wait1Msec(100);
+    sleep(100);
   }
 }
 
@@ -200,10 +200,10 @@ task main () {
   nNxtButtonTask  = -2;
   nNxtExitClicks = 3;
 
-  StartTask(redrawMenu);
+  startTask(redrawMenu);
   doMainMenu();
   while(true)
-    wait1Msec(100);
+    sleep(100);
 }
 
 // Draw the main menu
@@ -222,7 +222,7 @@ void doMainMenu () {
             else
               activeOption++;
             menuFooter = optionMainMenuFooter[activeOption];
-            wait1Msec(300);
+            sleep(300);
             break;
       case kLeftButton:
             if (!checkTimer(leftButtonTimer)) {
@@ -233,18 +233,18 @@ void doMainMenu () {
             else
               activeOption--;
             menuFooter = optionMainMenuFooter[activeOption];
-            wait1Msec(300);
+            sleep(300);
             break;
       case kEnterButton:
             if (!checkTimer(rightButtonTimer)) {
               break;
             }
-            wait1Msec(600);
+            sleep(600);
             doMenuItem(activeOption);
             break;
       case kExitButton:
-            wait1Msec(500);
-            StopAllTasks();
+            sleep(500);
+            stopAllTasks();
 
     }
   }
@@ -253,7 +253,7 @@ void doMainMenu () {
 // When enter is pressed in the doMainMenu() we come here.
 // Here we handle the actual actions for each menu item.
 void doMenuItem(int activeOption) {
-  PlaySound(soundBlip);
+  playSound(soundBlip);
   while(bSoundActive) EndTimeSlice();
 
   if (activeOption == 4) {
@@ -284,13 +284,13 @@ void doMenuItem(int activeOption) {
               break;
             }
             writeParams();
-            wait1Msec(600);
+            sleep(600);
             return;
             break;
       case kExitButton:
             params[activeOption] = default_params[activeOption];
             writeParams();
-            wait1Msec(600);
+            sleep(600);
             break;
     }
   }
@@ -309,23 +309,23 @@ bool checkTimer(TTimers timer) {
 // Start and stop the line following task (followTheYellowBrickRoad)
 void doLineLead() {
   sensor = 0;
-  StopTask(redrawMenu);
+  stopTask(redrawMenu);
   keep_running = 1;
   for (int i = 0; i < 5; i++) {
-    PlaySound(soundBlip);
-    wait1Msec(600);
+    playSound(soundBlip);
+    sleep(600);
   }
-  PlaySound(soundFastUpwardTones);
+  playSound(soundFastUpwardTones);
   while(bSoundActive) EndTimeSlice();
-  StartTask(drawSensors);
-  StartTask(followTheYellowBrickRoad);
+  startTask(drawSensors);
+  startTask(followTheYellowBrickRoad);
   while(nNxtButtonPressed != kExitButton && keep_running != 0) {
-    wait1Msec(10);
+    sleep(10);
   }
   // this will kill off the followTheYellowBrickRoad task
   keep_running = 0;
-  wait1Msec(1000);
-  StartTask(redrawMenu);
+  sleep(1000);
+  startTask(redrawMenu);
 }
 
 // Write the PID values to the LineLeader sensor

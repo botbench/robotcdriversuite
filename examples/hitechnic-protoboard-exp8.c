@@ -44,7 +44,7 @@ task main() {
     // Convert to an actual temperature
     temperature = ((inputdata - 186) * 32 / 99);
     eraseDisplay();
-    nxtDisplayTextLine(1, "%d", temperature);
+    displayTextLine(1, "%d", temperature);
 
     // If we're above 28 degrees, switch on the LED
     if(temperature > THRESHOLD) {
@@ -52,7 +52,7 @@ task main() {
     } else {
       HTPBwriteIO(HTPB, 0x00);
     }
-    wait1Msec(50);
+    sleep(50);
   }
 }
 

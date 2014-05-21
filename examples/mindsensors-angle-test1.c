@@ -28,17 +28,17 @@
 
 task main () {
   nNxtButtonTask  = -2;
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "Angle");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "Angle");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
   eraseDisplay();
-  nxtDisplayCenteredTextLine(0, "GlideWheel-AS");
-  nxtDisplayTextLine(1, "-------------------");
-  nxtDisplayTextLine(5, "-------------------");
+  displayCenteredTextLine(0, "GlideWheel-AS");
+  displayTextLine(1, "-------------------");
+  displayTextLine(5, "-------------------");
   while (true) {
     // Reset the angle to 0
     if (nNxtButtonPressed == kEnterButton)
@@ -48,11 +48,11 @@ task main () {
     }
 
     // Read the current angle, accumulated angle and RPM and display them
-    nxtDisplayTextLine(2, "Ang: %7d deg", MSANGreadAngle(MSANG));
-    nxtDisplayTextLine(3, "Raw: %7d", MSANGreadRaw(MSANG));
-    nxtDisplayTextLine(4, "RPM: %7d", MSANGreadRPM(MSANG));
-    nxtDisplayTextLine(7, "   Reset angle");
-    wait1Msec(50);
+    displayTextLine(2, "Ang: %7d deg", MSANGreadAngle(MSANG));
+    displayTextLine(3, "Raw: %7d", MSANGreadRaw(MSANG));
+    displayTextLine(4, "RPM: %7d", MSANGreadRPM(MSANG));
+    displayTextLine(7, "   Reset angle");
+    sleep(50);
   }
 }
 

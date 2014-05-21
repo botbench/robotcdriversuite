@@ -30,16 +30,16 @@
 task main () {
   short msg = 0x00FD;
   eraseDisplay();
-  nxtDisplayTextLine(6, "Press [enter]");
-  nxtDisplayTextLine(7, "to send msg");
+  displayTextLine(6, "Press [enter]");
+  displayTextLine(7, "to send msg");
   while(true) {
     // Increment the msg
     msg++;
     while(nNxtButtonPressed != kEnterButton) EndTimeSlice();
     while(nNxtButtonPressed != kNoButton) EndTimeSlice();
     // Send the message to the RCX and display
-    PlaySound(soundBlip);
-    nxtDisplayCenteredBigTextLine(2, "0x%04X", msg);
+    playSound(soundBlip);
+    displayCenteredBigTextLine(2, "0x%04X", msg);
     HTRCXsendWord(HTRCX, msg);
   }
 }

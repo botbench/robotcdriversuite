@@ -32,13 +32,13 @@ task main () {
 	    int foo = 1 << i;
 	    foo = ~foo;
 	    PCF8574sendBytes(PCF8574, foo);
-	    wait1Msec(50);
+	    sleep(50);
 	  }
 	  for (int i = 7; i > -1; i--) {
 	    int foo = 1 << i;
 	    foo = ~foo;
 	    PCF8574sendBytes(PCF8574, foo);
-	    wait1Msec(50);
+	    sleep(50);
 	  }
   }
 }

@@ -43,17 +43,17 @@
 #define HTIRR_OFFSET          0x42      /*!< Offset for data registers */
 
 // Values contained by registers in active mode
-#define HTIRR_MOTOR_1A        0x00      /*!< Color number */
-#define HTIRR_MOTOR_1B        0x01      /*!< Color number */
-#define HTIRR_MOTOR_2A        0x02      /*!< Color number */
-#define HTIRR_MOTOR_2B        0x03      /*!< Color number */
-#define HTIRR_MOTOR_3A        0x04      /*!< Color number */
-#define HTIRR_MOTOR_3B        0x05      /*!< Color number */
-#define HTIRR_MOTOR_4A        0x06      /*!< Color number */
-#define HTIRR_MOTOR_4B        0x07      /*!< Color number */
+#define HTIRR_MOTOR_1A        0x00      /*!< Motor 1A */
+#define HTIRR_MOTOR_1B        0x01      /*!< Motor 1B */
+#define HTIRR_MOTOR_2A        0x02      /*!< Motor 2A */
+#define HTIRR_MOTOR_2B        0x03      /*!< Motor 2B */
+#define HTIRR_MOTOR_3A        0x04      /*!< Motor 3A */
+#define HTIRR_MOTOR_3B        0x05      /*!< Motor 3B */
+#define HTIRR_MOTOR_4A        0x06      /*!< Motor 4A */
+#define HTIRR_MOTOR_4B        0x07      /*!< Motor 4B */
 
 /*! Some define. */
-#define MOTOR_BRAKE           -128      /*!< Motor brake */
+#define HTIRR_MOTOR_BRAKE     -128      /*!< Motor brake */
 
 /*
 <function prototypes>

@@ -33,30 +33,30 @@ task main () {
   int number = 0;
   string output;
 
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "NumPad");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "NumPad");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
   eraseDisplay();
-  nxtDisplayCenteredTextLine(0, "Mindsensors NP");
-  nxtDisplayTextLine(1, "-------------------");
-  nxtDisplayTextLine(5, "-------------------");
-  nxtDisplayTextLine(7, "X: no key");
+  displayCenteredTextLine(0, "Mindsensors NP");
+  displayTextLine(1, "-------------------");
+  displayTextLine(5, "-------------------");
+  displayTextLine(7, "X: no key");
   while (true) {
     // Which key is being pressed now?
     if (!MSNPscanKeys(MSNP, keys, key[0], number))
-      StopAllTasks();
+      stopAllTasks();
 
     // "convert" to string so we can print it
     output = key;
 
-    nxtDisplayTextLine(3, "Numpad Key: %s", output);
-    nxtDisplayTextLine(4, "Numpad Num: %d", number);
+    displayTextLine(3, "Numpad Key: %s", output);
+    displayTextLine(4, "Numpad Num: %d", number);
 
-    wait1Msec(100);
+    sleep(100);
   }
 }
 

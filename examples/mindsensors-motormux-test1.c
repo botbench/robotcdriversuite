@@ -39,8 +39,8 @@ task main () {
 
   MSMotorStop(mmotor_S1_1);
   MSMotorStop(mmotor_S1_2);
-  PlaySound(soundBeepBeep);
-  wait1Msec(500);
+  playSound(soundBeepBeep);
+  sleep(500);
 
   // Reset the encoders.  This can be done individually or all at once.
   // You should do this at the start of your program.
@@ -64,7 +64,7 @@ task main () {
   //MSMMotorSetEncoderTarget(mmotor_S1_1, 360);
   //MSMMotorSetTimeTarget(mmotor_S1_2, 3);
 
-  //wait1Msec(2000);
+  //sleep(2000);
   // Tell the motors to start moving.
   MSMMotor(mmotor_S1_1, 50);
   MSMMotor(mmotor_S1_2, 90);
@@ -94,9 +94,9 @@ task main () {
 		motorBstatus = MSMMotorBusy(mmotor_S1_2) ? "busy" : "idle";
 
 		// Display the info.
-		nxtDisplayTextLine(5, "A: %5d (%s)", encA, motorAstatus);
-		nxtDisplayTextLine(6, "B: %5d (%s)", encB, motorBstatus);
-    wait1Msec(20);
+		displayTextLine(5, "A: %5d (%s)", encA, motorAstatus);
+		displayTextLine(6, "B: %5d (%s)", encB, motorBstatus);
+    sleep(20);
   }
 
   while(true) EndTimeSlice();

@@ -29,61 +29,61 @@
 task main () {
   tMotor testMotor = motorA;
 
-  PlaySound(soundBeepBeep);
-  nxtDisplayBigTextLine(3, "Retract");
+  playSound(soundBeepBeep);
+  displayBigTextLine(3, "Retract");
   FLACretractLA(testMotor, 100);
-  while(!isDone(testMotor)) wait1Msec(50);
-  wait1Msec(200);
+  while(!isDone(testMotor)) sleep(50);
+  sleep(200);
   nMotorEncoder[testMotor] = 0;
-  wait1Msec(1000);
+  sleep(1000);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   eraseDisplay();
-  nxtDisplayBigTextLine(1, "Extend");
-  nxtDisplayTextLine(3, "ticks:  40");
-  nxtDisplayTextLine(4, "speed:  50");
+  displayBigTextLine(1, "Extend");
+  displayTextLine(3, "ticks:  40");
+  displayTextLine(4, "speed:  50");
   FLACextendLA(testMotor, 50, 40);
-  while(!isDone(testMotor)) wait1Msec(50);
+  while(!isDone(testMotor)) sleep(50);
   if (isStalled(testMotor))
-    nxtDisplayTextLine(7, "STALLED");
-  wait1Msec(1000);
+    displayTextLine(7, "STALLED");
+  sleep(1000);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   eraseDisplay();
-  nxtDisplayBigTextLine(1, "Extend");
-  nxtDisplayTextLine(3, "ticks: 100");
-  nxtDisplayTextLine(4, "speed:  80");
+  displayBigTextLine(1, "Extend");
+  displayTextLine(3, "ticks: 100");
+  displayTextLine(4, "speed:  80");
   FLACextendLA(testMotor, 80, 100);
-  while(!isDone(testMotor)) wait1Msec(50);
+  while(!isDone(testMotor)) sleep(50);
   if (isStalled(testMotor))
-    nxtDisplayTextLine(7, "STALLED");
-  wait1Msec(1000);
+    displayTextLine(7, "STALLED");
+  sleep(1000);
   eraseDisplay();
 
-  PlaySound(soundBeepBeep);
-  nxtDisplayBigTextLine(1, "Retract");
-  nxtDisplayTextLine(3, "ticks: 120");
-  nxtDisplayTextLine(4, "speed: 100");
+  playSound(soundBeepBeep);
+  displayBigTextLine(1, "Retract");
+  displayTextLine(3, "ticks: 120");
+  displayTextLine(4, "speed: 100");
   FLACtretractLA(testMotor, 100, 120);
-  while(!isDone(testMotor)) wait1Msec(50);
+  while(!isDone(testMotor)) sleep(50);
   if (isStalled(testMotor))
-    nxtDisplayTextLine(7, "STALLED");
-  wait1Msec(1000);
+    displayTextLine(7, "STALLED");
+  sleep(1000);
 
-  PlaySound(soundBeepBeep);
-  nxtDisplayBigTextLine(1, "Retract");
-  nxtDisplayTextLine(3, "ticks:  20");
-  nxtDisplayTextLine(4, "speed: 100");
+  playSound(soundBeepBeep);
+  displayBigTextLine(1, "Retract");
+  displayTextLine(3, "ticks:  20");
+  displayTextLine(4, "speed: 100");
   FLACtretractLA(testMotor, 100, 20);
-  while(!isDone(testMotor)) wait1Msec(50);
+  while(!isDone(testMotor)) sleep(50);
   if (isStalled(testMotor))
-    nxtDisplayTextLine(7, "STALLED");
-  wait1Msec(1000);
+    displayTextLine(7, "STALLED");
+  sleep(1000);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   eraseDisplay();
-  nxtDisplayBigTextLine(1, "Done");
-  wait1Msec(2000);
+  displayBigTextLine(1, "Done");
+  sleep(2000);
 }
 
 /*

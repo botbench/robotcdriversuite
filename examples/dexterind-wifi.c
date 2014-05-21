@@ -61,8 +61,8 @@ void genResponse(int cid) {
   index = StringFind(tmpString, "HTTP");
   StringDelete(tmpString, index, strlen(tmpString));
   writeDebugStreamLine("Request:%s", tmpString);
-  nxtDisplayTextLine(2, "Request: ");
-  nxtDisplayTextLine(3, tmpString);
+  displayTextLine(2, "Request: ");
+  displayTextLine(3, tmpString);
   if (StringFind(tmpString, "MOTA") > 0) {
     StringDelete(tmpString, 0, 6);
     index = StringFind(tmpString, " ");
@@ -76,9 +76,9 @@ void genResponse(int cid) {
   }
 
   sendHeader(cid);
-  while(nxtHS_Status == HS_SENDING) wait1Msec(5);
+  while(nxtHS_Status == HS_SENDING) sleep(5);
 
-  wait1Msec(100);
+  sleep(100);
 
   index = 0;
   linebuff[0] = 27; // escape;
@@ -99,18 +99,18 @@ void genResponse(int cid) {
   if (power != 0) nMotorEncoderTarget[motorA] = 2000;
   motor[motorA] = power;
   if (power > 0)
-    SensorType[COLOUR] = sensorCOLORGREEN;
+    SensorType[COLOUR] = sensorColorNxtGREEN;
   else if (power < 0)
-    SensorType[COLOUR] = sensorCOLORBLUE;
+    SensorType[COLOUR] = sensorColorNxtBLUE;
   else if (nMotorRunState[motorA] == runStateIdle)
-    SensorType[COLOUR] = sensorCOLORRED;
+    SensorType[COLOUR] = sensorColorNxtRED;
   else
-    SensorType[COLOUR] = sensorCOLORRED;
-  wait1Msec(300);
+    SensorType[COLOUR] = sensorColorNxtRED;
+  sleep(300);
   RS485clearRead();
   DWIFIClose(1);
   memset(RS485rxbuffer, 0, sizeof(RS485rxbuffer));
-  //wait1Msec(100);
+  //sleep(100);
   //RS485read(RS485rxbuffer, sizeof(RS485rxbuffer));
   //clear_read_buffer();
   RS485clearRead();
@@ -168,8 +168,8 @@ void parseInput()
       }
       parsed = true;
       index = 0;
-      wait1Msec(2000);
-      PlaySound(soundBeepBeep);
+      sleep(2000);
+      playSound(soundBeepBeep);
     }
 	}
 }
@@ -178,7 +178,7 @@ void parseInput()
 
 void startDemon() {
   DWIFIClose();
-  wait1Msec(500);
+  sleep(500);
   DWIFITCPOpenServer(80);
   RS485clearRead();
   parseInput();
@@ -205,19 +205,19 @@ task main()
   DWIFIsetWPAPSK((char *)ssid, (char *)wpa_psk);
   // set_verbose(false);
   // Receive();
-  wait1Msec(100);
-  PlaySound(soundBeepBeep);
+  sleep(100);
+  playSound(soundBeepBeep);
   //time1[T1] = 0;
   //while (time1[T1] < 30000)
   //{
   //  RS485read(RS485rxbuffer, len, 100);
-  //  wait1Msec(500);
+  //  sleep(500);
   //}
   startDemon();
 
-  wait1Msec(1000);
+  sleep(1000);
   RS485clearRead();
-  SensorType[COLOUR] = sensorCOLORRED;
+  SensorType[COLOUR] = sensorColorNxtRED;
   RS485clearRead();
   parseInput();
 

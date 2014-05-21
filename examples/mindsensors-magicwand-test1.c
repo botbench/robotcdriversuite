@@ -39,9 +39,9 @@ task main () {
     for (int i = 0; i < 5; i++)
     {
       MSMWsetLED(MAGICWAND, 0, true);
-      wait1Msec(150);
+      sleep(150);
       MSMWsetLED(MAGICWAND, 0, false);
-      wait1Msec(50);
+      sleep(50);
     }
 
     // Do the same as above, only use the toggle function
@@ -49,16 +49,16 @@ task main () {
     for (int i = 0; i < 10; i++)
     {
       MSMWtoggleLED(MAGICWAND, 4);
-      wait1Msec(200);
+      sleep(200);
     }
 
     // Flash pulse all of the LEDs quickly
     for (int i = 0; i < 3; i++)
     {
       MSMWsetALL(MAGICWAND);
-      wait1Msec(50);
+      sleep(50);
       MSMWclearALL(MAGICWAND);
-      wait1Msec(150);
+      sleep(150);
     }
 
     // Use a cool flash effect and clear them all
@@ -71,11 +71,11 @@ task main () {
 			for (int i = 0; i < 10; i++)
 			{
 				MSMWtoggleLED(MAGICWAND, 4);
-				wait1Msec(100);
+				sleep(100);
 			}
 		  MSMWsetLED(MAGICWAND, r, false);
 		}
-    wait1Msec(500);
+    sleep(500);
     MSMWclearALL(MAGICWAND);
 
   }

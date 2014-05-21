@@ -127,7 +127,7 @@ bool _PSPV4init(tSensors link, ubyte address = PSPV4_I2C_ADDR)
     return false;
   }
 
-	wait1Msec(100);                         // wait for the dongle to initialize
+	sleep(100);                         // wait for the dongle to initialize
 	PSPV4initalised[link] = true;
 
 	return true;

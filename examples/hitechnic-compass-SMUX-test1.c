@@ -37,13 +37,13 @@ task main () {
   int _target = 0;
 
   eraseDisplay();
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "Compass");
-  nxtDisplayCenteredTextLine(3, "SMUX Test");
-  nxtDisplayCenteredTextLine(5, "Connect SMUX to");
-  nxtDisplayCenteredTextLine(6, "S1 and sensor to");
-  nxtDisplayCenteredTextLine(7, "SMUX Port 1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "Compass");
+  displayCenteredTextLine(3, "SMUX Test");
+  displayCenteredTextLine(5, "Connect SMUX to");
+  displayCenteredTextLine(6, "S1 and sensor to");
+  displayCenteredTextLine(7, "SMUX Port 1");
+  sleep(2000);
   eraseDisplay();
 
   time1[T1] = 0;
@@ -52,14 +52,14 @@ task main () {
     // This also helps with debouncing the [enter] button.
     if (time1[T1] > 1000) {
       eraseDisplay();
-      nxtDisplayTextLine(1, "Changing");
-      nxtDisplayTextLine(2, "target");
-      wait1Msec(500);
+      displayTextLine(1, "Changing");
+      displayTextLine(2, "target");
+      sleep(500);
       // Set the current heading as the value for the offset to be used as the
       // new zero-point for the relative heading returned by
       // HTMCreadRelativeHeading()
       _target = HTMCsetTarget(HTCOMPASS);
-      PlaySound(soundBlip);
+      playSound(soundBlip);
       while(bSoundActive) EndTimeSlice();
       time1[T1] = 0;
     }
@@ -68,13 +68,13 @@ task main () {
     // display them on the screen.
     while(nNxtButtonPressed != kEnterButton) {
       eraseDisplay();
-      nxtDisplayTextLine(1, "Reading");
-      nxtDisplayTextLine(2, "Target: %4d", _target);
-      nxtDisplayTextLine(4, "Abs:   %4d", HTMCreadHeading(HTCOMPASS));
-      nxtDisplayTextLine(5, "Rel:   %4d", HTMCreadRelativeHeading(HTCOMPASS));
-      nxtDisplayTextLine(6, "Press enter");
-      nxtDisplayTextLine(7, "to set target");
-      wait1Msec(100);
+      displayTextLine(1, "Reading");
+      displayTextLine(2, "Target: %4d", _target);
+      displayTextLine(4, "Abs:   %4d", HTMCreadHeading(HTCOMPASS));
+      displayTextLine(5, "Rel:   %4d", HTMCreadRelativeHeading(HTCOMPASS));
+      displayTextLine(6, "Press enter");
+      displayTextLine(7, "to set target");
+      sleep(100);
     }
   }
 }

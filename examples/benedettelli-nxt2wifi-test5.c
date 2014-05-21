@@ -55,15 +55,15 @@ task updateScreen()
 {
   while(true)
   {
-    nxtDisplayTextLine(0, "Stat: %s", connStatus);
-    nxtDisplayTextLine(1, "%s",IPaddress);
-    nxtDisplayTextLine(2, "-------------------");
-    nxtDisplayTextLine(3, "Temp : %2.2f", (float)dataTemp/100.0);
-    nxtDisplayTextLine(4, "Press: %d", dataPress);
-    nxtDisplayTextLine(5, "Light:");
-    nxtDisplayTextLine(6, "Sound:");
-    nxtDisplayTextLine(7, "RX/TX: %d/%d", rxbytes, txbytes);
-    wait1Msec(100);
+    displayTextLine(0, "Stat: %s", connStatus);
+    displayTextLine(1, "%s",IPaddress);
+    displayTextLine(2, "-------------------");
+    displayTextLine(3, "Temp : %2.2f", (float)dataTemp/100.0);
+    displayTextLine(4, "Press: %d", dataPress);
+    displayTextLine(5, "Light:");
+    displayTextLine(6, "Sound:");
+    displayTextLine(7, "RX/TX: %d/%d", rxbytes, txbytes);
+    sleep(100);
   }
 }
 
@@ -73,9 +73,9 @@ task pollSensors()
   while (true)
   {
     dataPress = HTBMreadMInHg(HTBM);
-    wait1Msec(100);
+    sleep(100);
     dataTemp = HTBMreadTemp(HTBM) * 100;
-    wait1Msec(1000);
+    sleep(1000);
   }
 }
 
@@ -113,55 +113,55 @@ bool tweet()
 
 task main ()
 {
-  StartTask(pollSensors);
-  StartTask(updateScreen);
+  startTask(pollSensors);
+  startTask(updateScreen);
 
   N2WsetDebug(true);
-  wait1Msec(100);
-  //wait1Msec(1000);
-  //StopAllTasks();
+  sleep(100);
+  //sleep(1000);
+  //stopAllTasks();
 
   // initialise the port, etc
   RS485initLib();
-  wait1Msec(100);
+  sleep(100);
   N2WsetDebug(true);
-  wait1Msec(100);
+  sleep(100);
 
   // Disconnect if already connected
   N2WDisconnect();
-  wait1Msec(500);
+  sleep(500);
 
   // if a custom profile exists, use that instead
   if (!N2WCustomExist())
   {
-    StopTask(updateScreen);
-    wait1Msec(50);
+    stopTask(updateScreen);
+    sleep(50);
     eraseDisplay();
-    PlaySound(soundException);
-    nxtDisplayCenteredBigTextLine(1, "ERROR");
-    nxtDisplayTextLine(3, "No custom profile");
-    nxtDisplayTextLine(4, "configured!!");
+    playSound(soundException);
+    displayCenteredBigTextLine(1, "ERROR");
+    displayTextLine(3, "No custom profile");
+    displayTextLine(4, "configured!!");
     while(true) EndTimeSlice();
   }
 
   N2WLoad();
 
-  wait1Msec(100);
+  sleep(100);
   N2WConnect(true);
   connStatus = "connecting";
 
   while (!N2WConnected())
-    wait1Msec(1000);
+    sleep(1000);
 
   connStatus = "connected";
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
 
-  wait1Msec(15000);
+  sleep(15000);
   N2WgetIP(IPaddress);
 
-  wait1Msec(1000);
+  sleep(1000);
   N2WTCPClose(0);
-  wait1Msec(1000);
+  sleep(1000);
   if (!N2WTCPOpenClient(1, "arduino-tweet.appspot.com", 80))
     writeDebugStreamLine("Err open port");
 
@@ -222,6 +222,6 @@ task main ()
 	 //     writeDebugStreamLine("Invalid packet");
 	 //   }
 	 // }
-  //  wait1Msec(100);
+  //  sleep(100);
   //}
 }

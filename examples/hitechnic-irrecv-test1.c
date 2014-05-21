@@ -37,12 +37,12 @@ task main {
   sbyte _motA = 0;
   sbyte _motB = 0;
 
-  nxtDisplayCenteredTextLine(0, "HiTechnic");
-  nxtDisplayCenteredBigTextLine(1, "IR Recv");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "HiTechnic");
+  displayCenteredBigTextLine(1, "IR Recv");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
   eraseDisplay();
 
   while (true) {
@@ -50,8 +50,8 @@ task main {
       // Read the motor powers sent by the remote on the specified channel
       // and display them.
       HTIRRreadChannel(HTIRR, i, _motA, _motB);
-      nxtDisplayTextLine(i, "%4d, %4d", _motA, _motB);
-      wait1Msec(10);
+      displayTextLine(i, "%4d, %4d", _motA, _motB);
+      sleep(10);
     }
   }
 }

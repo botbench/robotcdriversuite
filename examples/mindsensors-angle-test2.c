@@ -44,30 +44,30 @@ void calibrateScales()
   int calibrateWeight = 0;
 
   eraseDisplay();
-  nxtDisplayCenteredTextLine(0, "GlideWheel-AS");
-  nxtDisplayCenteredTextLine(2, "Place the object");
-  nxtDisplayCenteredTextLine(3, "on the scales");
-  nxtDisplayCenteredTextLine(4, "and press");
-  nxtDisplayCenteredTextLine(5, "[enter]");
-  nxtDisplayCenteredTextLine(6, "to calibrate");
+  displayCenteredTextLine(0, "GlideWheel-AS");
+  displayCenteredTextLine(2, "Place the object");
+  displayCenteredTextLine(3, "on the scales");
+  displayCenteredTextLine(4, "and press");
+  displayCenteredTextLine(5, "[enter]");
+  displayCenteredTextLine(6, "to calibrate");
   while (nNxtButtonPressed != kEnterButton) EndTimeSlice();
   debounce();
   eraseDisplay();
   calibrateWeight = weighObject();
-  nxtDisplayCenteredTextLine(0, "GlideWheel-AS");
-  nxtDisplayCenteredTextLine(2, "Enter the weight");
-  nxtDisplayCenteredTextLine(3, "in grams");
-  nxtDisplayCenteredTextLine(7, "-     OK     +");
+  displayCenteredTextLine(0, "GlideWheel-AS");
+  displayCenteredTextLine(2, "Enter the weight");
+  displayCenteredTextLine(3, "in grams");
+  displayCenteredTextLine(7, "-     OK     +");
   while (true)
   {
-    nxtDisplayCenteredBigTextLine(5, "%d", calibrateWeight);
+    displayCenteredBigTextLine(5, "%d", calibrateWeight);
     switch(nNxtButtonPressed)
     {
-      case kLeftButton: PlayTone(500,10); calibrateWeight--; calibrateWeight = max2(0, calibrateWeight); break;
-      case kRightButton: PlayTone(1000,10); calibrateWeight++; break;
-      case kEnterButton: PlayTone(1500,10);gramsPerUnit = (float)calibrateWeight / (float)MSANGreadRaw(MSANG); eraseDisplay(); return;
+      case kLeftButton: playTone(500,10); calibrateWeight--; calibrateWeight = max2(0, calibrateWeight); break;
+      case kRightButton: playTone(1000,10); calibrateWeight++; break;
+      case kEnterButton: playTone(1500,10);gramsPerUnit = (float)calibrateWeight / (float)MSANGreadRaw(MSANG); eraseDisplay(); return;
     }
-    wait1Msec(20);
+    sleep(20);
     debounce();
   }
 }
@@ -75,13 +75,13 @@ void calibrateScales()
 
 task main () {
   nNxtButtonTask  = -2;
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "Angle");
-  nxtDisplayCenteredTextLine(3, "Test 2");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "Angle");
+  displayCenteredTextLine(3, "Test 2");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
   MSANGresetAngle(MSANG);
-  wait1Msec(2000);
+  sleep(2000);
 
   eraseDisplay();
 
@@ -93,13 +93,13 @@ task main () {
       calibrateScales();
       debounce();
     }
-    nxtDisplayCenteredTextLine(0, "GlideWheel-AS");
-    nxtDisplayCenteredTextLine(1, "Weighing scale");
-		nxtDisplayTextLine(7, "[enter] to calib.");
+    displayCenteredTextLine(0, "GlideWheel-AS");
+    displayCenteredTextLine(1, "Weighing scale");
+		displayTextLine(7, "[enter] to calib.");
 
-    nxtDisplayCenteredBigTextLine(4, "%d g", weighObject());
+    displayCenteredBigTextLine(4, "%d g", weighObject());
 
-    wait1Msec(20);
+    sleep(20);
   }
 }
 

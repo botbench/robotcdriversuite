@@ -63,7 +63,7 @@ void dumpRXData(tBigByteArray &data, ubyte size)
 	  memcpy(tmpBuff, &data[i*18], datalen);
 	  writeDebugStream("BUFFER: ");
 	  writeDebugStreamLine(tmpBuff);
-    nxtDisplayTextLine(i+4, tmpBuff);
+    displayTextLine(i+4, tmpBuff);
 	  bytesleft -= 18;
 	}
 }
@@ -74,11 +74,11 @@ void dumpRXData(tBigByteArray &data, ubyte size)
  */
 void StartupDisplay()
 {
-  nxtDisplayCenteredBigTextLine(0, "WiFi");
-  nxtDisplayCenteredTextLine(3, "Program to test");
-  nxtDisplayCenteredTextLine(4, "Network with ");
-  nxtDisplayCenteredTextLine(5, "WifiBlock");
-  wait1Msec(2000);
+  displayCenteredBigTextLine(0, "WiFi");
+  displayCenteredTextLine(3, "Program to test");
+  displayCenteredTextLine(4, "Network with ");
+  displayCenteredTextLine(5, "WifiBlock");
+  sleep(2000);
   eraseDisplay();
   return;
 }
@@ -161,7 +161,7 @@ task main () {
 
 #endif
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(true) EndTimeSlice();
 }
 

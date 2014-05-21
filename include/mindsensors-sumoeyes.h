@@ -92,7 +92,7 @@ tObstacleZone MSSUMOreadZone(tSensors link) {
  */
 void MSSUMOsetShortRange(tSensors link) {
   if (SensorType[link] != MSSUMOSRType)
-    SetSensorType(link, MSSUMOSRType);
+    SensorType[link] = MSSUMOSRType;
 }
 
 
@@ -103,7 +103,7 @@ void MSSUMOsetShortRange(tSensors link) {
  */
 void MSSUMOsetLongRange(tSensors link) {
   if (SensorType[link] != MSSUMOLRType)
-    SetSensorType(link, MSSUMOLRType);
+    SensorType[link] = MSSUMOLRType;
 }
 
 

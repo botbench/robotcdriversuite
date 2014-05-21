@@ -113,19 +113,19 @@ bool _camera_cmd(tSensors link, byte cmd, ubyte address) {
 bool NXTCAMinit(tSensors link, ubyte address) {
   if (!_camera_cmd(link, 'D', address)) // Stop object tracking
     return false;
-  wait1Msec(500);
+  sleep(500);
 
   if (!_camera_cmd(link, 'A', address)) // Sort by size
     return false;
-  wait1Msec(500);
+  sleep(500);
 
   if (!_camera_cmd(link,'B', address))  // Set object tracking mode
     return false;
-  wait1Msec(500);
+  sleep(500);
 
   if (!_camera_cmd(link,'E', address))  // Start object tracking
     return false;
-  wait1Msec(500);
+  sleep(500);
 
   return true;
 }
@@ -140,20 +140,20 @@ bool NXTCAMinit(tSensors link, ubyte address) {
 bool NXTCAMinitTL(tSensors link, ubyte address) {
   if (!_camera_cmd(link, 'D', address)) // Stop object tracking
     return false;
-  wait1Msec(500);
+  sleep(500);
 
   if (!_camera_cmd(link, 'X', address)) // Do not sort objects
     return false;
-  wait1Msec(500);
+  sleep(500);
 
   if (!_camera_cmd(link,'L', address))  // Set tracking line mode
     return false;
-  wait1Msec(500);
+  sleep(500);
 
   if (!_camera_cmd(link,'E', address))  // Start tracking
     return false;
 
-  wait1Msec(500);
+  sleep(500);
   return true;
 }
 

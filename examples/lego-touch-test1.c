@@ -25,21 +25,21 @@
 #include "lego-touch.h"
 
 task main() {
-  nxtDisplayCenteredTextLine(0, "Lego");
-  nxtDisplayCenteredBigTextLine(1, "TOUCH");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Lego");
+  displayCenteredBigTextLine(1, "TOUCH");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
   eraseDisplay();
 
   while (true) {
     if (TSreadState(LEGOTS))
-      nxtDisplayCenteredBigTextLine(3, "ACTIVE");
+      displayCenteredBigTextLine(3, "ACTIVE");
     else
-      nxtDisplayCenteredBigTextLine(3, "INACTIVE");
-    wait1Msec(50);
+      displayCenteredBigTextLine(3, "INACTIVE");
+    sleep(50);
   }
 }
 

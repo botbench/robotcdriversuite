@@ -81,7 +81,7 @@ void MSRXMUXsetupChan(tSensors link, ubyte chan, TSensorTypes chantype, TSensorM
 int MSRXMUXreadChan(tSensors link, byte chan) {
   if (SensorType[link] != sensorI2CCustom9V) {
     SensorType[link] = sensorI2CCustom9V;
-    wait1Msec(3);
+    sleep(3);
   }
 
   MSRXMUX_I2CRequest[0] = 2;
@@ -98,7 +98,7 @@ int MSRXMUXreadChan(tSensors link, byte chan) {
   if (!writeI2C(link, MSRXMUX_I2CRequest))
     return -1;
 
-  wait10Msec(3+RCXSensorDelays[link][chan-1]);
+  sleep((3+RCXSensorDelays[link][chan-1]) * 10);
   SensorType[link] = RCXSensorTypes[link][chan-1];
   SensorMode[link] = RCXSensorModes[link][chan-1];
   return(SensorValue[link]);

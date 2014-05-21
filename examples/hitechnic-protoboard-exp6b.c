@@ -38,9 +38,9 @@ task main() {
     HTPBwriteIO(HTPB, 0x00);
 
     eraseDisplay();
-    nxtDisplayTextLine(2, "running");
+    displayTextLine(2, "running");
 
-    wait1Msec(random(5000) + 5000);
+    sleep(random(5000) + 5000);
 
     // Turn on a random LED
     if(random(1) > 0) {
@@ -54,14 +54,14 @@ task main() {
     time1[T1] = 0;
 
     while ((ubyte)HTPBreadIO(HTPB, 0xF3) != buttonmask) {
-      wait1Msec(5);
+      sleep(5);
     }
 
     eraseDisplay();
-    nxtDisplayTextLine(2, "%d", time1[T1]);
+    displayTextLine(2, "%d", time1[T1]);
 
     while (HTPBreadIO(HTPB, 0xF3) != 0x03) {
-      wait1Msec(5);
+      sleep(5);
     }
   }
 }

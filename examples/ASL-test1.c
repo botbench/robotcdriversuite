@@ -35,14 +35,14 @@ task main () {
   long level = 0;
   ubyte threshold = 0;
 
-  nxtDisplayCenteredTextLine(0, "Lizard");
-  nxtDisplayCenteredTextLine(1, "Monkey Hear");
-  nxtDisplayCenteredTextLine(3, "Test 1");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S1");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Lizard");
+  displayCenteredTextLine(1, "Monkey Hear");
+  displayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
+  sleep(2000);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
 
   level = ASLcalibrateLevel(ASL);
@@ -51,7 +51,7 @@ task main () {
 
   for (int i = 0; i < 1000; i++) {
     eraseDisplay();
-    nxtDisplayTextLine(0,"HTAC Test 1");
+    displayTextLine(0,"HTAC Test 1");
 
     // Read all of the axes at once
     statval = ASLreadStaticAngle(ASL, false);
@@ -59,11 +59,11 @@ task main () {
     threshval = ASLreadThresholdAngle(ASL, threshold, false);
     ASLreadMICS(ASL, rval, lval, bval);
 
-    nxtDisplayTextLine(2, "stat: %d", statval);
-    nxtDisplayTextLine(3, "dyn:  %d", dynval);
-    nxtDisplayTextLine(4, "rval:  %d", rval);
-    nxtDisplayTextLine(5, "lval:  %d", lval);
-    nxtDisplayTextLine(6, "bval:  %d", bval);
+    displayTextLine(2, "stat: %d", statval);
+    displayTextLine(3, "dyn:  %d", dynval);
+    displayTextLine(4, "rval:  %d", rval);
+    displayTextLine(5, "lval:  %d", lval);
+    displayTextLine(6, "bval:  %d", bval);
     writeDebugStream("%d,%d,", statval, dynval);
     writeDebugStream("%d,", threshval);
     writeDebugStream("%d,%d,", rval, lval);
@@ -72,7 +72,7 @@ task main () {
     else
       writeDebugStream("false,");
     writeDebugStreamLine("%d", bval);
-    wait1Msec(10);
+    sleep(10);
   }
 }
 

@@ -19,13 +19,13 @@ task main() {
   while(true) {
     if(HTSPBreadIO(HTSPB, 0x01) == 0) {
       eraseDisplay();
-      nxtDisplayTextLine(1, "Magnet present");
+      displayTextLine(1, "Magnet present");
       HTSPBwriteIO(HTSPB, 0x10);
     } else {
       eraseDisplay();
-      nxtDisplayTextLine(1, "Magnet absent");
+      displayTextLine(1, "Magnet absent");
       HTSPBwriteIO(HTSPB, 0x00);
     }
-    wait1Msec(50);
+    sleep(50);
   }
 }

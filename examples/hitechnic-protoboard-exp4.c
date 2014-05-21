@@ -35,9 +35,9 @@ task main() {
     inputdata = HTPBreadADC(HTPB, 0, 10);
 
     eraseDisplay();
-    nxtDisplayTextLine(1, "%d", inputdata);
+    displayTextLine(1, "%d", inputdata);
 
-    wait1Msec(50);
+    sleep(50);
   }
 }
 

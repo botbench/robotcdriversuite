@@ -29,12 +29,12 @@
 
 
 task main () {
-  nxtDisplayCenteredTextLine(0, "MindSensors");
-  nxtDisplayCenteredBigTextLine(1, "TouchPnl");
-  nxtDisplayCenteredTextLine(3, "Noise-a-Tron");
-  nxtDisplayCenteredTextLine(5, "Connect sensor");
-  nxtDisplayCenteredTextLine(6, "to S3");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "MindSensors");
+  displayCenteredBigTextLine(1, "TouchPnl");
+  displayCenteredTextLine(3, "Noise-a-Tron");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S3");
+  sleep(2000);
   eraseDisplay();
 
   int x, y = 0;
@@ -43,7 +43,7 @@ task main () {
   int multiplierY = 10;
   while (true) {
     if (!MSTPgetTouch(MSTP, x, y, buttons))
-      PlaySound(soundBlip);
+      playSound(soundBlip);
     else if (isButtonTouched(buttons, BUTTON_L1))
       multiplierX = 10;
     else if (isButtonTouched(buttons, BUTTON_L2))
@@ -63,10 +63,10 @@ task main () {
 
     else if (x > 0 && y > 0)
     {
-      PlayImmediateTone(x * multiplierX, 1);
-      wait1Msec(10);
-      PlayImmediateTone(y * multiplierY, 1);
-      nxtSetPixel(x, y);
+      playImmediateTone(x * multiplierX, 1);
+      sleep(10);
+      playImmediateTone(y * multiplierY, 1);
+      setPixel(x, y);
     }
     EndTimeSlice();
   }

@@ -162,7 +162,7 @@ bool MSHIDsendString(tSensors link, string data, ubyte address) {
 	  }
 		if (!MSHIDsendCommand(link, MSHID_XMIT))
 		  return false;
-    wait1Msec(50);
+    sleep(50);
   }
   return true;
 }

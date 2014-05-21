@@ -41,6 +41,31 @@
 
 #define DFLEXDAT "DFLEX.dat"    /*!< Datafile for dFlex Sensor calibration info */
 
+typedef struct
+{
+	int _offsets[3];
+} tDIMCCalData, *tDIMCCalDataptr;
+
+typedef struct
+{
+  tI2CData I2CData;
+  tDIMCCalData calData;
+  float heading;
+  int axes[3];
+  int _minVals[3];
+  int _maxVals[3];
+  bool _calibrated;
+  bool _calibrating;
+  string _calibrationFile;
+} tDIMC, *tDIMCptr;
+
+bool initSensor(tDIMCptr dimcPtr, tSensors port);
+bool sensorReadAll(tDIMCptr dimcPtr);
+bool startCal(tDIMCptr dimcPtr);
+bool stopCal(tDIMCptr dimcPtr);
+bool _readCalVals(tDIMCptr dimcPtr);
+bool _writeCalVals(tDIMCptr dimcPtr);
+
 // Globals
 int dflexlow = 0;                    /*!< Low calibration value */
 int dflexhigh = 1023;                /*!< High calibration value */
@@ -176,44 +201,44 @@ void _DFLEXwriteCalVals(int lowval, int highval) {
   if (nIoResult != ioRsltSuccess) {
     Close(hFileHandle, nIoResult);
     eraseDisplay();
-    nxtDisplayTextLine(3, "W:can't cal file");
-    PlaySound(soundException);
+    displayTextLine(3, "W:can't cal file");
+    playSound(soundException);
     while(bSoundActive) EndTimeSlice();
-    wait1Msec(5000);
-    StopAllTasks();
+    sleep(5000);
+    stopAllTasks();
   }
 
   // Write the low calibration value
   WriteShort(hFileHandle, nIoResult, lowval);
   if (nIoResult != ioRsltSuccess) {
     eraseDisplay();
-    nxtDisplayTextLine(3, "can't write lowval");
-    PlaySound(soundException);
+    displayTextLine(3, "can't write lowval");
+    playSound(soundException);
     while(bSoundActive) EndTimeSlice();
-    wait1Msec(5000);
-    StopAllTasks();
+    sleep(5000);
+    stopAllTasks();
   }
 
   // Write the high calibration value
   WriteShort(hFileHandle, nIoResult, highval);
   if (nIoResult != ioRsltSuccess) {
     eraseDisplay();
-    nxtDisplayTextLine(3, "can't write highval");
-    PlaySound(soundException);
+    displayTextLine(3, "can't write highval");
+    playSound(soundException);
     while(bSoundActive) EndTimeSlice();
-    wait1Msec(5000);
-    StopAllTasks();
+    sleep(5000);
+    stopAllTasks();
   }
 
   // Close the file
   Close(hFileHandle, nIoResult);
   if (nIoResult != ioRsltSuccess) {
     eraseDisplay();
-    nxtDisplayTextLine(3, "Can't close");
-    PlaySound(soundException);
+    displayTextLine(3, "Can't close");
+    playSound(soundException);
     while(bSoundActive) EndTimeSlice();
-    wait1Msec(5000);
-    StopAllTasks();
+    sleep(5000);
+    stopAllTasks();
   }
 }
 

@@ -370,9 +370,9 @@ void _FLACcontrolTasks(tMotor _motor, int _highPower, long _encTarget, bool _ram
   switch(_motor) {
     case motorA:
 		  if (getTaskState(_FLACcontrolTaskA) == taskStateRunning) {
-		    StopTask(_FLACcontrolTaskA);
+		    stopTask(_FLACcontrolTaskA);
 		    while(getTaskState(_FLACcontrolTaskA) != taskStateStopped) EndTimeSlice();
-		    wait1Msec(50);
+		    sleep(50);
 		    motor[motorA] = 0;
 		  }
 		  if (_ramp && (_highPower > 30))
@@ -383,15 +383,15 @@ void _FLACcontrolTasks(tMotor _motor, int _highPower, long _encTarget, bool _ram
 		  _motorHighPower[_motor] = _highPower;
 		  _encoderTarget[_motor] = _encTarget;
 
-		  StartTask(_FLACcontrolTaskA);
+		  startTask(_FLACcontrolTaskA);
 			while(getTaskState(_FLACcontrolTaskA) != taskStateRunning) EndTimeSlice();
 		  break;
 
     case motorB:
 		  if (getTaskState(_FLACcontrolTaskB) == taskStateRunning) {
-		    StopTask(_FLACcontrolTaskA);
+		    stopTask(_FLACcontrolTaskA);
 		    while(getTaskState(_FLACcontrolTaskB) != taskStateStopped) EndTimeSlice();
-		    wait1Msec(50);
+		    sleep(50);
 		    motor[motorB] = 0;
 		  }
 		  if (_ramp && (_highPower > 30))
@@ -402,15 +402,15 @@ void _FLACcontrolTasks(tMotor _motor, int _highPower, long _encTarget, bool _ram
 		  _motorHighPower[_motor] = _highPower;
 		  _encoderTarget[_motor] = _encTarget;
 
-		  StartTask(_FLACcontrolTaskB);
+		  startTask(_FLACcontrolTaskB);
 			while(getTaskState(_FLACcontrolTaskB) != taskStateRunning) EndTimeSlice();
 		  break;
 
     case motorC:
 		  if (getTaskState(_FLACcontrolTaskC) == taskStateRunning) {
-		    StopTask(_FLACcontrolTaskC);
+		    stopTask(_FLACcontrolTaskC);
 		    while(getTaskState(_FLACcontrolTaskC) != taskStateStopped) EndTimeSlice();
-		    wait1Msec(50);
+		    sleep(50);
 		    motor[motorC] = 0;
 		  }
 		  if (_ramp && (_highPower > 30))
@@ -421,7 +421,7 @@ void _FLACcontrolTasks(tMotor _motor, int _highPower, long _encTarget, bool _ram
 		  _motorHighPower[_motor] = _highPower;
 		  _encoderTarget[_motor] = _encTarget;
 
-		  StartTask(_FLACcontrolTaskC);
+		  startTask(_FLACcontrolTaskC);
 			while(getTaskState(_FLACcontrolTaskC) != taskStateRunning) EndTimeSlice();
 		  break;
 	}

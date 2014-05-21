@@ -39,24 +39,24 @@ task main {
     LLreadSensorRaw(LLEADER, signalstr);
 
     // This clears the entire area occupied by the small rectangles
-    nxtEraseRect(6,62, 91, 43);
+    eraseRect(6,62, 91, 43);
     for (int i = 0; i < 8; i++) {
       // Draw the rectangles for the signal strength first
-      nxtDrawRect(6+(i*11),62, 14+(i*11), 50);
-      nxtFillRect(6+(i*11),51+signalstr[i]/10, 14+(i*11), 50);
+      drawRect(6+(i*11),62, 14+(i*11), 50);
+      fillRect(6+(i*11),51+signalstr[i]/10, 14+(i*11), 50);
       // Draw a black rectangle if the sensor has detected the line,
       // a hollow one when nothing has been detected.
       if ((sensor >> i) & 1) {
-        nxtFillRect(6+(i*11),48, 14+(i*11), 43);
+        fillRect(6+(i*11),48, 14+(i*11), 43);
       } else {
-        nxtDrawRect(6+(i*11),48, 14+(i*11), 43);
+        drawRect(6+(i*11),48, 14+(i*11), 43);
       }
     }
     // Display the actual signal strength for each sensor
     for (int i = 0; i < 7; i+=2) {
-      nxtDisplayTextLine(i/2+3, "S: %3d S: %3d", (int)signalstr[i], (int)signalstr[i+1]);
+      displayTextLine(i/2+3, "S: %3d S: %3d", (int)signalstr[i], (int)signalstr[i+1]);
     }
-    wait1Msec(50);
+    sleep(50);
   }
 }
 

@@ -49,8 +49,8 @@ string MACaddress;
 
 task main ()
 {
-  nxtDisplayTextLine(0, "Stat: disconnected");
-  nxtDisplayTextLine(2, "-------------------");
+  displayTextLine(0, "Stat: disconnected");
+  displayTextLine(2, "-------------------");
 
   // port to use for the socket
   string dataString;
@@ -67,30 +67,30 @@ task main ()
 
   // Disconnect if already connected
   N2WDisconnect();
-  wait1Msec(100);
+  sleep(100);
 
   // Delete the custom profile and reset the device
   N2WDelete();
-  wait1Msec(100);
+  sleep(100);
   N2WReset();
-  nxtDisplayTextLine(0, "Stat: Resetting");
-  wait1Msec(5000);
+  displayTextLine(0, "Stat: Resetting");
+  sleep(5000);
 
   // Connect to the default profile (AdHoc)
-  nxtDisplayTextLine(0, "Stat: Connecting");
+  displayTextLine(0, "Stat: Connecting");
   N2WConnect(false);
 
   while (!N2WConnected())
-    wait1Msec(500);
+    sleep(500);
 
-  wait1Msec(2000);
+  sleep(2000);
   N2WgetIP(IPaddress);
-  nxtDisplayTextLine(4, IPaddress);
-  wait1Msec(100);
+  displayTextLine(4, IPaddress);
+  sleep(100);
   N2WgetMAC(MACaddress);
-  nxtDisplayTextLine(5, MACaddress);
-  nxtDisplayTextLine(0, "Stat: Connected");
-  PlaySound(soundBeepBeep);
+  displayTextLine(5, MACaddress);
+  displayTextLine(0, "Stat: Connected");
+  playSound(soundBeepBeep);
 
   while(true) EndTimeSlice();
 

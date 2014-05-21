@@ -22,9 +22,9 @@
 
 task main() {
   int _chVal = 0;
-  nxtDisplayTextLine(3, "MAX127");
-  nxtDisplayTextLine(4, "Test prog");
-  wait1Msec(1000);
+  displayTextLine(3, "MAX127");
+  displayTextLine(4, "Test prog");
+  sleep(1000);
   eraseDisplay();
 
   while(true) {
@@ -33,13 +33,13 @@ task main() {
       _chVal = MAX127readChan(MAX127, MAX127_I2C_ADDR, i);
       // if the return value is < 0 then an error occurred
       if (_chVal < 0) {
-        nxtDisplayTextLine(4, "ERROR!!");
-        wait1Msec(2000);
-        StopAllTasks();
+        displayTextLine(4, "ERROR!!");
+        sleep(2000);
+        stopAllTasks();
       }
-      nxtDisplayTextLine(i, "CH[%d]: %d", i, _chVal);
+      displayTextLine(i, "CH[%d]: %d", i, _chVal);
     }
-    wait1Msec(100);
+    sleep(100);
   }
 }
 

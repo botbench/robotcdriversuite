@@ -37,10 +37,10 @@ task main () {
   int tone2;
   int waitTime;
 
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "ACCEL-Nx");
-  nxtDisplayCenteredTextLine(3, "Test 2");
-  wait1Msec(2000);
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "ACCEL-Nx");
+  displayCenteredTextLine(3, "Test 2");
+  sleep(2000);
 
   // There are four ranges the ACCL-Nx can measure in
   // up to 2.5G - MSAC_RANGE_2_5
@@ -49,15 +49,15 @@ task main () {
   // up to 10G  - MSAC_RANGE_10
   MSACsetRange(MSAC, MSAC_RANGE_10);
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
 
   while (true) {
     // Read the tilt data from the sensor
     if (!MSACreadTilt(MSAC, _x_tilt, _y_tilt, _z_tilt)) {
-      nxtDisplayTextLine(4, "ERROR!!");
-      wait1Msec(2000);
-      StopAllTasks();
+      displayTextLine(4, "ERROR!!");
+      sleep(2000);
+      stopAllTasks();
     }
 
     // Tilt values seem to go from about -20 to +20.
@@ -70,9 +70,9 @@ task main () {
     // Make sure the wait time is at least 10ms
     waitTime = max2(10, (_y_tilt + 20));
 
-    PlayImmediateTone(tone1, 5);
-    wait1Msec(waitTime);
-    PlayImmediateTone(tone2, 1);
+    playImmediateTone(tone1, 5);
+    sleep(waitTime);
+    playImmediateTone(tone2, 1);
   }
 }
 

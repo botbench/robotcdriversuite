@@ -92,18 +92,18 @@ task main ()
 		// Rotation speed is controlled by the right joystick
 		rotation = -controller.joystickRight_x;
 
-    nxtDisplayCenteredTextLine(1, "%d:%d", controller.joystickLeft_x, controller.joystickLeft_y);
-    nxtDisplayCenteredTextLine(3, "%d:%d", controller.joystickRight_x, controller.joystickRight_y);
-		nxtDisplayCenteredTextLine(5, "%d", angle);
-		nxtDisplayCenteredTextLine(6, "%d", speed);
-		nxtDisplayCenteredTextLine(7, "%d", rotation);
+    displayCenteredTextLine(1, "%d:%d", controller.joystickLeft_x, controller.joystickLeft_y);
+    displayCenteredTextLine(3, "%d:%d", controller.joystickRight_x, controller.joystickRight_y);
+		displayCenteredTextLine(5, "%d", angle);
+		displayCenteredTextLine(6, "%d", speed);
+		displayCenteredTextLine(7, "%d", rotation);
 		MoveRobot(angle, speed, rotation);
-    wait1Msec(100);
+    sleep(100);
   }
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   MoveRobot(0, 0, 0);
   while (bSoundActive) EndTimeSlice();
-  wait1Msec(100);
+  sleep(100);
 }
 
 

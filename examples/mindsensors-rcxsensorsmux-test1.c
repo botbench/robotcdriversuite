@@ -33,11 +33,11 @@ task main () {
   int chan2 = 0;
   int chan4 = 0;
 
-  nxtDisplayCenteredTextLine(0, "Mindsensors");
-  nxtDisplayCenteredBigTextLine(1, "RXMUX");
-  nxtDisplayCenteredTextLine(3, "Test 1");
+  displayCenteredTextLine(0, "Mindsensors");
+  displayCenteredBigTextLine(1, "RXMUX");
+  displayCenteredTextLine(3, "Test 1");
 
-  wait1Msec(2000);
+  sleep(2000);
 
   // Set up channel 1 on the RCX sensor MUX to a light sensor in percentage mode
   MSRXMUXsetupChan(MSRXMUX, 1, sensorReflection, modePercentage, 5);
@@ -53,12 +53,12 @@ task main () {
     chan1 = MSRXMUXreadChan(MSRXMUX, 1);
     chan2 = MSRXMUXreadChan(MSRXMUX, 2);
     chan4 = MSRXMUXreadChan(MSRXMUX, 4);
-    nxtDisplayBigTextLine(1, "%d", chan1);
-    nxtDisplayBigTextLine(3, "%d", chan2);
-    nxtDisplayBigTextLine(5, "%d", chan4);
+    displayBigTextLine(1, "%d", chan1);
+    displayBigTextLine(3, "%d", chan2);
+    displayBigTextLine(5, "%d", chan4);
   }
 
-  PlaySound(soundBeepBeep);
+  playSound(soundBeepBeep);
   while(bSoundActive) EndTimeSlice();
   eraseDisplay();
   while(1) EndTimeSlice();

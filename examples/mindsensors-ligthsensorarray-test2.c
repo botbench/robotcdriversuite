@@ -35,14 +35,14 @@ task main {
     if (!MSLSAreadRawSensors(MSLSA, &signalstr[0]))
     {
       eraseDisplay();
-      PlaySound(soundException);
-      nxtDisplayCenteredTextLine(4, "error!");
-      wait1Msec(5000);
+      playSound(soundException);
+      displayCenteredTextLine(4, "error!");
+      sleep(5000);
     }
     for (int i = 0; i < 8; i++) {
-      nxtDisplayTextLine(i, "S[%d]: %d", i, signalstr[i]);
+      displayTextLine(i, "S[%d]: %d", i, signalstr[i]);
     }
-    wait1Msec(50);
+    sleep(50);
   }
 }
 

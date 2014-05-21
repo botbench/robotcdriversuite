@@ -90,8 +90,8 @@ int MSTMUXgetActive(tSensors link) {
 
   // Make sure the sensor is configured as type sensorLightInactive
   if (SensorType[link] != sensorLightInactive) {
-    SetSensorType(link, sensorLightInactive);
-    wait1Msec(10);
+    SensorType[link] = sensorLightInactive;
+    sleep(10);
   }
 
 	int s;
