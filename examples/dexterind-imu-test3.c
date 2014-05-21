@@ -25,7 +25,7 @@
  *
  * License: You may use this code as you wish, provided you give credit where it's due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.60 AND HIGHER.
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 4.0 AND HIGHER
 
  * Written by Avery Radmacher (Coder A on the ROBOTC Forums)
  * Modified by Xander Soldaat (xander_at_botbench.com)

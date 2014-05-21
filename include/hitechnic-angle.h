@@ -26,7 +26,7 @@
  *
  * License: You may use this code as you wish, provided you give credit where its due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.60 AND HIGHER.
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 4.0 AND HIGHER
 
  * \author Xander Soldaat (xander_at_botbench.com)
  * \date 20 February 2011
@@ -65,7 +65,7 @@ typedef struct
   tI2CData I2CData;
   int angle;
   int accumlatedAngle;
-  int rpm;
+  short rpm;
   ubyte _cmd;
 } tHTANG, *tHTANGPtr;
 
@@ -78,7 +78,7 @@ bool _sensorSendCommand(tHTANGPtr htangPtr);
 
 int HTANGreadAngle(tSensors link);
 long HTANGreadAccumulatedAngle(tSensors link);
-int HTANGreadRPM(tSensors link);
+short HTANGreadRPM(tSensors link);
 bool HTANGresetAngle(tSensors link);
 bool HTANGresetAccumulatedAngle(tSensors link);
 bool _HTANGsendCommand(tSensors link, byte command);
@@ -186,7 +186,7 @@ long HTANGreadAccumulatedAngle(tMUXSensor muxsensor) {
  * @param link the HTANG port number
  * @return the current rpm of the shaft or -1 if an error occurred.
  */
-int HTANGreadRPM(tSensors link) {
+short HTANGreadRPM(tSensors link) {
   memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
 
   HTANG_I2CRequest[0] = 2;                           // Message size
@@ -196,7 +196,7 @@ int HTANGreadRPM(tSensors link) {
   if (!writeI2C(link, HTANG_I2CRequest, HTANG_I2CReply, 2))
     return -1;
 
-  return (HTANG_I2CReply[0] <<  8) +
+  return (short)(HTANG_I2CReply[0] <<  8) +
           HTANG_I2CReply[1];
 }
 
@@ -288,7 +288,7 @@ bool sensorReadAll(tHTANGPtr htangPtr)
   // Read all of the data available on the sensor
   htangPtr->I2CData.request[0] = 2;                    // Message size
   htangPtr->I2CData.request[1] = htangPtr->I2CData.address; // I2C Address
-  htangPtr->I2CData.request[2] = HTANG_ANG2;
+  htangPtr->I2CData.request[2] = HTANG_OFFSET + HTANG_ANG2;
   htangPtr->I2CData.replyLen = 8;
   htangPtr->I2CData.requestLen = 2;
 
@@ -300,7 +300,7 @@ bool sensorReadAll(tHTANGPtr htangPtr)
          											(htangPtr->I2CData.reply[3] << 16) +
          											(htangPtr->I2CData.reply[4] <<  8) +
           										 htangPtr->I2CData.reply[5];
-  htangPtr->rpm = (htangPtr->I2CData.reply[6] <<  8) + htangPtr->I2CData.reply[7];
+  htangPtr->rpm = (short)(htangPtr->I2CData.reply[6] <<  8) + htangPtr->I2CData.reply[7];
 
   return true;
 }

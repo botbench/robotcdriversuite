@@ -15,7 +15,7 @@
  *
  * License: You may use this code as you wish, provided you give credit where it's due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.60 AND HIGHER.
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 4.0 AND HIGHER
 
  * Xander Soldaat (xander_at_botbench.com)
  * date 20 February 2011
@@ -23,7 +23,7 @@
  */
 
 #include "hitechnic-angle.h"
-  tHTANG angleSensor;
+
 task main () {
   nNxtButtonTask  = -2;
   displayCenteredTextLine(0, "HiTechnic");
@@ -39,7 +39,7 @@ task main () {
   displayTextLine(5, "-------------------");
 
   // Create struct to hold sensor data
-
+  tHTANG angleSensor;
 
   // Initialise and configure struct and port
   initSensor(&angleSensor, S1);
