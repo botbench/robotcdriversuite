@@ -16,7 +16,7 @@
  * drivers.
  * License: You may use this code as you wish, provided you give credit where its due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 4.0 AND HIGHER
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 4.10 AND HIGHER
 
  *
  * Changelog:
@@ -73,8 +73,8 @@
 #endif
 
 #include "firmwareVersion.h"
-#if (kRobotCVersionNumeric < 359)
-#error "These drivers are only supported on RobotC version 3.59 or higher"
+#if (kRobotCVersionNumeric < 410)
+#error "These drivers are only supported on RobotC version 4.10 or higher"
 #endif
 
 #ifndef MAX_ARR_SIZE

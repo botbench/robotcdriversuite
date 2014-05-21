@@ -18,7 +18,7 @@
  *
  * License: You may use this code as you wish, provided you give credit where it's due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 4.0 AND HIGHER
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 4.10 AND HIGHER
 
  * Daniel Playfair Cal (daniel.playfair.cal_at_gmail.com)
  * 20 September 2011

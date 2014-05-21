@@ -26,7 +26,7 @@
  *
  * License: You may use this code as you wish, provided you give credit where its due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 4.0 AND HIGHER
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 4.10 AND HIGHER
 
  * \author Xander Soldaat (xander_at_botbench.com)
  * \date 18 January 2011
