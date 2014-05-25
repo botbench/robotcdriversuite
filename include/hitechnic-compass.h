@@ -37,6 +37,7 @@
  */
 
 #pragma systemFile
+#include "hitechnic-sensormux.h"
 
 #ifndef __COMMON_H__
 #include "common.h"
@@ -45,12 +46,29 @@
 // I2C address + registers
 #define HTMC_I2C_ADDR       0x02  /*!< HTMC I2C device address */
 #define HTMC_MODE           0x41  /*!< HTMC Mode control */
-#define HTMC_HEAD_U         0x42  /*!< HTMC Heading Upper bits */
+#define HTMC_OFFSET					0x42
+#define HTMC_HEAD_U         0x00  /*!< HTMC Heading Upper bits */
 #define HTMC_HEAD_L         0x43  /*!< HTMC Heading Lower bit */
 
 // I2C commands
 #define HTMC_MEASURE_CMD    0x00  /*!< HTMC measurement mode command */
 #define HTMC_CALIBRATE_CMD  0x43 /*!< HTMC calibrate mode command */
+
+typedef struct
+{
+  tI2CData I2CData;
+  int heading;
+  int relativeHeading;
+  int offset;
+  bool smux;
+  tMUXSensor smuxport;
+} tHTMC, *tHTMCPtr;
+
+bool initSensor(tHTMCPtr htmcPtr, tSensors port);
+bool initSensor(tHTMCPtr htmcPtr, tMUXSensor muxsensor);
+bool sensorReadAll(tHTMCPtr htmcPtr);
+bool sensorCalibrate(tHTMCPtr htmcPtr);
+bool sensorStopCalibrate(tHTMCPtr htmcPtr);
 
 bool HTMCstartCal(tSensors link);
 bool HTMCstopCal(tSensors link);
@@ -221,6 +239,150 @@ int HTMCsetTarget(tMUXSensor muxsensor, int offset) {
   return target[SPORT(muxsensor)][MPORT(muxsensor)];
 }
 #endif // __HTSMUX_SUPPORT__
+
+
+/**
+ * Initialise the sensor's data struct and port
+ *
+ * @param htmcPtr pointer to the sensor's data struct
+ * @param port the sensor port
+ * @return true if no error occured, false if it did
+ */
+bool initSensor(tHTMCPtr htmcPtr, tSensors port)
+{
+  memset(htmcPtr, 0, sizeof(tHTMCPtr));
+  htmcPtr->I2CData.address = HTMC_I2C_ADDR;
+  htmcPtr->I2CData.port = port;
+  htmcPtr->I2CData.type = sensorI2CCustom;
+  htmcPtr->smux = false;
+	htmcPtr->offset = 0;
+
+  // Ensure the sensor is configured correctly
+  if (SensorType[htmcPtr->I2CData.port] != htmcPtr->I2CData.type)
+    SensorType[htmcPtr->I2CData.port] = htmcPtr->I2CData.type;
+
+  return true;
+}
+
+
+/**
+ * Initialise the sensor's data struct and MUX port
+ *
+ * @param htmcPtr pointer to the sensor's data struct
+ * @param muxsensor the sensor MUX port
+ * @return true if no error occured, false if it did
+ */
+bool initSensor(tHTMCPtr htmcPtr, tMUXSensor muxsensor)
+{
+  memset(htmcPtr, 0, sizeof(tHTMCPtr));
+  htmcPtr->I2CData.address = HTMC_I2C_ADDR;
+  htmcPtr->I2CData.type = sensorI2CCustom;
+  htmcPtr->smux = true;
+	htmcPtr->smuxport = muxsensor;
+	htmcPtr->offset = 0;
+
+  // Ensure the sensor is configured correctly
+  if (SensorType[htmcPtr->I2CData.port] != htmcPtr->I2CData.type)
+    SensorType[htmcPtr->I2CData.port] = htmcPtr->I2CData.type;
+
+  return HTSMUXconfigChannel(muxsensor, HTMC_config);
+}
+
+
+/**
+ * Read all the sensor's data
+ *
+ * @param htmcPtr pointer to the sensor's data struct
+ * @return true if no error occured, false if it did
+ */
+bool sensorReadAll(tHTMCPtr htmcPtr)
+{
+	int tempHeading = 0;
+	memset(htmcPtr->I2CData.request, 0, sizeof(htmcPtr->I2CData.request));
+
+	if (htmcPtr->smux)
+	{
+		if (!HTSMUXreadPort(htmcPtr->smuxport, htmcPtr->I2CData.reply, 2, HTMC_HEAD_U))
+			return false;
+	}
+	else
+	{
+	  // Read all of the data available on the sensor
+	  htmcPtr->I2CData.request[0] = 2;                    // Message size
+	  htmcPtr->I2CData.request[1] = htmcPtr->I2CData.address; // I2C Address
+	  htmcPtr->I2CData.request[2] = HTMC_OFFSET + HTMC_HEAD_U;
+	  htmcPtr->I2CData.replyLen = 2;
+	  htmcPtr->I2CData.requestLen = 2;
+
+	  if (!writeI2C(&htmcPtr->I2CData))
+	    return false;
+	}
+
+	// Populate the struct with the newly retrieved data
+	htmcPtr->heading = (htmcPtr->I2CData.reply[0] * 2) + htmcPtr->I2CData.reply[1];
+	tempHeading = htmcPtr->heading - htmcPtr->offset + 180;
+  htmcPtr->relativeHeading = (tempHeading >= 0 ? tempHeading % 360 : 359 - (-1 - tempHeading)%360) - 180;
+
+  return true;
+}
+
+bool sensorCalibrate(tHTMCPtr htmcPtr)
+{
+	// Operation not supported on a SMUX
+	if (htmcPtr->smux)
+		return false;
+
+	memset(htmcPtr->I2CData.request, 0, sizeof(htmcPtr->I2CData.request));
+
+  // Read all of the data available on the sensor
+  htmcPtr->I2CData.request[0] = 3;                    // Message size
+  htmcPtr->I2CData.request[1] = htmcPtr->I2CData.address; // I2C Address
+  htmcPtr->I2CData.request[2] = HTMC_MODE;
+  htmcPtr->I2CData.request[3] = HTMC_CALIBRATE_CMD;
+  htmcPtr->I2CData.replyLen = 0;
+  htmcPtr->I2CData.requestLen = 3;
+
+  // Start the calibration
+  return writeI2C(&htmcPtr->I2CData);
+}
+
+
+bool sensorStopCalibrate(tHTMCPtr htmcPtr)
+{
+	// Operation not supported on a SMUX
+	if (htmcPtr->smux)
+		return false;
+
+	memset(htmcPtr->I2CData.request, 0, sizeof(htmcPtr->I2CData.request));
+
+  // Read all of the data available on the sensor
+  htmcPtr->I2CData.request[0] = 3;                    // Message size
+  htmcPtr->I2CData.request[1] = htmcPtr->I2CData.address; // I2C Address
+  htmcPtr->I2CData.request[2] = HTMC_MODE;
+  htmcPtr->I2CData.request[3] = HTMC_MEASURE_CMD;
+  htmcPtr->I2CData.replyLen = 1;
+  htmcPtr->I2CData.requestLen = 3;
+
+  // Start the calibration
+  return writeI2C(&htmcPtr->I2CData);
+
+
+  memset(HTMC_I2CRequest, 0, sizeof(tByteArray));
+
+  HTMC_I2CRequest[0] = 3;                 // Number of bytes in I2C command
+  HTMC_I2CRequest[1] = HTMC_I2C_ADDR;     // I2C address of compass sensor
+  HTMC_I2CRequest[2] = HTMC_MODE;         // Set write address to sensor mode register
+  HTMC_I2CRequest[3] = HTMC_MEASURE_CMD;  // The measurement mode command
+
+  // Stop the calibration by setting the mode register back to measurement.
+  // Read back the register value to check if an error has occurred.
+  if (!writeI2C(&htmcPtr->I2CData))
+    return false;
+
+  // The register is equal to 2 if the calibration has failed.
+  return (htmcPtr->I2CData.reply[0] == 2) ? false : true;
+}
+
 
 /*
  * $Id: hitechnic-compass.h $

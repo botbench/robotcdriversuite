@@ -133,6 +133,7 @@ typedef enum {
 } tMUXSensor;
 
 
+
 /*!< array to hold SMUX status info */
 ubyte HTSMUXstatus[4] = {HTSMUX_STAT_NOTHING, HTSMUX_STAT_NOTHING, HTSMUX_STAT_NOTHING, HTSMUX_STAT_NOTHING};
 
@@ -148,6 +149,14 @@ tByteArray HTSMUX_I2CReply;       /*!< Array to hold I2C reply data */
 typedef ubyte tConfigParams[4];   /*!< Array to hold SMUX channel info */
 
 tConfigParams Analogue_config = {HTSMUX_CHAN_NONE, 0, 0, 0}; /*!< Array to hold SMUX config data for sensor */
+
+typedef struct
+{
+  tI2CData I2CData;
+  ubyte status;
+  HTSMUXSensorType sensorTypes[4];
+  tConfigParams configParams[4];
+} tHTSMUX, *tHTSMUXPtr;
 
 byte HTSMUXreadStatus(tSensors link);
 HTSMUXSensorType HTSMUXreadSensorType(tMUXSensor muxsensor);

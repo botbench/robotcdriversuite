@@ -33,14 +33,19 @@ task main () {
   displayCenteredBigTextLine(1, "BaroTemp");
   displayCenteredTextLine(3, "Test 1");
   displayCenteredTextLine(5, "Connect sensor");
-  displayCenteredTextLine(6, "to S1");
+  displayCenteredTextLine(6, "to the SMUX");
   sleep(2000);
 
   // Create struct to hold sensor data
   tHTBM pressureSensor;
 
   // Initialise and configure struct and port
-  initSensor(&pressureSensor, S1);
+  // The sensor is connected to the first port
+	// of the SMUX which is connected to the NXT port S1.
+	// To access that sensor, we must use msensor_S1_1.  If the sensor
+	// were connected to 3rd port of the SMUX connected to the NXT port S4,
+	// we would use msensor_S4_3
+  initSensor(&pressureSensor, msensor_S1_1);
 
   while (true) {
     eraseDisplay();
