@@ -64,7 +64,7 @@ task main () {
     }
 
     // Read the data from the sensor
-    sensorReadAll(&angleSensor);
+    readSensor(&angleSensor);
     displayTextLine(2, "Ang: %7d deg", angleSensor.angle);
     displayTextLine(3, "Tot: %7d deg", angleSensor.accumlatedAngle);
     displayTextLine(4, "RPM: %7d", angleSensor.rpm);

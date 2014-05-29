@@ -66,7 +66,7 @@ typedef struct
 
 bool initSensor(tHTMCPtr htmcPtr, tSensors port);
 bool initSensor(tHTMCPtr htmcPtr, tMUXSensor muxsensor);
-bool sensorReadAll(tHTMCPtr htmcPtr);
+bool readSensor(tHTMCPtr htmcPtr);
 bool sensorCalibrate(tHTMCPtr htmcPtr);
 bool sensorStopCalibrate(tHTMCPtr htmcPtr);
 
@@ -295,7 +295,7 @@ bool initSensor(tHTMCPtr htmcPtr, tMUXSensor muxsensor)
  * @param htmcPtr pointer to the sensor's data struct
  * @return true if no error occured, false if it did
  */
-bool sensorReadAll(tHTMCPtr htmcPtr)
+bool readSensor(tHTMCPtr htmcPtr)
 {
 	int tempHeading = 0;
 	memset(htmcPtr->I2CData.request, 0, sizeof(htmcPtr->I2CData.request));

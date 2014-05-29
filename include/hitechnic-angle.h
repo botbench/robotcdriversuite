@@ -74,7 +74,7 @@ typedef struct
 
 bool initSensor(tHTANGPtr htangPtr, tSensors port);
 bool initSensor(tHTANGPtr htangPtr, tMUXSensor muxsensor);
-bool sensorReadAll(tHTANGPtr htangPtr);
+bool readSensor(tHTANGPtr htangPtr);
 bool resetSensor(tHTANGPtr htangPtr);
 bool resetAccmulatedAngle(tHTANGPtr htangPtr);
 bool resetAngle(tHTANGPtr htangPtr);
@@ -324,7 +324,7 @@ bool initSensor(tHTANGPtr htangPtr, tMUXSensor muxsensor)
  * @param htangPtr pointer to the sensor's data struct
  * @return true if no error occured, false if it did
  */
-bool sensorReadAll(tHTANGPtr htangPtr)
+bool readSensor(tHTANGPtr htangPtr)
 {
 	memset(htangPtr->I2CData.request, 0, sizeof(htangPtr->I2CData.request));
 

@@ -77,7 +77,7 @@ bool initSensor(tTIRPtr tirPtr, tSensors port)
 }
 
 
-bool sensorReadAll(tTIRPtr tirPtr)
+bool readSensor(tTIRPtr tirPtr)
 {
   memset(tirPtr->I2CData.request, 0, sizeof(tirPtr->I2CData.request));
 

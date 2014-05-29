@@ -57,7 +57,7 @@ task main(){
   while(time1[T1] < 15000)
   {
 		// Read the Compass
-    if (!sensorReadAll(&compass))
+    if (!readSensor(&compass))
       playSound(soundException);
 
     if (time1[T1] % 1000 < 10)
@@ -73,7 +73,7 @@ task main(){
   while (true){
 
 		// Read the Compass
-    if (!sensorReadAll(&compass))
+    if (!readSensor(&compass))
       playSound(soundException);
 
     displayCenteredBigTextLine(1, "Heading");

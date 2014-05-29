@@ -60,7 +60,7 @@ typedef struct
 } tDIMC, *tDIMCptr;
 
 bool initSensor(tDIMCptr dimcPtr, tSensors port);
-bool sensorReadAll(tDIMCptr dimcPtr);
+bool readSensor(tDIMCptr dimcPtr);
 bool startCal(tDIMCptr dimcPtr);
 bool stopCal(tDIMCptr dimcPtr);
 bool _readCalVals(tDIMCptr dimcPtr);

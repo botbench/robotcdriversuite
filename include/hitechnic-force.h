@@ -49,7 +49,7 @@ typedef struct
 
 bool initSensor(tHTFPtr htfPtr, tSensors port);
 bool initSensor(tHTFPtr htfPtr, tMUXSensor muxsensor);
-bool sensorReadAll(tHTFPtr htfPtr);
+bool readSensor(tHTFPtr htfPtr);
 
 //int HTFreadSensor(tSensors link);
 
@@ -129,7 +129,7 @@ bool initSensor(tHTFPtr htfPtr, tMUXSensor muxsensor)
  * @param htfPtr pointer to the sensor's data struct
  * @return true if no error occured, false if it did
  */
-bool sensorReadAll(tHTFPtr htfPtr)
+bool readSensor(tHTFPtr htfPtr)
 {
 	memset(htfPtr->I2CData.request, 0, sizeof(htfPtr->I2CData.request));
 

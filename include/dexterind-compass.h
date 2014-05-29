@@ -142,7 +142,7 @@ typedef struct
 } tDIMC, *tDIMCptr;
 
 bool initSensor(tDIMCptr dimcPtr, tSensors port);
-bool sensorReadAll(tDIMCptr dimcPtr);
+bool readSensor(tDIMCptr dimcPtr);
 bool startCal(tDIMCptr dimcPtr);
 bool stopCal(tDIMCptr dimcPtr);
 bool _readCalVals(tDIMCptr dimcPtr);
@@ -207,7 +207,7 @@ bool initSensor(tDIMCptr dimcPtr, tSensors port)
  * @param tirPtr pointer to tTIR struct holding sensor info
  * @return true if no error occured, false if it did
  */
-bool sensorReadAll(tDIMCptr dimcPtr)
+bool readSensor(tDIMCptr dimcPtr)
 {
   float angle;
 

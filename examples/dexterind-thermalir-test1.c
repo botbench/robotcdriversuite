@@ -47,7 +47,7 @@ task main () {
   displayCenteredTextLine(1, "Thermal Infrared");
   while (true) {
     // Read the currently detected ambient and object temp from the sensor
-    sensorReadAll(&tir);
+    readSensor(&tir);
 
     displayTextLine(3, "A: %3.2f", tir.ambientTemp);
     displayTextLine(4, "O: %3.2f", tir.objectTemp);

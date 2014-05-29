@@ -43,7 +43,7 @@ task main ()
 	while (true)
 	{
 		// Read the Compass
-    if (!sensorReadAll(&compass))
+    if (!readSensor(&compass))
       playSound(soundException);
 
 		// calculate the field strength

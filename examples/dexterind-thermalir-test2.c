@@ -71,7 +71,7 @@ task main () {
 	  motor[HORIZONTAL] = -40;
 	  time1[T1] = 0;
 	  while((nMotorRunState[HORIZONTAL] != runStateIdle) && (nMotorRunState[HORIZONTAL] != runStateHoldPosition)) {
-	  	sensorReadAll(&tir);
+	  	readSensor(&tir);
 	    data[X] = tir.objectTemp;
 	    X++;
 	    sleep(20);

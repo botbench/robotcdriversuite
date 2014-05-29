@@ -201,7 +201,7 @@ bool initSensor(tHTBMPtr htbmPtr, tMUXSensor muxsensor)
  * @param htbmPtr pointer to the sensor's data struct
  * @return true if no error occured, false if it did
  */
-bool sensorReadAll(tHTBMPtr htbmPtr)
+bool readSensor(tHTBMPtr htbmPtr)
 {
 	memset(htbmPtr->I2CData.request, 0, sizeof(htbmPtr->I2CData.request));
 

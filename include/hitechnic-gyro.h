@@ -59,7 +59,7 @@ typedef struct
 
 bool initSensor(tHTGYROPtr htgyroPtr, tSensors port);
 bool initSensor(tHTGYROPtr htgyroPtr, tMUXSensor muxsensor);
-bool sensorReadAll(tHTGYROPtr htgyroPtr);
+bool readSensor(tHTGYROPtr htgyroPtr);
 bool sensorCalibrate(tHTMCPtr htmcPtr)
 
 float HTGYROreadRot(tSensors link);
@@ -254,7 +254,7 @@ bool initSensor(tHTGYROPtr htgyroPtr, tMUXSensor muxsensor)
  * @param htgyroPtr pointer to the sensor's data struct
  * @return true if no error occured, false if it did
  */
-bool sensorReadAll(tHTGYROPtr htgyroPtr)
+bool readSensor(tHTGYROPtr htgyroPtr)
 {
 	memset(htgyroPtr->I2CData.request, 0, sizeof(htgyroPtr->I2CData.request));
 

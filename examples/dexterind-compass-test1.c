@@ -47,7 +47,7 @@ task main(){
   while (true){
 
 		// Read the Compass
-    if (!sensorReadAll(&compass))
+    if (!readSensor(&compass))
       playSound(soundException);
 
     displayCenteredBigTextLine(2, "%3.2f", compass.heading);

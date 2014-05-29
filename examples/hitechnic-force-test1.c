@@ -43,7 +43,7 @@ task main() {
 
   while(true) {
     // Read the sensor value
-    sensorReadAll(&forceSensor);
+    readSensor(&forceSensor);
 
     displayClearTextLine(3);
     displayClearTextLine(4);

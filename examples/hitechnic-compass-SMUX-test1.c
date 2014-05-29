@@ -53,7 +53,7 @@ task main () {
       sleep(500);
 
       // Read the data from the sensor
-    	sensorReadAll(&compass);
+    	readSensor(&compass);
 
     	// Set the current heading as the value for the offset to be used as the
       // new zero-point for the relative heading returned by
@@ -69,7 +69,7 @@ task main () {
     // display them on the screen.
     while(nNxtButtonPressed != kEnterButton) {
     	 // Read the data from the sensor
-    	sensorReadAll(&compass);
+    	readSensor(&compass);
       eraseDisplay();
       displayTextLine(1, "Reading");
       displayTextLine(2, "Target: %4d", compass.offset);

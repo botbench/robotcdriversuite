@@ -53,7 +53,7 @@ These functions below may not pertain to all drivers, but if the sensor offers t
 bool initSensor(tTIRPtr tirPtr, tSensors port)
 
 // Populate the struct with data
-bool sensorReadAll(tTIRPtr tirPtr)
+bool readSensor(tTIRPtr tirPtr)
 
 // Reset the sensor
 bool resetSensor(tTIRPtr tirPtr)

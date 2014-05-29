@@ -46,7 +46,7 @@ task main () {
     eraseDisplay();
 
     // Read the sensor's data
-    sensorReadAll(&pressureSensor);
+    readSensor(&pressureSensor);
 
     displayCenteredTextLine(0, "HTBM Test 1");
     displayTextLine(2, "%5d mInHg", pressureSensor.mInHg);
