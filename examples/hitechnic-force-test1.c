@@ -26,18 +26,7 @@
 
 #include "hitechnic-force.h"
 
- /*
-  =============================================================================
-  main task with some testing code
-
- */
 task main() {
-  int _force = 0;
-
-  // Standard range is set to short range
-
-  nNxtButtonTask  = -2;
-
   eraseDisplay();
 
   displayCenteredTextLine(0, "HiTechnic");
@@ -46,13 +35,19 @@ task main() {
   sleep(2000);
   eraseDisplay();
 
+  // Create struct to hold sensor data
+  tHTF forceSensor;
+
+  // Initialise and configure struct and port
+  initSensor(&forceSensor, S1);
+
   while(true) {
     // Read the sensor value
-    _force = HTFreadSensor(HTFORCE);
+    sensorReadAll(&forceSensor);
 
     displayClearTextLine(3);
     displayClearTextLine(4);
-    displayTextLine(3, "Force:  %4d", _force);
+    displayTextLine(3, "Force:  %4d", forceSensor.force);
     sleep(50);
   }
 }

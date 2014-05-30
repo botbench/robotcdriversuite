@@ -24,23 +24,9 @@
  * version 0.1
  */
 
-#include "hitechnic-sensormux.h"
 #include "hitechnic-force.h"
 
-// The sensor is connected to the first port
-// of the SMUX which is connected to the NXT port S1.
-// To access that sensor, we must use msensor_S1_1.  If the sensor
-// were connected to 3rd port of the SMUX connected to the NXT port S4,
-// we would use msensor_S4_3
-
-// Give the sensor a nice easy to use name
-const tMUXSensor HTFORCE = msensor_S1_1;
-
 task main() {
-  int _force = 0;
-
-  nNxtButtonTask  = -2;
-
   eraseDisplay();
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "Force");
@@ -50,13 +36,24 @@ task main() {
   displayCenteredTextLine(7, "SMUX Port 1");
   sleep(2000);
 
+  // Create struct to hold sensor data
+  tHTF forceSensor;
+
+  // Initialise and configure struct and port
+  // The sensor is connected to the first port
+	// of the SMUX which is connected to the NXT port S1.
+	// To access that sensor, we must use msensor_S1_1.  If the sensor
+	// were connected to 3rd port of the SMUX connected to the NXT port S4,
+	// we would use msensor_S4_3
+  initSensor(&forceSensor, msensor_S1_1);
+
   while(true) {
     // Read the sensor value
-    _force = HTFreadSensor(HTFORCE);
+    sensorReadAll(&forceSensor);
 
     displayClearTextLine(3);
     displayClearTextLine(4);
-    displayTextLine(3, "Force:  %4d", _force);
+    displayTextLine(3, "Force:  %4d", forceSensor.force);
     sleep(50);
   }
 }
