@@ -42,10 +42,25 @@
  */
 
 #pragma systemFile
+#include "hitechnic-sensormux.h"
 
 #ifndef __COMMON_H__
 #include "common.h"
 #endif
+
+typedef struct
+{
+  tI2CData I2CData;
+  float rotation;
+  float offset
+  bool smux;
+  tMUXSensor smuxport;
+} HTGYRO, *tHTGYROPtr;
+
+bool initSensor(tHTGYROPtr htgyroPtr, tSensors port);
+bool initSensor(tHTGYROPtr htgyroPtr, tMUXSensor muxsensor);
+bool sensorReadAll(tHTGYROPtr htgyroPtr);
+bool sensorCalibrate(tHTMCPtr htmcPtr)
 
 float HTGYROreadRot(tSensors link);
 float HTGYROstartCal(tSensors link);
@@ -188,6 +203,85 @@ float HTGYROreadCal(tMUXSensor muxsensor) {
   return HTGYRO_offsets[SPORT(muxsensor)][MPORT(muxsensor)];
 }
 #endif // __HTSMUX_SUPPORT__
+
+/**
+ * Initialise the sensor's data struct and port
+ *
+ * @param htgyroPtr pointer to the sensor's data struct
+ * @param port the sensor port
+ * @return true if no error occured, false if it did
+ */
+bool initSensor(tHTGYROPtr htgyroPtr, tSensors port)
+{
+  memset(htgyroPtr, 0, sizeof(tHTGYROPtr));
+  htgyroPtr->I2CData.port = port;
+  htgyroPtr->I2CData.type = sensorAnalogActive;
+  htgyroPtr->smux = false;
+
+  // Ensure the sensor is configured correctly
+  if (SensorType[htgyroPtr->I2CData.port] != htgyroPtr->I2CData.type)
+    SensorType[htgyroPtr->I2CData.port] = htgyroPtr->I2CData.type;
+
+  return true;
+}
+
+
+/**
+ * Initialise the sensor's data struct and MUX port
+ *
+ * @param htgyroPtr pointer to the sensor's data struct
+ * @param muxsensor the sensor MUX port
+ * @return true if no error occured, false if it did
+ */
+bool initSensor(tHTGYROPtr htgyroPtr, tMUXSensor muxsensor)
+{
+  memset(htgyroPtr, 0, sizeof(tHTGYROPtr));
+  htgyroPtr->I2CData.type = sensorI2CCustom;
+  htgyroPtr->smux = true;
+	htgyroPtr->smuxport = muxsensor;
+
+  // Ensure the sensor is configured correctly
+  if (SensorType[htgyroPtr->I2CData.port] != htgyroPtr->I2CData.type)
+    SensorType[htgyroPtr->I2CData.port] = htgyroPtr->I2CData.type;
+
+  return HTSMUXsetAnalogueActive(muxsensor);
+}
+
+
+/**
+ * Read all the sensor's data
+ *
+ * @param htgyroPtr pointer to the sensor's data struct
+ * @return true if no error occured, false if it did
+ */
+bool sensorReadAll(tHTGYROPtr htgyroPtr)
+{
+	memset(htgyroPtr->I2CData.request, 0, sizeof(htgyroPtr->I2CData.request));
+
+	if (htgyroPtr->smux)
+		htgyroPtr->force = 1023 - HTSMUXreadAnalogue(htgyroPtr->smuxport);
+	else
+	  htgyroPtr->force = 1023 - SensorValue[htgyroPtr->I2CData.port];
+
+	  return true;
+}
+
+bool sensorCalibrate(tHTGYROPtr htgyroPtr)
+{
+	float avgdata = 0.0;
+
+  // Take 50 readings and average them out
+  for (int i = 0; i < 50; i++)
+  {
+		if (htgyroPtr->smux)
+			avgdata += 1023 - HTSMUXreadAnalogue(htgyroPtr->smuxport);
+		else
+		  avgdata += 1023 - SensorValue[htgyroPtr->I2CData.port];
+
+    sleep(50);
+  }
+ 	htgyroPtr->offset = avgdata / 50;
+}
 
 #endif // __HTGYRO_H__
 
