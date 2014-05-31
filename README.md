@@ -28,7 +28,8 @@ typedef struct
   ubyte address;
   tSensors port;
   TSensorTypes type;
-} tI2CData, *tI2CDataPtr;```
+} tI2CData, *tI2CDataPtr;
+```
 Global variables have been eliminated as much as possible, making the drivers less prone to weird behavioural issues, if multitasking is used.
 
 A sensor specific struct will look more like this.  This is the one for the HiTechnic Angle Sensor:
