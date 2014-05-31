@@ -18,7 +18,7 @@ If you're a more advanced user, I would advise you to use something like [Git] [
 The new API
 --------------
 So what is so special about this new API?  It's a complete rethink of how the drivers handle sensor data.  All data (or as much as possible), is contained within a sensor specific struct.  For example, the struct that contains I2C data looks as follows:
-```cpp
+```
 typedef struct
 {
   ubyte request[17];
@@ -32,7 +32,7 @@ typedef struct
 Global variables have been eliminated as much as possible, making the drivers less prone to weird behavioural issues, if multitasking is used.
 
 A sensor specific struct will look more like this.  This is the one for the HiTechnic Angle Sensor:
-```cpp
+```
 typedef struct
 {
   tI2CData I2CData;
@@ -47,7 +47,7 @@ typedef struct
 As you can see, the sensor's struct contains an I2CData struct as well, to keep all the data specific to that sensor in one place.
 
 These functions below may not pertain to all drivers, but if the sensor offers this functionality, it will be accessible through that specific function.  It relies heavily on ROBOTC's function overloading to allow multiple functions with the same name to exist, but taking different arguments.
-```cpp
+```
 // Setup the sensor's port and struct
 bool initSensor(tTIRPtr tirPtr, tSensors port)
 
