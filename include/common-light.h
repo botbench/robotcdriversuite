@@ -40,19 +40,19 @@
  * @param value the value output value (from 0 to 100)
  * @return void
  */
-void RGBtoHSV(float red, float green, float blue, float &hue, float &sat, float &value)
+void RGBtoHSV(float red, float green, float blue, float *hue, float *sat, float *value)
 {
-	hue = 0;
-	sat = 0;
-	value = 0;
+	*hue = 0;
+	*sat = 0;
+	*value = 0;
 
   //   Value
   float rgb_max = max3(red, green, blue);
   float rgb_min;
-  value = rgb_max / 2.56;
+  *value = rgb_max / 2.56;
   if (value == 0){
-    hue = -1;
-    sat = -1;
+    *hue = -1;
+    *sat = -1;
     return;
   }
 
@@ -63,9 +63,9 @@ void RGBtoHSV(float red, float green, float blue, float &hue, float &sat, float 
 
   rgb_max = max3(red, green, blue);
   rgb_min = min3(red, green, blue);
-  sat = (rgb_max - rgb_min) * 100;
-  if (sat == 0){
-    hue = -1;
+  *sat = (rgb_max - rgb_min) * 100;
+  if (*sat == 0){
+    *hue = -1;
     return;
   }
 
@@ -79,14 +79,14 @@ void RGBtoHSV(float red, float green, float blue, float &hue, float &sat, float 
   rgb_min = min3(red, green,blue);
 
   if (rgb_max == red){
-    hue = 0.0 + 60.0*(green-blue);
-    if (hue < 0.0){
-      hue += 360.0;
+    *hue = 0.0 + 60.0*(green-blue);
+    if (*hue < 0.0){
+      *hue += 360.0;
     }
   } else if (rgb_max == green){
-    hue = 120.0 + 60.0 * (blue-red);
+    *hue = 120.0 + 60.0 * (blue-red);
   } else {
-    hue = 240.0 + 60.0 * (red-green);
+    *hue = 240.0 + 60.0 * (red-green);
   }
 }
 
