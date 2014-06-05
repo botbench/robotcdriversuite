@@ -74,7 +74,7 @@
 typedef struct
 {
   tI2CData I2CData;
-  int color;
+  short color;
   short red;
   short green;
   short blue;
@@ -92,18 +92,18 @@ bool readSensor(tHTCS2Ptr htcs2Ptr);
 bool readSensorNorm(tHTCS2Ptr htcs2Ptr);
 bool _sensorSendCommand(tHTCS2Ptr htcs2Ptr);
 
-int HTCS2readColor(tSensors link);
-bool HTCS2readRGB(tSensors link, int &red, int &green, int &blue);
+short HTCS2readColor(tSensors link);
+bool HTCS2readRGB(tSensors link, short &red, short &green, short &blue);
 bool HTCS2readHSV(tSensors link, float &hue, float &saturation, float &value);
-bool HTCS2readWhite(tSensors link, int &white);
-bool HTCS2readNormRGB(tSensors link, int &red, int &green, int &blue);
+bool HTCS2readWhite(tSensors link, short &white);
+bool HTCS2readNormRGB(tSensors link, short &red, short &green, short &blue);
 bool HTCS2readRawRGB(tSensors link, bool passive, long &red, long &green, long &blue);
 bool HTCS2readRawWhite(tSensors link, bool passive, long &white);
 bool _HTCSsendCommand(tSensors link, byte command);
 
 #ifdef __HTSMUX_SUPPORT__
-int HTCS2readColor(tMUXSensor muxsensor);
-bool HTCS2readRGB(tMUXSensor muxsensor, int &red, int &green, int &blue);
+short HTCS2readColor(tMUXSensor muxsensor);
+bool HTCS2readRGB(tMUXSensor muxsensor, short &red, short &green, short &blue);
 
 tConfigParams HTCS2_config = {HTSMUX_CHAN_I2C, 4, 0x02, 0x42};  /*!< Array to hold SMUX config data for sensor */
 #endif // __HTSMUX_SUPPORT__
@@ -120,7 +120,7 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 // * @param link the HTCS2 port number
 // * @return color index number or -1 if an error occurred.
 // */
-//int HTCS2readColor(tSensors link) {
+//short HTCS2readColor(tSensors link) {
 //  memset(HTCS2_I2CRequest, 0, sizeof(tByteArray));
 
 //  if (active_mode[link] != HTCS2_MODE_ACTIVE)
@@ -143,7 +143,7 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 // * @return color index number or -1 if an error occurred.
 // */
 //#ifdef __HTSMUX_SUPPORT__
-//int HTCS2readColor(tMUXSensor muxsensor) {
+//short HTCS2readColor(tMUXSensor muxsensor) {
 //  memset(HTCS2_I2CRequest, 0, sizeof(tByteArray));
 
 //  if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -166,7 +166,7 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 // * @param blue the blue value
 // * @return true if no error occured, false if it did
 // */
-//bool HTCS2readRGB(tSensors link, int &red, int &green, int &blue) {
+//bool HTCS2readRGB(tSensors link, short &red, short &green, short &blue) {
 //  memset(HTCS2_I2CRequest, 0, sizeof(tByteArray));
 
 //  if (active_mode[link] != HTCS2_MODE_ACTIVE)
@@ -196,7 +196,7 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 // * @return true if no error occured, false if it did
 // */
 //#ifdef __HTSMUX_SUPPORT__
-//bool HTCS2readRGB(tMUXSensor muxsensor, int &red, int &green, int &blue) {
+//bool HTCS2readRGB(tMUXSensor muxsensor, short &red, short &green, short &blue) {
 //  memset(HTCS2_I2CRequest, 0, sizeof(tByteArray));
 
 //  if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -225,7 +225,7 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 
 // */
 //bool HTCS2readHSV(tSensors link, float &hue, float &saturation, float &value) {
-//  int red,green,blue;
+//  short red,green,blue;
 
 //  bool ret = HTCS2readRGB(link, red, green, blue);
 //  RGBtoHSV(red,green,blue, hue, saturation, value);
@@ -244,7 +244,7 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 // */
 //#ifdef __HTSMUX_SUPPORT__
 //bool HTCS2readHSV(tMUXSensor muxsensor, float &hue, float &saturation, float &value) {
-//  int red,green,blue;
+//  short red,green,blue;
 
 //  bool ret = HTCS2readRGB(muxsensor, red, green, blue);
 //  RGBtoHSV(red,green,blue, hue, saturation, value);
@@ -260,7 +260,7 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 // * @param white the white channel value
 // * @return true if no error occured, false if it did
 // */
-//bool HTCS2readWhite(tSensors link, int &white) {
+//bool HTCS2readWhite(tSensors link, short &white) {
 //  memset(HTCS2_I2CRequest, 0, sizeof(tByteArray));
 
 //  if (active_mode[link] != HTCS2_MODE_ACTIVE)
@@ -289,7 +289,7 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 // * @param blue the blue value
 // * @return true if no error occured, false if it did
 // */
-//bool HTCS2readNormRGB(tSensors link, int &red, int &green, int &blue) {
+//bool HTCS2readNormRGB(tSensors link, short &red, short &green, short &blue) {
 //  memset(HTCS2_I2CRequest, 0, sizeof(tByteArray));
 
 //  HTCS2_I2CRequest[0] = 2;                               // Message size
@@ -377,7 +377,7 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 // * @param link the HTCS2 port number
 // * @return color index number or -1 if an error occurred.
 // */
-//int HTCS2readColorIndex(tSensors link) {
+//short HTCS2readColorIndex(tSensors link) {
 //  memset(HTCS2_I2CRequest, 0, sizeof(tByteArray));
 
 //  if (active_mode[link] != HTCS2_MODE_ACTIVE)

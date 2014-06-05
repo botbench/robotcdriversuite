@@ -77,7 +77,7 @@
 
 string N2WscratchString;   /*!< string for tmp formatting, scratch data */
 
-intrinsic int StringFind(const char *sSrce, const char *pzFindString)	 asm(opcdStringOps, strOpFind, variableRefCharPtr(sSrce), functionReturn, variableRefCharPtr(pzFindString));
+intrinsic short StringFind(const char *sSrce, const char *pzFindString)	 asm(opcdStringOps, strOpFind, variableRefCharPtr(sSrce), functionReturn, variableRefCharPtr(pzFindString));
 
 
 /**
@@ -85,10 +85,10 @@ intrinsic int StringFind(const char *sSrce, const char *pzFindString)	 asm(opcdS
  * @param buf the buffer to pull the number from
  * @return the number or -1 if no number found.
  */
-int N2WgetNumericResponse(tMassiveArray &buf)
+short N2WgetNumericResponse(tMassiveArray &buf)
 {
   long retval = 0;
-  int pos = 0;
+  short pos = 0;
   for (pos = 0; pos < sizeof(tMassiveArray); pos++)
   {
     memset(N2WscratchString, 0, 20);
@@ -110,7 +110,7 @@ int N2WgetNumericResponse(tMassiveArray &buf)
  */
 void N2WgetStringResponse(const tMassiveArray &buf, string &response)
 {
-  int pos = 0;
+  short pos = 0;
 
   memset(N2WscratchString, 0, 20);
   memcpy(N2WscratchString, buf, 19);
@@ -245,8 +245,8 @@ void N2WReset()
  * @param keyind used for WEP, usually set to 0
  * @return true if no error occured, false if it did
  */
-bool N2WSecurity(int mode, const ubyte *pKeypass, int keylen, int keyind) {
-  int index = 0;
+bool N2WSecurity(short mode, const ubyte *pKeypass, short keylen, short keyind) {
+  short index = 0;
   writeDebugStreamLine("keylen: %d", keylen);
   index = RS485appendToBuff((tBigByteArray)RS485txbuffer, index, "$WFS?");
   sprintf(N2WscratchString, "%d:", mode);
@@ -264,7 +264,7 @@ bool N2WSecurity(int mode, const ubyte *pKeypass, int keylen, int keyind) {
  * @param len the length of the WPA2 key
  * @return true if no error occured, false if it did
  */
-bool N2WSecurityWPA2Key(tBigByteArray &key, int len) {
+bool N2WSecurityWPA2Key(tBigByteArray &key, short len) {
 	return N2WSecurity(WF_SEC_WPA2_KEY, &key[0], len, 0);
 }
 
@@ -287,7 +287,7 @@ bool N2WSecurityWPA2Passphrase(const string passphrase) {
  * @param len the length of the WPA key
  * @return true if no error occured, false if it did
  */
-bool N2WSecurityWPAKey(tBigByteArray &key, int len) {
+bool N2WSecurityWPAKey(tBigByteArray &key, short len) {
 	return N2WSecurity(WF_SEC_WPA_KEY, &key[0], len, 0);
 }
 
@@ -350,7 +350,7 @@ bool N2WsetAdHoc(bool adhoc) {
  * @return true if no error occured, false if it did
  */
 bool _N2WsetPar(const string type, const string param) {
-  int index = 0;
+  short index = 0;
 	N2WscratchString = "$WFE?";
 	index = RS485appendToBuff((tBigByteArray)RS485txbuffer, index, N2WscratchString);
 	index = RS485appendToBuff((tBigByteArray)RS485txbuffer, index, type);
@@ -449,7 +449,7 @@ bool N2WsetPowerSave(bool powersave)
  * Get the current connection status.
  * @return true if no error occured, false if it did
  */
-int N2WStatus() {
+short N2WStatus() {
   long len;
   RS485sendString("$WFGS\n");
   N2WchillOut();
@@ -527,9 +527,9 @@ void N2WgetMAC(string &mac)
  * @param port the port of the service on the remote host
  * @return true if no error occured, false if it did
  */
-bool N2WUDPOpenClient(int id, string ip, int port) {
-  int index = 0;
-  int respOK = 0;
+bool N2WUDPOpenClient(short id, string ip, short port) {
+  short index = 0;
+  short respOK = 0;
   long len;
   sprintf(N2WscratchString, "$UDPOC%d?", id);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
@@ -550,9 +550,9 @@ bool N2WUDPOpenClient(int id, string ip, int port) {
  * @param port the port on which to start listening
  * @return true if no error occured, false if it did
  */
-bool N2WUDPOpenServer(int id, int port) {
-  int index = 0;
-  int respOK = 0;
+bool N2WUDPOpenServer(short id, short port) {
+  short index = 0;
+  short respOK = 0;
   long len;
   sprintf(N2WscratchString, "$UDPOS%d?%d\n", id, port);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
@@ -569,8 +569,8 @@ bool N2WUDPOpenServer(int id, int port) {
  * @param id the connection ID to use, can be 1 to 4
  * @return the number of bytes available for reading
  */
-int N2WUDPAvail(int id) {
-  int index = 0;
+short N2WUDPAvail(short id) {
+  short index = 0;
   long len;
   sprintf(N2WscratchString, "$UDPL%d\n", id);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
@@ -592,8 +592,8 @@ int N2WUDPAvail(int id) {
  * @param datalen the number of bytes to read
  * @return true if no error occured, false if it did
  */
-int N2WUDPRead(int id, int datalen) {
-  int index = 0;
+short N2WUDPRead(short id, short datalen) {
+  short index = 0;
   memset(N2WscratchString, 0, 20);
   ubyte offset;
 
@@ -608,7 +608,7 @@ int N2WUDPRead(int id, int datalen) {
 
 
  	// This part seperates the data from the pre-amble
-	for (int i = 0; i < sizeof(RS485rxbuffer); i++)
+	for (short i = 0; i < sizeof(RS485rxbuffer); i++)
 	{
 	  if (RS485rxbuffer[i] != ',')
 	  {
@@ -632,10 +632,10 @@ int N2WUDPRead(int id, int datalen) {
  * @param datalen the number of bytes to read
  * @return true if no error occured, false if it did
  */
-bool N2WUDPWrite(int id, tHugeByteArray &data, int datalen) {
+bool N2WUDPWrite(short id, tHugeByteArray &data, short datalen) {
   // writeDebugStreamLine("N2WUDPWrite");
-  int index = 0;
-  int respOK;
+  short index = 0;
+  short respOK;
   memset(N2WscratchString, 0, 20);
 
   sprintf(N2WscratchString, "$UDPW%d?%d,", id, datalen);
@@ -655,7 +655,7 @@ bool N2WUDPWrite(int id, tHugeByteArray &data, int datalen) {
  * @param id the connection ID to use, can be 1 to 4 or 0 for all
  * @return true if no error occured, false if it did
  */
-bool N2WUDPClose(int id) {
+bool N2WUDPClose(short id) {
 	StringFormat(N2WscratchString, "$UDPX%d\n", id);
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
@@ -670,7 +670,7 @@ bool N2WUDPClose(int id) {
  * @param id the connection ID to use, can be 1 to 4 or 0 for all
  * @return true if no error occured, false if it did
  */
-bool N2WUDPFlush(int id) {
+bool N2WUDPFlush(short id) {
 	StringFormat(N2WscratchString, "$UDPF%d\n", id);
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
@@ -688,9 +688,9 @@ bool N2WUDPFlush(int id) {
  * @param port the port of the service on the remote host
  * @return true if no error occured, false if it did
  */
-bool N2WTCPOpenClient(int id, string host, int port) {
-  int index = 0;
-  int respOK = 0;
+bool N2WTCPOpenClient(short id, string host, short port) {
+  short index = 0;
+  short respOK = 0;
   long len;
   sprintf(N2WscratchString, "$TCPOC%d?", id);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
@@ -712,10 +712,10 @@ bool N2WTCPOpenClient(int id, string host, int port) {
  * @param port the port of the service on the remote host
  * @return true if no error occured, false if it did
  */
-bool N2WTCPOpenClient(int id, char *host, int port) {
+bool N2WTCPOpenClient(short id, char *host, short port) {
   writeDebugStreamLine("TCPOC pointer version");
-  int index = 0;
-  int respOK = 0;
+  short index = 0;
+  short respOK = 0;
   long len;
   writeDebugStreamLine("host: %s", host);
   sprintf(N2WscratchString, "$TCPOC%d?", id);
@@ -737,9 +737,9 @@ bool N2WTCPOpenClient(int id, char *host, int port) {
  * @param port the port on which to start listening
  * @return true if no error occured, false if it did
  */
-bool N2WTCPOpenServer(int id, int port) {
-  int index = 0;
-  int respOK = 0;
+bool N2WTCPOpenServer(short id, short port) {
+  short index = 0;
+  short respOK = 0;
   long len;
   sprintf(N2WscratchString, "$TCPOS%d?%d\n", id, port);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
@@ -756,9 +756,9 @@ bool N2WTCPOpenServer(int id, int port) {
  * @param id the connection ID to use, can be 1 to 4
  * @return true if no error occured, false if it did
  */
-bool N2WTCPDetachClient(int id) {
-  int index = 0;
-  int respOK = 0;
+bool N2WTCPDetachClient(short id) {
+  short index = 0;
+  short respOK = 0;
   long len;
   sprintf(N2WscratchString, "$TCPD%d\n", id);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
@@ -775,7 +775,7 @@ bool N2WTCPDetachClient(int id) {
  * @param id the connection ID to use, can be 1 to 4 or 0 for all
  * @return true if no error occured, false if it did
  */
-bool N2WTCPClose(int id) {
+bool N2WTCPClose(short id) {
 	StringFormat(N2WscratchString, "$TCPX%d\n", id);
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
@@ -790,7 +790,7 @@ bool N2WTCPClose(int id) {
  * @param id the connection ID to use, can be 1 to 4 or 0 for all
  * @return true if no error occured, false if it did
  */
-bool N2WTCPFlush(int id) {
+bool N2WTCPFlush(short id) {
 	StringFormat(N2WscratchString, "$TCPF%d\n", id);
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
@@ -806,8 +806,8 @@ bool N2WTCPFlush(int id) {
  * @param id the connection ID to use, can be 1 to 4
  * @return the number of bytes available for reading
  */
-int N2WTCPAvail(int id) {
-  int index = 0;
+short N2WTCPAvail(short id) {
+  short index = 0;
   long len;
   sprintf(N2WscratchString, "$TCPL%d\n", id);
   index = RS485appendToBuff(RS485txbuffer, index, N2WscratchString);
@@ -825,8 +825,8 @@ int N2WTCPAvail(int id) {
  * @param datalen the number of bytes to read
  * @return true if no error occured, false if it did
  */
-int N2WTCPRead(int id, int datalen) {
-  int index = 0;
+short N2WTCPRead(short id, short datalen) {
+  short index = 0;
   memset(N2WscratchString, 0, 20);
   ubyte offset;
 
@@ -839,7 +839,7 @@ int N2WTCPRead(int id, int datalen) {
  	RS485readLargeResponse(RS485rxbuffer, datalen, 100);
 
 
-	for (int i = 0; i < sizeof(RS485rxbuffer); i++)
+	for (short i = 0; i < sizeof(RS485rxbuffer); i++)
 	{
 	  if (RS485rxbuffer[i] != ',')
 	  {
@@ -863,12 +863,12 @@ int N2WTCPRead(int id, int datalen) {
  * @param datalen the number of bytes to read
  * @return true if no error occured, false if it did
  */
-int N2WTCPWrite(int id, tHugeByteArray &data, int datalen)
+short N2WTCPWrite(short id, tHugeByteArray &data, short datalen)
 {
   writeDebugStream("N2WTCPWrite: ");
   writeDebugStreamLine("datalen: %d", datalen);
-  int index = 0;
-  int respOK;
+  short index = 0;
+  short respOK;
   memset(N2WscratchString, 0, 20);
 
   sprintf(N2WscratchString, "$TCPW%d?%d,", id, datalen);
@@ -889,7 +889,7 @@ int N2WTCPWrite(int id, tHugeByteArray &data, int datalen)
  * @param ip string to hold IP address
  * @return true if no error occured, false if it did
  */
-void N2WTCPClientIP(int id, string &ip)
+void N2WTCPClientIP(short id, string &ip)
 {
   long len;
   sprintf(N2WscratchString, "$TCPSI%d\n", id);
@@ -915,7 +915,7 @@ void N2WTCPClientIP(int id, string &ip)
  * @param id the connection ID to use, can be 1 to 4
  * @param mac string to hold MAC address
  */
-void N2WTCPClientMAC(int id, string &mac)
+void N2WTCPClientMAC(short id, string &mac)
 {
   long len;
   sprintf(N2WscratchString, "$TCPSM%d\n", id);
@@ -974,7 +974,7 @@ bool N2WreadWS(ubyte &type, ubyte &ID, ubyte &state, ubyte &value)
     nxtReadRawHS(&RS485rxbuffer[0], avail);
     writeDebugStream("N2WreadWS[%d]: ", avail);
 
-    for (int i = 0; i < avail - 2; i++)
+    for (short i = 0; i < avail - 2; i++)
     {
       if ((RS485rxbuffer[i] == 0x00) && (RS485rxbuffer[i+1] == 0x80) && (RS485rxbuffer[i+2] == 0x14))
       {
@@ -1013,8 +1013,8 @@ bool N2WwriteWS(ubyte type, ubyte id, tHugeByteArray &wsmessage, ubyte wsmsglen)
 	  writeDebugStream("0x%2X ", wsmessage[i]);
 	}
 	writeDebugStreamLine(" ");
-	int index = 0;
-	int respOK;
+	short index = 0;
+	short respOK;
 	memset(N2WscratchString, 0, 20);
 
 	string web;

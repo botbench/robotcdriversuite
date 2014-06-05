@@ -104,7 +104,7 @@ task pollSensors()
   }
 }
 
-int genSNMPreply(long reqNo, string &communityName, tByteArray &oid, ubyte oidlen, ubyte dataType, tHugeByteArray &payloadData, int size)
+short genSNMPreply(long reqNo, string &communityName, tByteArray &oid, ubyte oidlen, ubyte dataType, tHugeByteArray &payloadData, short size)
 {
   ubyte communityNameLen = strlen(communityName);
   ubyte payloadSize = size;
@@ -183,7 +183,7 @@ int genSNMPreply(long reqNo, string &communityName, tByteArray &oid, ubyte oidle
   data[OFFS_DATA + 1] = payloadSize;
   memcpy(&data[OFFS_DATA + 2], payloadData, payloadSize);
 
-  for (unsigned int i = 0; i < TOTL_SIZE;i++)
+  for (unsigned short i = 0; i < TOTL_SIZE;i++)
   {
     if ((i % 8) == 0)
       writeDebugStreamLine("");
@@ -194,14 +194,14 @@ int genSNMPreply(long reqNo, string &communityName, tByteArray &oid, ubyte oidle
 }
 
 
-int genSNMPreply(long reqNo, string &communityName, tByteArray &oid, ubyte oidlen, string &dataString)
+short genSNMPreply(long reqNo, string &communityName, tByteArray &oid, ubyte oidlen, string &dataString)
 {
-  int len = strlen(dataString);
+  short len = strlen(dataString);
   memcpy(payloadData, dataString, len);
   return genSNMPreply(reqNo, communityName, oid, oidlen, (ubyte)ASN_OCTET_STRING, payloadData, len);
 }
 
-int genSNMPreply(long reqNo, string &communityName, tByteArray &oid, ubyte oidlen, long value)
+short genSNMPreply(long reqNo, string &communityName, tByteArray &oid, ubyte oidlen, long value)
 {
   payloadData[0] = (value >> 24) & 0xFF;
   payloadData[1] = (value >> 16) & 0xFF;
@@ -260,7 +260,7 @@ bool SNMPdecode (long &reqID, tByteArray &oid)
 	if (oidSize > 9)
 	  return false;
 	writeDebugStream("OID: ");
-	for (int i = 0; i < (oidSize - 1); i++)
+	for (short i = 0; i < (oidSize - 1); i++)
 	{
 	  writeDebugStream("%d.", oid[i]);
 	}
@@ -293,8 +293,8 @@ task main ()
 
   long sensorData;
 
-  int avail = 0;
-  int totsize = 0;
+  short avail = 0;
+  short totsize = 0;
 
   nNxtButtonTask = -2;
 
@@ -350,12 +350,12 @@ task main ()
       if (SNMPdecode(reqID, oid))
       {
 				writeDebugStreamLine("------------------");
-				for (int i = 0; i < sizeof(oid); i++)
+				for (short i = 0; i < sizeof(oid); i++)
 				{
 				  writeDebugStream("0x%02x ", oid[i] & 0xFF);
 				}
 				writeDebugStreamLine("");
-				for (int i = 0; i < sizeof(oidTree); i++)
+				for (short i = 0; i < sizeof(oidTree); i++)
 				{
 				  writeDebugStream("0x%02x ", oidTree[i] & 0xFF);
 				}

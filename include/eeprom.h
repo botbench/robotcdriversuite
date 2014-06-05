@@ -46,8 +46,8 @@ tByteArray EEPROM_I2CReply;      /*!< Array to hold I2C reply data */
 /*
 <function prototypes>
 */
-bool EEPROMreadBytes(tSensors link, long address, tByteArray &data, int numbytes);
-bool EEPROMwriteBytes(tSensors link, long address, tByteArray &data, int numbytes);
+bool EEPROMreadBytes(tSensors link, long address, tByteArray &data, short numbytes);
+bool EEPROMwriteBytes(tSensors link, long address, tByteArray &data, short numbytes);
 bool _EEPROMwriteDummy(tSensors link, long address);
 
 
@@ -59,7 +59,7 @@ bool _EEPROMwriteDummy(tSensors link, long address);
  * @param numbytes the number of bytes to read (limited to 16 at a time)
  * @return true if no error occured, false if it did
  */
-bool EEPROMreadBytes(tSensors link, long address, tByteArray &data, int numbytes) {
+bool EEPROMreadBytes(tSensors link, long address, tByteArray &data, short numbytes) {
   if (!_EEPROMwriteDummy(link, address))
     return false;
 
@@ -104,7 +104,7 @@ bool _EEPROMwriteDummy(tSensors link, long address) {
  * @param numbytes the number of bytes to write (limited to 13 at a time)
  * @return true if no error occured, false if it did
  */
-bool EEPROMwriteBytes(tSensors link, long address, tByteArray &data, int numbytes) {
+bool EEPROMwriteBytes(tSensors link, long address, tByteArray &data, short numbytes) {
   memset(EEPROM_I2CRequest, 0, sizeof(tByteArray));
 
   EEPROM_I2CRequest[0] = 3 + numbytes;                  // Message size

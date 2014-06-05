@@ -44,7 +44,7 @@ task main () {
 
     // Go through each possible touch switch attached to the TMUX
     // and display whether or not is active (pressed)
-    for (int i = 1; i < 5; i++) {
+    for (short i = 1; i < 5; i++) {
       if (HTTMUXisActive(HTTMUX, i))
         displayTextLine(i+2, "Touch %d: on", i);
       else

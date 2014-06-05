@@ -30,10 +30,10 @@
 #include "hitechnic-colour-v1.h"
 
 task main () {
-  int red = 0;
-  int green = 0;
-  int blue = 0;
-  int _color = 0;
+  short red = 0;
+  short green = 0;
+  short blue = 0;
+  short _color = 0;
   string _tmp;
 
   displayCenteredTextLine(0, "HiTechnic");

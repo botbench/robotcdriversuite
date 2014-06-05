@@ -46,7 +46,7 @@
 
 // function prototypes
 void doMainMenu();
-void doMenuItem(int activeOption);
+void doMenuItem(short activeOption);
 bool checkTimer(TTimers timer);
 void doLineLead();
 void writeParams();
@@ -57,14 +57,14 @@ string menuFooter;
 const TTimers rightButtonTimer = T1;
 const TTimers leftButtonTimer  = T2;
 
-int activeOption = 0;
+short activeOption = 0;
 
-int keep_running = 0;
+short keep_running = 0;
 
 byte sensor = 0;
 
 // array to hold user entered values
-int params[4];
+short params[4];
 
 string optionMainMenu[] = {
                               "Kp",
@@ -84,9 +84,9 @@ string optionMainMenuFooter[] = {
 tByteArray signalstr;
 
 
-int getNumber(tSensors link, int &_number, int numdigits=3, int timeout=0) {
+short getNumber(tSensors link, short &_number, short numdigits=3, short timeout=0) {
   long starttime = nPgmTime;
-  int tmpnum, prevnum, counter = 0;
+  short tmpnum, prevnum, counter = 0;
 
   //_number = 0;
 
@@ -146,7 +146,7 @@ task drawSensors() {
   while (keep_running == 1) {
     // This clears the entire area occupied by the small rectangles
     eraseRect(6,62, 91, 43);
-    for (int i = 0; i < 8; i++) {
+    for (short i = 0; i < 8; i++) {
       // Draw the rectangles for the signal strength first
       drawRect(6+(i*11),62, 14+(i*11), 50);
       fillRect(6+(i*11),51+signalstr[i]/10, 14+(i*11), 50);
@@ -165,8 +165,8 @@ task drawSensors() {
 
 // Keep the robot on the line!
 task followTheYellowBrickRoad () {
-  int powerA = 0;
-  int powerC = 0;
+  short powerA = 0;
+  short powerC = 0;
   byte steering = 0;
 
   eraseDisplay();
@@ -221,7 +221,7 @@ task redrawMenu() {
   while(true) {
     eraseDisplay();
     displayTextLine(0, menuHeader);
-    for (int i = 0; i < MENUITEMS; i++) {
+    for (short i = 0; i < MENUITEMS; i++) {
       displayClearTextLine(i + 1);
       if (i == activeOption) {
         if (i < 4)
@@ -314,9 +314,9 @@ void doMainMenu () {
 
 // When enter is pressed in the doMainMenu() we come here.
 // Here we handle the actual actions for each menu item.
-void doMenuItem(int activeOption) {
+void doMenuItem(short activeOption) {
   long oldnumber = 0;
-  int retval = 0;
+  short retval = 0;
 
   playSound(soundBlip);
   while(bSoundActive) EndTimeSlice();
@@ -379,7 +379,7 @@ void doLineLead() {
   keep_running = 1;
   eraseDisplay();
   // Count down and
-  for (int i = 0; i < 5; i++) {
+  for (short i = 0; i < 5; i++) {
     displayCenteredBigTextLine(3, "%d", 5-i);
     playSound(soundBlip);
     sleep(600);

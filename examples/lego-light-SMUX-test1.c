@@ -35,8 +35,8 @@
 const tMUXSensor LEGOLS = msensor_S1_1;
 
 task main() {
-  int raw = 0;
-  int nrm = 0;
+  short raw = 0;
+  short nrm = 0;
   bool active = true;
 
   // Turn the light on

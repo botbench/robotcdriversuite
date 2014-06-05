@@ -73,7 +73,7 @@ bool DTMPreadTemp(tSensors link, float &temp) {
 bool DTMPreadTempK(tSensors link, float &temp) {
   // local vars
   byte i = 0;
-  int val = 0;
+  short val = 0;
   float RtRt25 = 0.0;
   float lnRtRt25 = 0.0;
 

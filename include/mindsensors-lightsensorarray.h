@@ -68,7 +68,7 @@ tByteArray MSLSA_I2CReply;         /*!< Array to hold I2C reply data */
 
 
 bool MSLSAreadSensors(tSensors link, ubyte *values);
-bool MSLSAreadRawSensors(tSensors link, int *values);
+bool MSLSAreadRawSensors(tSensors link, short *values);
 bool _MSLSAsendCommand(tSensors link, ubyte cmd);                      /*!< Send a command to the LightSensorArray */
 
 /**
@@ -129,7 +129,7 @@ bool MSLSAreadSensors(tSensors link, ubyte *values)
  * @param values pointer to integer array to hold the uncalibrated sensor values
  * @return true if no error occured, false if it did
  */
-bool MSLSAreadRawSensors(tSensors link, int *values)
+bool MSLSAreadRawSensors(tSensors link, short *values)
 {
   MSLSA_I2CRequest[0] = 2;
   MSLSA_I2CRequest[1] = MSLSA_I2C_ADDR;
@@ -141,7 +141,7 @@ bool MSLSAreadRawSensors(tSensors link, int *values)
   // clear out the old values
   memset(values, 0, sizeof(values));
 
-  for (int i = 0; i < 8; i++)
+  for (short i = 0; i < 8; i++)
   {
     values[i] = MSLSA_I2CReply[i * 2] + (MSLSA_I2CReply[(i * 2) + 1] << 8);
   }

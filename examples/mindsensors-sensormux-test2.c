@@ -39,9 +39,9 @@ tSensors disco[] = {sensorColorNxtGREEN, sensorColorNxtBLUE, sensorColorNxtRED};
 
 task danceMOnkeyDance()
 {
-  const int X_COORD = 30;
-  const int Y_COORD = 0;
-  const int WAITTIME = 100;
+  const short X_COORD = 30;
+  const short Y_COORD = 0;
+  const short WAITTIME = 100;
 
   while (true) {
     displayRICFile(X_COORD,Y_COORD, MONNKEY01);

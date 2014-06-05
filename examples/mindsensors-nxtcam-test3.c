@@ -30,13 +30,13 @@
 
 #include "mindsensors-nxtcam.h"
 
-// int xscale(int x) - Scales x values from camera coordinates to screen coordinates.
-int xscale(int x) {
+// short xscale(short x) - Scales x values from camera coordinates to screen coordinates.
+short xscale(short x) {
   return ((x - 12) * 99) / 175;
 }
 
-// int yscale(int y) - Scales y values from camera coordinates to screen coordinates.
-int yscale(int y) {
+// short yscale(short y) - Scales y values from camera coordinates to screen coordinates.
+short yscale(short y) {
   return ((143 - y) * 63) / 143;
 }
 
@@ -48,8 +48,8 @@ task main () {
   memset(_blobs, 0, sizeof(blob_array));
 
   //blob_array _blobs;
-  int _x, _y, _x1, _y1;
-  int _nblobs;
+  short _x, _y, _x1, _y1;
+  short _nblobs;
   eraseDisplay();
 
   // pid variables

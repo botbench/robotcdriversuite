@@ -29,7 +29,7 @@
 
 task main()
 {
-  int max = 200;
+  short max = 200;
 
   // Initialise all of the dLights
   DLIGHTinit(DLIGHT, DLIGHT_I2C_ADDR_ALL);
@@ -53,13 +53,13 @@ task main()
 
 
   // Make a nice sort of rainbow effect by cycling through colours
-  for (int value = 0; value < max; value++)
+  for (short value = 0; value < max; value++)
   {
-		int midpoint = max / 2;
-		int currvalue = max - value;
-		int red = 0;
-		int green = 0;
-		int blue = 0;
+		short midpoint = max / 2;
+		short currvalue = max - value;
+		short red = 0;
+		short green = 0;
+		short blue = 0;
 
 		if (currvalue <= midpoint)
 		{

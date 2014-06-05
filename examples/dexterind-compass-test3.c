@@ -32,7 +32,7 @@ task main ()
   tDIMC compass;
 
   // Our local variables
-	int strength = 0;
+	short strength = 0;
 
   // Fire up the compass and initialize it. Only needs to be done once.
   if (!initSensor(&compass, DIMC))

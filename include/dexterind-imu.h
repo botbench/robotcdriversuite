@@ -276,7 +276,7 @@ bool DIMUconfigAccel(tSensors link, ubyte range) {
  * @return gravity in G with 8 bit accuracy
  */
 float DIMUreadAccelAxis8Bit(tSensors link, ubyte axis){
-  int sensorReading = 0;
+  short sensorReading = 0;
 	DIMU_I2CRequest[0] = 2;      // Sending address, register.
 	DIMU_I2CRequest[1] = DIMU_ACC_I2C_ADDR;   // I2C Address of accl.
 
@@ -289,7 +289,7 @@ float DIMUreadAccelAxis8Bit(tSensors link, ubyte axis){
 	if (!writeI2C(link, DIMU_I2CRequest, DIMU_I2CReply, 1))
 	  return 0;
 
-	sensorReading = (int)DIMU_I2CReply[0];
+	sensorReading = (short)DIMU_I2CReply[0];
 	return ((sensorReading > 128) ? sensorReading - 256 : sensorReading) / DIMU_Accel_divisor[link];
 }
 
@@ -325,9 +325,9 @@ bool DIMUsetAccelAxisOffset(tSensors link, ubyte drift_reg, ubyte drift_LSB, uby
  * @return gravity in G with 10 bit accuracy
  */
 float DIMUreadAccelAxis10Bit(tSensors link, ubyte axis, bool calibrate){
-  int ureading = 0;  // unsigned sensor data
-  int sreading = 0;  // signed sensor data
-  int drift_offset = 0;
+  short ureading = 0;  // unsigned sensor data
+  short sreading = 0;  // signed sensor data
+  short drift_offset = 0;
 
   if (calibrate == true) {
     writeDebugStreamLine("axis: %d", axis);

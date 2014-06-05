@@ -41,7 +41,7 @@
 tByteArray MAX127_I2CRequest;    /*!< Array to hold I2C command data */
 tByteArray MAX127_I2CReply;      /*!< Array to hold I2C reply data */
 
-int MAX127readChan(tSensors link, byte i2caddress, byte adcchannel);
+short MAX127readChan(tSensors link, byte i2caddress, byte adcchannel);
 
 /**
  * Returns the current analogue value as measured on the specified channel.
@@ -50,8 +50,8 @@ int MAX127readChan(tSensors link, byte i2caddress, byte adcchannel);
  * @param adcchannel the ADC channel number (0-7)
  * @return value of the ADC channel or -1 if an error occurred.
  */
-int MAX127readChan(tSensors link, byte i2caddress, byte adcchannel) {
-  int _chVal = 0;
+short MAX127readChan(tSensors link, byte i2caddress, byte adcchannel) {
+  short _chVal = 0;
 
   memset(MAX127_I2CRequest, 0, sizeof(tByteArray));
 
@@ -68,7 +68,7 @@ int MAX127readChan(tSensors link, byte i2caddress, byte adcchannel) {
   // 1st byte contains bits 11-4 of the channel's value
   // 2nd byte contains bits 3-0 of the channel's value, followed by 4 0's
   // We'll need to shift the 1st byte left by 4 and the 2nd byte to the right by 4
-  _chVal = ((int)(MAX127_I2CReply[0]) << 4) + ((int)MAX127_I2CReply[1] >> 4);
+  _chVal = ((short)(MAX127_I2CReply[0]) << 4) + ((short)MAX127_I2CReply[1] >> 4);
 
   return _chVal;
 }

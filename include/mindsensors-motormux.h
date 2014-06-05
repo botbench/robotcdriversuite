@@ -124,13 +124,13 @@ void MSMMUXinit();
 bool MSMMUXreadStatus(tMUXmotor muxmotor, ubyte &motorStatus);
 bool MSMMUXsendCommand(tSensors link, ubyte channel, long setpoint, byte speed, ubyte seconds, ubyte commandA, ubyte address = MSMMUX_I2C_ADDR);
 bool MSMMUXsendCommand(tSensors link, ubyte command, ubyte address = MSMMUX_I2C_ADDR);
-bool MSMMUXsetPID(tSensors link, unsigned int kpTacho, unsigned int kiTacho, unsigned int kdTacho, unsigned int kpSpeed, unsigned int kiSpeed, unsigned int kdSpeed, ubyte passCount, ubyte tolerance, ubyte address = MSMMUX_I2C_ADDR);
-// bool MSMMUXsetPID(tSensors link, int kpTacho, int kiTacho, int kdTacho, int kpSpeed, int kiSpeed, int kdSpeed, ubyte passCount, ubyte tolerance, ubyte address = MSMMUX_I2C_ADDR);
+bool MSMMUXsetPID(tSensors link, unsigned short kpTacho, unsigned short kiTacho, unsigned short kdTacho, unsigned short kpSpeed, unsigned short kiSpeed, unsigned short kdSpeed, ubyte passCount, ubyte tolerance, ubyte address = MSMMUX_I2C_ADDR);
+// bool MSMMUXsetPID(tSensors link, short kpTacho, short kiTacho, short kdTacho, short kpSpeed, short kiSpeed, short kdSpeed, ubyte passCount, ubyte tolerance, ubyte address = MSMMUX_I2C_ADDR);
 bool MSMMotor(tMUXmotor muxmotor, byte power, ubyte address = MSMMUX_I2C_ADDR);
 bool MSMotorStop(tMUXmotor muxmotor, ubyte address = MSMMUX_I2C_ADDR);
 bool MSMotorStop(tMUXmotor muxmotor, bool brake, ubyte address = MSMMUX_I2C_ADDR);
 void MSMMotorSetRotationTarget(tMUXmotor muxmotor, long target);
-void MSMMotorSetTimeTarget(tMUXmotor muxmotor, int target);
+void MSMMotorSetTimeTarget(tMUXmotor muxmotor, short target);
 void MSMMotorSetEncoderTarget(tMUXmotor muxmotor, long target);
 void MSMMotorSetEncoderTarget(tMUXmotor muxmotor, long target, bool relative);
 long MSMMotorEncoder(tMUXmotor muxmotor, ubyte address = MSMMUX_I2C_ADDR);
@@ -148,7 +148,7 @@ void MSMMotorSetRamping(tMUXmotor muxmotor, bool ramping);
  * Initialise the mmuxData array needed for keeping track of motor settings
  */
 void MSMMUXinit(){
-  for (int i = 0; i < 4; i++) {
+  for (short i = 0; i < 4; i++) {
     memset(mmuxData[i].runToTarget[0], false, 4);
     memset(mmuxData[i].brake[0], true, 4);
     memset(mmuxData[i].pidcontrol[0], true, 4);
@@ -268,7 +268,7 @@ bool MSMMUXsendCommand(tSensors link, ubyte command, ubyte address) {
  * @param address I2C address of the sensor (optional)
  * @return true if no error occured, false if it did
  */
-bool MSMMUXsetPID(tSensors link, unsigned int kpTacho, unsigned int kiTacho, unsigned int kdTacho, unsigned int kpSpeed, unsigned int kiSpeed, unsigned int kdSpeed, ubyte passCount, ubyte tolerance, ubyte address) {
+bool MSMMUXsetPID(tSensors link, unsigned short kpTacho, unsigned short kiTacho, unsigned short kdTacho, unsigned short kpSpeed, unsigned short kiSpeed, unsigned short kdSpeed, ubyte passCount, ubyte tolerance, ubyte address) {
   memset(MSMMUX_I2CRequest, 0, sizeof(tByteArray));
 
   MSMMUX_I2CRequest[0] = 16;               // Message size
@@ -375,7 +375,7 @@ void MSMMotorSetRotationTarget(tMUXmotor muxmotor, long target) {
  * @param target the time target value in seconds [1-255]
  * @return true if no error occured, false if it did
  */
-void MSMMotorSetTimeTarget(tMUXmotor muxmotor, int target) {
+void MSMMotorSetTimeTarget(tMUXmotor muxmotor, short target) {
   mmuxData[SPORT(muxmotor)].target[MPORT(muxmotor)] = target;
   mmuxData[SPORT(muxmotor)].targetUnit[MPORT(muxmotor)] = MSMMUX_ROT_SECONDS;
 }

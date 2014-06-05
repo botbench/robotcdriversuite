@@ -85,11 +85,11 @@ tByteArray MSIMU_I2CRequest;    /*!< Array to hold I2C command data */
 tByteArray MSIMU_I2CReply;      /*!< Array to hold I2C reply data */
 
 bool _MSIMUsendCMD(tSensors link, ubyte cmd);
-bool MSIMUreadTiltAxes(tSensors link, int &_x, int &_y, int &_z);
-bool MSIMUreadGyroAxes(tSensors link, int &_x, int &_y, int &_z);
-bool MSIMUreadAccelAxes(tSensors link, int &_x, int &_y, int &_z);
-bool MSIMUreadMagneticFields(tSensors link,  int &_x, int &_y, int &_z);
-int MSIMUreadHeading(tSensors link);
+bool MSIMUreadTiltAxes(tSensors link, short &_x, short &_y, short &_z);
+bool MSIMUreadGyroAxes(tSensors link, short &_x, short &_y, short &_z);
+bool MSIMUreadAccelAxes(tSensors link, short &_x, short &_y, short &_z);
+bool MSIMUreadMagneticFields(tSensors link,  short &_x, short &_y, short &_z);
+short MSIMUreadHeading(tSensors link);
 bool MSIMUsetGyroFilter(tSensors link, ubyte level);
 
 
@@ -120,7 +120,7 @@ bool _MSIMUsendCMD(tSensors link, ubyte cmd)
  * @param _z data for z axis in degrees per second
  * @return true if no error occured, false if it did
  */
-bool MSIMUreadTiltAxes(tSensors link, int &_x, int &_y, int &_z){
+bool MSIMUreadTiltAxes(tSensors link, short &_x, short &_y, short &_z){
 	MSIMU_I2CRequest[0] = 2;                        // Message size
   MSIMU_I2CRequest[1] = MSIMU_IMU_I2C_ADDR;      // I2C Address
 	MSIMU_I2CRequest[2] = MSIMU_REG_TILT_ALL_AXES;  // Register address
@@ -128,9 +128,9 @@ bool MSIMUreadTiltAxes(tSensors link, int &_x, int &_y, int &_z){
   if (!writeI2C(link, MSIMU_I2CRequest, MSIMU_I2CReply, 3))
     return false;
 
-  _x = (MSIMU_I2CReply[0] >= 128) ? (int)MSIMU_I2CReply[0] - 256 : (int)MSIMU_I2CReply[0];
-  _y = (MSIMU_I2CReply[1] >= 128) ? (int)MSIMU_I2CReply[1] - 256 : (int)MSIMU_I2CReply[1];
-  _z = (MSIMU_I2CReply[2] >= 128) ? (int)MSIMU_I2CReply[2] - 256 : (int)MSIMU_I2CReply[2];
+  _x = (MSIMU_I2CReply[0] >= 128) ? (short)MSIMU_I2CReply[0] - 256 : (short)MSIMU_I2CReply[0];
+  _y = (MSIMU_I2CReply[1] >= 128) ? (short)MSIMU_I2CReply[1] - 256 : (short)MSIMU_I2CReply[1];
+  _z = (MSIMU_I2CReply[2] >= 128) ? (short)MSIMU_I2CReply[2] - 256 : (short)MSIMU_I2CReply[2];
 
   return true;
 }
@@ -144,7 +144,7 @@ bool MSIMUreadTiltAxes(tSensors link, int &_x, int &_y, int &_z){
  * @param _z data for z axis in degrees per second
  * @return true if no error occured, false if it did
  */
-bool MSIMUreadGyroAxes(tSensors link, int &_x, int &_y, int &_z){
+bool MSIMUreadGyroAxes(tSensors link, short &_x, short &_y, short &_z){
 	MSIMU_I2CRequest[0] = 2;                        // Message size
   MSIMU_I2CRequest[1] = MSIMU_IMU_I2C_ADDR;      // I2C Address
 	MSIMU_I2CRequest[2] = MSIMU_REG_GYRO_ALL_AXES;  // Register address
@@ -152,9 +152,9 @@ bool MSIMUreadGyroAxes(tSensors link, int &_x, int &_y, int &_z){
   if (!writeI2C(link, MSIMU_I2CRequest, MSIMU_I2CReply, 6))
     return false;
 
-  _x = MSIMU_I2CReply[0] + ((int)(MSIMU_I2CReply[1]<<8));
-  _y = MSIMU_I2CReply[2] + ((int)(MSIMU_I2CReply[3]<<8));
-  _z = MSIMU_I2CReply[4] + ((int)(MSIMU_I2CReply[5]<<8));
+  _x = MSIMU_I2CReply[0] + ((short)(MSIMU_I2CReply[1]<<8));
+  _y = MSIMU_I2CReply[2] + ((short)(MSIMU_I2CReply[3]<<8));
+  _z = MSIMU_I2CReply[4] + ((short)(MSIMU_I2CReply[5]<<8));
   return true;
 }
 
@@ -167,7 +167,7 @@ bool MSIMUreadGyroAxes(tSensors link, int &_x, int &_y, int &_z){
  * @param _z variable to hold Z axis data
  * @return true if no error occured, false if it did
  */
-bool MSIMUreadAccelAxes(tSensors link, int &_x, int &_y, int &_z){
+bool MSIMUreadAccelAxes(tSensors link, short &_x, short &_y, short &_z){
 	MSIMU_I2CRequest[0] = 2;                        // Message size
   MSIMU_I2CRequest[1] = MSIMU_IMU_I2C_ADDR;      // I2C Address
 	MSIMU_I2CRequest[2] = MSIMU_REG_ACC_ALL_AXES;  // Register address
@@ -175,9 +175,9 @@ bool MSIMUreadAccelAxes(tSensors link, int &_x, int &_y, int &_z){
   if (!writeI2C(link, MSIMU_I2CRequest, MSIMU_I2CReply, 6))
     return false;
 
-  _x = MSIMU_I2CReply[0] + ((int)(MSIMU_I2CReply[1]<<8));
-  _y = MSIMU_I2CReply[2] + ((int)(MSIMU_I2CReply[3]<<8));
-  _z = MSIMU_I2CReply[4] + ((int)(MSIMU_I2CReply[5]<<8));
+  _x = MSIMU_I2CReply[0] + ((short)(MSIMU_I2CReply[1]<<8));
+  _y = MSIMU_I2CReply[2] + ((short)(MSIMU_I2CReply[3]<<8));
+  _z = MSIMU_I2CReply[4] + ((short)(MSIMU_I2CReply[5]<<8));
   return true;
 }
 
@@ -191,7 +191,7 @@ bool MSIMUreadAccelAxes(tSensors link, int &_x, int &_y, int &_z){
  * @param _z variable to hold Z axis data
  * @return true if no error occured, false if it did
  */
-bool MSIMUreadMagneticFields(tSensors link, int &_x, int &_y, int &_z){
+bool MSIMUreadMagneticFields(tSensors link, short &_x, short &_y, short &_z){
 	MSIMU_I2CRequest[0] = 2;                        // Message size
   MSIMU_I2CRequest[1] = MSIMU_IMU_I2C_ADDR;      // I2C Address
 	MSIMU_I2CRequest[2] = MSIMU_REG_ACC_ALL_AXES;  // Register address
@@ -199,9 +199,9 @@ bool MSIMUreadMagneticFields(tSensors link, int &_x, int &_y, int &_z){
   if (!writeI2C(link, MSIMU_I2CRequest, MSIMU_I2CReply, 6))
     return false;
 
-  _x = MSIMU_I2CReply[0] + ((int)(MSIMU_I2CReply[1]<<8));
-  _y = MSIMU_I2CReply[2] + ((int)(MSIMU_I2CReply[3]<<8));
-  _z = MSIMU_I2CReply[4] + ((int)(MSIMU_I2CReply[5]<<8));
+  _x = MSIMU_I2CReply[0] + ((short)(MSIMU_I2CReply[1]<<8));
+  _y = MSIMU_I2CReply[2] + ((short)(MSIMU_I2CReply[3]<<8));
+  _z = MSIMU_I2CReply[4] + ((short)(MSIMU_I2CReply[5]<<8));
 
   return true;
 }
@@ -212,7 +212,7 @@ bool MSIMUreadMagneticFields(tSensors link, int &_x, int &_y, int &_z){
  * @param link the port number
  * @return the current heading
  */
-int MSIMUreadHeading(tSensors link)
+short MSIMUreadHeading(tSensors link)
 {
 	MSIMU_I2CRequest[0] = 2;                        // Message size
   MSIMU_I2CRequest[1] = MSIMU_IMU_I2C_ADDR;      // I2C Address
@@ -221,7 +221,7 @@ int MSIMUreadHeading(tSensors link)
   if (!writeI2C(link, MSIMU_I2CRequest, MSIMU_I2CReply, 2))
     return 0;
 
-  return MSIMU_I2CReply[0] + ((int)(MSIMU_I2CReply[1]<<8));
+  return MSIMU_I2CReply[0] + ((short)(MSIMU_I2CReply[1]<<8));
 }
 
 

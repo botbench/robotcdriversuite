@@ -34,9 +34,9 @@
 #define MAXMOTORSPEED 90.0
 
 // Use some trig to culcalate the required power for each motor
-void MoveRobot(int angle, int Vb, int rotSpeed) {
+void MoveRobot(short angle, short Vb, short rotSpeed) {
   float Vw1, Vw2, Vw3, maxSpeed, norm_factor;
-  int iVw1, iVw2, iVw3;
+  short iVw1, iVw2, iVw3;
 
   // This is where the magic happens.  The actual formula is
   // Vw = rotSpeed + Vb * ((cosDegrees(wheelAngle) * cosDegrees(movementAngle)) + (sinDegrees(wheelAngle) * sinDegrees(movementAngle)))
@@ -68,9 +68,9 @@ task main ()
   // This is the struct that holds all the info on all buttons and joypads/sticks
   tPSP controller;
 
-  int angle;
-  int speed;
-  int rotation;
+  short angle;
+  short speed;
+  short rotation;
 
   while (true)
   {

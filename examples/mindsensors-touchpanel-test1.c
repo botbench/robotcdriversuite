@@ -37,10 +37,10 @@ task main () {
   sleep(2000);
   eraseDisplay();
 
-  int x, y = 0;
+  short x, y = 0;
   ubyte buttons = 0;
-  int multiplierX = 10;
-  int multiplierY = 10;
+  short multiplierX = 10;
+  short multiplierY = 10;
   while (true) {
     if (!MSTPgetTouch(MSTP, x, y, buttons))
       playSound(soundBlip);

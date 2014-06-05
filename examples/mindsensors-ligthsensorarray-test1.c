@@ -40,14 +40,14 @@ task main {
 
     // This clears the entire area occupied by the small rectangles
     eraseRect(6,62, 91, 43);
-    for (int i = 0; i < 8; i++) {
+    for (short i = 0; i < 8; i++) {
       // Draw the rectangles for the signal strength first
       drawRect(6+(i*11),62, 14+(i*11), 50);
       fillRect(6+(i*11),51+signalstr[i]/10, 14+(i*11), 50);
     }
     // Display the actual signal strength for each sensor
-    for (int i = 0; i < 7; i+=2) {
-      displayTextLine(i/2+3, "S: %3d S: %3d", (int)signalstr[i], (int)signalstr[i+1]);
+    for (short i = 0; i < 7; i+=2) {
+      displayTextLine(i/2+3, "S: %3d S: %3d", (short)signalstr[i], (short)signalstr[i+1]);
     }
     sleep(50);
   }

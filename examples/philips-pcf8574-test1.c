@@ -28,14 +28,14 @@
 
 task main () {
   while (true) {
-	  for (int i = 0; i < 8; i++) {
-	    int foo = 1 << i;
+	  for (short i = 0; i < 8; i++) {
+	    short foo = 1 << i;
 	    foo = ~foo;
 	    PCF8574sendBytes(PCF8574, foo);
 	    sleep(50);
 	  }
-	  for (int i = 7; i > -1; i--) {
-	    int foo = 1 << i;
+	  for (short i = 7; i > -1; i--) {
+	    short foo = 1 << i;
 	    foo = ~foo;
 	    PCF8574sendBytes(PCF8574, foo);
 	    sleep(50);

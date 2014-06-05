@@ -24,7 +24,7 @@
 #include "hitechnic-protoboard.h"
 
 task main() {
-  int adch0, adch1, adch2, adch3, adch4 = 0;
+  short adch0, adch1, adch2, adch3, adch4 = 0;
 
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "Proto");

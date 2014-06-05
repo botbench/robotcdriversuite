@@ -18,9 +18,9 @@
 
 //ubyte rxbuffer[1500];
 
-void sendHeader(int cid) {
+void sendHeader(short cid) {
   ubyte linebuff[20];
-  int index = 0;
+  short index = 0;
   string tmpString;
 
   linebuff[0] = 27; // escape;
@@ -49,11 +49,11 @@ void sendHeader(int cid) {
 }
 
 
-void genResponse(int cid) {
-  int power = motor[motorA];
+void genResponse(short cid) {
+  short power = motor[motorA];
   float temp = 0.0;
   string tmpString;
-  int index = 0;
+  short index = 0;
   ubyte linebuff[20];
   StringFromChars(tmpString, &RS485rxbuffer[0]);
   index = StringFind(tmpString, "/");
@@ -122,17 +122,17 @@ void parseInput()
   tMassiveArray tmp_array;
   //char *b_marker = &beginmarker;
   //char *e_marker = &endmarker;
-  int len;
-  int bpos;
-  int epos;
+  short len;
+  short bpos;
+  short epos;
   bool parsed = true;
   writeDebugStreamLine("Beging parsing...");
   //ubyte currByte[] = {0};
   //ubyte prevByte[] = {0};
   ubyte conn[] = {0};
-  //int cid;
+  //short cid;
   //string tmpString;
-  int index = 0;
+  short index = 0;
   memset(&tmp_array[0], 0, sizeof(tMassiveArray));
   while (true)
   {
@@ -191,7 +191,7 @@ task main()
 
 	writeDebugStreamLine("ssid: %s", ssid);
 	writeDebugStreamLine("psk: %s", wpa_psk);
-  int len = 100;
+  short len = 100;
   eraseDisplay();
   bNxtLCDStatusDisplay = true; // Enable top status line display
   writeDebugStream("Scanning for wifi sensor: ");

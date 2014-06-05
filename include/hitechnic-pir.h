@@ -40,11 +40,11 @@
 
 #define HTPIR_DEFAULT_DEADBAND 12
 
-bool HTPIRsetDeadband(tSensors link, int deadband);
-int HTPIRreadSensor(tSensors link);
+bool HTPIRsetDeadband(tSensors link, short deadband);
+short HTPIRreadSensor(tSensors link);
 
 #ifdef __HTSMUX_SUPPORT__
-int HTPIRreadSensor(tMUXSensor muxsensor);
+short HTPIRreadSensor(tMUXSensor muxsensor);
 
 tConfigParams HTPIR_config = {HTSMUX_CHAN_I2C, 1, 0x02, 0x42}; /*!< Array to hold SMUX config data for sensor */
 #endif // __HTSMUX_SUPPORT__
@@ -65,7 +65,7 @@ tByteArray HTPIR_I2CReply;         /*!< Array to hold I2C reply data */
  * @param deadband the amount
  * @return true if no error occured, false if it did
  */
-bool HTPIRsetDeadband(tSensors link, int deadband) {
+bool HTPIRsetDeadband(tSensors link, short deadband) {
   memset(HTPIR_I2CRequest, 0, sizeof(tByteArray));
   // Ensure the values are valid
   deadband = clip(deadband, 0, 47);
@@ -85,7 +85,7 @@ bool HTPIRsetDeadband(tSensors link, int deadband) {
  * @param link the HTPIR port number
  * @return level detected by sensor, will be between -128 and 127.
  */
-int HTPIRreadSensor(tSensors link) {
+short HTPIRreadSensor(tSensors link) {
   memset(HTPIR_I2CRequest, 0, sizeof(tByteArray));
 
   HTPIR_I2CRequest[0] = 2;               // Number of bytes in I2C command
@@ -95,7 +95,7 @@ int HTPIRreadSensor(tSensors link) {
   if (!writeI2C(link, HTPIR_I2CRequest, HTPIR_I2CReply, 1))
     return -1;
 
-  return (HTPIR_I2CReply[0] >= 128) ? (int)HTPIR_I2CReply[0] - 256 : (int)HTPIR_I2CReply[0];
+  return (HTPIR_I2CReply[0] >= 128) ? (short)HTPIR_I2CReply[0] - 256 : (short)HTPIR_I2CReply[0];
 }
 
 /**
@@ -104,7 +104,7 @@ int HTPIRreadSensor(tSensors link) {
  * @return level detected by sensor, will be between -128 and 127.
  */
 #ifdef __HTSMUX_SUPPORT__
-int HTPIRreadSensor(tMUXSensor muxsensor) {
+short HTPIRreadSensor(tMUXSensor muxsensor) {
   memset(HTPIR_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -114,7 +114,7 @@ int HTPIRreadSensor(tMUXSensor muxsensor) {
     return -1;
   }
 
-  return (HTPIR_I2CReply[0] >= 128) ? (int)HTPIR_I2CReply[0] - 256 : (int)HTPIR_I2CReply[0];
+  return (HTPIR_I2CReply[0] >= 128) ? (short)HTPIR_I2CReply[0] - 256 : (short)HTPIR_I2CReply[0];
 }
 #endif // __HTSMUX_SUPPORT__
 

@@ -61,12 +61,12 @@
 #define HTIRS_SSTR4    0x04      /*!< Address of Sensor 3 signal strength */
 #define HTIRS_SSTR5    0x05      /*!< Address of Sensor 4 signal strength */
 
-int HTIRSreadDir(tSensors link);
-bool HTIRSreadAllStrength(tSensors link, int &dcS1, int &dcS2, int &dcS3, int &dcS4, int &dcS5);
+short HTIRSreadDir(tSensors link);
+bool HTIRSreadAllStrength(tSensors link, short &dcS1, short &dcS2, short &dcS3, short &dcS4, short &dcS5);
 
 #ifdef __HTSMUX_SUPPORT__
-int HTIRSreadDir(tMUXSensor muxsensor);
-bool HTIRSreadAllStrength(tMUXSensor muxsensor, int &dcS1, int &dcS2, int &dcS3, int &dcS4, int &dcS5);
+short HTIRSreadDir(tMUXSensor muxsensor);
+bool HTIRSreadAllStrength(tMUXSensor muxsensor, short &dcS1, short &dcS2, short &dcS3, short &dcS4, short &dcS5);
 
 tConfigParams HTIRS_config = {HTSMUX_CHAN_I2C, 7, 0x02, 0x42}; /*!< Array to hold SMUX config data for sensor */
 #endif // __HTSMUX_SUPPORT__
@@ -79,7 +79,7 @@ tByteArray HTIRS_I2CReply;      /*!< Array to hold I2C reply data */
  * @param link the HTIRS port number
  * @return value of 0-9, the direction index of the detected IR signal or -1 if an error occurred.
  */
-int HTIRSreadDir(tSensors link) {
+short HTIRSreadDir(tSensors link) {
   memset(HTIRS_I2CRequest, 0, sizeof(tByteArray));
 
   HTIRS_I2CRequest[0] = 2;                        // Message size
@@ -89,7 +89,7 @@ int HTIRSreadDir(tSensors link) {
   if (!writeI2C(link, HTIRS_I2CRequest, HTIRS_I2CReply, 1))
     return -1;
 
-  return (int)HTIRS_I2CReply[0];
+  return (short)HTIRS_I2CReply[0];
 }
 
 
@@ -99,7 +99,7 @@ int HTIRSreadDir(tSensors link) {
  * @return value of 0-9, the direction index of the detected IR signal or -1 if an error occurred.
  */
 #ifdef __HTSMUX_SUPPORT__
-int HTIRSreadDir(tMUXSensor muxsensor) {
+short HTIRSreadDir(tMUXSensor muxsensor) {
 	memset(HTIRS_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -108,7 +108,7 @@ int HTIRSreadDir(tMUXSensor muxsensor) {
   if (!HTSMUXreadPort(muxsensor, HTIRS_I2CReply, 1, HTIRS_DIR))
     return -1;
 
-  return (int)HTIRS_I2CReply[0];
+  return (short)HTIRS_I2CReply[0];
 }
 #endif // __HTSMUX_SUPPORT__
 
@@ -123,7 +123,7 @@ int HTIRSreadDir(tMUXSensor muxsensor) {
  * @param dcS5 data from internal sensor nr 5
  * @return true if no error occured, false if it did
  */
-bool HTIRSreadAllStrength(tSensors link, int &dcS1, int &dcS2, int &dcS3, int &dcS4, int &dcS5) {
+bool HTIRSreadAllStrength(tSensors link, short &dcS1, short &dcS2, short &dcS3, short &dcS4, short &dcS5) {
   memset(HTIRS_I2CRequest, 0, sizeof(tByteArray));
 
   HTIRS_I2CRequest[0] = 2;                          // Message size
@@ -133,11 +133,11 @@ bool HTIRSreadAllStrength(tSensors link, int &dcS1, int &dcS2, int &dcS3, int &d
   if (!writeI2C(link, HTIRS_I2CRequest, HTIRS_I2CReply, 5))
     return false;
 
-  dcS1 = (int)HTIRS_I2CReply[0];
-  dcS2 = (int)HTIRS_I2CReply[1];
-  dcS3 = (int)HTIRS_I2CReply[2];
-  dcS4 = (int)HTIRS_I2CReply[3];
-  dcS5 = (int)HTIRS_I2CReply[4];
+  dcS1 = (short)HTIRS_I2CReply[0];
+  dcS2 = (short)HTIRS_I2CReply[1];
+  dcS3 = (short)HTIRS_I2CReply[2];
+  dcS4 = (short)HTIRS_I2CReply[3];
+  dcS5 = (short)HTIRS_I2CReply[4];
 
   return true;
 }
@@ -154,7 +154,7 @@ bool HTIRSreadAllStrength(tSensors link, int &dcS1, int &dcS2, int &dcS3, int &d
  * @return true if no error occured, false if it did
  */
 #ifdef __HTSMUX_SUPPORT__
-bool HTIRSreadAllStrength(tMUXSensor muxsensor, int &dcS1, int &dcS2, int &dcS3, int &dcS4, int &dcS5) {
+bool HTIRSreadAllStrength(tMUXSensor muxsensor, short &dcS1, short &dcS2, short &dcS3, short &dcS4, short &dcS5) {
   memset(HTIRS_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -163,11 +163,11 @@ bool HTIRSreadAllStrength(tMUXSensor muxsensor, int &dcS1, int &dcS2, int &dcS3,
   if (!HTSMUXreadPort(muxsensor, HTIRS_I2CReply, 5, HTIRS_SSTR1))
     return false;
 
-  dcS1 = (int)HTIRS_I2CReply[0];
-  dcS2 = (int)HTIRS_I2CReply[1];
-  dcS3 = (int)HTIRS_I2CReply[2];
-  dcS4 = (int)HTIRS_I2CReply[3];
-  dcS5 = (int)HTIRS_I2CReply[4];
+  dcS1 = (short)HTIRS_I2CReply[0];
+  dcS2 = (short)HTIRS_I2CReply[1];
+  dcS3 = (short)HTIRS_I2CReply[2];
+  dcS4 = (short)HTIRS_I2CReply[3];
+  dcS5 = (short)HTIRS_I2CReply[4];
   return true;
 }
 #endif // __HTSMUX_SUPPORT__

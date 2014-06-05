@@ -27,8 +27,8 @@
 #include "dexterind-flex.h"
 
 task main () {
-  int raw = 0;
-  int nrm = 0;
+  short raw = 0;
+  short nrm = 0;
   // Get control over the buttons
   nNxtButtonTask  = -2;
 

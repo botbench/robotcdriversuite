@@ -13,9 +13,9 @@ digital value to one of six LEDs.
 #include "hitechnic-superpro.h"
 
 task main() {
-  int inputdata;
+  short inputdata;
   ubyte outputdata;
-  int bit;
+  short bit;
 
   // Set all digital IOs as outputs as output
   HTSPBsetupIO(HTSPB, 0xFF);

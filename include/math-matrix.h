@@ -48,9 +48,9 @@
  * @param numCols the number of columns in the matrix
  * @param label the label to use when printing the matrix
  */
-void matrixPrintF(float* matrix, int numRows, int numCols, char* label){
+void matrixPrintF(float* matrix, short numRows, short numCols, char* label){
   // matrixA = input matrix (numRowsA x n)
-  int i,j;
+  short i,j;
   writeDebugStreamLine(label);
   for (i=0; i<numRows; i++){
     for (j=0;j<numCols;j++){
@@ -71,9 +71,9 @@ void matrixPrintF(float* matrix, int numRows, int numCols, char* label){
  * @param numCols the number of columns in the matrix
  * @param label the label to use when printing the matrix
  */
-void matrixPrintL(long* matrix, int numRows, int numCols, char* label){
+void matrixPrintL(long* matrix, short numRows, short numCols, char* label){
   // matrixA = input matrix (numRowsA x n)
-  int i,j;
+  short i,j;
   writeDebugStreamLine(label);
   for (i=0; i<numRows; i++){
     for (j=0;j<numCols;j++){
@@ -94,7 +94,7 @@ void matrixPrintL(long* matrix, int numRows, int numCols, char* label){
  * @param numCols the number of columns in the source matrix
  * @param destination the matrix to copy to
  */
-void matrixCopyF(float* source, int numRows, int numCols, float* destination)
+void matrixCopyF(float* source, short numRows, short numCols, float* destination)
 {
   memcpy(destination, source, numRows * numCols * sizeof(float));
 }
@@ -109,7 +109,7 @@ void matrixCopyF(float* source, int numRows, int numCols, float* destination)
  * @param numCols the number of columns in the source matrix
  * @param destination the matrix to copy to
  */
-void matrixCopyL(long* source, int numRows, int numCols, long* destination)
+void matrixCopyL(long* source, short numRows, short numCols, long* destination)
 {
   memcpy(destination, source, numRows * numCols * sizeof(long));
 }
@@ -126,9 +126,9 @@ void matrixCopyL(long* source, int numRows, int numCols, long* destination)
  * @param numColsB the number of columns in the second matrix
  * @param matrixC the resulting matrix
  */
-void matrixMultF(float* matrixA, float* matrixB, int numRowsA, int numColsA, int numColsB, float* matrixC)
+void matrixMultF(float* matrixA, float* matrixB, short numRowsA, short numColsA, short numColsB, float* matrixC)
 {
-  int i, j, k;
+  short i, j, k;
   for (i = 0; i < numRowsA; i++)
     for(j = 0; j < numColsB; j++)
   {
@@ -150,9 +150,9 @@ void matrixMultF(float* matrixA, float* matrixB, int numRowsA, int numColsA, int
  * @param numColsB the number of columns in the second matrix
  * @param matrixC the resulting matrix
  */
-void matrixMultL(long* matrixA, long* matrixB, int numRowsA, int numColsA, int numColsB, long* matrixC)
+void matrixMultL(long* matrixA, long* matrixB, short numRowsA, short numColsA, short numColsB, long* matrixC)
 {
-  int i, j, k;
+  short i, j, k;
   for (i = 0; i < numRowsA; i++)
     for(j = 0; j < numColsB; j++)
   {
@@ -173,9 +173,9 @@ void matrixMultL(long* matrixA, long* matrixB, int numRowsA, int numColsA, int n
  * @param numColsA the number of columns of both matrices
  * @param matrixC the resulting matrix
  */
-void matrixAddF(float* matrixA, float* matrixB, int numRowsA, int numColsA, float* matrixC)
+void matrixAddF(float* matrixA, float* matrixB, short numRowsA, short numColsA, float* matrixC)
 {
-  int i, j;
+  short i, j;
   for (i = 0; i < numRowsA; i++)
     for(j = 0; j < numColsA; j++)
     matrixC[numColsA * i + j] = matrixA[numColsA * i + j] + matrixB[numColsA * i + j];
@@ -192,9 +192,9 @@ void matrixAddF(float* matrixA, float* matrixB, int numRowsA, int numColsA, floa
  * @param numColsA the number of columns of both matrices
  * @param matrixC the resulting matrix
  */
-void matrixAddL(long* matrixA, long* matrixB, int numRowsA, int numColsA, long* matrixC)
+void matrixAddL(long* matrixA, long* matrixB, short numRowsA, short numColsA, long* matrixC)
 {
-  int i, j;
+  short i, j;
   for (i = 0; i < numRowsA; i++)
     for(j = 0; j < numColsA; j++)
     matrixC[numColsA * i + j] = matrixA[numColsA * i + j] + matrixB[numColsA * i + j];
@@ -211,9 +211,9 @@ void matrixAddL(long* matrixA, long* matrixB, int numRowsA, int numColsA, long* 
  * @param numColsA the number of columns of both matrices
  * @param matrixC the resulting matrix
  */
-void matrixSubtractF(float* matrixA, float* matrixB, int numRowsA, int numColsA, float* matrixC)
+void matrixSubtractF(float* matrixA, float* matrixB, short numRowsA, short numColsA, float* matrixC)
 {
-  int i, j;
+  short i, j;
   for (i = 0; i < numRowsA; i++)
     for(j = 0; j < numColsA; j++)
     matrixC[numColsA * i + j] = matrixA[numColsA * i +j ] - matrixB[numColsA * i + j];
@@ -230,9 +230,9 @@ void matrixSubtractF(float* matrixA, float* matrixB, int numRowsA, int numColsA,
  * @param numColsA the number of columns of both matrices
  * @param matrixC the resulting matrix
  */
-void matrixSubtractL(long* matrixA, long* matrixB, int numRowsA, int numColsA, long* matrixC)
+void matrixSubtractL(long* matrixA, long* matrixB, short numRowsA, short numColsA, long* matrixC)
 {
-  int i, j;
+  short i, j;
   for (i = 0; i < numRowsA; i++)
     for(j = 0; j < numColsA; j++)
     matrixC[numColsA * i + j] = matrixA[numColsA * i +j ] - matrixB[numColsA * i + j];
@@ -248,9 +248,9 @@ void matrixSubtractL(long* matrixA, long* matrixB, int numRowsA, int numColsA, l
  * @param numColsA the number of columns matrixA
  * @param matrixC the resulting matrix
  */
-void matrixTransposeF(float* matrixA, int numRowsA, int numColsA, float* matrixC)
+void matrixTransposeF(float* matrixA, short numRowsA, short numColsA, float* matrixC)
 {
-  int i, j;
+  short i, j;
   for (i = 0;i < numRowsA; i++)
     for(j = 0; j < numColsA; j++)
     matrixC[numRowsA * j + i] = matrixA[numColsA * i + j];
@@ -266,9 +266,9 @@ void matrixTransposeF(float* matrixA, int numRowsA, int numColsA, float* matrixC
  * @param numColsA the number of columns matrixA
  * @param matrixC the resulting matrix
  */
-void matrixTransposeL(long* matrixA, int numRowsA, int numColsA, long* matrixC)
+void matrixTransposeL(long* matrixA, short numRowsA, short numColsA, long* matrixC)
 {
-  int i, j;
+  short i, j;
   for (i = 0;i < numRowsA; i++)
     for(j = 0; j < numColsA; j++)
     matrixC[numRowsA * j + i] = matrixA[numColsA * i + j];

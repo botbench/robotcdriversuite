@@ -39,8 +39,8 @@
 const tMUXSensor HTEOPD = msensor_S1_1;
 
 task main() {
-  int _raw = 0;
-  int _processed = 0;
+  short _raw = 0;
+  short _processed = 0;
 
   // Standard range is set to short range
   bool shortrange = true;

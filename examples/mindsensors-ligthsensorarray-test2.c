@@ -39,7 +39,7 @@ task main {
       displayCenteredTextLine(4, "error!");
       sleep(5000);
     }
-    for (int i = 0; i < 8; i++) {
+    for (short i = 0; i < 8; i++) {
       displayTextLine(i, "S[%d]: %d", i, signalstr[i]);
     }
     sleep(50);

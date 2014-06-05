@@ -38,8 +38,8 @@
 const tMUXSensor HTIRS = msensor_S1_1;
 
 task main () {
-  int _dir = 0;
-	int dcS1, dcS2, dcS3, dcS4, dcS5 = 0;
+  short _dir = 0;
+	short dcS1, dcS2, dcS3, dcS4, dcS5 = 0;
 
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "IR Seekr");

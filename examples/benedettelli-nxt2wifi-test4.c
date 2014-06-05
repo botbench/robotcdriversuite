@@ -19,17 +19,17 @@ string connStatus = "disconnected";
 string dataStrings[5];
 tHugeByteArray data;
 
-int prevDetectedColour = 0;
-int currDetectedColour = 0;
+short prevDetectedColour = 0;
+short currDetectedColour = 0;
 
-int prevBatteryLevel = 0;
-int currBatteryLevel = 0;
+short prevBatteryLevel = 0;
+short currBatteryLevel = 0;
 
-int prevTouchState = 0;
-int currTouchState = 0;
+short prevTouchState = 0;
+short currTouchState = 0;
 
-int prevSonarDistance = 0;
-int currSonarDistance = 0;
+short prevSonarDistance = 0;
+short currSonarDistance = 0;
 
 long prevEncMotorA = 0;
 long currEncMotorA = 0;

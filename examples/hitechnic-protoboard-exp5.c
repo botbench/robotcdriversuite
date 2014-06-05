@@ -26,9 +26,9 @@
 
 #include "hitechnic-protoboard.h"
 
-int wlight;
-int wolight;
-int lightdelta;
+short wlight;
+short wolight;
+short lightdelta;
 
 
 task main() {

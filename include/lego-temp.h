@@ -172,7 +172,7 @@ tLEGOTMPAccuracy _LEGOTMPconvertAccuracy(ubyte config) {
  */
 bool LEGOTMPreadTemp(tSensors link, float &temp) {
   memset(LEGOTMP_I2CRequest, 0, sizeof(tByteArray));
-  int b1;
+  short b1;
   float b2;
   ubyte config;
 
@@ -220,24 +220,24 @@ bool LEGOTMPreadTemp(tSensors link, float &temp) {
   if (!writeI2C(link, LEGOTMP_I2CRequest, LEGOTMP_I2CReply, 2))
     return false;
 
-  b1 = (int)LEGOTMP_I2CReply[0];
+  b1 = (short)LEGOTMP_I2CReply[0];
 
   switch (_LEGOTMPconvertAccuracy(config)) {
     case A_MIN:
       ///128 to have only the most significant bit (9 bits accuracy - 8 (b1) = 1 bit to keep)
-      b2 = ((int)LEGOTMP_I2CReply[1] >> 7) * 0.5;
+      b2 = ((short)LEGOTMP_I2CReply[1] >> 7) * 0.5;
       break;
     case A_MEAN1:
       ///64 to have only the 2 most significant bits
-      b2 = ((int)LEGOTMP_I2CReply[1] >> 6) * 0.25;
+      b2 = ((short)LEGOTMP_I2CReply[1] >> 6) * 0.25;
       break;
     case A_MEAN2:
       ///32 to have only the 3 most significant bits
-      b2 = ((int)LEGOTMP_I2CReply[1] >> 5) * 0.125;
+      b2 = ((short)LEGOTMP_I2CReply[1] >> 5) * 0.125;
       break;
     case A_MAX:
       ///16 to have only the 4 most significant bits
-      b2 = ((int)LEGOTMP_I2CReply[1] >> 4) * 0.0625;
+      b2 = ((short)LEGOTMP_I2CReply[1] >> 4) * 0.0625;
       break;
   }
 

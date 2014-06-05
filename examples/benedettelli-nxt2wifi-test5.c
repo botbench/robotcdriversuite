@@ -180,12 +180,12 @@ task main ()
   //    if (SNMPdecode(reqID, oid))
   //    {
 		//		writeDebugStreamLine("------------------");
-		//		for (int i = 0; i < sizeof(oid); i++)
+		//		for (short i = 0; i < sizeof(oid); i++)
 		//		{
 		//		  writeDebugStream("0x%02x ", oid[i] & 0xFF);
 		//		}
 		//		writeDebugStreamLine("");
-		//		for (int i = 0; i < sizeof(oidTree); i++)
+		//		for (short i = 0; i < sizeof(oidTree); i++)
 		//		{
 		//		  writeDebugStream("0x%02x ", oidTree[i] & 0xFF);
 		//		}

@@ -17,8 +17,8 @@ typedef struct
   float Kp;
   float Ki;
   float Kd;
-  int direction;
-  int sampleTime;
+  short direction;
+  short sampleTime;
 } PIDparams;
 
 
@@ -106,7 +106,7 @@ void PIDSetTunings(float Kp, float Ki, float Kd)
 /* SetSampleTime(...) *********************************************************
  * sets the period, in Milliseconds, at which the calculation is performed
  ******************************************************************************/
-void PIDSetSampleTime(int NewSampleTime)
+void PIDSetSampleTime(short NewSampleTime)
 {
    if (NewSampleTime > 0)
    {
@@ -147,7 +147,7 @@ void PIDSetOutputLimits(float Min, float Max)
  * when the transition from manual to auto occurs, the controller is
  * automatically initialized
  ******************************************************************************/
-void PIDSetMode(int Mode)
+void PIDSetMode(short Mode)
 {
     bool newAuto = (Mode == AUTOMATIC);
     if(newAuto == !inAuto)
@@ -175,7 +175,7 @@ void PIDInitialize()
  * know which one, because otherwise we may increase the output when we should
  * be decreasing.  This is called from the constructor.
  ******************************************************************************/
-void PIDSetControllerDirection(int Direction)
+void PIDSetControllerDirection(short Direction)
 {
    if(inAuto && Direction !=controllerDirection)
    {

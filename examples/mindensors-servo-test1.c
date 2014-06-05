@@ -28,7 +28,7 @@
 #include "mindensors-servo.h"
 
 task main () {
-  int voltage = 0;
+  short voltage = 0;
 
   displayCenteredTextLine(0, "Mindsensors");
   displayCenteredBigTextLine(1, "NXTServo");

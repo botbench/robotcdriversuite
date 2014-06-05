@@ -67,15 +67,15 @@
 
 #define HTCS_CAL_WHITE      0x43      /*!< Command to calibrate white */
 
-int HTCSreadColor(tSensors link);
-bool HTCSreadRGB(tSensors link, int &red, int &green, int &blue);
-bool HTCSreadNormRGB(tSensors link, int &red, int &green, int &blue);
-bool HTCSreadRawRGB(tSensors link, int &red, int &green, int &blue);
+short HTCSreadColor(tSensors link);
+bool HTCSreadRGB(tSensors link, short &red, short &green, short &blue);
+bool HTCSreadNormRGB(tSensors link, short &red, short &green, short &blue);
+bool HTCSreadRawRGB(tSensors link, short &red, short &green, short &blue);
 bool HTCScalWhite(tSensors link);
 
 #ifdef __HTSMUX_SUPPORT__
-int HTCSreadColor(tMUXSensor muxsensor);
-bool HTCSreadRGB(tMUXSensor muxsensor, int &red, int &green, int &blue);
+short HTCSreadColor(tMUXSensor muxsensor);
+bool HTCSreadRGB(tMUXSensor muxsensor, short &red, short &green, short &blue);
 
 tConfigParams HTCS_config = {HTSMUX_CHAN_I2C, 4, 0x02, 0x42}; /*!< Array to hold SMUX config data for sensor */
 #endif
@@ -88,7 +88,7 @@ tByteArray HTCS_I2CReply;             /*!< Array to hold I2C reply data */
  * @param link the HTCS port number
  * @return color index number or -1 if an error occurred.
  */
-int HTCSreadColor(tSensors link) {
+short HTCSreadColor(tSensors link) {
   memset(HTCS_I2CRequest, 0, sizeof(tByteArray));
 
   HTCS_I2CRequest[0] = 2;                             // Message size
@@ -108,7 +108,7 @@ int HTCSreadColor(tSensors link) {
  * @return color index number or -1 if an error occurred.
  */
 #ifdef __HTSMUX_SUPPORT__
-int HTCSreadColor(tMUXSensor muxsensor) {
+short HTCSreadColor(tMUXSensor muxsensor) {
 	memset(HTCS_I2CRequest, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -131,7 +131,7 @@ int HTCSreadColor(tMUXSensor muxsensor) {
  * @param blue the blue value
  * @return true if no error occured, false if it did
  */
-bool HTCSreadRGB(tSensors link, int &red, int &green, int &blue) {
+bool HTCSreadRGB(tSensors link, short &red, short &green, short &blue) {
   memset(HTCS_I2CRequest, 0, sizeof(tByteArray));
 
   HTCS_I2CRequest[0] = 2;                           // Message size
@@ -158,7 +158,7 @@ bool HTCSreadRGB(tSensors link, int &red, int &green, int &blue) {
  * @return true if no error occured, false if it did
  */
 #ifdef __HTSMUX_SUPPORT__
-bool HTCSreadRGB(tMUXSensor muxsensor, int &red, int &green, int &blue) {
+bool HTCSreadRGB(tMUXSensor muxsensor, short &red, short &green, short &blue) {
   memset(HTCS_I2CRequest, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -187,7 +187,7 @@ bool HTCSreadRGB(tMUXSensor muxsensor, int &red, int &green, int &blue) {
  */
 bool HTCSreadHSV(tSensors link, float &hue, float &saturation, float &value) {
 
-  int red,green,blue;
+  short red,green,blue;
   bool ret = HTCSreadRGB(link, red, green, blue);
   RGBtoHSV(red,green,blue, hue, saturation, value);
 
@@ -206,7 +206,7 @@ bool HTCSreadHSV(tSensors link, float &hue, float &saturation, float &value) {
 #ifdef __HTSMUX_SUPPORT__
 bool HTCSreadHSV(tMUXSensor muxsensor, float &hue, float &saturation, float &value) {
 
-  int red,green,blue;
+  short red,green,blue;
 
   bool ret = HTCSreadRGB(muxsensor, red, green, blue);
   RGBtoHSV(red,green,blue, hue, saturation, value);
@@ -226,7 +226,7 @@ bool HTCSreadHSV(tMUXSensor muxsensor, float &hue, float &saturation, float &val
  * @param blue the blue value
  * @return true if no error occured, false if it did
  */
-bool HTCSreadNormRGB(tSensors link, int &red, int &green, int &blue) {
+bool HTCSreadNormRGB(tSensors link, short &red, short &green, short &blue) {
   memset(HTCS_I2CRequest, 0, sizeof(tByteArray));
 
   HTCS_I2CRequest[0] = 2;                               // Message size
@@ -252,7 +252,7 @@ bool HTCSreadNormRGB(tSensors link, int &red, int &green, int &blue) {
  * @return true if no error occured, false if it did
  */
 
-bool HTCSreadRawRGB(tSensors link, int &red, int &green, int &blue) {
+bool HTCSreadRawRGB(tSensors link, short &red, short &green, short &blue) {
   memset(HTCS_I2CRequest, 0, sizeof(tByteArray));
 
   HTCS_I2CRequest[0] = 2;                               // Message size
@@ -277,7 +277,7 @@ bool HTCSreadRawRGB(tSensors link, int &red, int &green, int &blue) {
  * @param link the HTCS port number
  * @return color index number or -1 if an error occurred.
  */
-int HTCSreadColorIndex(tSensors link) {
+short HTCSreadColorIndex(tSensors link) {
   memset(HTCS_I2CRequest, 0, sizeof(tByteArray));
 
   HTCS_I2CRequest[0] = 2;                                // Message size

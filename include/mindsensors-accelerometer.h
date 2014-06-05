@@ -58,10 +58,10 @@
 #define MSAC_RANGE_6_7      3     /*!< Acceleration up to 6.7G */
 #define MSAC_RANGE_10       4     /*!< Acceleration up to 10G */
 
-bool MSACreadTilt(tSensors link, int &x_tilt, int &y_tilt, int &z_tilt);
-bool MSACreadAccel(tSensors link, int &x_accel, int &y_accel, int &z_accel);
+bool MSACreadTilt(tSensors link, short &x_tilt, short &y_tilt, short &z_tilt);
+bool MSACreadAccel(tSensors link, short &x_accel, short &y_accel, short &z_accel);
 bool MSACsendCmd(tSensors link, byte command);
-bool MSACsetRange(tSensors link, int range);
+bool MSACsetRange(tSensors link, short range);
 
 tByteArray MSAC_I2CRequest;       /*!< Array to hold I2C command data */
 tByteArray MSAC_I2CReply;         /*!< Array to hold I2C reply data */
@@ -75,7 +75,7 @@ tByteArray MSAC_I2CReply;         /*!< Array to hold I2C reply data */
  * @param z_tilt Z tilt data
  * @return true if no error occured, false if it did
  */
-bool MSACreadTilt(tSensors link, int &x_tilt, int &y_tilt, int &z_tilt) {
+bool MSACreadTilt(tSensors link, short &x_tilt, short &y_tilt, short &z_tilt) {
   memset(MSAC_I2CRequest, 0, sizeof(tByteArray));
 
   MSAC_I2CRequest[0] = 2;               // Number of bytes in I2C command
@@ -101,7 +101,7 @@ bool MSACreadTilt(tSensors link, int &x_tilt, int &y_tilt, int &z_tilt) {
  * @param z_accel Z acceleration data
  * @return true if no error occured, false if it did
  */
-bool MSACreadAccel(tSensors link, int &x_accel, int &y_accel, int &z_accel) {
+bool MSACreadAccel(tSensors link, short &x_accel, short &y_accel, short &z_accel) {
   memset(MSAC_I2CRequest, 0, sizeof(tByteArray));
 
   MSAC_I2CRequest[0] = 2;               // Number of bytes in I2C command
@@ -143,7 +143,7 @@ bool MSACsendCmd(tSensors link, byte command) {
  * @param range 1 = 2.5G, 2 = 3.3G, 3 = 6.7G, 4 = 10G
  * @return true if no error occured, false if it did
  */
-bool MSACsetRange(tSensors link, int range) {
+bool MSACsetRange(tSensors link, short range) {
   byte command = 0;
 
   switch (range) {

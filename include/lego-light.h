@@ -41,26 +41,26 @@
 
 #define LEGOLSDAT "legols.dat"    /*!< Datafile for Light Sensor calibration info */
 
-int lslow[16];
-int lshigh[16];
+short lslow[16];
+short lshigh[16];
 
 // Globals
-//int lslow = 0;                    /*!< Low calibration value */
-//int lshigh = 1023;                /*!< High calibration value */
+//short lslow = 0;                    /*!< Low calibration value */
+//short lshigh = 1023;                /*!< High calibration value */
 bool legols_calibrated = false;   /*!< Has the sensor been calibrated yet */
 
 // Function prototypes
-int LSvalRaw(tSensors link);
-int LSvalNorm(tSensors link);
+short LSvalRaw(tSensors link);
+short LSvalNorm(tSensors link);
 void LScalLow(tSensors link);
 void LScalHigh(tSensors link);
 void LSsetActive(tSensors link);
 void LSsetInactive(tSensors link);
 
 #ifdef __HTSMUX_SUPPORT__
-int LSvalNorm(tMUXSensor muxsensor);
+short LSvalNorm(tMUXSensor muxsensor);
 void LScalLow(tMUXSensor muxsensor);
-int LSvalRaw(tMUXSensor muxsensor);
+short LSvalRaw(tMUXSensor muxsensor);
 void LScalHigh(tMUXSensor muxsensor);
 void LSsetActive(tMUXSensor muxsensor);
 void LSsetInactive(tMUXSensor muxsensor);
@@ -76,7 +76,7 @@ void _LSreadCalVals();
  * @param link the Light Sensor port number
  * @return the raw value of the Light Sensor
  */
-int LSvalRaw(tSensors link) {
+short LSvalRaw(tSensors link) {
   _LScheckSensor(link);
 
   return SensorRaw[link];
@@ -89,7 +89,7 @@ int LSvalRaw(tSensors link) {
  * @return the raw value of the Light Sensor
  */
 #ifdef __HTSMUX_SUPPORT__
-int LSvalRaw(tMUXSensor muxsensor) {
+short LSvalRaw(tMUXSensor muxsensor) {
   return 1023 - HTSMUXreadAnalogue(muxsensor);
 }
 #endif // __HTSMUX_SUPPORT__
@@ -99,7 +99,7 @@ int LSvalRaw(tMUXSensor muxsensor) {
  * @param link the Light Sensor port number
  * @return the normalised value
  */
-int LSvalNorm(tSensors link) {
+short LSvalNorm(tSensors link) {
   long currval = 0;
 
   _LScheckSensor(link);
@@ -125,7 +125,7 @@ int LSvalNorm(tSensors link) {
  * @return the normalised value
  */
  #ifdef __HTSMUX_SUPPORT__
-int LSvalNorm(tMUXSensor muxsensor) {
+short LSvalNorm(tMUXSensor muxsensor) {
   long currval = 0;
 
   if (!legols_calibrated) {
@@ -275,7 +275,7 @@ void _LSwriteCalVals() {
   }
 
   // Write the low calibration value
-  for (int i = 0; i < 16; i++) {
+  for (short i = 0; i < 16; i++) {
 	  WriteShort(hFileHandle, nIoResult, lslow[i]);
 	  // writeDebugStreamLine("W: lslow[%d]: %d", i, lslow[i]);
 	  if (nIoResult != ioRsltSuccess) {
@@ -289,7 +289,7 @@ void _LSwriteCalVals() {
 	}
 
   // Write the low calibration value
-  for (int i = 0; i < 16; i++) {
+  for (short i = 0; i < 16; i++) {
 	  WriteShort(hFileHandle, nIoResult, lshigh[i]);
 	  // writeDebugStreamLine("W lshigh[%d]: %d", i, lshigh[i]);
 	  if (nIoResult != ioRsltSuccess) {
@@ -331,7 +331,7 @@ void _LSreadCalVals() {
     Close(hFileHandle, nIoResult);
     // Assign default values
 		memset(&lslow[0], 0, sizeof(lslow));
-		for (int i = 0; i < 16; i++) {
+		for (short i = 0; i < 16; i++) {
 		  lshigh[i] = 1023;
 		}
 		_LSwriteCalVals();
@@ -339,12 +339,12 @@ void _LSreadCalVals() {
   }
 
   // Read the low calibration value
-  for (int i = 0; i < 16; i++) {
+  for (short i = 0; i < 16; i++) {
 	  ReadShort(hFileHandle, nIoResult, (short)lslow[i]);
     // writeDebugStreamLine("R: lslow[%d]: %d", i, lslow[i]);
 	  if (nIoResult != ioRsltSuccess) {
 			memset(&lslow[0], 0, sizeof(lslow));
-			for (int i = 0; i < 16; i++) {
+			for (short i = 0; i < 16; i++) {
 			  lshigh[i] = 1023;
 			}
 			_LSwriteCalVals();
@@ -352,12 +352,12 @@ void _LSreadCalVals() {
 	  }
 	}
 
-  for (int i = 0; i < 16; i++) {
+  for (short i = 0; i < 16; i++) {
 	  ReadShort(hFileHandle, nIoResult, (short)lshigh[i]);
 	  // writeDebugStreamLine("R lshigh[%d]: %d", i, lshigh[i]);
 	  if (nIoResult != ioRsltSuccess) {
 			memset(&lslow[0], 0, sizeof(lslow));
-			for (int i = 0; i < 16; i++) {
+			for (short i = 0; i < 16; i++) {
 			  lshigh[i] = 1023;
 			}
 			_LSwriteCalVals();

@@ -17,9 +17,9 @@ Port 4 - Ultrasonic sensor
 #include "hitechnic-superpro.h"
 
 task main() {
-  int sonarvalue;
+  short sonarvalue;
   ubyte outputdata;
-  int bit;
+  short bit;
 
   // The data to be written: 0x3F = 111111 binary,
   // makes all digital ports outputs.

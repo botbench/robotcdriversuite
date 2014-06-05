@@ -275,7 +275,7 @@ bool CTRFIDreadTransponder(tSensors link, string &transponderID) {
   // first : clear the current value of TransponderID
   // (if not, the next instructions will concatenate as much IDs as read !)
   strcpy(transponderID, "");
-  for (int i=0;i<5;i++) {
+  for (short i=0;i<5;i++) {
     // "%02x"  will pad the hex number with a zero to make it two digits long at all times.
     StringFormat(transponderID, "%s%02x", transponderID, CTRFID_I2CReply[i]);
   }

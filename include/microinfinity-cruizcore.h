@@ -54,9 +54,9 @@
 #define MICC_CMD_RANGE_4G   0x62  /*!< MICC Acceleration up to 4G */
 #define MICC_CMD_RANGE_8G   0x63  /*!< MICC Acceleration up to 8G */
 
-int MICCreadRelativeHeading(tSensors link);
-int MICCreadTurnRate(tSensors link);
-bool MICCreadAccel(tSensors link, int &x_accel, int &y_accel, int &z_accel);
+short MICCreadRelativeHeading(tSensors link);
+short MICCreadTurnRate(tSensors link);
+bool MICCreadAccel(tSensors link, short &x_accel, short &y_accel, short &z_accel);
 bool MICCsendCmd(tSensors link, ubyte command);
 
 #define MICCsetRange2G(x) MICCsendCmd(x, MICC_CMD_RANGE_2G) /*!< Macro for setting sensor to 2G range */
@@ -73,7 +73,7 @@ tByteArray MICC_I2CReply;         /*!< Array to hold I2C reply data */
  * Angle is measured in 100th degrees.  So 12899 = 128.99 degrees.
  * @return the relative heading
  */
-int MICCreadRelativeHeading(tSensors link) {
+short MICCreadRelativeHeading(tSensors link) {
   memset(MICC_I2CRequest, 0, sizeof(tByteArray));
 
   MICC_I2CRequest[0] = 2;               // Number of bytes in I2C command
@@ -92,7 +92,7 @@ int MICCreadRelativeHeading(tSensors link) {
  * Return the Rate of Turn in degrees per second
  * @return the current rate of turn
  */
-int MICCreadTurnRate(tSensors link) {
+short MICCreadTurnRate(tSensors link) {
   memset(MICC_I2CRequest, 0, sizeof(tByteArray));
 
   MICC_I2CRequest[0] = 2;               // Number of bytes in I2C command
@@ -114,7 +114,7 @@ int MICCreadTurnRate(tSensors link) {
  * @param z_accel Z acceleration data
  * @return true if no error occured, false if it did
  */
-bool MICCreadAccel(tSensors link, int &x_accel, int &y_accel, int &z_accel) {
+bool MICCreadAccel(tSensors link, short &x_accel, short &y_accel, short &z_accel) {
   memset(MICC_I2CRequest, 0, sizeof(tByteArray));
 
   MICC_I2CRequest[0] = 2;               // Number of bytes in I2C command

@@ -26,11 +26,11 @@
 
 #include "mindsensors-powermeter.h"
 
-int voltage = 0;
-int current = 0;
+short voltage = 0;
+short current = 0;
 bool scaleChanged = false;
-int vscale = 0;
-int cscale = 0;
+short vscale = 0;
+short cscale = 0;
 
 typedef enum {
   showvoltage,
@@ -48,7 +48,7 @@ void debounce() {
   }
 }
 
-void doDrawPoint(int top, int x_pos, int y_pos) {
+void doDrawPoint(short top, short x_pos, short y_pos) {
 	eraseRect(x_pos, 63, x_pos+5, 0);
 	if (displayUnit == showcurrent)
 	  displayCenteredTextLine(7, "Max: %d mA", top);
@@ -63,7 +63,7 @@ void doDrawPoint(int top, int x_pos, int y_pos) {
 	setPixel(x_pos, y_pos);
 }
 
-int scaleToTop() {
+short scaleToTop() {
   // scales (amps)
   // 0: 0 -   50 mA
   // 1: 0 -  100 mA
@@ -98,11 +98,11 @@ int scaleToTop() {
 }
 
 task displayCardio () {
-  int top = 0;
-  int y_val = 0;
+  short top = 0;
+  short y_val = 0;
   eraseDisplay();
   while (true) {
-    for (int i = 10; i < 99; i++) {
+    for (short i = 10; i < 99; i++) {
       top = scaleToTop();
       if (displayUnit == showcurrent) {
         y_val = (((long)current * 50) / top) + 10;

@@ -43,7 +43,7 @@
 
 typedef struct
 {
-	int _offsets[3];
+	short _offsets[3];
 } tDIMCCalData, *tDIMCCalDataptr;
 
 typedef struct
@@ -51,9 +51,9 @@ typedef struct
   tI2CData I2CData;
   tDIMCCalData calData;
   float heading;
-  int axes[3];
-  int _minVals[3];
-  int _maxVals[3];
+  short axes[3];
+  short _minVals[3];
+  short _maxVals[3];
   bool _calibrated;
   bool _calibrating;
   string _calibrationFile;
@@ -67,22 +67,22 @@ bool _readCalVals(tDIMCptr dimcPtr);
 bool _writeCalVals(tDIMCptr dimcPtr);
 
 // Globals
-int dflexlow = 0;                    /*!< Low calibration value */
-int dflexhigh = 1023;                /*!< High calibration value */
+short dflexlow = 0;                    /*!< Low calibration value */
+short dflexhigh = 1023;                /*!< High calibration value */
 bool DFLEX_calibrated = false;   /*!< Has the sensor been calibrated yet */
 
 // Function prototypes
-int DFLEXvalRaw(tSensors link);
-int DFLEXvalNorm(tSensors link);
+short DFLEXvalRaw(tSensors link);
+short DFLEXvalNorm(tSensors link);
 
 void DFLEXcalLow(tSensors link);
-void DFLEXcalLow(int lowval);
+void DFLEXcalLow(short lowval);
 void DFLEXcalHigh(tSensors link);
-void DFLEXcalHigh(int highval);
+void DFLEXcalHigh(short highval);
 
 void _DFLEXcheckSensor(tSensors link);
-void _DFLEXwriteCalVals(int lowval, int highval);
-void _DFLEXreadCalVals(int &lowval, int &highval);
+void _DFLEXwriteCalVals(short lowval, short highval);
+void _DFLEXreadCalVals(short &lowval, short &highval);
 
 
 /**
@@ -90,7 +90,7 @@ void _DFLEXreadCalVals(int &lowval, int &highval);
  * @param link the dFlex Sensor port number
  * @return the raw value of the dFlex Sensor
  */
-int DFLEXvalRaw(tSensors link) {
+short DFLEXvalRaw(tSensors link) {
   _DFLEXcheckSensor(link);
 
   return SensorRaw[link];
@@ -104,7 +104,7 @@ int DFLEXvalRaw(tSensors link) {
  * @param link the dFlex Sensor port number
  * @return the normalised value (0-100)
  */
-int DFLEXvalNorm(tSensors link) {
+short DFLEXvalNorm(tSensors link) {
   long currval = 0;
 
   _DFLEXcheckSensor(link);
@@ -140,7 +140,7 @@ void DFLEXcalLow(tSensors link) {
  * Calibrate the dFlex Sensor's low calibration value with the supplied value.
  * @param lowval the sensor's low calibration value
  */
-void DFLEXcalLow(int lowval) {
+void DFLEXcalLow(short lowval) {
   dflexlow = lowval;
   _DFLEXwriteCalVals(dflexlow, dflexhigh);
 }
@@ -162,7 +162,7 @@ void DFLEXcalHigh(tSensors link) {
  * Calibrate the dFlex Sensor's high calibration value with the supplied value.
  * @param highval the sensor's high calibration value
  */
-void DFLEXcalHigh(int highval) {
+void DFLEXcalHigh(short highval) {
   dflexhigh = highval;
   _DFLEXwriteCalVals(dflexlow, dflexhigh);
 }
@@ -190,7 +190,7 @@ void _DFLEXcheckSensor(tSensors link) {
  * @param lowval the low calibration value
  * @param highval the high calibration value
  */
-void _DFLEXwriteCalVals(int lowval, int highval) {
+void _DFLEXwriteCalVals(short lowval, short highval) {
   TFileHandle hFileHandle;
   TFileIOResult nIoResult;
   short nFileSize = 4;
@@ -250,7 +250,7 @@ void _DFLEXwriteCalVals(int lowval, int highval) {
  * @param lowval the low calibration value
  * @param highval the high calibration value
  */
-void _DFLEXreadCalVals(int &lowval, int &highval) {
+void _DFLEXreadCalVals(short &lowval, short &highval) {
   TFileHandle hFileHandle;
   TFileIOResult nIoResult;
   short nFileSize;

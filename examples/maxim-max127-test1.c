@@ -21,7 +21,7 @@
 #include "maxim-max127.h"
 
 task main() {
-  int _chVal = 0;
+  short _chVal = 0;
   displayTextLine(3, "MAX127");
   displayTextLine(4, "Test prog");
   sleep(1000);
@@ -29,7 +29,7 @@ task main() {
 
   while(true) {
     eraseDisplay();
-    for (int i = 0; i < 8; i++) {
+    for (short i = 0; i < 8; i++) {
       _chVal = MAX127readChan(MAX127, MAX127_I2C_ADDR, i);
       // if the return value is < 0 then an error occurred
       if (_chVal < 0) {

@@ -27,13 +27,13 @@
 
 #include "mindsensors-nxtcam.h"
 
-// int xscale(int x) - Scales x values from camera coordinates to screen coordinates.
-int xscale(int x) {
+// short xscale(short x) - Scales x values from camera coordinates to screen coordinates.
+short xscale(short x) {
   return ((x - 12) * 99) / 175;
 }
 
-// int yscale(int y) - Scales y values from camera coordinates to screen coordinates.
-int yscale(int y) {
+// short yscale(short y) - Scales y values from camera coordinates to screen coordinates.
+short yscale(short y) {
   return ((143 - y) * 63) / 143;
 }
 
@@ -46,8 +46,8 @@ task main () {
   bool _condensed = true;
 
   //blob_array _blobs;
-  int _l, _t, _r, _b;
-  int _nblobs;
+  short _l, _t, _r, _b;
+  short _nblobs;
   eraseDisplay();
 
   // Initialise the camera
@@ -57,7 +57,7 @@ task main () {
     // Fetch all the blobs, have the driver combine all
     // the colliding blobs.
     _nblobs = NXTCAMgetBlobs(cam, _blobs, _condensed);
-    for (int i = 0; i < _nblobs; i++) {
+    for (short i = 0; i < _nblobs; i++) {
       // Draw the scaled blobs
       _l = xscale(_blobs[i].x1);
       _t = yscale(_blobs[i].y1);

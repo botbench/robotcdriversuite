@@ -78,7 +78,7 @@ void MSRXMUXsetupChan(tSensors link, ubyte chan, TSensorTypes chantype, TSensorM
   RCXSensorDelays[link][chan-1] = delay;
 }
 
-int MSRXMUXreadChan(tSensors link, byte chan) {
+short MSRXMUXreadChan(tSensors link, byte chan) {
   if (SensorType[link] != sensorI2CCustom9V) {
     SensorType[link] = sensorI2CCustom9V;
     sleep(3);

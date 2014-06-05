@@ -28,8 +28,8 @@
 
 task main(){
 
-  int heading;
-  int x_val, y_val, z_val;      // axis values
+  short heading;
+  short x_val, y_val, z_val;      // axis values
 
   displayCenteredTextLine(0, "Mindsensors");
   displayCenteredBigTextLine(1, "IMU");

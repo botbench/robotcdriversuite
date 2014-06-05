@@ -19,7 +19,7 @@
  * Changelog:
  * - 0.1: Initial release
  * - 0.2: Fixed bad registers<br>
- *        Added HTACreadAllAxes(tSensors link, int &x, int &y, int &z)<br>
+ *        Added HTACreadAllAxes(tSensors link, short &x, short &y, short &z)<br>
  *        Removed HTACreadAllAxes(tSensors link, tIntArray &data)<br>
  *        Changed HTACreadX, Y, Z to use by reference instead of as return value<br>
  * - 0.3: SMUX functions added.
@@ -58,10 +58,10 @@
 #define HTAC_Y_LOW     0x04      /*!< Y axis lower 2 bits */
 #define HTAC_Z_LOW     0x05      /*!< Z axis lower 2 bits */
 
-bool HTACreadAllAxes(tSensors link, int &x, int &y, int &z);
+bool HTACreadAllAxes(tSensors link, short &x, short &y, short &z);
 
 #ifdef __HTSMUX_SUPPORT__
-bool HTACreadAllAxes(tMUXSensor muxsensor, int &x, int &y, int &z);
+bool HTACreadAllAxes(tMUXSensor muxsensor, short &x, short &y, short &z);
 
 tConfigParams HTAC_config = {HTSMUX_CHAN_I2C, 6, 0x02, 0x42}; /*!< Array to hold SMUX config data for sensor */
 #endif
@@ -77,7 +77,7 @@ tByteArray HTAC_I2CReply;      /*!< Array to hold I2C reply data */
  * @param z z axis
  * @return true if no error occured, false if it did
  */
-bool HTACreadAllAxes(tSensors link, int &x, int &y, int &z) {
+bool HTACreadAllAxes(tSensors link, short &x, short &y, short &z) {
   memset(HTAC_I2CRequest, 0, sizeof(tByteArray));
 
   HTAC_I2CRequest[0] = 2;                       // Message size
@@ -112,7 +112,7 @@ bool HTACreadAllAxes(tSensors link, int &x, int &y, int &z) {
  * @return true if no error occured, false if it did
  */
 #ifdef __HTSMUX_SUPPORT__
-bool HTACreadAllAxes(tMUXSensor muxsensor, int &x, int &y, int &z) {
+bool HTACreadAllAxes(tMUXSensor muxsensor, short &x, short &y, short &z) {
   memset(HTAC_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)

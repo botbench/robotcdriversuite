@@ -30,9 +30,9 @@
 
 task main()
 {
-  int voltage = 0;
-  int angle;
-  int x, y, z;
+  short voltage = 0;
+  short angle;
+  short x, y, z;
   displayCenteredTextLine(0, "Mindsensors");
   displayCenteredBigTextLine(1, "SnsrMUX");
   displayCenteredTextLine(3, "Test 1");

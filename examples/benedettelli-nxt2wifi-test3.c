@@ -56,15 +56,15 @@ task updateScreen()
 
 task main ()
 {
-  int index;
+  short index;
   // port to use for the socket
-  int BOFHport = 6666;
+  short BOFHport = 6666;
   string dataString;
 
   // get our bluetooth name
   getFriendlyName(dataString);
 
-  int avail = 0;
+  short avail = 0;
 
   startTask(updateScreen);
 

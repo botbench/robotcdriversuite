@@ -29,9 +29,9 @@
 
 task main () {
 
-  int chan1 = 0;
-  int chan2 = 0;
-  int chan4 = 0;
+  short chan1 = 0;
+  short chan2 = 0;
+  short chan4 = 0;
 
   displayCenteredTextLine(0, "Mindsensors");
   displayCenteredBigTextLine(1, "RXMUX");

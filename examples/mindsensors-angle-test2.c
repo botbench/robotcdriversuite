@@ -33,7 +33,7 @@ float gramsPerUnit = 1.084507;
 
 
 // Get the current weight of the object
-int weighObject()
+short weighObject()
 {
   return max2(0, round(MSANGreadRaw(MSANG) * gramsPerUnit));
 }
@@ -41,7 +41,7 @@ int weighObject()
 // Allow the user to calibrate the scales
 void calibrateScales()
 {
-  int calibrateWeight = 0;
+  short calibrateWeight = 0;
 
   eraseDisplay();
   displayCenteredTextLine(0, "GlideWheel-AS");

@@ -114,7 +114,7 @@ void HDMMotorSetRamping(tMUXmotor muxmotor, ubyte ramping);
  * Initialise the mmuxData array needed for keeping track of motor settings
  */
 void HDMMUXinit(){
-  for (int i = 0; i < 4; i++) {
+  for (short i = 0; i < 4; i++) {
     memset(mmuxData[i].runToTarget[0], false, 4);
     memset(mmuxData[i].brake[0], true, 4);
     memset(mmuxData[i].pidcontrol[0], true, 4);

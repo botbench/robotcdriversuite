@@ -52,11 +52,11 @@ typedef struct {
 typeTMR _timers[MAX_TIMERS]; /*!< Array to hold timer data */
 
 // Prototypes
-int TMRnewTimer();
-bool TMRisExpired(int timerIdx);
-void TMRreset(int timerIdx);
-void TMRreset(int timerIdx, long duration);
-void TMRsetup(int timerIdx, long duration);
+short TMRnewTimer();
+bool TMRisExpired(short timerIdx);
+void TMRreset(short timerIdx);
+void TMRreset(short timerIdx, long duration);
+void TMRsetup(short timerIdx, long duration);
 
 /**
  * Create a new timer.  It's an index to the next available timer in the array of
@@ -64,8 +64,8 @@ void TMRsetup(int timerIdx, long duration);
  * @return the first available slot in the timer object array or -1 if all slots
  *         have been used.  Increase the MAX_TIMERS variable in this case.
  */
-int TMRnewTimer() {
-  static int _tmrIdx = -1;
+short TMRnewTimer() {
+  static short _tmrIdx = -1;
   if (_tmrIdx < (MAX_TIMERS - 2))
     return ++_tmrIdx;
   else
@@ -78,7 +78,7 @@ int TMRnewTimer() {
  * @param timerIdx the timer to be checked.
  * @return true if the timer has expired, false if it hasn't.
  */
-bool TMRisExpired(int timerIdx) {
+bool TMRisExpired(short timerIdx) {
   hogCPU();
   if (_timers[timerIdx].startTime < 0) {
     return true;
@@ -95,7 +95,7 @@ bool TMRisExpired(int timerIdx) {
  * start it up if this isn't the case.
  * @param timerIdx the timer to be checked.
  */
-void TMRreset(int timerIdx) {
+void TMRreset(short timerIdx) {
   hogCPU();
 	_timers[timerIdx].startTime = nPgmTime;
 	releaseCPU();
@@ -107,7 +107,7 @@ void TMRreset(int timerIdx) {
  * @param timerIdx the timer to be checked.
  * @param duration the amount of time the timer should run for before expiring.
  */
-void TMRreset(int timerIdx, long duration) {
+void TMRreset(short timerIdx, long duration) {
   hogCPU();
   _timers[timerIdx].duration = duration;
 	_timers[timerIdx].startTime = nPgmTime;
@@ -119,7 +119,7 @@ void TMRreset(int timerIdx, long duration) {
  * Cause the timer to expire.
  * @param timerIdx the timer to be expired.
  */
-void TMRexpire(int timerIdx) {
+void TMRexpire(short timerIdx) {
   hogCPU();
   _timers[timerIdx].startTime = -1;
   releaseCPU();
@@ -131,7 +131,7 @@ void TMRexpire(int timerIdx) {
  * @param timerIdx the timer to be checked.
  * @param duration the amount of time the timer should run for before expiring.
  */
-void TMRsetup(int timerIdx, long duration) {
+void TMRsetup(short timerIdx, long duration) {
   hogCPU();
   _timers[timerIdx].duration = duration;
   releaseCPU();

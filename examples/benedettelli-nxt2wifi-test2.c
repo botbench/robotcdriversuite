@@ -35,7 +35,7 @@ string IPaddress = "0.0.0.0";
 string connStatus = "disconnected";
 string dataStrings[4];
 tHugeByteArray data;
-int sizeOfReceivedData;
+short sizeOfReceivedData;
 
 task updateScreen()
 {
@@ -61,13 +61,13 @@ void processData()
   string singleword = "";
 
 	// What line are we current printing on?
-  int screenLine = 0;
+  short screenLine = 0;
 
   dataStrings[0] = "";
   dataStrings[1] = "";
   dataStrings[2] = "";
   dataStrings[3] = "";
-  for (int i = 0; i < sizeOfReceivedData; i++)
+  for (short i = 0; i < sizeOfReceivedData; i++)
   {
     // It's a printable character
     if (RS485rxbuffer[i] > 0x20)
@@ -111,11 +111,11 @@ void processData()
 task main ()
 {
   string BOFHserver = "192.168.0.100"; // Linux VM
-  int BOFHport = 6666;
+  short BOFHport = 6666;
   string dataString;
   getFriendlyName(dataString);
 
-  int avail = 0;
+  short avail = 0;
 
   nNxtButtonTask = -2;
   startTask(updateScreen);
@@ -178,7 +178,7 @@ task main ()
 	      // read the current buffer
 	      N2WTCPRead(1, avail);
 	      processData();
-	      for (int i = 0; i < avail; i++)
+	      for (short i = 0; i < avail; i++)
 	      {
 	        writeDebugStream("%c", RS485rxbuffer[i]);
 	      }

@@ -65,13 +65,13 @@ bool sensorCalibrate(tHTMCPtr htmcPtr)
 float HTGYROreadRot(tSensors link);
 float HTGYROstartCal(tSensors link);
 float HTGYROreadCal(tSensors link);
-// void HTGYROsetCal(tSensors link, int offset);
+// void HTGYROsetCal(tSensors link, short offset);
 
 #ifdef __HTSMUX_SUPPORT__
 float HTGYROreadRot(tMUXSensor muxsensor);
 float HTGYROstartCal(tMUXSensor muxsensor);
 float HTGYROreadCal(tMUXSensor muxsensor);
-void HTGYROsetCal(tMUXSensor muxsensor, int offset);
+void HTGYROsetCal(tMUXSensor muxsensor, short offset);
 #endif // __HTSMUX_SUPPORT__
 
 float HTGYRO_offsets[][] = {{620.0, 620.0, 620.0, 620.0}, /*!< Array for offset values.  Default is 620 */
@@ -122,7 +122,7 @@ float HTGYROstartCal(tSensors link) {
   }
 
   // Take 50 readings and average them out
-  for (int i = 0; i < 50; i++) {
+  for (short i = 0; i < 50; i++) {
     _avgdata += SensorValue[link];
     sleep(5);
   }
@@ -145,7 +145,7 @@ float HTGYROstartCal(tMUXSensor muxsensor) {
   long _avgdata = 0;
 
   // Take 5 readings and average them out
-  for (int i = 0; i < 50; i++) {
+  for (short i = 0; i < 50; i++) {
     _avgdata += HTSMUXreadAnalogue(muxsensor);
     sleep(50);
   }
@@ -165,7 +165,7 @@ float HTGYROstartCal(tMUXSensor muxsensor) {
  * @param offset the new offset to be used
  */
 //#define HTGYROsetCal(link, offset) HTGYRO_offsets[link][0] = offset
-void HTGYROsetCal(tSensors link, int offset) {
+void HTGYROsetCal(tSensors link, short offset) {
   HTGYRO_offsets[link][0] = offset;
 }
 
@@ -177,7 +177,7 @@ void HTGYROsetCal(tSensors link, int offset) {
  */
 #ifdef __HTSMUX_SUPPORT__
 //#define HTGYROsetCal(muxsensor, offset) HTGYRO_offsets[SPORT(muxsensor)][MPORT(muxsensor)] = offset
-void HTGYROsetCal(tMUXSensor muxsensor, int offset) {
+void HTGYROsetCal(tMUXSensor muxsensor, short offset) {
   HTGYRO_offsets[SPORT(muxsensor)][MPORT(muxsensor)] = offset;
 }
 #endif // __HTSMUX_SUPPORT__
@@ -271,7 +271,7 @@ bool sensorCalibrate(tHTGYROPtr htgyroPtr)
 	float avgdata = 0.0;
 
   // Take 50 readings and average them out
-  for (int i = 0; i < 50; i++)
+  for (short i = 0; i < 50; i++)
   {
 		if (htgyroPtr->smux)
 			avgdata += 1023 - HTSMUXreadAnalogue(htgyroPtr->smuxport);

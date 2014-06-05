@@ -11,7 +11,7 @@
 
 void configureWiFi(char *_ssid, char *_key)
 {
-  int len;
+  short len;
   RS485clearRead();      // Clear out the buffer and test TX/RX.
   sleep(1000);          // Must be run first!
   DWIFIsetEcho(false);     // Must be run first!
@@ -38,7 +38,7 @@ task main()
 
 	writeDebugStreamLine("ssid: %s", ssid);
 	writeDebugStreamLine("psk: %s", wpa_psk);
-  int len;
+  short len;
   eraseDisplay();
   bNxtLCDStatusDisplay = true; // Enable top status line display
   writeDebugStream("Scanning for wifi sensor: ");

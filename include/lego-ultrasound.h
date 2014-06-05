@@ -47,7 +47,7 @@
 #define LEGOUS_CMD_RST    0x04      /*!< Command to request a warm reset */
 
 // Prototypes
-int USreadDist(tSensors link);
+short USreadDist(tSensors link);
 bool USreadDistances(tSensors link, tByteArray &distances);
 bool _USsendCmd(tSensors link, ubyte command);
 bool USsetSingleMode(tSensors link);
@@ -57,7 +57,7 @@ bool USsetEventCapture(tSensors link);
 bool USreset(tSensors link);
 
 #ifdef __HTSMUX_SUPPORT__
-int USreadDist(tMUXSensor muxsensor);
+short USreadDist(tMUXSensor muxsensor);
 
 tConfigParams LEGOUS_config = {HTSMUX_CHAN_I2C + HTSMUX_CHAN_9V + HTSMUX_CHAN_I2C_SLOW, 1, 0x02, 0x42}; /*!< Array to hold SMUX config data for sensor */
 #endif // __HTSMUX_SUPPORT__
@@ -71,7 +71,7 @@ tByteArray LEGOUS_I2CReply;
  * @return distance from the sensor or 255 if no valid range has been specified.
  */
 #ifdef __HTSMUX_SUPPORT__
-int USreadDist(tMUXSensor muxsensor) {
+short USreadDist(tMUXSensor muxsensor) {
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
     HTSMUXconfigChannel(muxsensor, LEGOUS_config);
@@ -81,7 +81,7 @@ int USreadDist(tMUXSensor muxsensor) {
     return 255;
   }
 
-  return (int)LEGOUS_I2CReply[0];
+  return (short)LEGOUS_I2CReply[0];
 }
 #endif
 
@@ -91,7 +91,7 @@ int USreadDist(tMUXSensor muxsensor) {
  * @param link the US port number
  * @return distance from the sensor or 255 if no valid range has been specified.
  */
-int USreadDist(tSensors link) {
+short USreadDist(tSensors link) {
   memset(LEGOUS_I2CRequest, 0, sizeof(tByteArray));
 
   LEGOUS_I2CRequest[0] = 2;                // Message size

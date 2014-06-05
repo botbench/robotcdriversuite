@@ -82,9 +82,9 @@
 <function prototypes>
 */
 bool NXTServoSetSpeed(tSensors link, ubyte servochan, ubyte speed, ubyte address);
-bool NXTServoSetPos(tSensors link, ubyte servochan, int position, ubyte speed, ubyte address = NXTSERVO_I2C_ADDR);
+bool NXTServoSetPos(tSensors link, ubyte servochan, short position, ubyte speed, ubyte address = NXTSERVO_I2C_ADDR);
 bool NXTServoQSetPos(tSensors link, ubyte servochan, ubyte position, byte speed, ubyte address = NXTSERVO_I2C_ADDR);
-int NXTServoReadVoltage(tSensors link, ubyte address = NXTSERVO_I2C_ADDR);
+short NXTServoReadVoltage(tSensors link, ubyte address = NXTSERVO_I2C_ADDR);
 
 tByteArray NXTSERVO_I2CRequest;         /*!< Array to hold I2C command data */
 tByteArray NXTSERVO_I2CReply;           /*!< Array to hold I2C reply data */
@@ -121,7 +121,7 @@ bool NXTServoSetSpeed(tSensors link, ubyte servochan, ubyte speed, ubyte address
  * @param address the I2C address to use, optional, defaults to 0xB0
  * @return true if no error occured, false if it did
  */
-bool NXTServoSetPos(tSensors link, ubyte servochan, int position, ubyte speed, ubyte address) {
+bool NXTServoSetPos(tSensors link, ubyte servochan, short position, ubyte speed, ubyte address) {
   memset(NXTSERVO_I2CRequest, 0, sizeof(tByteArray));
   if (!NXTServoSetSpeed(link, servochan, speed, address))
     return false;
@@ -177,7 +177,7 @@ bool NXTServoQSetPos(tSensors link, ubyte servochan, ubyte position, byte speed,
  * @param address the I2C address to use, optional, defaults to 0xB0
  * @return the voltage of the battery pack or -1 if an error occurred
  */
-int NXTServoReadVoltage(tSensors link, ubyte address) {
+short NXTServoReadVoltage(tSensors link, ubyte address) {
   long mvs = 0;
 
   memset(NXTSERVO_I2CRequest, 0, sizeof(tByteArray));

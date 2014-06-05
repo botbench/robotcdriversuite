@@ -50,13 +50,13 @@
 #define ASL_REG_LEFT_MIC    0x49      /*!< XXXXXXXXXXX */
 #define ASL_REG_COMBO_MIC   0x4A      /*!< XXXXXXXXXXX */
 
-int ASLreadStaticAngle(tSensors link, bool reversed=false);
-int ASLreadDynamicAngle(tSensors link, bool reversed=false);
-int ASLreadThresholdAngle(tSensors link, ubyte threshold, bool reversed=false);
-int ASLreadAngle(tSensors link, byte reg, bool reversed=false);
-bool ASLreadMICS(tSensors link, int &rmic, int &lmic, int &bmic, bool reversed=false);
+short ASLreadStaticAngle(tSensors link, bool reversed=false);
+short ASLreadDynamicAngle(tSensors link, bool reversed=false);
+short ASLreadThresholdAngle(tSensors link, ubyte threshold, bool reversed=false);
+short ASLreadAngle(tSensors link, byte reg, bool reversed=false);
+bool ASLreadMICS(tSensors link, short &rmic, short &lmic, short &bmic, bool reversed=false);
 
-int ASLoldAngle[4] = {0, 0, 0, 0};
+short ASLoldAngle[4] = {0, 0, 0, 0};
 
 tByteArray ASL_I2CRequest;    /*!< Array to hold I2C command data */
 tByteArray ASL_I2CReply;      /*!< Array to hold I2C reply data */
@@ -68,8 +68,8 @@ tByteArray ASL_I2CReply;      /*!< Array to hold I2C reply data */
  * @param reversed indicate whether L and R should be reversed (if the sensor is mounted upside down)
  * @return the angle of the sound direction.
  */
-int ASLreadAngle(tSensors link, byte reg, bool reversed) {
-  int angle = 0;
+short ASLreadAngle(tSensors link, byte reg, bool reversed) {
+  short angle = 0;
   memset(ASL_I2CRequest, 0, sizeof(tByteArray));
 
   ASL_I2CRequest[0] = 2;                // Message size
@@ -79,7 +79,7 @@ int ASLreadAngle(tSensors link, byte reg, bool reversed) {
   if (!writeI2C(link, ASL_I2CRequest, ASL_I2CReply, 1))
     return -1;
 
-  angle = (int)ASL_I2CReply[0] & 0xFF;
+  angle = (short)ASL_I2CReply[0] & 0xFF;
   if (reversed)
     angle = 180 -angle;
   return angle;
@@ -92,7 +92,7 @@ int ASLreadAngle(tSensors link, byte reg, bool reversed) {
  * @param reversed indicate whether L and R should be reversed (if the sensor is mounted upside down)
  * @return the angle of the sound direction.
  */
-int ASLreadStaticAngle(tSensors link, bool reversed) {
+short ASLreadStaticAngle(tSensors link, bool reversed) {
   return ASLreadAngle(link, ASL_REG_STAT_ANGLE, reversed);
 }
 
@@ -105,15 +105,15 @@ int ASLreadStaticAngle(tSensors link, bool reversed) {
  * @param reversed indicate whether L and R should be reversed (if the sensor is mounted upside down)
  * @return the angle of the sound direction.
  */
-int ASLreadDynamicAngle(tSensors link, bool reversed) {
+short ASLreadDynamicAngle(tSensors link, bool reversed) {
   return ASLreadAngle(link, ASL_REG_DYN_ANGLE, reversed);
 }
 
 
 
-int ASLreadThresholdAngle(tSensors link, ubyte threshold, bool reversed)
+short ASLreadThresholdAngle(tSensors link, ubyte threshold, bool reversed)
 {
-  int angle = 0;
+  short angle = 0;
 
   ASL_I2CRequest[0] = 2;                 // Message size
   ASL_I2CRequest[1] = ASL_I2C_ADDR;      // I2C Address
@@ -136,10 +136,10 @@ int ASLreadThresholdAngle(tSensors link, ubyte threshold, bool reversed)
  * @param reversed indicate whether L and R should be reversed (if the sensor is mounted upside down)
  * @return the angle of the sound direction.
  */
-bool ASLreadMICS(tSensors link, int &rmic, int &lmic, int &bmic, bool reversed)
+bool ASLreadMICS(tSensors link, short &rmic, short &lmic, short &bmic, bool reversed)
 {
-  int angle = 0;
-  int micvalues[3] = {0, 0, 0};
+  short angle = 0;
+  short micvalues[3] = {0, 0, 0};
 
   memset(ASL_I2CRequest, 0, sizeof(tByteArray));
 
@@ -148,13 +148,13 @@ bool ASLreadMICS(tSensors link, int &rmic, int &lmic, int &bmic, bool reversed)
   ASL_I2CRequest[1] = ASL_I2C_ADDR;      // I2C Address
 
   // You can only read one byte at a time.
-  for (int i = 0; i < 3; i++) {
+  for (short i = 0; i < 3; i++) {
 	  ASL_I2CRequest[2] = ASL_REG_RIGHT_MIC + i; // Read the appropriate mic register
 
 	  if (!writeI2C(link, ASL_I2CRequest, ASL_I2CReply, 1))
 	    return false;
 
-	  micvalues[i] = (int)ASL_I2CReply[0] & 0xFF;
+	  micvalues[i] = (short)ASL_I2CReply[0] & 0xFF;
 	}
 
   rmic = (reversed) ? micvalues[1] : micvalues[0];
@@ -164,7 +164,7 @@ bool ASLreadMICS(tSensors link, int &rmic, int &lmic, int &bmic, bool reversed)
 }
 
 
-int ASLcalibrateLevel(tSensors link)
+short ASLcalibrateLevel(tSensors link)
 {
   long total = 0;
 
@@ -174,11 +174,11 @@ int ASLcalibrateLevel(tSensors link)
   ASL_I2CRequest[1] = ASL_I2C_ADDR;      // I2C Address
 	ASL_I2CRequest[2] = ASL_REG_COMBO_MIC; // Read the appropriate mic register
 
-	for (int i = 0; i < 100; i++) {
+	for (short i = 0; i < 100; i++) {
 	  if (!writeI2C(link, ASL_I2CRequest, ASL_I2CReply, 1))
 	    return 0;
 
-	  total += (int)ASL_I2CReply[0] & 0xFF;
+	  total += (short)ASL_I2CReply[0] & 0xFF;
 	  sleep(5);
 	}
 	return total / 100;

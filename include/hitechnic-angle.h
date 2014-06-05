@@ -64,8 +64,8 @@
 typedef struct
 {
   tI2CData I2CData;
-  int angle;
-  int accumlatedAngle;
+  short angle;
+  short accumlatedAngle;
   short rpm;
   ubyte _cmd;
   bool smux;
@@ -80,7 +80,7 @@ bool resetAccmulatedAngle(tHTANGPtr htangPtr);
 bool resetAngle(tHTANGPtr htangPtr);
 bool _sensorSendCommand(tHTANGPtr htangPtr);
 
-//int HTANGreadAngle(tSensors link);
+//short HTANGreadAngle(tSensors link);
 //long HTANGreadAccumulatedAngle(tSensors link);
 //short HTANGreadRPM(tSensors link);
 //bool HTANGresetAngle(tSensors link);
@@ -88,9 +88,9 @@ bool _sensorSendCommand(tHTANGPtr htangPtr);
 //bool _HTANGsendCommand(tSensors link, byte command);
 
 //#ifdef __HTSMUX_SUPPORT__
-//int HTANGreadAngle(tMUXSensor muxsensor);
+//short HTANGreadAngle(tMUXSensor muxsensor);
 //long HTANGreadAccumulatedAngle(tMUXSensor muxsensor);
-//int HTANGreadRPM(tMUXSensor muxsensor);
+//short HTANGreadRPM(tMUXSensor muxsensor);
 
 tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to hold SMUX config data for sensor */
 //#endif // __HTSMUX_SUPPORT__
@@ -104,7 +104,7 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 // * @param link the HTANG port number
 // * @return current angle or -1 if an error occurred.
 // */
-//int HTANGreadAngle(tSensors link) {
+//short HTANGreadAngle(tSensors link) {
 //  memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
 
 //  HTANG_I2CRequest[0] = 2;                         // Message size
@@ -124,7 +124,7 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 // * @return current angle or -1 if an error occurred.
 // */
 //#ifdef __HTSMUX_SUPPORT__
-//int HTANGreadAngle(tMUXSensor muxsensor) {
+//short HTANGreadAngle(tMUXSensor muxsensor) {
 //	memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
 
 //  if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -211,7 +211,7 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 // * @return the current rpm of the shaft or -1 if an error occurred.
 // */
 //#ifdef __HTSMUX_SUPPORT__
-//int HTANGreadRPM(tMUXSensor muxsensor) {
+//short HTANGreadRPM(tMUXSensor muxsensor) {
 //  memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
 
 //  if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)

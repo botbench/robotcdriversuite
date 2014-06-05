@@ -52,7 +52,7 @@ typedef enum {
 tByteArray MSMTRMX_I2CMessage;       /*!< Array to hold I2C command data */
 
 /*! Function prototypes */
-bool MSMTRMX_Control(tSensors link, tMSMTRMXMotors channel, int power, ubyte address = MSMTRMX_I2C_ADDR);
+bool MSMTRMX_Control(tSensors link, tMSMTRMXMotors channel, short power, ubyte address = MSMTRMX_I2C_ADDR);
 bool MSMTRMX_Brake(tSensors link, tMSMTRMXMotors channel, unsigned byte brakeForce, ubyte address = MSMTRMX_I2C_ADDR);
 
 
@@ -66,7 +66,7 @@ bool MSMTRMX_Brake(tSensors link, tMSMTRMXMotors channel, unsigned byte brakeFor
  * @param address the I2C address to use, optional, defaults to 0xB4
  * @return true if message is sent successfully
  */
-bool MSMTRMX_Control(tSensors link, tMSMTRMXMotors channel, int power, ubyte address) {
+bool MSMTRMX_Control(tSensors link, tMSMTRMXMotors channel, short power, ubyte address) {
   tMSMTRMXSettings dir;
 
   if (power == 0) {

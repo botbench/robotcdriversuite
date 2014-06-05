@@ -28,9 +28,9 @@
 
 task main () {
 
-  int keys = 0;
+  short keys = 0;
   unsigned byte key[] = {0};
-  int number = 0;
+  short number = 0;
   string output;
 
   displayCenteredTextLine(0, "Mindsensors");

@@ -59,17 +59,17 @@ bool DGPSreadStatus(tSensors link);
 long DGPSreadUTC(tSensors link);
 long DGPSreadLatitude(tSensors link);
 long DGPSreadLongitude(tSensors link);
-int DGPSreadVelocity(tSensors link);
-int DGPSreadHeading(tSensors link);
-int DGPSreadRelHeading(tSensors link);
-int DGPSreadTravHeading(tSensors link);
+short DGPSreadVelocity(tSensors link);
+short DGPSreadHeading(tSensors link);
+short DGPSreadRelHeading(tSensors link);
+short DGPSreadTravHeading(tSensors link);
 bool DGPSsetDestination(tSensors link, long latitude, long longitude);
-int DGPSreadDistToDestination(tSensors link);
+short DGPSreadDistToDestination(tSensors link);
 
 tByteArray DGPS_I2CRequest;    /*!< Array to hold I2C command data */
 tByteArray DGPS_I2CReply;      /*!< Array to hold I2C reply data */
 
-long _DGPSreadRegister(tSensors link, unsigned byte command, int replysize) {
+long _DGPSreadRegister(tSensors link, unsigned byte command, short replysize) {
   memset(DGPS_I2CRequest, 0, sizeof(tByteArray));
 
   DGPS_I2CRequest[0] = 2;               // Message size
@@ -133,7 +133,7 @@ long DGPSreadLongitude(tSensors link) {
  * @param link the DGPS port number
  * @return current velocity in cm/s
  */
-int DGPSreadVelocity(tSensors link) {
+short DGPSreadVelocity(tSensors link) {
   return _DGPSreadRegister(link, DGPS_CMD_VELO, 3);
 }
 
@@ -143,7 +143,7 @@ int DGPSreadVelocity(tSensors link) {
  * @param link the DGPS port number
  * @return current heading in degrees
  */
-int DGPSreadHeading(tSensors link) {
+short DGPSreadHeading(tSensors link) {
   return _DGPSreadRegister(link, DGPS_CMD_HEAD, 2);
 }
 
@@ -153,7 +153,7 @@ int DGPSreadHeading(tSensors link) {
  * @param link the DGPS port number
  * @return heading in degrees
  */
-int DGPSreadRelHeading(tSensors link) {
+short DGPSreadRelHeading(tSensors link) {
   return _DGPSreadRegister(link, DGPS_CMD_ANGD, 2);
 }
 
@@ -164,7 +164,7 @@ int DGPSreadRelHeading(tSensors link) {
  * @param link the DGPS port number
  * @return heading in degrees
  */
-int DGPSreadTravHeading(tSensors link) {
+short DGPSreadTravHeading(tSensors link) {
   return _DGPSreadRegister(link, DGPS_CMD_ANGR, 2);
 }
 
@@ -210,7 +210,7 @@ bool DGPSsetDestination(tSensors link, long latitude, long longitude) {
  * @param link the DGPS port number
  * @return distance to destination in meters
  */
-int DGPSreadDistToDestination(tSensors link) {
+short DGPSreadDistToDestination(tSensors link) {
   return _DGPSreadRegister(link, DGPS_CMD_DIST, 4);
 }
 

@@ -29,13 +29,13 @@
 #include "mindsensors-accelerometer.h"
 
 task main () {
-  int _x_tilt = 0;
-  int _y_tilt = 0;
-  int _z_tilt = 0;
+  short _x_tilt = 0;
+  short _y_tilt = 0;
+  short _z_tilt = 0;
 
-  int tone1;
-  int tone2;
-  int waitTime;
+  short tone1;
+  short tone2;
+  short waitTime;
 
   displayCenteredTextLine(0, "Mindsensors");
   displayCenteredBigTextLine(1, "ACCEL-Nx");

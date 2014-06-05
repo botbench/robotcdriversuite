@@ -28,10 +28,10 @@
 #include "ASL-driver.h"
 
 task main () {
-  int dynval = 0;
-  int statval = 0;
-  int threshval = 0;
-  int rval, lval, bval;
+  short dynval = 0;
+  short statval = 0;
+  short threshval = 0;
+  short rval, lval, bval;
   long level = 0;
   ubyte threshold = 0;
 
@@ -49,7 +49,7 @@ task main () {
   threshold = (level * 120) / 100;
 
 
-  for (int i = 0; i < 1000; i++) {
+  for (short i = 0; i < 1000; i++) {
     eraseDisplay();
     displayTextLine(0,"HTAC Test 1");
 

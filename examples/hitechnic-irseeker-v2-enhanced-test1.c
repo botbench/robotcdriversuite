@@ -38,18 +38,18 @@ long nInits = 0;
 string sTextLines[8];
 
 // function prototypes
-void displayText(int nLineNumber, const string cChar, int nValueDC, int nValueAC);
-void displayText3(int nLineNumber, const string cChar, int nValueDC, int nValueAC, int nValueEnh);
+void displayText(short nLineNumber, const string cChar, short nValueDC, short nValueAC);
+void displayText3(short nLineNumber, const string cChar, short nValueDC, short nValueAC, short nValueEnh);
 void displayInstructions();
 
 // main task
 task main ()
 {
-  int _dirDC = 0;
-  int _dirAC = 0;
-	int dcS1, dcS2, dcS3, dcS4, dcS5 = 0;
-	int acS1, acS2, acS3, acS4, acS5 = 0;
-	int _dirEnh, _strEnh;
+  short _dirDC = 0;
+  short _dirAC = 0;
+	short dcS1, dcS2, dcS3, dcS4, dcS5 = 0;
+	short acS1, acS2, acS3, acS4, acS5 = 0;
+	short _dirEnh, _strEnh;
 
 	// the default DSP mode is 1200 Hz.
   tHTIRS2DSPMode _mode = DSP_1200;
@@ -89,7 +89,7 @@ task main ()
     }
 
     eraseDisplay();
-    for (int i = 0; i < 8; ++i)
+    for (short i = 0; i < 8; ++i)
       sTextLines[i] = "";
 
     // display the current DSP mode
@@ -159,7 +159,7 @@ void displayInstructions()
 }
 
 // Minimize LCD screen flicker by only updating LCD when data has changed
-void displayText(int nLineNumber, const string cChar, int nValueDC, int nValueAC)
+void displayText(short nLineNumber, const string cChar, short nValueDC, short nValueAC)
 {
   string sTemp;
 
@@ -178,7 +178,7 @@ void displayText(int nLineNumber, const string cChar, int nValueDC, int nValueAC
 }
 
 // Minimize LCD screen flicker by only updating LCD when data has changed
-void displayText3(int nLineNumber, const string cChar, int nValueDC, int nValueAC, int nValueEnh)
+void displayText3(short nLineNumber, const string cChar, short nValueDC, short nValueAC, short nValueEnh)
 {
   string sTemp;
 

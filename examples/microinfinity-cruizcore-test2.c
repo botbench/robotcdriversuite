@@ -26,15 +26,15 @@
 
 #include "microinfinity-cruizcore.h"
 
-int angleI = 0;
-int rotI = 0;
-int x_accel = 0;
-int y_accel = 0;
-int z_accel = 0;
+short angleI = 0;
+short rotI = 0;
+short x_accel = 0;
+short y_accel = 0;
+short z_accel = 0;
 
 task updateHUD () {
-  int x = 0;
-  int y = 0;
+  short x = 0;
+  short y = 0;
 
   while (true) {
     eraseRect(4,50, 44,10);

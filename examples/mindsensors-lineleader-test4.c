@@ -36,7 +36,7 @@ task main {
     LLreadSensorUncalibrated(LLEADER, signalstr);
 
     // Display the actual signal strength for each sensor
-    for (int i = 0; i < 7; i++) {
+    for (short i = 0; i < 7; i++) {
       displayTextLine(i, "S[%d]: %5d", i, signalstr[i]);
     }
     sleep(50);

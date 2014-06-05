@@ -57,7 +57,7 @@ task main() {
     // Fetch the state of the digital IO pins.  When not explicitly
     // configured as input or output, they will default to input.
     inputs = HTPBreadIO(HTPB, 0x3F);
-    displayTextLine(4, "D: 0x%x", (int)inputs);
+    displayTextLine(4, "D: 0x%x", (short)inputs);
     sleep(10);
   }
 }

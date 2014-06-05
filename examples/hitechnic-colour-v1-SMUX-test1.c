@@ -40,11 +40,11 @@
 const tMUXSensor HTCOLOR = msensor_S1_1;
 
 task main () {
-  int _color = 0;
+  short _color = 0;
   string _tmp;
-  int red = 0;
-  int green = 0;
-  int blue = 0;
+  short red = 0;
+  short green = 0;
+  short blue = 0;
 
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "COLOUR");

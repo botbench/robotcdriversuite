@@ -59,7 +59,7 @@ task main () {
 
     // Go through each possible touch switch attached to the TMUX
     // and display whether or not is active (pressed)
-    for (int i = 1; i < 4; i++) {
+    for (short i = 1; i < 4; i++) {
       if (MSTMUXisActive(MSTMUX, i))
         displayTextLine(i+2, "Touch %d: on", i);
       else

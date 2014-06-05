@@ -88,7 +88,7 @@ tByteArray MSTP_I2CReply;      /*!< Array to hold I2C reply data */
 #define isButtonR4Touched(X) (X >> BUTTON_R4) & 0x01  /*!< Check if the R4 button is pressed */
 
 
-bool MSTPgetTouch(tSensors link, int &x, int &y, ubyte &buttons, ubyte addr = MSTP_I2C_ADDR);
+bool MSTPgetTouch(tSensors link, short &x, short &y, ubyte &buttons, ubyte addr = MSTP_I2C_ADDR);
 bool MSTPsendCmd(tSensors link, ubyte cmd, ubyte addr = MSTP_I2C_ADDR);
 
 #define MSTPresetCalibration(x) MSTPsendCmd(tSensors link, ubyte cmd, ubyte addr = MSTP_I2C_ADDR);
@@ -105,7 +105,7 @@ bool MSTPsendCmd(tSensors link, ubyte cmd, ubyte addr = MSTP_I2C_ADDR);
  * @param addr the I2C address of the TouchPanel, is optional, defaults to 0x04
  * @return true if no error has occured, false if it did
  */
-bool MSTPgetTouch(tSensors link, int &x, int &y, ubyte &buttons, ubyte addr) {
+bool MSTPgetTouch(tSensors link, short &x, short &y, ubyte &buttons, ubyte addr) {
   memset(MSTP_I2CRequest, 0, sizeof(tByteArray));
 
   MSTP_I2CRequest[0] = 2;                      // Message size
@@ -144,7 +144,7 @@ bool MSTPsendCmd(tSensors link, ubyte cmd, ubyte addr)
 
 
 /*
-int MSTPgetGesture(tSensors link)
+short MSTPgetGesture(tSensors link)
 {
   memset(MSTP_I2CRequest, 0, sizeof(tByteArray));
 

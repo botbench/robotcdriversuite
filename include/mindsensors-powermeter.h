@@ -57,9 +57,9 @@ tByteArray MSPM_I2CReply;         /*!< Array to hold I2C reply data */
 //*******************************************************************************
 // PUBLIC Power Meter functions
 //*******************************************************************************
-int MSPMreadCurrent(tSensors link, ubyte address = MSPM_I2C_ADDR);
-int MSPMreadVoltage(tSensors link, ubyte address = MSPM_I2C_ADDR);
-bool MSPMreadVoltageCurrent(tSensors link, int &voltage, int &current, ubyte address = MSPM_I2C_ADDR);
+short MSPMreadCurrent(tSensors link, ubyte address = MSPM_I2C_ADDR);
+short MSPMreadVoltage(tSensors link, ubyte address = MSPM_I2C_ADDR);
+bool MSPMreadVoltageCurrent(tSensors link, short &voltage, short &current, ubyte address = MSPM_I2C_ADDR);
 long MSPMreadTime(tSensors link, ubyte address = MSPM_I2C_ADDR);
 bool MSPMresetCounters(tSensors link, ubyte address = MSPM_I2C_ADDR);
 
@@ -94,7 +94,7 @@ bool _MSPMsendCommand(tSensors link, byte command, ubyte address) {
  * @param address the I2C address to use, optional, defaults to 0x12
  * @return the present current measured or -1 if an error occurred.
  */
-int MSPMreadCurrent(tSensors link, ubyte address) {
+short MSPMreadCurrent(tSensors link, ubyte address) {
   memset(MSPM_I2CRequest, 0, sizeof(tByteArray));
 
   MSPM_I2CRequest[0] = 2;             // Message size
@@ -114,7 +114,7 @@ int MSPMreadCurrent(tSensors link, ubyte address) {
  * @param address the I2C address to use, optional, defaults to 0x12
  * @return the present voltage measured or -1 if an error occurred.
  */
-int MSPMreadVoltage(tSensors link, ubyte address) {
+short MSPMreadVoltage(tSensors link, ubyte address) {
   memset(MSPM_I2CRequest, 0, sizeof(tByteArray));
 
   MSPM_I2CRequest[0] = 2;             // Message size
@@ -137,7 +137,7 @@ int MSPMreadVoltage(tSensors link, ubyte address) {
  * @param address the I2C address to use, optional, defaults to 0x12
  * @return the present voltage measured or -1 if an error occurred.
  */
-bool MSPMreadVoltageCurrent(tSensors link, int &voltage, int &current, ubyte address) {
+bool MSPMreadVoltageCurrent(tSensors link, short &voltage, short &current, ubyte address) {
   memset(MSPM_I2CRequest, 0, sizeof(tByteArray));
 
   MSPM_I2CRequest[0] = 2;             // Message size

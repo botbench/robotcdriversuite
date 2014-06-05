@@ -61,7 +61,7 @@ long MSPPSreadAbsPressure(tSensors link);
 long MSPPSreadGaugePressure(tSensors link);
 long MSPPSreadRefPressure(tSensors link);
 bool MSPPSsetRefPressure(tSensors link);
-bool MSPPSsetRefPressure(tSensors link, int refpressure);
+bool MSPPSsetRefPressure(tSensors link, short refpressure);
 
 // Handy defines to shortcut some actions
 #define MSPPSsetUnitPSI(X)  MSPPSsetUnit(X, MSPPS_UNIT_PSI)
@@ -139,7 +139,7 @@ long MSPPSreadRefPressure(tSensors link)
  * @param refpressure the value the ref pressure register should be set to.
  * @return true if no error occured, false if it did
  */
-bool MSPPSsetRefPressure(tSensors link, int refpressure)
+bool MSPPSsetRefPressure(tSensors link, short refpressure)
 {
   memset(MSPPS_I2CRequest, 0, sizeof(tByteArray));
 

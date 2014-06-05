@@ -58,7 +58,7 @@ typedef struct
   tI2CData I2CData;
   float ambientTemp;
   float objectTemp;
-  int emissivity;
+  short emissivity;
 } tTIR, *tTIRPtr;
 
 
@@ -110,7 +110,7 @@ bool readSensor(tTIRPtr tirPtr)
  * @param emissivity the emissivity of the object that is to be measured
  * @return true if no error occured, false if it did
  */
-bool setEmissivity(tTIRPtr tirPtr, int emissivity) {
+bool setEmissivity(tTIRPtr tirPtr, short emissivity) {
   tirPtr->emissivity = emissivity;
 
   tirPtr->I2CData.request[0] = 4;            // Message size

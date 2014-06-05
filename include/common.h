@@ -34,10 +34,10 @@
  *        added support for new colour sensor<br>
  *        added better handling for when sensor is not configured properly
  * - 0.9: added bool HTSMUXsetMode(tSensors link, byte channel, byte mode) prototype<br>
- *        added int HTSMUXreadAnalogue(tMUXSensor muxsensor)<br>
+ *        added short HTSMUXreadAnalogue(tMUXSensor muxsensor)<br>
  *        added HTSMUXSensorType HTSMUXreadSensorType(tMUXSensor muxsensor)<br>
- *        added bool HTSMUXreadPort(tMUXSensor muxsensor, tByteArray &result, int numbytes, int offset)<br>
- *        added bool HTSMUXreadPort(tMUXSensor muxsensor, tByteArray &result, int numbytes)<br>
+ *        added bool HTSMUXreadPort(tMUXSensor muxsensor, tByteArray &result, short numbytes, short offset)<br>
+ *        added bool HTSMUXreadPort(tMUXSensor muxsensor, tByteArray &result, short numbytes)<br>
  *        added bool HTSMUXsetMode(tMUXSensor muxsensor, byte mode)<br>
  *        added bool HTSMUXsetAnalogueActive(tMUXSensor muxsensor)<br>
  *        added bool HTSMUXsetAnalogueInactive(tMUXSensor muxsensor)<br>
@@ -45,7 +45,7 @@
  * - 0.10: Removed unnecessary read from HTSMUXsendCommand()
  * - 0.11: Added long uByteToLong(byte a1, byte a2, byte a3, byte a4);
  * - 0.12: Added HTSMUXreadPowerStatus(tSensors link)<br>
- *         Added int round(float fl)
+ *         Added short round(float fl)
  * - 0.13: Added motor mux types and data structs
  * - 0.14: Added check for digital sensors to prevent conflict with built-in drivers\n
  *         Changed clearI2CError to take ubyte for address, thanks Aswin
@@ -143,12 +143,12 @@ typedef ubyte tIPaddr[4];                     /*!< Struct for holding an IP addr
  * Array of ints as a struct, this is a work around for RobotC's inability to pass an array to
  * a function.
  */
-typedef int tIntArray[MAX_ARR_SIZE];
+typedef short tIntArray[MAX_ARR_SIZE];
 
 void clearI2CError(tSensors link, ubyte address);
 void clearI2Cbus(tSensors link);
 bool waitForI2CBus(tSensors link);
-bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, int replylen);
+bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, short replylen);
 bool writeI2C(tSensors link, tByteArray &request);
 
 
@@ -169,7 +169,7 @@ void clearI2CError(tI2CDataPtr data) {
   sleep(2000);
 #endif // __COMMON_H_DEBUG__
 
-  for (int i = 0; i < 5; i++) {
+  for (short i = 0; i < 5; i++) {
     sendI2CMsg(data->port, &error_array[0], 0);
     sleep(5);
   }
@@ -193,7 +193,7 @@ void clearI2CError(tSensors link, ubyte address) {
   sleep(2000);
 #endif // __COMMON_H_DEBUG__
 
-  for (int i = 0; i < 5; i++) {
+  for (short i = 0; i < 5; i++) {
     sendI2CMsg(link, &error_array[0], 0);
     sleep(5);
   }
@@ -396,7 +396,7 @@ bool writeI2C(tSensors link, tByteArray &request) {
  * @param replylen the number of bytes (if any) expected in reply to this command
  * @return true if no error occured, false if it did
  */
-bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, int replylen) {
+bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, short replylen) {
   // clear the input data buffer
 
 #if (__COMMON_H_SENSOR_CHECK__ == 1)
@@ -452,7 +452,7 @@ bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, int replyle
 }
 
 /*
-bool I2CreadInt(tSensors link, ubyte address, ubyte reg, int &retval, tByteArray request, tByteArray reply, bool msbfirst = true)
+bool I2CreadInt(tSensors link, ubyte address, ubyte reg, short &retval, tByteArray request, tByteArray reply, bool msbfirst = true)
 {
   request[0] = 2;            // Message size
   request[1] = address; // I2C Address
@@ -467,7 +467,7 @@ bool I2CreadInt(tSensors link, ubyte address, ubyte reg, int &retval, tByteArray
 }
 
 
-bool I2CreadLong(tSensors link, ubyte address, ubyte reg, int &retval, tByteArray request, tByteArray reply, bool msbfirst = true)
+bool I2CreadLong(tSensors link, ubyte address, ubyte reg, short &retval, tByteArray request, tByteArray reply, bool msbfirst = true)
 {
   request[0] = 2;            // Message size
   request[1] = address; // I2C Address
@@ -494,7 +494,7 @@ bool I2CreadSByte(tSensors link, ubyte address, ubyte reg, sbyte &retval, tByteA
   if (!writeI2C(link, request, reply, 1))
     return false;
 
-  retval =  (reply[0] >= 128) ? (int)reply[0] - 256 : (int)reply[0];
+  retval =  (reply[0] >= 128) ? (short)reply[0] - 256 : (short)reply[0];
 
   return true;
 }
@@ -543,7 +543,7 @@ long getUID() {
  */
 bool strtok(char *buffer, char *token, char *seperator)
 {
-  int pos = StringFind(buffer, seperator);
+  short pos = StringFind(buffer, seperator);
   char t_buff[STRTOK_MAX_BUFFER_SIZE];
 
   // Make sure we zero out the buffer and token

@@ -38,7 +38,7 @@ task main () {
   long mindist = 0;
   long maxdist = 0;
 
-  int motorSpeed = 0;
+  short motorSpeed = 0;
 
   eraseDisplay();
   MSMMUXinit();

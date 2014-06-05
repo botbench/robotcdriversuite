@@ -29,13 +29,13 @@
 #include "mindsensors-accelerometer.h"
 
 task main () {
-  int _x_accel = 0;
-  int _y_accel = 0;
-  int _z_accel = 0;
+  short _x_accel = 0;
+  short _y_accel = 0;
+  short _z_accel = 0;
 
-  int _x_tilt = 0;
-  int _y_tilt = 0;
-  int _z_tilt = 0;
+  short _x_tilt = 0;
+  short _y_tilt = 0;
+  short _z_tilt = 0;
 
   string _tmp;
 

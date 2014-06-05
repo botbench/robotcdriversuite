@@ -11,7 +11,7 @@ Read the status of a switch and display the status on an LED
 #include "hitechnic-superpro.h"
 
 task main() {
-  int inputdata;
+  short inputdata;
 
   // Set B0 for output
   HTSPBsetupIO(HTSPB, 0x1);

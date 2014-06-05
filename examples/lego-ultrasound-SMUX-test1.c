@@ -35,7 +35,7 @@
 const tMUXSensor LEGOUS = msensor_S1_1;
 
 task main () {
-  int dist = 0;
+  short dist = 0;
 
   displayCenteredTextLine(0, "Lego");
   displayCenteredBigTextLine(1, "US");

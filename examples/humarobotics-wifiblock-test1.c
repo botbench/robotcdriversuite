@@ -52,10 +52,10 @@
 void dumpRXData(tBigByteArray &data, ubyte size)
 {
   string tmpBuff;
-  int bytesleft = size;
-  int datalen = 0;
+  short bytesleft = size;
+  short datalen = 0;
 
-  for (int i =  0; i < ((size/18) + 1); i++)
+  for (short i =  0; i < ((size/18) + 1); i++)
 	{
 	  datalen = (bytesleft > 18) ? 18 : bytesleft;
 

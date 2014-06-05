@@ -53,14 +53,14 @@
 TSensorTypes HTEOPDLRType = sensorAnalogActive;
 TSensorTypes HTEOPDSRType = sensorAnalogInactive;
 
-int HTEOPDreadRaw(tSensors link);
-int HTEOPDreadProcessed(tSensors link);
+short HTEOPDreadRaw(tSensors link);
+short HTEOPDreadProcessed(tSensors link);
 void HTEOPDsetShortRange(tSensors link);
 void HTEOPDsetLongRange(tSensors link);
 
 #ifdef __HTSMUX_SUPPORT__
-int HTEOPDreadRaw(tMUXSensor muxsensor);
-int HTEOPDreadProcessed(tMUXSensor muxsensor);
+short HTEOPDreadRaw(tMUXSensor muxsensor);
+short HTEOPDreadProcessed(tMUXSensor muxsensor);
 void HTEOPDsetShortRange(tMUXSensor muxsensor);
 void HTEOPDsetLongRange(tMUXSensor muxsensor);
 #endif
@@ -70,7 +70,7 @@ void HTEOPDsetLongRange(tMUXSensor muxsensor);
  * @param link the HTEOPD port number
  * @return raw value of the sensor
  */
-int HTEOPDreadRaw(tSensors link) {
+short HTEOPDreadRaw(tSensors link) {
   return 1023 - SensorRaw[link];
 }
 
@@ -81,7 +81,7 @@ int HTEOPDreadRaw(tSensors link) {
  * @return raw value of the sensor
  */
 #ifdef __HTSMUX_SUPPORT__
-int HTEOPDreadRaw(tMUXSensor muxsensor) {
+short HTEOPDreadRaw(tMUXSensor muxsensor) {
   return 1023 - HTSMUXreadAnalogue(muxsensor);
 }
 #endif // __HTSMUX_SUPPORT__
@@ -92,8 +92,8 @@ int HTEOPDreadRaw(tMUXSensor muxsensor) {
  * @param link the HTEOPD port number
  * @return processed value of the sensor
  */
-int HTEOPDreadProcessed(tSensors link) {
-  int _val = sqrt(HTEOPDreadRaw(link) * 10);
+short HTEOPDreadProcessed(tSensors link) {
+  short _val = sqrt(HTEOPDreadRaw(link) * 10);
   return _val;
 }
 
@@ -104,8 +104,8 @@ int HTEOPDreadProcessed(tSensors link) {
  * @return processed value of the sensor
  */
 #ifdef __HTSMUX_SUPPORT__
-int HTEOPDreadProcessed(tMUXSensor muxsensor) {
-  int _val = sqrt((long)HTEOPDreadRaw(muxsensor) * (long)10);
+short HTEOPDreadProcessed(tMUXSensor muxsensor) {
+  short _val = sqrt((long)HTEOPDreadRaw(muxsensor) * (long)10);
   return _val;
 }
 #endif // __HTSMUX_SUPPORT__

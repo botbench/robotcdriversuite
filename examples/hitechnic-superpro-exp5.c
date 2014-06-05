@@ -13,9 +13,9 @@ calculates the background light level to create an ambient (background) cancelin
 #include "hitechnic-superpro.h"
 
 task main() {
-  int wlight;
-  int wolight;
-  int lightdelta;
+  short wlight;
+  short wolight;
+  short lightdelta;
 
   // The data to be written: 0x3F = 111111 binary,
   // makes all digital ports outputs.

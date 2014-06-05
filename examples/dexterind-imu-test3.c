@@ -71,7 +71,7 @@ float match()
  * This displays an arrow on the screen pointing downwards.
  * @param degreesFromDown the number of degrees from down
  */
-void displayArrow(int degreesFromDown)
+void displayArrow(short degreesFromDown)
 {
    eraseDisplay();
    // Otherwise, the arrow would point up.

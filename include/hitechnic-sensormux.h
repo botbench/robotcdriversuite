@@ -161,11 +161,11 @@ typedef struct
 byte HTSMUXreadStatus(tSensors link);
 HTSMUXSensorType HTSMUXreadSensorType(tMUXSensor muxsensor);
 bool HTSMUXsendCommand(tSensors link, byte command);
-bool HTSMUXreadPort(tMUXSensor muxsensor, tByteArray &result, int numbytes, int offset = 0);
+bool HTSMUXreadPort(tMUXSensor muxsensor, tByteArray &result, short numbytes, short offset = 0);
 bool HTSMUXsetMode(tMUXSensor muxsensor, byte mode);
 bool HTSMUXsetAnalogueActive(tMUXSensor muxsensor);
 bool HTSMUXsetAnalogueInactive(tMUXSensor muxsensor);
-int HTSMUXreadAnalogue(tMUXSensor muxsensor);
+short HTSMUXreadAnalogue(tMUXSensor muxsensor);
 bool HTSMUXreadPowerStatus(tSensors link);
 bool HTSMUXconfigChannel(tMUXSensor muxsensor, tConfigParams &configparams);
 
@@ -323,7 +323,7 @@ bool HTSMUXsendCommand(tSensors link, byte command) {
  * @param offset the offset used to start reading from
  * @return true if no error occured, false if it did
  */
-bool HTSMUXreadPort(tMUXSensor muxsensor, tByteArray &result, int numbytes, int offset) {
+bool HTSMUXreadPort(tMUXSensor muxsensor, tByteArray &result, short numbytes, short offset) {
   tSensors link = (tSensors)SPORT(muxsensor);
   byte channel = MPORT(muxsensor);
 
@@ -350,7 +350,7 @@ bool HTSMUXreadPort(tMUXSensor muxsensor, tByteArray &result, int numbytes, int 
  * @param muxsensor the SMUX sensor port number
  * @return the value of the sensor or -1 if an error occurred.
  */
-int HTSMUXreadAnalogue(tMUXSensor muxsensor) {
+short HTSMUXreadAnalogue(tMUXSensor muxsensor) {
   tSensors link = (tSensors)SPORT(muxsensor);
   byte channel = MPORT(muxsensor);
 
@@ -368,7 +368,7 @@ int HTSMUXreadAnalogue(tMUXSensor muxsensor) {
   if (!writeI2C(link, HTSMUX_I2CRequest, HTSMUX_I2CReply, 2))
     return -1;
 
-  return ((int)HTSMUX_I2CReply[0] * 4) + HTSMUX_I2CReply[1];
+  return ((short)HTSMUX_I2CReply[0] * 4) + HTSMUX_I2CReply[1];
 }
 
 

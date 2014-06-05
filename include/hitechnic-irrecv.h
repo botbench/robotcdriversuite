@@ -83,8 +83,8 @@ bool HTIRRreadChannel(tSensors link, byte channel, sbyte &motA, sbyte &motB) {
   if (!writeI2C(link, HTIRR_I2CRequest, HTIRR_I2CReply, 2))
     return false;
 
-  motA = (HTIRR_I2CReply[0] >= 128) ? (int)HTIRR_I2CReply[0] - 256 : (int)HTIRR_I2CReply[0];
-  motB = (HTIRR_I2CReply[1] >= 128) ? (int)HTIRR_I2CReply[1] - 256 : (int)HTIRR_I2CReply[1];
+  motA = (HTIRR_I2CReply[0] >= 128) ? (short)HTIRR_I2CReply[0] - 256 : (short)HTIRR_I2CReply[0];
+  motB = (HTIRR_I2CReply[1] >= 128) ? (short)HTIRR_I2CReply[1] - 256 : (short)HTIRR_I2CReply[1];
 
   return true;
 }

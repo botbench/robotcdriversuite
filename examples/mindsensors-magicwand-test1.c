@@ -36,7 +36,7 @@ task main () {
   {
 
     // Blink LED 0 5 times
-    for (int i = 0; i < 5; i++)
+    for (short i = 0; i < 5; i++)
     {
       MSMWsetLED(MAGICWAND, 0, true);
       sleep(150);
@@ -46,14 +46,14 @@ task main () {
 
     // Do the same as above, only use the toggle function
     // Toggle LED 4
-    for (int i = 0; i < 10; i++)
+    for (short i = 0; i < 10; i++)
     {
       MSMWtoggleLED(MAGICWAND, 4);
       sleep(200);
     }
 
     // Flash pulse all of the LEDs quickly
-    for (int i = 0; i < 3; i++)
+    for (short i = 0; i < 3; i++)
     {
       MSMWsetALL(MAGICWAND);
       sleep(50);
@@ -64,11 +64,11 @@ task main () {
     // Use a cool flash effect and clear them all
     MSMWflashAndClear(MAGICWAND, 4);
 
-		for (int j = 1; j < 10; j++)
+		for (short j = 1; j < 10; j++)
 		{
-			int r = random(7);
+			short r = random(7);
 			MSMWsetLED(MAGICWAND, r, true);
-			for (int i = 0; i < 10; i++)
+			for (short i = 0; i < 10; i++)
 			{
 				MSMWtoggleLED(MAGICWAND, 4);
 				sleep(100);

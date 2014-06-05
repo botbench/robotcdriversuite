@@ -27,14 +27,14 @@
 #include "microinfinity-cruizcore.h"
 
 task main () {
-  int _x_accel = 0;
-  int _y_accel = 0;
-  int _z_accel = 0;
+  short _x_accel = 0;
+  short _y_accel = 0;
+  short _z_accel = 0;
 
-  int angleI = 0;
+  short angleI = 0;
   float angleF = 0.0;
 
-  int rotI = 0;
+  short rotI = 0;
   float rotF = 0.0;
 
   displayCenteredTextLine(0, "MicroInfinity");

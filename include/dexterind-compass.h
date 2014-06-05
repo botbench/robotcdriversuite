@@ -125,7 +125,7 @@
 // to make use of the generic calibration data file writing/reading
 typedef struct
 {
-	int _offsets[3];
+	short _offsets[3];
 } tDIMCCalData, *tDIMCCalDataptr;
 
 typedef struct
@@ -133,9 +133,9 @@ typedef struct
   tI2CData I2CData;
   tDIMCCalData calData;
   float heading;
-  int axes[3];
-  int _minVals[3];
-  int _maxVals[3];
+  short axes[3];
+  short _minVals[3];
+  short _maxVals[3];
   bool _calibrated;
   bool _calibrating;
   string _calibrationFile;
@@ -227,7 +227,7 @@ bool readSensor(tDIMCptr dimcPtr)
 
   if (dimcPtr->_calibrating)
   {
-    for (int i = 0; i < 3; i++)
+    for (short i = 0; i < 3; i++)
     {
       dimcPtr->_minVals[i] = min2(dimcPtr->axes[i], dimcPtr->_minVals[i]);
       dimcPtr->_maxVals[i] = max2(dimcPtr->axes[i], dimcPtr->_maxVals[i]);
@@ -269,7 +269,7 @@ bool startCal(tDIMCptr dimcPtr)
 bool stopCal(tDIMCptr dimcPtr)
 {
   dimcPtr->_calibrating = false;
-  for (int i = 0; i < 3; i++)
+  for (short i = 0; i < 3; i++)
   {
     dimcPtr->calData._offsets[i] = ((dimcPtr->_maxVals[i] - dimcPtr->_minVals[i]) / 2) + dimcPtr->_minVals[i];
   }
@@ -289,7 +289,7 @@ bool _writeCalVals(tDIMCptr dimcPtr)
 {
   TFileHandle hFileHandle;
   TFileIOResult nIoResult;
-  short nFileSize = 3*sizeof(int);
+  short nFileSize = 3*sizeof(short);
 
   // Delete the old data file and open a new one for writing
   Delete(DIMCDAT, nIoResult);
@@ -305,7 +305,7 @@ bool _writeCalVals(tDIMCptr dimcPtr)
     stopAllTasks();
   }
 
-  for (int i = 0; i < 3; i++)
+  for (short i = 0; i < 3; i++)
   {
 	  WriteShort(hFileHandle, nIoResult, dimcPtr->calData._offsets[i]);
 	  if (nIoResult != ioRsltSuccess)
@@ -355,19 +355,19 @@ bool _readCalVals(tDIMCptr dimcPtr)
     Close(hFileHandle, nIoResult);
 
     // Assign default values
-    memset(dimcPtr->calData._offsets, 0, 3 * sizeof(int));
+    memset(dimcPtr->calData._offsets, 0, 3 * sizeof(short));
 		_writeCalVals(dimcPtr);
     return true;
   }
 
-  for (int i = 0; i < 3; i++)
+  for (short i = 0; i < 3; i++)
   {
 	  ReadShort(hFileHandle, nIoResult, (short)dimcPtr->calData._offsets[i]);
 	  // writeDebugStream("R offsets[%d][%d]:", i, j);
 	  // writeDebugStreamLine(" %d", DIMCoffsets[i][j]);
 	  if (nIoResult != ioRsltSuccess)
 	  {
-	    memset(dimcPtr->calData._offsets, 0, 3 * sizeof(int));
+	    memset(dimcPtr->calData._offsets, 0, 3 * sizeof(short));
 		  _writeCalVals(dimcPtr);
 		  return true;
 		}

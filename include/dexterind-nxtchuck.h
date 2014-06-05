@@ -87,9 +87,9 @@ typedef struct
   ubyte ident;
   ubyte stickX;
   ubyte stickY;
-  int accelX;
-  int accelY;
-  int accelZ;
+  short accelX;
+  short accelY;
+  short accelZ;
   bool buttonC;
   bool buttonZ;
   ubyte buttons;
@@ -119,7 +119,7 @@ typedef struct
   bool buttonStart;
   bool buttonZL;
   bool buttonZR;
-  unsigned int buttons;
+  unsigned short buttons;
 } tClassicCtrl;
 
 
@@ -202,7 +202,7 @@ bool NXTChuckreadIdent(tSensors link, tNunchuck &nunchuck){
   if(__NXTChuckReadRaw(link, 0xFA, NXTCHUCK_I2CReply)){
 
 #ifdef __NUNHUCK__DEBUG__
-    for (int i = 0; i < 6; i++)
+    for (short i = 0; i < 6; i++)
     {
       writeDebugStream("0x%02X ", NXTCHUCK_I2CReply[i]);
     }
@@ -214,12 +214,12 @@ bool NXTChuckreadIdent(tSensors link, tNunchuck &nunchuck){
 
 #ifdef __NUNHUCK__DEBUG__
       writeDebugStream("Comparing: ");
-      for (int j = 0; j < 6; j++)
+      for (short j = 0; j < 6; j++)
       {
         writeDebugStream("0x%02X ", NXTCHUCK_I2CReply[j]);
       }
       writeDebugStream("   and   ");
-      for (int j = 0; j < 6; j++)
+      for (short j = 0; j < 6; j++)
       {
         writeDebugStream("0x%02X ", NXTChuckIdentLookup[i][j]);
       }

@@ -86,19 +86,19 @@ bool MSMWtoggleLED(tSensors link, ubyte ledToChange)
  * @param count number of times to flash the LEDs
  * @return true if no error occured, false if it did
  */
-bool MSMWflashAndClear(tSensors link, int count)
+bool MSMWflashAndClear(tSensors link, short count)
 {
   PCF8574sendBytes(link, 0xFF);    // all off
-  for (int i = 0; i < count; i++)
+  for (short i = 0; i < count; i++)
   {
-    for (int j = 0; j < 8; j++) {
+    for (short j = 0; j < 8; j++) {
       if (!MSMWsetLED(link, j, true))
       {
         return false;
       }
       sleep(30);
     }
-    for (int j = 0; j < 8; j++) {
+    for (short j = 0; j < 8; j++) {
       if (!MSMWsetLED(link, j, false))
       {
         return false;

@@ -25,8 +25,8 @@
 
 /*! arbStruct struct, <short explanation. */
 typedef struct {
-	int size;                 /*!< Number of bytes used */
-	int arr[DEF_SOMETHING];   /*!< Array containing data */
+	short size;                 /*!< Number of bytes used */
+	short arr[DEF_SOMETHING];   /*!< Array containing data */
 } arbStruct;
 
 /*

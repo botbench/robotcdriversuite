@@ -59,7 +59,7 @@ void MSSUMOsetLongRange(tSensors link);
  * @return raw value of the sensor
  */
 tObstacleZone MSSUMOreadZone(tSensors link) {
-  int sensordata = 0;
+  short sensordata = 0;
 
   sensordata = SensorValue[link];
 

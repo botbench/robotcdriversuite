@@ -30,8 +30,8 @@
 task main () {
 
   // Create two new timer index numbers
-  int timer1 = TMRnewTimer();
-  int timer2 = TMRnewTimer();
+  short timer1 = TMRnewTimer();
+  short timer2 = TMRnewTimer();
 
   // Configure timer1 for 2000ms
   TMRsetup(timer1, 2000);

@@ -122,14 +122,14 @@ bool MSHIDsendKeyboardData(tSensors link, byte modifier, byte keybdata, ubyte ad
  */
 bool MSHIDsendString(tSensors link, string data, ubyte address) {
   byte buffer[19];
-  int len = strlen(data);
+  short len = strlen(data);
   if (len < 20) {
     memcpy(buffer, data, len);
   } else {
     return false;
   }
 
-  for (int i = 0; i < len; i++) {
+  for (short i = 0; i < len; i++) {
 		if (buffer[i] == 0x5C && i < (len - 1)) {
 		  switch (buffer[i+1]) {
         case 'r':

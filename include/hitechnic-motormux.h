@@ -100,7 +100,7 @@ void MMotorSetPIDSpeedCtrl(tMUXmotor muxmotor, bool constspeed);
  * Initialise the mmuxData array needed for keeping track of motor settings
  */
 void HTMMUXinit(){
-  for (int i = 0; i < 4; i++) {
+  for (short i = 0; i < 4; i++) {
     memset(mmuxData[i].runToTarget[0], false, 4);
     memset(mmuxData[i].brake[0], true, 4);
     memset(mmuxData[i].pidcontrol[0], true, 4);
@@ -279,10 +279,10 @@ long HTMMUXMotorEncoder(tSensors link, ubyte channel) {
 
   writeI2C(link, HTMMUX_I2CRequest, HTMMUX_I2CReply, 4);
 
-  return ((int)HTMMUX_I2CReply[0] << 24) +
-         ((int)HTMMUX_I2CReply[1] << 16) +
-         ((int)HTMMUX_I2CReply[2] <<  8) +
-          (int)HTMMUX_I2CReply[3];
+  return ((short)HTMMUX_I2CReply[0] << 24) +
+         ((short)HTMMUX_I2CReply[1] << 16) +
+         ((short)HTMMUX_I2CReply[2] <<  8) +
+          (short)HTMMUX_I2CReply[3];
 }
 
 

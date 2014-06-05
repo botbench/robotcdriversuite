@@ -42,7 +42,7 @@
 typedef struct
 {
   tI2CData I2CData;
-  int force;
+  short force;
   bool smux;
   tMUXSensor smuxport;
 } tHTF, *tHTFPtr;
@@ -51,10 +51,10 @@ bool initSensor(tHTFPtr htfPtr, tSensors port);
 bool initSensor(tHTFPtr htfPtr, tMUXSensor muxsensor);
 bool readSensor(tHTFPtr htfPtr);
 
-//int HTFreadSensor(tSensors link);
+//short HTFreadSensor(tSensors link);
 
 //#ifdef __HTSMUX_SUPPORT__
-//int HTFreadSensor(tMUXSensor muxsensor);
+//short HTFreadSensor(tMUXSensor muxsensor);
 //#endif
 
 ///**
@@ -62,7 +62,7 @@ bool readSensor(tHTFPtr htfPtr);
 // * @param link the HTF port number
 // * @return raw value of the sensor
 // */
-//int HTFreadSensor(tSensors link) {
+//short HTFreadSensor(tSensors link) {
 //  return 1023 - SensorRaw[link];
 //}
 
@@ -73,7 +73,7 @@ bool readSensor(tHTFPtr htfPtr);
 // * @return raw value of the sensor
 // */
 //#ifdef __HTSMUX_SUPPORT__
-//int HTFreadSensor(tMUXSensor muxsensor) {
+//short HTFreadSensor(tMUXSensor muxsensor) {
 //  return 1023 - HTSMUXreadAnalogue(muxsensor);
 //}
 //#endif // __HTSMUX_SUPPORT__

@@ -72,26 +72,26 @@ typedef enum {
 } tHTIRS2DSPMode;
 
 // ---------------------------- DC Signal processing -----------------------------
-int HTIRS2readDCDir(tSensors link);
-bool HTIRS2readAllDCStrength(tSensors link, int &dcS1, int &dcS2, int &dcS3, int &dcS4, int &dcS5);
-int HTIRS2readDCAverage(tSensors link);
+short HTIRS2readDCDir(tSensors link);
+bool HTIRS2readAllDCStrength(tSensors link, short &dcS1, short &dcS2, short &dcS3, short &dcS4, short &dcS5);
+short HTIRS2readDCAverage(tSensors link);
 // ---------------------------- AC Signal processing -----------------------------
 bool HTIRS2setDSPMode(tSensors link, tHTIRS2DSPMode mode);
-int HTIRS2readACDir(tSensors link);
-bool HTIRS2readAllACStrength(tSensors link, int &acS1, int &acS2, int &acS3, int &acS4, int &acS5);
+short HTIRS2readACDir(tSensors link);
+bool HTIRS2readAllACStrength(tSensors link, short &acS1, short &acS2, short &acS3, short &acS4, short &acS5);
 
-bool HTIRS2readEnhanced(tSensors  link, int &dir, int &strength);
+bool HTIRS2readEnhanced(tSensors  link, short &dir, short &strength);
 
 #ifdef __HTSMUX_SUPPORT__
 // ---------------------------- DC Signal processing -----------------------------
-int HTIRS2readDCDir(tMUXSensor muxsensor);
-bool HTIRS2readAllDCStrength(tMUXSensor muxsensor, int &dcS1, int &dcS2, int &dcS3, int &dcS4, int &dcS5);
-int HTIRS2readDCAverage(tMUXSensor muxsensor);
+short HTIRS2readDCDir(tMUXSensor muxsensor);
+bool HTIRS2readAllDCStrength(tMUXSensor muxsensor, short &dcS1, short &dcS2, short &dcS3, short &dcS4, short &dcS5);
+short HTIRS2readDCAverage(tMUXSensor muxsensor);
 // ---------------------------- AC Signal processing -----------------------------
-int HTIRS2readACDir(tMUXSensor muxsensor);
-bool HTIRS2readAllACStrength(tMUXSensor muxsensor, int &acS1, int &acS2, int &acS3, int &acS4, int &acS5);
+short HTIRS2readACDir(tMUXSensor muxsensor);
+bool HTIRS2readAllACStrength(tMUXSensor muxsensor, short &acS1, short &acS2, short &acS3, short &acS4, short &acS5);
 
-bool HTIRS2readEnhanced(tMUXSensor muxsensor, int &dir, int &strength);
+bool HTIRS2readEnhanced(tMUXSensor muxsensor, short &dir, short &strength);
 
 tConfigParams HTIRS2_config = {HTSMUX_CHAN_I2C, 13, 0x10, 0x42}; /*!< Array to hold SMUX config data for sensor */
 #endif // __HTSMUX_SUPPORT__
@@ -106,7 +106,7 @@ tByteArray HTIRS2_I2CReply;      /*!< Array to hold I2C reply data */
  * @param link the HTIRS2 port number
  * @return value of 0-9, the direction index of the detected IR signal or -1 if an error occurred.
  */
-int HTIRS2readDCDir(tSensors link) {
+short HTIRS2readDCDir(tSensors link) {
   memset(HTIRS2_I2CRequest, 0, sizeof(tByteArray));
 
   HTIRS2_I2CRequest[0] = 2;              // Message size
@@ -126,7 +126,7 @@ int HTIRS2readDCDir(tSensors link) {
  * @return value of 0-9, the direction index of the detected IR signal or -1 if an error occurred.
  */
 #ifdef __HTSMUX_SUPPORT__
-int HTIRS2readDCDir(tMUXSensor muxsensor) {
+short HTIRS2readDCDir(tMUXSensor muxsensor) {
 	memset(HTIRS2_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -151,7 +151,7 @@ int HTIRS2readDCDir(tMUXSensor muxsensor) {
  * @param dcS5 data from internal sensor nr 5
  * @return true if no error occured, false if it did
  */
-bool HTIRS2readAllDCStrength(tSensors link, int &dcS1, int &dcS2, int &dcS3, int &dcS4, int &dcS5) {
+bool HTIRS2readAllDCStrength(tSensors link, short &dcS1, short &dcS2, short &dcS3, short &dcS4, short &dcS5) {
   memset(HTIRS2_I2CRequest, 0, sizeof(tByteArray));
 
   HTIRS2_I2CRequest[0] = 2;                      // Message size
@@ -185,7 +185,7 @@ bool HTIRS2readAllDCStrength(tSensors link, int &dcS1, int &dcS2, int &dcS3, int
  * @return true if no error occured, false if it did
  */
 #ifdef __HTSMUX_SUPPORT__
-bool HTIRS2readAllDCStrength(tMUXSensor muxsensor, int &dcS1, int &dcS2, int &dcS3, int &dcS4, int &dcS5) {
+bool HTIRS2readAllDCStrength(tMUXSensor muxsensor, short &dcS1, short &dcS2, short &dcS3, short &dcS4, short &dcS5) {
   memset(HTIRS2_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -211,7 +211,7 @@ bool HTIRS2readAllDCStrength(tMUXSensor muxsensor, int &dcS1, int &dcS2, int &dc
  * @param link the HTIRS2 port number
  * @return value of 0-9, the direction index of the detected IR signal or -1 if an error occurred.
  */
-int HTIRS2readDCAverage(tSensors link) {
+short HTIRS2readDCAverage(tSensors link) {
   memset(HTIRS2_I2CRequest, 0, sizeof(tByteArray));
 
   HTIRS2_I2CRequest[0] = 2;              // Message size
@@ -231,7 +231,7 @@ int HTIRS2readDCAverage(tSensors link) {
  * @return value of 0-9, the direction index of the detected IR signal or -1 if an error occurred.
  */
 #ifdef __HTSMUX_SUPPORT__
-int HTIRS2readDCAverage(tMUXSensor muxsensor) {
+short HTIRS2readDCAverage(tMUXSensor muxsensor) {
   memset(HTIRS2_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -274,7 +274,7 @@ bool HTIRS2setDSPMode(tSensors link, tHTIRS2DSPMode mode) {
  * @param link the HTIRS2 port number
  * @return value of 0-9, the direction index of the detected IR signal or -1 if an error occurred.
  */
-int HTIRS2readACDir(tSensors link) {
+short HTIRS2readACDir(tSensors link) {
   memset(HTIRS2_I2CRequest, 0, sizeof(tByteArray));
 
   HTIRS2_I2CRequest[0] = 2;              // Message size
@@ -294,7 +294,7 @@ int HTIRS2readACDir(tSensors link) {
  * @return value of 0-9, the direction index of the detected IR signal or -1 if an error occurred.
  */
 #ifdef __HTSMUX_SUPPORT__
-int HTIRS2readACDir(tMUXSensor muxsensor) {
+short HTIRS2readACDir(tMUXSensor muxsensor) {
   memset(HTIRS2_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -319,7 +319,7 @@ int HTIRS2readACDir(tMUXSensor muxsensor) {
  * @param acS5 data from internal sensor nr 5
  * @return true if no error occured, false if it did
  */
-bool HTIRS2readAllACStrength(tSensors link, int &acS1, int &acS2, int &acS3, int &acS4, int &acS5) {
+bool HTIRS2readAllACStrength(tSensors link, short &acS1, short &acS2, short &acS3, short &acS4, short &acS5) {
   memset(HTIRS2_I2CRequest, 0, sizeof(tByteArray));
 
   HTIRS2_I2CRequest[0] = 2;                      // Message size
@@ -350,7 +350,7 @@ bool HTIRS2readAllACStrength(tSensors link, int &acS1, int &acS2, int &acS3, int
  * @return true if no error occured, false if it did
  */
 #ifdef __HTSMUX_SUPPORT__
-bool HTIRS2readAllACStrength(tMUXSensor muxsensor, int &acS1, int &acS2, int &acS3, int &acS4, int &acS5) {
+bool HTIRS2readAllACStrength(tMUXSensor muxsensor, short &acS1, short &acS2, short &acS3, short &acS4, short &acS5) {
   memset(HTIRS2_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -379,7 +379,7 @@ bool HTIRS2readAllACStrength(tMUXSensor muxsensor, int &acS1, int &acS2, int &ac
  * @param strength the strength (and distance) of the ball's IR signal
  * @return true if no error occured, false if it did
  */
-bool HTIRS2readEnhanced(tSensors  link, int &dir, int &strength)
+bool HTIRS2readEnhanced(tSensors  link, short &dir, short &strength)
 {
   ubyte iMax = 0;
   long dcSigSum = 0;
@@ -395,7 +395,7 @@ bool HTIRS2readEnhanced(tSensors  link, int &dir, int &strength)
     return false;
 
   // Find the max DC sig strength
-  for (int i = 1; i < 5; i++)
+  for (short i = 1; i < 5; i++)
   {
     if (HTIRS2_I2CReply[i] > HTIRS2_I2CReply[iMax])
     {
@@ -457,7 +457,7 @@ bool HTIRS2readEnhanced(tSensors  link, int &dir, int &strength)
  * @return true if no error occured, false if it did
  */
 #ifdef __HTSMUX_SUPPORT__
-bool HTIRS2readEnhanced(tMUXSensor muxsensor, int &dir, int &strength)
+bool HTIRS2readEnhanced(tMUXSensor muxsensor, short &dir, short &strength)
 {
   ubyte iMax = 0;
   long dcSigSum = 0;
@@ -472,7 +472,7 @@ bool HTIRS2readEnhanced(tMUXSensor muxsensor, int &dir, int &strength)
   }
 
   // Find the max DC sig strength
-  for (int i = 1; i < 5; i++)
+  for (short i = 1; i < 5; i++)
   {
     if (HTIRS2_I2CReply[HTIRS2_DC_SSTR1+i] > HTIRS2_I2CReply[HTIRS2_DC_SSTR1+iMax])
     {

@@ -32,9 +32,9 @@
 #include "hitechnic-accelerometer.h"
 
 task main () {
-  int _x_axis = 0;
-  int _y_axis = 0;
-  int _z_axis = 0;
+  short _x_axis = 0;
+  short _y_axis = 0;
+  short _z_axis = 0;
 
   string _tmp;
 

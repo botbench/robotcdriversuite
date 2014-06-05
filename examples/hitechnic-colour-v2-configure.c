@@ -127,7 +127,7 @@ task main () {
             else
               displayCenteredTextLine(4, "60 Hz operating");
             displayCenteredTextLine(5, "frequency");
-            for (int i = 5; i > 0; i--) {
+            for (short i = 5; i > 0; i--) {
               displayCenteredTextLine(7, "Exiting in %d sec", i);
               sleep(1000);
             }

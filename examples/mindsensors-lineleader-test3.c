@@ -51,7 +51,7 @@
 
 // function prototypes
 void doMainMenu();
-void doMenuItem(int activeOption);
+void doMenuItem(short activeOption);
 bool checkTimer(TTimers timer);
 void doLineLead();
 void writeParams();
@@ -63,21 +63,21 @@ const TTimers rightButtonTimer = T1;
 const TTimers leftButtonTimer  = T2;
 const TTimers enterButtonTimer = T3;
 
-int activeOption = 0;
+short activeOption = 0;
 
-int keep_running = 0;
+short keep_running = 0;
 
 byte sensor = 0;
 
 // array holding default values for PID constants and base speed
-const int default_params[4] = {
+const short default_params[4] = {
                               DEFAULT_KP,
                               DEFAULT_KI,
                               DEFAULT_KD,
                               DEFAULT_SP };
 
 // array to hold user entered values
-int params[4];
+short params[4];
 
 const string optionMainMenu[5] = {
                               "Kp",
@@ -102,7 +102,7 @@ task drawSensors() {
   while (keep_running == 1) {
     // This clears the entire area occupied by the small rectangles
     eraseRect(6,62, 91, 43);
-    for (int i = 0; i < 8; i++) {
+    for (short i = 0; i < 8; i++) {
       // Draw the rectangles for the signal strength first
       drawRect(6+(i*11),62, 14+(i*11), 50);
       fillRect(6+(i*11),51+signalstr[i]/10, 14+(i*11), 50);
@@ -121,8 +121,8 @@ task drawSensors() {
 
 // Keep the robot on the line!
 task followTheYellowBrickRoad () {
-  int powerA = 0;
-  int powerC = 0;
+  short powerA = 0;
+  short powerC = 0;
   byte steering = 0;
 
   eraseDisplay();
@@ -171,7 +171,7 @@ task redrawMenu() {
   while(true) {
     eraseDisplay();
     println(0, menuHeader);
-    for (int i = 0; i < MENUITEMS; i++) {
+    for (short i = 0; i < MENUITEMS; i++) {
       clearln(i + 1);
       if (i == activeOption) {
         if (i < 4)
@@ -252,7 +252,7 @@ void doMainMenu () {
 
 // When enter is pressed in the doMainMenu() we come here.
 // Here we handle the actual actions for each menu item.
-void doMenuItem(int activeOption) {
+void doMenuItem(short activeOption) {
   playSound(soundBlip);
   while(bSoundActive) EndTimeSlice();
 
@@ -311,7 +311,7 @@ void doLineLead() {
   sensor = 0;
   stopTask(redrawMenu);
   keep_running = 1;
-  for (int i = 0; i < 5; i++) {
+  for (short i = 0; i < 5; i++) {
     playSound(soundBlip);
     sleep(600);
   }

@@ -57,9 +57,9 @@
 typedef struct
 {
   tI2CData I2CData;
-  int heading;
-  int relativeHeading;
-  int offset;
+  short heading;
+  short relativeHeading;
+  short offset;
   bool smux;
   tMUXSensor smuxport;
 } tHTMC, *tHTMCPtr;
@@ -72,14 +72,14 @@ bool sensorStopCalibrate(tHTMCPtr htmcPtr);
 
 //bool HTMCstartCal(tSensors link);
 //bool HTMCstopCal(tSensors link);
-//int HTMCreadHeading(tSensors link);
-//int HTMCreadRelativeHeading(tSensors link);
-//int HTMCsetTarget(tSensors link, int offset = 0);
+//short HTMCreadHeading(tSensors link);
+//short HTMCreadRelativeHeading(tSensors link);
+//short HTMCsetTarget(tSensors link, short offset = 0);
 
 //#ifdef __HTSMUX_SUPPORT__
-//int HTMCreadHeading(tMUXSensor muxsensor);
-//int HTMCreadRelativeHeading(tMUXSensor muxsensor);
-//int HTMCsetTarget(tMUXSensor muxsensor, int offset = 0);
+//short HTMCreadHeading(tMUXSensor muxsensor);
+//short HTMCreadRelativeHeading(tMUXSensor muxsensor);
+//short HTMCsetTarget(tMUXSensor muxsensor, short offset = 0);
 
 tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold SMUX config data for sensor */
 //#endif // __HTSMUX_SUPPORT__
@@ -87,7 +87,7 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 //tByteArray HTMC_I2CRequest;       /*!< Array to hold I2C command data */
 //tByteArray HTMC_I2CReply;         /*!< Array to hold I2C reply data */
 
-//int target[][] = {{0, 0, 0, 0},   /*!< Offsets for the compass sensor relative readings */
+//short target[][] = {{0, 0, 0, 0},   /*!< Offsets for the compass sensor relative readings */
 //                  {0, 0, 0, 0},
 //                  {0, 0, 0, 0},
 //                  {0, 0, 0, 0}};
@@ -147,7 +147,7 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 // * @param link the HTMC port number
 // * @return heading in degrees (0 - 359) or -1 if an error occurred.
 // */
-//int HTMCreadHeading(tSensors link) {
+//short HTMCreadHeading(tSensors link) {
 //  memset(HTMC_I2CRequest, 0, sizeof(tByteArray));
 
 //  HTMC_I2CRequest[0] = 2;               // Number of bytes in I2C command
@@ -168,7 +168,7 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 // * @return heading in degrees (0 - 359) or -1 if an error occurred.
 // */
 //#ifdef __HTSMUX_SUPPORT__
-//int HTMCreadHeading(tMUXSensor muxsensor) {
+//short HTMCreadHeading(tMUXSensor muxsensor) {
 //  memset(HTMC_I2CReply, 0, sizeof(tByteArray));
 
 //  if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
@@ -189,10 +189,10 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 // * @param link the HTMC port number
 // * @return relative heading in degrees or -255 if an error occurred.
 // */
-//int HTMCreadRelativeHeading(tSensors link) {
+//short HTMCreadRelativeHeading(tSensors link) {
 
 //  // The black voodoo magic code below is courtsey of Gus from HiTechnic.
-//  int _tmpHeading = HTMCreadHeading(link) - target[link][0] + 180;
+//  short _tmpHeading = HTMCreadHeading(link) - target[link][0] + 180;
 //  return (_tmpHeading >= 0 ? _tmpHeading % 360 : 359 - (-1 - _tmpHeading)%360) - 180;
 //}
 
@@ -203,10 +203,10 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 // * @return relative heading in degrees or -255 if an error occurred.
 // */
 //#ifdef __HTSMUX_SUPPORT__
-//int HTMCreadRelativeHeading(tMUXSensor muxsensor) {
+//short HTMCreadRelativeHeading(tMUXSensor muxsensor) {
 
 //  // The black voodoo magic code below is courtsey of Gus from HiTechnic.
-//  int _tmpHeading = HTMCreadHeading(muxsensor) - target[SPORT(muxsensor)][MPORT(muxsensor)] + 180;
+//  short _tmpHeading = HTMCreadHeading(muxsensor) - target[SPORT(muxsensor)][MPORT(muxsensor)] + 180;
 //  return (_tmpHeading >= 0 ? _tmpHeading % 360 : 359 - (-1 - _tmpHeading)%360) - 180;
 
 //  // return ((HTMCreadHeading(muxsensor) - target[SPORT(muxsensor)][MPORT(muxsensor)] + 540) % 360 - 180);
@@ -221,7 +221,7 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 // * @param offset to be used to calculate relative heading (0-360 degrees).  If unspecified, uses current heading.
 // * @return the current target heading
 // */
-//int HTMCsetTarget(tSensors link, int offset) {
+//short HTMCsetTarget(tSensors link, short offset) {
 //  target[link][0] = (offset != 0) ? offset : HTMCreadHeading(link);
 //  return target[link][0];
 //}
@@ -234,7 +234,7 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 // * @param offset to be used to calculate relative heading (0-360 degrees).  If unspecified, uses current heading.
 // */
 //#ifdef __HTSMUX_SUPPORT__
-//int HTMCsetTarget(tMUXSensor muxsensor, int offset) {
+//short HTMCsetTarget(tMUXSensor muxsensor, short offset) {
 //  target[SPORT(muxsensor)][MPORT(muxsensor)] = (offset != 0) ? offset : HTMCreadHeading(muxsensor);
 //  return target[SPORT(muxsensor)][MPORT(muxsensor)];
 //}
@@ -297,7 +297,7 @@ bool initSensor(tHTMCPtr htmcPtr, tMUXSensor muxsensor)
  */
 bool readSensor(tHTMCPtr htmcPtr)
 {
-	int tempHeading = 0;
+	short tempHeading = 0;
 	memset(htmcPtr->I2CData.request, 0, sizeof(htmcPtr->I2CData.request));
 
 	if (htmcPtr->smux)

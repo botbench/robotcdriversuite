@@ -106,8 +106,8 @@ bool _MSNPinit(tSensors link) {
  * @param number the numeric equivalent, 0-9 for digits, -1 for # and -2 for *, -255 when nothing is pressed
  * @return true if no error occured, false if it did
  */
-bool MSNPscanKeys(tSensors link, int &pressedKeys, unsigned byte &key, int &number) {
-  //int keyPress = 0;
+bool MSNPscanKeys(tSensors link, short &pressedKeys, unsigned byte &key, short &number) {
+  //short keyPress = 0;
 
   if (!_MSNPinitialised[link]) {
     _MSNPinit(link);
@@ -127,7 +127,7 @@ bool MSNPscanKeys(tSensors link, int &pressedKeys, unsigned byte &key, int &numb
 
   pressedKeys = MSNP_I2CReply[0] + (MSNP_I2CReply[1] * 256);
 
-	for (int i=0; i < 12; i++) {
+	for (short i=0; i < 12; i++) {
 	  if (pressedKeys & (1<<i)) {
 	    key = MSNP_KeyMap[i];
 	    number = MSNP_NumMap[i];
@@ -144,8 +144,8 @@ bool MSNPscanKeys(tSensors link, int &pressedKeys, unsigned byte &key, int &numb
  * @param link the MSNP port number
  * @return number the numeric equivalent, 0-9 for digits, -1 for # and -2 for *, -255 when nothing is pressed
  */
-int MSNPscanKeys(tSensors link) {
-  int keyPress = 0;
+short MSNPscanKeys(tSensors link) {
+  short keyPress = 0;
 
   if (!_MSNPinitialised[link]) {
     _MSNPinit(link);
@@ -163,7 +163,7 @@ int MSNPscanKeys(tSensors link) {
 
   keyPress = MSNP_I2CReply[0] + (MSNP_I2CReply[1] * 256);
 
-	for (int i=0; i < 12; i++) {
+	for (short i=0; i < 12; i++) {
 	  if (keyPress & (1<<i)) {
 	    return MSNP_NumMap[i];
 	  }

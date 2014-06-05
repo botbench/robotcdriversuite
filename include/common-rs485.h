@@ -36,7 +36,7 @@
 #include "timer.h"
 #endif
 
-int rxTimer;            /*!< timer for receiving timeouts */
+short rxTimer;            /*!< timer for receiving timeouts */
 //const string newline = "\n";
 const ubyte newline[1] = '\n';
 
@@ -88,8 +88,8 @@ bool RS485write(tMassiveArray &buf, ubyte len)
  * @param timeout optional parameter to specify the timeout, defaults to 100ms
  * @return true if no error occured, false if it did
  */
-bool RS485read(tMassiveArray &buf, int &len, int timeout = 100) {
-	int bytesAvailable = 0;
+bool RS485read(tMassiveArray &buf, short &len, short timeout = 100) {
+	short bytesAvailable = 0;
 
 	memset(buf, 0, sizeof(buf));
 
@@ -106,7 +106,7 @@ bool RS485read(tMassiveArray &buf, int &len, int timeout = 100) {
 
 #ifdef __RS485_DEBUG__
 	writeDebugStream("RS485read (%d): ", bytesAvailable);
-	for (int datacounter = 0; datacounter < bytesAvailable; datacounter++)
+	for (short datacounter = 0; datacounter < bytesAvailable; datacounter++)
 	{
 	  writeDebugStream("%c", buf[datacounter]);
 	  EndTimeSlice();
@@ -126,14 +126,14 @@ bool RS485read(tMassiveArray &buf, int &len, int timeout = 100) {
  * @param timeout optional parameter to specify the timeout, defaults to 100ms
  * @return true if no error occured, false if it did
  */
-bool RS485readLargeResponse(tMassiveArray &buf, int &len, int timeout = 100)
+bool RS485readLargeResponse(tMassiveArray &buf, short &len, short timeout = 100)
 {
   const ubyte chunkSize = 10;
-  int bytesAvailable;
+  short bytesAvailable;
 	tByteArray tmpBuff;
-	int bytesleft = len;
-	int bytesToRead = 0;
-	int index = 0;
+	short bytesleft = len;
+	short bytesToRead = 0;
+	short index = 0;
 	memset(buf, 0, sizeof(buf));
 
 	TMRreset(rxTimer);
@@ -155,7 +155,7 @@ bool RS485readLargeResponse(tMassiveArray &buf, int &len, int timeout = 100)
 
 #ifdef __RS485_DEBUG__
 	writeDebugStream("RS485readLargeResponse: ");
-	for (int datacounter = 0; datacounter < len; datacounter++)
+	for (short datacounter = 0; datacounter < len; datacounter++)
 	{
 	  writeDebugStream("%c", buf[datacounter]);
 	  EndTimeSlice();
@@ -173,7 +173,7 @@ bool RS485readLargeResponse(tMassiveArray &buf, int &len, int timeout = 100)
  * @param nLength the length of the data to be appended
  * @return the new 'tail' position of buf at which to append.
  */
-int RS485appendToBuff(tMassiveArray &buf, const short index, const ubyte *pData, const short nLength)
+short RS485appendToBuff(tMassiveArray &buf, const short index, const ubyte *pData, const short nLength)
 {
   if (index == 0) memset(buf, 0, sizeof(buf));
 
@@ -189,7 +189,7 @@ int RS485appendToBuff(tMassiveArray &buf, const short index, const ubyte *pData,
  * @param pData the string to be appended to buf
  * @return the new 'tail' position of buf at which to append.
  */
-int RS485appendToBuff(tMassiveArray &buf, const short index, string pData)
+short RS485appendToBuff(tMassiveArray &buf, const short index, string pData)
 {
   if (index == 0) memset(buf, 0, sizeof(buf));
 
@@ -206,7 +206,7 @@ int RS485appendToBuff(tMassiveArray &buf, const short index, string pData)
  * @param nLength the length of the data to be appended
  * @return the new 'tail' position of buf at which to append.
  */
-int RS485appendToBuff(tBigByteArray &buf, const short index, const ubyte *pData, const short nLength)
+short RS485appendToBuff(tBigByteArray &buf, const short index, const ubyte *pData, const short nLength)
 {
   if (index == 0) memset(buf, 0, sizeof(buf));
 
@@ -222,7 +222,7 @@ int RS485appendToBuff(tBigByteArray &buf, const short index, const ubyte *pData,
  * @param pData the string to be appended to buf
  * @return the new 'tail' position of buf at which to append.
  */
-int RS485appendToBuff(tBigByteArray &buf, const short index, const string pData)
+short RS485appendToBuff(tBigByteArray &buf, const short index, const string pData)
 {
   if (index == 0) memset(buf, 0, sizeof(buf));
 

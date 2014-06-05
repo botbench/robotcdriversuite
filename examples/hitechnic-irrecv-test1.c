@@ -46,7 +46,7 @@ task main {
   eraseDisplay();
 
   while (true) {
-    for (int i = 1; i < 5; i++) {
+    for (short i = 1; i < 5; i++) {
       // Read the motor powers sent by the remote on the specified channel
       // and display them.
       HTIRRreadChannel(HTIRR, i, _motA, _motB);

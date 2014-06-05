@@ -71,12 +71,12 @@
 #define MSTMUX_SMUX_HIGH_123 643
 
 
-int MSTMUXgetActive(tSensors link);
-bool MSTMUXisActive(tSensors link, int touch);
+short MSTMUXgetActive(tSensors link);
+bool MSTMUXisActive(tSensors link, short touch);
 
 #ifdef __HTSMUX_SUPPORT__
-int MSTMUXgetActive(tMUXSensor muxsensor);
-bool MSTMUXisActive(tMUXSensor muxsensor, int touch);
+short MSTMUXgetActive(tMUXSensor muxsensor);
+bool MSTMUXisActive(tMUXSensor muxsensor, short touch);
 #endif
 
 /**
@@ -86,7 +86,7 @@ bool MSTMUXisActive(tMUXSensor muxsensor, int touch);
  * @param link the MSTMUX port number
  * @return the value of the switches status
  */
-int MSTMUXgetActive(tSensors link) {
+short MSTMUXgetActive(tSensors link) {
 
   // Make sure the sensor is configured as type sensorLightInactive
   if (SensorType[link] != sensorLightInactive) {
@@ -94,7 +94,7 @@ int MSTMUXgetActive(tSensors link) {
     sleep(10);
   }
 
-	int s;
+	short s;
   s = SensorRaw[link];
 
   if ( MSTMUX_LOW_1 < s && s < MSTMUX_HIGH_1 ) {
@@ -125,9 +125,9 @@ int MSTMUXgetActive(tSensors link) {
  * @return the value of the switches status
  */
 #ifdef __HTSMUX_SUPPORT__
-int MSTMUXgetActive(tMUXSensor muxsensor) {
+short MSTMUXgetActive(tMUXSensor muxsensor) {
 
-	int s;
+	short s;
   s = 1023 - HTSMUXreadAnalogue(muxsensor);
 
   if ( MSTMUX_SMUX_LOW_1 < s && s < MSTMUX_SMUX_HIGH_1 ) {
@@ -157,7 +157,7 @@ int MSTMUXgetActive(tMUXSensor muxsensor) {
  * @param touch the touch sensor to be checked, numbered 1 to 4.
  * @return the value of the switches status
  */
-bool MSTMUXisActive(tSensors link, int touch) {
+bool MSTMUXisActive(tSensors link, short touch) {
   if (MSTMUXgetActive(link) & (1 << (touch - 1)))
     return true;
   else
@@ -172,7 +172,7 @@ bool MSTMUXisActive(tSensors link, int touch) {
  * @return the value of the switches status
  */
 #ifdef __HTSMUX_SUPPORT__
-bool MSTMUXisActive(tMUXSensor muxsensor, int touch) {
+bool MSTMUXisActive(tMUXSensor muxsensor, short touch) {
   if (MSTMUXgetActive(muxsensor) & (1 << (touch - 1)))
     return true;
   else

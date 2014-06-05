@@ -28,8 +28,8 @@
 
 task main () {
 
-  int magFieldValue = 0;
-  int calibrationValue = 0;
+  short magFieldValue = 0;
+  short calibrationValue = 0;
 
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "MAGNETIC");

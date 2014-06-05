@@ -32,7 +32,7 @@
 float data[200];
 
 task main () {
-  int X = 0;
+  short X = 0;
 
   // declare and initialise the sensor
   tTIR tir;
@@ -63,7 +63,7 @@ task main () {
 	nMotorEncoder[VERTICAL] = 0;
 	playSound(soundBeepBeep);
 	while(bSoundActive) EndTimeSlice();
-  for (int i = 0; i < 80; i++) {
+  for (short i = 0; i < 80; i++) {
     sleep(500);
     X = 0;
     memset(data, 0, sizeof(data));
@@ -84,7 +84,7 @@ task main () {
 	  nMotorEncoderTarget[HORIZONTAL] = 720;
 	  motor[HORIZONTAL] = 60;
 
-	  for (int j = 0; j < 200; j++) {
+	  for (short j = 0; j < 200; j++) {
 	    if (data[j] != 0) {
 	      writeDebugStream("%3.2f,", data[j]);
 	      sleep(5);

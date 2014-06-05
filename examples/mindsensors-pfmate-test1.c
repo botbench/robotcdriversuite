@@ -27,7 +27,7 @@
 
 #include "mindsensors-pfmate.h"
 
-void doTest(int channel) {
+void doTest(short channel) {
   displayTextLine(5, "Chan:  %d", channel);
 
   // -------- testing motor A -----------------------
@@ -35,7 +35,7 @@ void doTest(int channel) {
   while(bSoundActive) EndTimeSlice();
   displayTextLine(6, "Motor: A");
   displayTextLine(7, "Dir:   fwd");
-  for (int speed = 1; speed < 8; speed++) {
+  for (short speed = 1; speed < 8; speed++) {
     // Run motor A forward from speed 1 to 7
     MSPFMcontrolMotorA(MSPFM, channel, MSPFM_FORWARD, speed);
     sleep(500);
@@ -47,7 +47,7 @@ void doTest(int channel) {
   sleep(500);
 
   displayTextLine(7, "Dir:   rev");
-  for (int speed = 1; speed < 8; speed++) {
+  for (short speed = 1; speed < 8; speed++) {
     // Run motor A in reverse from speed 1 to 7
     MSPFMcontrolMotorA(MSPFM, channel, MSPFM_REVERSE, speed);
     sleep(500);
@@ -63,7 +63,7 @@ void doTest(int channel) {
   while(bSoundActive) EndTimeSlice();
   displayTextLine(6, "Motor: B");
   displayTextLine(7, "Dir:   fwd");
-  for (int speed = 1; speed < 8; speed++) {
+  for (short speed = 1; speed < 8; speed++) {
     // Run motor B forward from speed 1 to 7
     MSPFMcontrolMotorB(MSPFM, channel, MSPFM_FORWARD, speed);
     sleep(500);
@@ -74,7 +74,7 @@ void doTest(int channel) {
   sleep(500);
 
   displayTextLine(7, "Dir:   rev");
-  for (int speed = 1; speed < 8; speed++) {
+  for (short speed = 1; speed < 8; speed++) {
     // Run motor B in reverse from speed 1 to 7
     MSPFMcontrolMotorB(MSPFM, channel, MSPFM_REVERSE, speed);
     sleep(500);
@@ -89,7 +89,7 @@ void doTest(int channel) {
   while(bSoundActive) EndTimeSlice();
   displayTextLine(6, "Motor: A+B");
   displayTextLine(7, "Dir:   fwd+rev");
-  for (int speed = 1; speed < 8; speed++) {
+  for (short speed = 1; speed < 8; speed++) {
     // Run motor A forward and motor B in reverse from speed 1 to 7
     MSPFMcontrolMotorAB(MSPFM, channel, MSPFM_FORWARD, speed, MSPFM_REVERSE, speed);
     sleep(500);
@@ -101,7 +101,7 @@ void doTest(int channel) {
   sleep(500);
 
   displayTextLine(7, "Dir:   rev+fwd");
-  for (int speed = 1; speed < 8; speed++) {
+  for (short speed = 1; speed < 8; speed++) {
     // Run motor A in revese and motor B forward from speed 1 to 7
     MSPFMcontrolMotorAB(MSPFM, channel, MSPFM_REVERSE, speed, MSPFM_FORWARD, speed);
     sleep(500);
@@ -120,7 +120,7 @@ task main() {
   sleep(2000);
 
   // Run through each channel for testing.
-  for (int channel = 1; channel < 5; channel++) {
+  for (short channel = 1; channel < 5; channel++) {
     doTest(channel);
   }
 }

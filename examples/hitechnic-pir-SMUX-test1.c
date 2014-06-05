@@ -34,7 +34,7 @@
 const tMUXSensor HTPIR = msensor_S1_1;
 
 // Draw a little stick figure
-void drawStickFigure(int offset)
+void drawStickFigure(short offset)
 {
   eraseRect(0, 0, 99, 50);
   drawCircle(offset + 43, 40, 15);
@@ -45,8 +45,8 @@ void drawStickFigure(int offset)
 }
 
 task main () {
-  int reading = 0;
-  int x = 0;
+  short reading = 0;
+  short x = 0;
 
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "PIR");

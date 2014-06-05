@@ -31,7 +31,7 @@ const string frequencyNames[] = {"US", "UNI", "EU", };
 // Set the desired frequency compensation mode.  This has to do with the frequency of the
 // AC current.  It causes flickering of the lights at the same frequency and can
 // interfere with the sensor readings. This allows you to compensate for it.
-void setFrequency(int choice)
+void setFrequency(short choice)
 {
   playSound(soundBlip);
   switch(choice)
@@ -43,7 +43,7 @@ void setFrequency(int choice)
 }
 
 task main {
-  int choice = 1;
+  short choice = 1;
 
   while (true) {
     switch(nNxtButtonPressed)

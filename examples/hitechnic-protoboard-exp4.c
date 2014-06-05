@@ -28,7 +28,7 @@
 
 task main() {
   // Local variables
-  int inputdata;
+  short inputdata;
 
   while(true) {
     // Read a 10bit wide analogue value from A0

@@ -25,7 +25,7 @@
 
 task main() {
 
-  int _joule;
+  short _joule;
   float _voltageIn;
   float _currentIn;
   float _voltageOut;

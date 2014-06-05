@@ -35,8 +35,8 @@
 const tMUXSensor LEGOSND = msensor_S1_1;
 
 task main () {
-  int soundraw = 0;
-  int soundnorm = 0;
+  short soundraw = 0;
+  short soundnorm = 0;
   bool dba = false;
 
   nNxtButtonTask  = -2;

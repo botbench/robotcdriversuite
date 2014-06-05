@@ -30,10 +30,10 @@
 #include "mindsensors-irdist.h"
 
 task main () {
-  int distance = 0;
-  int voltage = 0;
-  int mindist = 0;
-  int maxdist = 0;
+  short distance = 0;
+  short voltage = 0;
+  short mindist = 0;
+  short maxdist = 0;
   string type;
 
   displayCenteredTextLine(0, "Mindsensors");

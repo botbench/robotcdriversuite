@@ -63,7 +63,7 @@ task showPulse() {
 
 // Does some voodoo maths to calculate how many times the wheels should rotate
 // to make the robot spin about 360 degrees.
-int numRotations() {
+short numRotations() {
   return ((WHEELDIST * 3142) / 1000) / ((WHEELSIZE * 3142) / 1000);
 }
 
@@ -105,7 +105,7 @@ void stopCalibration() {
 
 task main () {
   bFloatDuringInactiveMotorPWM = true;
-  int numDegrees = 0;
+  short numDegrees = 0;
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "Compass");
   displayCenteredTextLine(3, "Test 2");

@@ -29,7 +29,7 @@
 
 task main() {
   // Local variables
-  int inputdata;
+  short inputdata;
 
   // The data to be written: 0x3F = 111111 binary,
   // makes all digital ports outputs.

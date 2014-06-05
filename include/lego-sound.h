@@ -35,8 +35,8 @@
 #endif
 
 #ifdef __HTSMUX_SUPPORT__
-int SNDreadRaw(tMUXSensor muxsensor);
-int SNDreadNorm(tMUXSensor muxsensor);
+short SNDreadRaw(tMUXSensor muxsensor);
+short SNDreadNorm(tMUXSensor muxsensor);
 void SNDsetDBA(tMUXSensor muxsensor);
 void SNDsetDB(tMUXSensor muxsensor);
 
@@ -45,7 +45,7 @@ void SNDsetDB(tMUXSensor muxsensor);
  * @param muxsensor the SMUX sensor port number
  * @return the raw value of the Sound Sensor
  */
-int SNDreadRaw(tMUXSensor muxsensor) {
+short SNDreadRaw(tMUXSensor muxsensor) {
   return 1023 - HTSMUXreadAnalogue(muxsensor);
 }
 
@@ -55,8 +55,8 @@ int SNDreadRaw(tMUXSensor muxsensor) {
  * @param muxsensor the SMUX sensor port number
  * @return processed value of the sensor or -1 if no valid range has been specified.
  */
-int SNDreadNorm(tMUXSensor muxsensor) {
-  int _val = ((long)SNDreadRaw(muxsensor) * (long)100) / (long)1024;
+short SNDreadNorm(tMUXSensor muxsensor) {
+  short _val = ((long)SNDreadRaw(muxsensor) * (long)100) / (long)1024;
   return _val;
 }
 

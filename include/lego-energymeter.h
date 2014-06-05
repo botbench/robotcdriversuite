@@ -51,7 +51,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Function prototypes
-bool LEGOEMreadData(tSensors link, float &voltageIn, float &currentIn, float &voltageOut, float &currentOut, int &joule, float &wattIn, float &wattOut);
+bool LEGOEMreadData(tSensors link, float &voltageIn, float &currentIn, float &voltageOut, float &currentOut, short &joule, float &wattIn, float &wattOut);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // global variables
@@ -75,7 +75,7 @@ tByteArray       LEGOEM_I2CReply;      /*!< Array to hold I2C reply data   */
  * @param wattOut amount of Watts being consumed
  * @return true if no error occured, false if it did
  */
-bool LEGOEMreadData(tSensors link, float &voltageIn, float &currentIn, float &voltageOut, float &currentOut, int &joule, float &wattIn, float &wattOut) {
+bool LEGOEMreadData(tSensors link, float &voltageIn, float &currentIn, float &voltageOut, float &currentOut, short &joule, float &wattIn, float &wattOut) {
   memset(LEGOEM_I2CRequest, 0, sizeof(tByteArray));
 
   LEGOEM_I2CRequest[0] = 2;                // Message size

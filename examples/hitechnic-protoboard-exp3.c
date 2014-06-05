@@ -29,7 +29,7 @@
 
 task main() {
   // Local variables
-  int soundlevel;
+  short soundlevel;
   ubyte outputdata;
 
   // The data to be written: 0x3F = 111111 binary,

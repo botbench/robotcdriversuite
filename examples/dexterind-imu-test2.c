@@ -48,7 +48,7 @@ task main(){
   if(!DIMUconfigGyro(DIMU, DIMU_GYRO_RANGE_250, true))
     playSound(soundException);
 
-  for (int i = 0; i < 500; i++){
+  for (short i = 0; i < 500; i++){
 
 		// Read the GYROSCOPE
     // There are 3 ways to do this:
@@ -58,7 +58,7 @@ task main(){
     sleep(5);
   }
 
-  for (int i = 0; i< 500; i++) {
+  for (short i = 0; i< 500; i++) {
     writeDebugStream("%f, %f",  xvals[i], yvals[i]);
     writeDebugStreamLine(", %f", zvals[i]);
     sleep(2);

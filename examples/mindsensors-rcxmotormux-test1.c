@@ -30,37 +30,37 @@
 task main () {
 
   // Gradually speed up
-  for (int power = 0; power <= 255; power++) {
+  for (short power = 0; power <= 255; power++) {
     MSMTRMX_Control (MSMTRMX, MSMTRMX_M1, power);
     sleep (20);
   }
 
   // Gradually slow down
-  for (int power = 255; power >=1; power--) {
+  for (short power = 255; power >=1; power--) {
     MSMTRMX_Control (MSMTRMX, MSMTRMX_M1, power);
     sleep (20);
   }
 
   // The same backwards
-  for (int power = 0; power >= -255; power--) {
+  for (short power = 0; power >= -255; power--) {
     MSMTRMX_Control (MSMTRMX, MSMTRMX_M1, power);
     sleep (20);
   }
 
   // Slow down again
-  for (int power = -255; power <= -1; power++) {
+  for (short power = -255; power <= -1; power++) {
     MSMTRMX_Control (MSMTRMX, MSMTRMX_M1, power);
     sleep (20);
   }
 
   // Gradually increase braking force
-  for (int force = 0; force <= 255; force++) {
+  for (short force = 0; force <= 255; force++) {
     MSMTRMX_Brake (MSMTRMX, MSMTRMX_M1, force);
     sleep (20);
   }
 
   // Gradually reduce braing force
-  for (int force = 255; force >=1; force--) {
+  for (short force = 255; force >=1; force--) {
     MSMTRMX_Brake (MSMTRMX, MSMTRMX_M1, force);
     sleep (20);
   }

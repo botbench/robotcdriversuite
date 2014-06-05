@@ -55,7 +55,7 @@ bool DPRESSreadPress500PSI(tSensors link, float &pressure);
 bool DPRESSreadPress250kPa(tSensors link, float &pressure) {
   float Vout = 0.0;
 
-  int val = 0;
+  short val = 0;
 
   // dPressure sensor type must absolutely be set to sensorAnalogInactive
   if (SensorType[link] != sensorAnalogInactive)
@@ -98,7 +98,7 @@ bool DPRESSreadPress250PSI(tSensors link, float &pressure) {
 bool DPRESSreadPress500kPa(tSensors link, float &pressure) {
   float Vout = 0.0;
 
-  int val = 0;
+  short val = 0;
 
   // dPressure sensor type must absolutely be set to sensorAnalogInactive
   if (SensorType[link] != sensorAnalogInactive)

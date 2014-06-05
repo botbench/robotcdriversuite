@@ -12,7 +12,7 @@ This program reads the analog value from a photo cell and displays the light lev
 #include "hitechnic-superpro.h"
 
 task main() {
-  int inputdata;
+  short inputdata;
 
   while(true) {
     // Read a 10bit wide analogue value from A0

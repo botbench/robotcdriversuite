@@ -135,29 +135,29 @@ typedef enum {
 // Function prototypes
 // inline void addI2CHead(tByteArray &data);
 // inline void addI2CTail(tByteArray &data);
-void PFcomboDirectMode(tSensors link, int channel, eCDMMotorCommand _motorB, eCDMMotorCommand _motorA);
-void PFcomboPwmMode(tSensors link, int channel, ePWMMotorCommand _motorB, ePWMMotorCommand _motorA);
+void PFcomboDirectMode(tSensors link, short channel, eCDMMotorCommand _motorB, eCDMMotorCommand _motorA);
+void PFcomboPwmMode(tSensors link, short channel, ePWMMotorCommand _motorB, ePWMMotorCommand _motorA);
 void encodeBuffer(tByteArray &iBuffer, tByteArray &oBuffer);
-void transmitIR(tSensors link, tByteArray &oBuffer, int channel);
+void transmitIR(tSensors link, tByteArray &oBuffer, short channel);
 
 #ifdef _DEBUG_DRIVER_
-void decToBin(int number, int length, string &output);
+void decToBin(short number, short length, string &output);
 void debugIR(tByteArray &data);
 
 
 /**
- * Returns a binary representation in a string of an int with specified length
+ * Returns a binary representation in a string of an short with specified length
  *
  * Note: this function is only available when driver is compiled with _DEBUG_DRIVER_ defined.
  * @param number the number to be converted to a binary representation
  * @param length number of bits to convert
  * @param output the number converted to binary representation
  */
-void decToBin(int number, int length, string &output) {
+void decToBin(short number, short length, string &output) {
   memset(output, 0, sizeof(output));
   output = "";
 
-  for (int i = 0; i < length; i++) {
+  for (short i = 0; i < length; i++) {
     output += (number & (1<< (length - 1))) >> (length - 1);
     number = number << 1;
   }
@@ -178,7 +178,7 @@ void decToBin(int number, int length, string &output) {
  */
 void debugIR(tByteArray &data) {
   string _output;
-  for (int i = 0; i < MAX_ARR_SIZE; i++) {
+  for (short i = 0; i < MAX_ARR_SIZE; i++) {
     if ((i != 0) && (i % 8 == 0)) {
       sleep(10000);
       playSound(soundBlip);
@@ -201,7 +201,7 @@ void debugIR(tByteArray &data) {
  * @param _motorB the command to be sent to Motor B
  * @param _motorA the command to be sent to Motor A
  */
-void PFcomboDirectMode(tSensors link, int channel, eCDMMotorCommand _motorB, eCDMMotorCommand _motorA) {
+void PFcomboDirectMode(tSensors link, short channel, eCDMMotorCommand _motorB, eCDMMotorCommand _motorA) {
   tByteArray _iBuffer;
   tByteArray _oBuffer;
 
@@ -246,7 +246,7 @@ void PFcomboDirectMode(tSensors link, int channel, eCDMMotorCommand _motorB, eCD
  * @param _motorB the command to be sent to Motor B
  * @param _motorA the command to be sent to Motor A
  */
-void PFcomboPwmMode(tSensors link, int channel, ePWMMotorCommand _motorB, ePWMMotorCommand _motorA) {
+void PFcomboPwmMode(tSensors link, short channel, ePWMMotorCommand _motorB, ePWMMotorCommand _motorA) {
   tByteArray _iBuffer;
   tByteArray _oBuffer;
 
@@ -342,11 +342,11 @@ void PFMotor(tPFmotor pfmotor, ePWMMotorCommand _motorCmd) {
  * @param oBuffer output buffer for encoded data
  */
 void encodeBuffer(tByteArray &iBuffer, tByteArray &oBuffer) {
-  int _oByteIdx = 0;
-  int _oBitIdx = 0;
-  int _iIndex = 0;              // _iBUffer bit index
-  int _oIndex = 0;              // _oBuffer bit index
-  int _len = 0;
+  short _oByteIdx = 0;
+  short _oBitIdx = 0;
+  short _iIndex = 0;              // _iBUffer bit index
+  short _oIndex = 0;              // _oBuffer bit index
+  short _len = 0;
 
   //debugIR(iBuffer);
   // Calculate the size of the output bit index
@@ -388,7 +388,7 @@ void encodeBuffer(tByteArray &iBuffer, tByteArray &oBuffer) {
  * @param oBuffer the data that is be transmitted
  * @param channel the channel number of the receiver
  */
-void transmitIR(tSensors link, tByteArray &oBuffer, int channel) {
+void transmitIR(tSensors link, tByteArray &oBuffer, short channel) {
   long starttime = 0;
 #ifdef _DEBUG_DRIVER_
   debugIR(oBuffer);

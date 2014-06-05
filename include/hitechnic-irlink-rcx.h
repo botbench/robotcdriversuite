@@ -97,8 +97,8 @@ bool HTRCXsendHeader(tSensors link) {
  * @param oBuffer the I2C message to be sent to the IR Link
  */
 void HTRCXencode(tSensors link, tByteArray &iBuffer, tByteArray &oBuffer) {
-  int checksum = 0;
-  int msgsize = iBuffer[0];
+  short checksum = 0;
+  short msgsize = iBuffer[0];
 
   // Max size of an RCX message is 5 bytes due to the encoding and additional
   // info needed for the IR Link.
@@ -112,7 +112,7 @@ void HTRCXencode(tSensors link, tByteArray &iBuffer, tByteArray &oBuffer) {
 
   // Build the outgoing IR message and inverse
   // Keep track of checksum
-  for (int i = 0; i < msgsize; i++) {
+  for (short i = 0; i < msgsize; i++) {
     checksum += iBuffer[i + 1];
     oBuffer[3 + (i * 2)] =  iBuffer[i + 1];
     oBuffer[4 + (i * 2)] = ~iBuffer[i + 1];

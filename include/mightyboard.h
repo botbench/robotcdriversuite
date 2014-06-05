@@ -21,10 +21,10 @@ byte _enabledSensors = 0;
 void initBoard(tSensors _link);
 void enableSensors(byte _mask);
 void enableSensors(tSensors _link, byte _mask);
-int readSensor(byte _channel);
-int readSensor(byte _channel, byte _precision);
-int readSensor(tSensors _link, byte _channel);
-int readSensor(tSensors _link, byte _channel, byte _precision);
+short readSensor(byte _channel);
+short readSensor(byte _channel, byte _precision);
+short readSensor(tSensors _link, byte _channel);
+short readSensor(tSensors _link, byte _channel, byte _precision);
 
 
 // Initialise the board and configure the sensor port it is attached to
@@ -46,19 +46,19 @@ void enableSensors(tSensors _link, byte _mask) {
 }
 
 // Get the ADC value of the associated channel, return -1 of the sensor was not enabled.
-int readSensor(byte _channel) {
+short readSensor(byte _channel) {
   return readSensor(_board, _channel, 12);
 }
 
-int readSensor(byte _channel, byte _precision) {
+short readSensor(byte _channel, byte _precision) {
   return readSensor(_board, _channel, _precision);
 }
 
-int readSensor(tSensors _link, byte _channel) {
+short readSensor(tSensors _link, byte _channel) {
 	return readSensor(_link, _channel, 12);
 }
 
-int readSensor(tSensors _link, byte _channel, byte _precision) {
+short readSensor(tSensors _link, byte _channel, byte _precision) {
 	if ((_enabledSensors >> _channel) & 1) {
 	  return MAX127readChan(_link, MAX127_I2C_ADDR, _channel) >> (12 - _precision);
 	} else {

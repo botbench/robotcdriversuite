@@ -183,7 +183,7 @@ typedef struct
 typedef struct                    /*!< Struct to hold UDP connection info */
 {
   tIPaddr IP;                     /*!< IP address to send request to */
-  int port;                       /*!< port to send request to */
+  short port;                       /*!< port to send request to */
   tHugeByteArray URL;             /*!< URL (everything after the host name) */
   tBigByteArray RXData;           /*!< Received data */
   ubyte RXDataLen;                /*!< Amount of received data */
@@ -194,7 +194,7 @@ typedef struct                    /*!< Struct to hold UDP connection info */
 typedef struct
 {
   tIPaddr IP;                     /*!< IP address to send request to */
-  int port;                       /*!< port to send request to */
+  short port;                       /*!< port to send request to */
   tHugeByteArray URL;             /*!< URL (everything after the host name) */
   tBigByteArray TXData;           /*!< Data to be transmitted */
   ubyte TXDataLen;                /*!< Amount of data to be transmitted */
@@ -205,7 +205,7 @@ typedef struct
 typedef struct
 {
   tIPaddr IP;                     /*!< IP address to send request to */
-  int port;                       /*!< port to send request to */
+  short port;                       /*!< port to send request to */
   tHugeByteArray TXData;          /*!< Data to be transmitted */
   ubyte TXDataLen;                /*!< Amount of data to be transmitted */
   tHugeByteArray RXData;          /*!< Data to be transmitted */
@@ -217,8 +217,8 @@ typedef struct
 typedef struct
 {
   tIPaddr IP;                     /*!< IP address to send request to */
-  int sport;                      /*!< port to send request from */
-  int dport;                      /*!< port to send request to */
+  short sport;                      /*!< port to send request from */
+  short dport;                      /*!< port to send request to */
   tHugeByteArray TXData;          /*!< Data to be transmitted */
   ubyte TXDataLen;                /*!< Amount of data to be transmitted */
   tHugeByteArray RXData;          /*!< Data to be transmitted */
@@ -233,9 +233,9 @@ typedef struct
  * @param array the array to check the length of
  * @return length of the string in the array
  */
-int strsize(tHugeByteArray &array)
+short strsize(tHugeByteArray &array)
 {
-  for (int i = 0; i < sizeof(tHugeByteArray); i++)
+  for (short i = 0; i < sizeof(tHugeByteArray); i++)
   {
     if((ubyte)array[i] == 0)
       return i;
@@ -254,10 +254,10 @@ void stringToIp(const string address, tIPaddr &addr)
 {
   string octet;
   string copy;
-  int index = 0;
+  short index = 0;
   memcpy(copy, address, 20);
 
-  for (int i = 0; i < 3; i++)
+  for (short i = 0; i < 3; i++)
   {
     octet = "";
     index = StringFind(copy, ".");
@@ -277,7 +277,7 @@ void stringToIp(const string address, tIPaddr &addr)
  * @param mask to use when writing to the register
  * @return true if no error occured, false if it did
  */
-bool HRWBwriteRegMasked(tSensors link, int reg, ubyte data, ubyte mask)
+bool HRWBwriteRegMasked(tSensors link, short reg, ubyte data, ubyte mask)
 {
   // writeDebugStreamLine("writeRegMasked");
   memset(HRWB_I2CRequest, 0, sizeof(tByteArray));
@@ -301,7 +301,7 @@ bool HRWBwriteRegMasked(tSensors link, int reg, ubyte data, ubyte mask)
  * @param data value to write to the register
  * @return true if no error occured, false if it did
  */
-bool HRWBwriteReg(tSensors link, int reg, ubyte data)
+bool HRWBwriteReg(tSensors link, short reg, ubyte data)
 {
   // writeDebugStreamLine("writeReg");
   memset(HRWB_I2CRequest, 0, sizeof(tByteArray));
@@ -327,7 +327,7 @@ bool HRWBwriteReg(tSensors link, int reg, ubyte data)
  * @param size amount of data to send
  * @return true if no error occured, false if it did
  */
-bool _HRWBwriteRegPrivate(tSensors link, int reg, tByteArray &data, int size)
+bool _HRWBwriteRegPrivate(tSensors link, short reg, tByteArray &data, short size)
 {
   if (size > 12)
     return false;
@@ -354,14 +354,14 @@ bool _HRWBwriteRegPrivate(tSensors link, int reg, tByteArray &data, int size)
  * @param size amount of data to send
  * @return true if no error occured, false if it did
  */
-bool HRWBwriteReg(tSensors link, int reg, tByteArray &data, int size)
+bool HRWBwriteReg(tSensors link, short reg, tByteArray &data, short size)
 {
   tByteArray tmpBuff;
   // writeDebugStreamLine("writeReg tByteArray");
-  int bytesleft = size;
-  int datalen = 0;
+  short bytesleft = size;
+  short datalen = 0;
 
-  for (int i =  0; i < ((size/12) + 1); i++)
+  for (short i =  0; i < ((size/12) + 1); i++)
 	{
 	  datalen = (bytesleft > 12) ? 12 : bytesleft;
 	  memset(tmpBuff, 0, sizeof(tmpBuff));
@@ -383,13 +383,13 @@ bool HRWBwriteReg(tSensors link, int reg, tByteArray &data, int size)
  * @param size amount of data to send
  * @return true if no error occured, false if it did
  */
-bool HRWBwriteReg(tSensors link, int reg, tHugeByteArray &data, int size)
+bool HRWBwriteReg(tSensors link, short reg, tHugeByteArray &data, short size)
 {
   tByteArray tmpBuff;
-  int bytesleft = size;
-  int datalen = 0;
+  short bytesleft = size;
+  short datalen = 0;
 
-  for (int i =  0; i < ((size/12) + 1); i++)
+  for (short i =  0; i < ((size/12) + 1); i++)
 	{
 	  datalen = (bytesleft > 12) ? 12 : bytesleft;
 	  memset(tmpBuff, 0, sizeof(tmpBuff));
@@ -411,13 +411,13 @@ bool HRWBwriteReg(tSensors link, int reg, tHugeByteArray &data, int size)
  * @param size amount of data to send
  * @return true if no error occured, false if it did
  */
-bool HRWBwriteReg(tSensors link, int reg, tBigByteArray &data, int size)
+bool HRWBwriteReg(tSensors link, short reg, tBigByteArray &data, short size)
 {
   tByteArray tmpBuff;
-  int bytesleft = size;
-  int datalen = 0;
+  short bytesleft = size;
+  short datalen = 0;
 
-  for (int i =  0; i < ((size/12) + 1); i++)
+  for (short i =  0; i < ((size/12) + 1); i++)
 	{
 	  datalen = (bytesleft > 12) ? 12 : bytesleft;
 	  memset(tmpBuff, 0, sizeof(tmpBuff));
@@ -438,7 +438,7 @@ bool HRWBwriteReg(tSensors link, int reg, tBigByteArray &data, int size)
  * @param size amount of data to read
  * @return true if no error occured, false if it did
  */
-bool HRWBreadReg(tSensors link, int reg, int size)
+bool HRWBreadReg(tSensors link, short reg, short size)
 {
   // writeDebugStreamLine("readReg");
   memset(HRWB_I2CRequest, 0, sizeof(tByteArray));
@@ -463,15 +463,15 @@ bool HRWBreadReg(tSensors link, int reg, int size)
  * @param size amount of data to read
  * @return true if no error occured, false if it did
  */
-bool HRWBreadBigReg(tSensors link, int reg, int size)
+bool HRWBreadBigReg(tSensors link, short reg, short size)
 {
   // writeDebugStreamLine("readBigReg");
-  int bytesleft = size;
-  int requestlen = 0;
+  short bytesleft = size;
+  short requestlen = 0;
   memset(HRWB_I2CRequest, 0, sizeof(tByteArray));
   memset(HRWB_HugeArray, 0, sizeof(HRWB_HugeArray));
 
-  for (int i =  0; i < ((size/16) + 1); i++)
+  for (short i =  0; i < ((size/16) + 1); i++)
 	{
 	  requestlen = (bytesleft > 16) ? 16 : bytesleft;
 	  if (!HRWBreadReg(link, reg + (i*16), requestlen))
@@ -489,7 +489,7 @@ bool HRWBreadBigReg(tSensors link, int reg, int size)
  * @param link the port number
  * @return the HTTP result code
  */
-int HRWBreadHTTPCode(tSensors link)
+short HRWBreadHTTPCode(tSensors link)
 {
   string tmpResultCode;
   HRWBreadReg(WifiBlockPort, HRWB_HTTP_RESULT_CODE, 3);
@@ -596,7 +596,7 @@ bool HRWBeraseConfig(tSensors link)
 bool HRWBscanChannel(tSensors link, ubyte channel) {
   string tmpString;
   char tmpCharArray[20];
-  int SSIDcount = 0;
+  short SSIDcount = 0;
   memset(HRWB_I2CRequest, 0, sizeof(tByteArray));
 
   writeDebugStreamLine("channel: %d", channel);
@@ -638,7 +638,7 @@ bool HRWBscanChannel(tSensors link, ubyte channel) {
 bool HRWBscanWifi(tSensors link)
 {
   char tmpCharArray[20];
-  int SSIDcount = 0;
+  short SSIDcount = 0;
   memset(HRWB_I2CRequest, 0, sizeof(tByteArray));
 
   if (!HRWBwriteRegMasked(link, HRWB_WIFI_STATUS, HRWB_WIFI_STATUS_START_SCAN, HRWB_WIFI_STATUS_START_SCAN))
@@ -660,7 +660,7 @@ bool HRWBscanWifi(tSensors link)
     return false;
 
   writeDebugStreamLine("count: %d", SSIDcount);
-  for (int i = 0; i < SSIDcount; i++) {
+  for (short i = 0; i < SSIDcount; i++) {
     if (!HRWBscanChannel(link, i))
       return false;
     sleep(10);

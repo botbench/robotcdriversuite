@@ -98,10 +98,10 @@ typedef struct
   ubyte   joystickRightBtn;   /*!< Right joystick button value */
   ubyte   selectBtn;          /*!< Select button value */
   ubyte   startBtn;           /*!< Start button value */
-  int   joystickLeft_x;       /*!< Left joystick X value, scaled from 0 to 100 */
-  int   joystickLeft_y;       /*!< Left joystick X value, scaled from 0 to 100 */
-  int   joystickRight_x;      /*!< Left joystick X value, scaled from 0 to 100 */
-  int   joystickRight_y;      /*!< Left joystick X value, scaled from 0 to 100 */
+  short   joystickLeft_x;       /*!< Left joystick X value, scaled from 0 to 100 */
+  short   joystickLeft_y;       /*!< Left joystick X value, scaled from 0 to 100 */
+  short   joystickRight_x;      /*!< Left joystick X value, scaled from 0 to 100 */
+  short   joystickRight_y;      /*!< Left joystick X value, scaled from 0 to 100 */
 } tPSP;
 
 tPSP pspController;

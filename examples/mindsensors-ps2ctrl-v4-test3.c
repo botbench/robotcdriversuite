@@ -43,7 +43,7 @@
 #define goBotRev()    moveBot(-50, -50)
 #define goBotStop()   moveBot(0, 0)
 
-void moveBot(int speedRight, int speedLeft)
+void moveBot(short speedRight, short speedLeft)
 {
   motor[RIGHT] = speedRight;
   motor[LEFT] = speedLeft;

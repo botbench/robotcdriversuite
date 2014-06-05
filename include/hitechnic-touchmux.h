@@ -34,8 +34,8 @@
 
 #pragma systemFile
 
-int HTTMUXgetActive(tSensors link);
-bool HTTMUXisActive(tSensors link, int touch);
+short HTTMUXgetActive(tSensors link);
+bool HTTMUXisActive(tSensors link, short touch);
 
 /**
  * Read the value of all of the currently connected touch sensors.  The status is logically OR'd
@@ -44,7 +44,7 @@ bool HTTMUXisActive(tSensors link, int touch);
  * @param link the HTTMUX port number
  * @return the value of the switches status
  */
-int HTTMUXgetActive(tSensors link) {
+short HTTMUXgetActive(tSensors link) {
   long muxvalue = 0;
   long switches = 0;
 
@@ -62,7 +62,7 @@ int HTTMUXgetActive(tSensors link) {
   switches += 5;
   switches /= 10;
 
-  return (int)switches;
+  return (short)switches;
 }
 
 /**
@@ -71,7 +71,7 @@ int HTTMUXgetActive(tSensors link) {
  * @param touch the touch sensor to be checked, numbered 1 to 4.
  * @return the value of the switches status
  */
-bool HTTMUXisActive(tSensors link, int touch) {
+bool HTTMUXisActive(tSensors link, short touch) {
   if (HTTMUXgetActive(link) & (1 << (touch - 1)))
     return true;
   else
