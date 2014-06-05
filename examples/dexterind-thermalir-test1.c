@@ -20,7 +20,6 @@
  * version 0.1
  */
 
-
 #include "dexterind-thermalir.h"
 
 task main () {
@@ -36,7 +35,7 @@ task main () {
   displayCenteredTextLine(6, "to S1");
   sleep(2000);
 
-	eraseDisplay();
+  eraseDisplay();
 
   // set emissivity for light skin
   setEmissivity(&tir, TIR_EM_SKIN_LIGHT);

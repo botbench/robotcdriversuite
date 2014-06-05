@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: common-rs485.h $
- */
-
 /** \file common-rs485.h
  * \brief Commonly used RS485-related functions used by drivers.
  *
@@ -64,12 +60,12 @@ bool RS485write(tMassiveArray &buf, ubyte len)
   while (nxtHS_Status != HS_RECEIVING) EndTimeSlice();
 
 #ifdef __RS485_DEBUG__
-	writeDebugStream("RS485write: ");
-	for (ubyte datacounter = 0; datacounter < len; datacounter++)
-	{
-	  writeDebugStream("%c", buf[datacounter]);
-	  EndTimeSlice();
-	}
+  writeDebugStream("RS485write: ");
+  for (ubyte datacounter = 0; datacounter < len; datacounter++)
+  {
+    writeDebugStream("%c", buf[datacounter]);
+    EndTimeSlice();
+  }
 #endif // __RS485_DEBUG__
 
   res = nxtWriteRawHS(&buf[0], len);
@@ -80,7 +76,6 @@ bool RS485write(tMassiveArray &buf, ubyte len)
   return true;
 }
 
-
 /**
  * Read a message from the NXT2WIFI. An optional timeout can be specified.
  * @param buf the buffer in which to store the received data
@@ -89,34 +84,33 @@ bool RS485write(tMassiveArray &buf, ubyte len)
  * @return true if no error occured, false if it did
  */
 bool RS485read(tMassiveArray &buf, short &len, short timeout = 100) {
-	short bytesAvailable = 0;
+  short bytesAvailable = 0;
 
-	memset(buf, 0, sizeof(buf));
+  memset(buf, 0, sizeof(buf));
 
-	TMRreset(rxTimer);
+  TMRreset(rxTimer);
   TMRsetup(rxTimer, timeout);
 
-	while(bytesAvailable == 0 && !TMRisExpired(rxTimer)) {
-		bytesAvailable = nxtGetAvailHSBytes();
-		sleep(10);
-	}
+  while(bytesAvailable == 0 && !TMRisExpired(rxTimer)) {
+    bytesAvailable = nxtGetAvailHSBytes();
+    sleep(10);
+  }
 
-	nxtReadRawHS(&buf[0], bytesAvailable);
-	len = bytesAvailable;
+  nxtReadRawHS(&buf[0], bytesAvailable);
+  len = bytesAvailable;
 
 #ifdef __RS485_DEBUG__
-	writeDebugStream("RS485read (%d): ", bytesAvailable);
-	for (short datacounter = 0; datacounter < bytesAvailable; datacounter++)
-	{
-	  writeDebugStream("%c", buf[datacounter]);
-	  EndTimeSlice();
-	}
-	writeDebugStream("\n");
+  writeDebugStream("RS485read (%d): ", bytesAvailable);
+  for (short datacounter = 0; datacounter < bytesAvailable; datacounter++)
+  {
+    writeDebugStream("%c", buf[datacounter]);
+    EndTimeSlice();
+  }
+  writeDebugStream("\n");
 #endif // __RS485_DEBUG__
 
   return true;
 }
-
 
 /**
  * Read a very large response from the NXT2WIFI sensor.  This breaks up the
@@ -130,38 +124,37 @@ bool RS485readLargeResponse(tMassiveArray &buf, short &len, short timeout = 100)
 {
   const ubyte chunkSize = 10;
   short bytesAvailable;
-	tByteArray tmpBuff;
-	short bytesleft = len;
-	short bytesToRead = 0;
-	short index = 0;
-	memset(buf, 0, sizeof(buf));
+  tByteArray tmpBuff;
+  short bytesleft = len;
+  short bytesToRead = 0;
+  short index = 0;
+  memset(buf, 0, sizeof(buf));
 
-	TMRreset(rxTimer);
+  TMRreset(rxTimer);
   TMRsetup(rxTimer, timeout);
 
+  while ((bytesleft > 0) && !TMRisExpired(rxTimer))
+  {
+    memset(tmpBuff, 0, sizeof(tmpBuff));
+    bytesAvailable = nxtGetAvailHSBytes();
+    bytesToRead = (bytesAvailable > chunkSize) ? chunkSize: bytesAvailable;
+    nxtReadRawHS(&tmpBuff[0], bytesToRead);
 
-	while ((bytesleft > 0) && !TMRisExpired(rxTimer))
-	{
-		memset(tmpBuff, 0, sizeof(tmpBuff));
-		bytesAvailable = nxtGetAvailHSBytes();
-		bytesToRead = (bytesAvailable > chunkSize) ? chunkSize: bytesAvailable;
-		nxtReadRawHS(&tmpBuff[0], bytesToRead);
-
-		memcpy(&buf[index], tmpBuff, bytesToRead);
-		bytesleft -= bytesToRead;
-		index += bytesToRead;
-		sleep(5);
-	}
+    memcpy(&buf[index], tmpBuff, bytesToRead);
+    bytesleft -= bytesToRead;
+    index += bytesToRead;
+    sleep(5);
+  }
 
 #ifdef __RS485_DEBUG__
-	writeDebugStream("RS485readLargeResponse: ");
-	for (short datacounter = 0; datacounter < len; datacounter++)
-	{
-	  writeDebugStream("%c", buf[datacounter]);
-	  EndTimeSlice();
-	}
+  writeDebugStream("RS485readLargeResponse: ");
+  for (short datacounter = 0; datacounter < len; datacounter++)
+  {
+    writeDebugStream("%c", buf[datacounter]);
+    EndTimeSlice();
+  }
 #endif // __RS485_DEBUG__
-	return (nxtGetAvailHSBytes() == 0);
+  return (nxtGetAvailHSBytes() == 0);
 }
 
 /**
@@ -181,7 +174,6 @@ short RS485appendToBuff(tMassiveArray &buf, const short index, const ubyte *pDat
   return index + nLength;
 }
 
-
 /**
  * Append a string a tMassiveArray buffer, starts at index in the buffer
  * @param buf the buffer to copy to
@@ -196,7 +188,6 @@ short RS485appendToBuff(tMassiveArray &buf, const short index, string pData)
   memcpy(&buf[index], pData, strlen(pData));
   return index + strlen(pData);
 }
-
 
 /**
  * Append a string a tBigByteArray buffer, starts at index in the buffer
@@ -214,7 +205,6 @@ short RS485appendToBuff(tBigByteArray &buf, const short index, const ubyte *pDat
   return index + nLength;
 }
 
-
 /**
  * Append a string a tBigByteArray buffer, starts at index in the buffer
  * @param buf the buffer to copy to
@@ -230,7 +220,6 @@ short RS485appendToBuff(tBigByteArray &buf, const short index, const string pDat
   return index + strlen(pData);
 }
 
-
 /**
  * Initialise the port, setup buffers
  */
@@ -243,22 +232,19 @@ void RS485initLib(long baudrate=230400) {
   memset(RS485txbuffer, 0, sizeof(RS485txbuffer));
 }
 
-
-
 void RS485clearRead(bool sendnewline = false)
 {
   ubyte nDymmyData[] = {13};
   if(sendnewline)
   {
-	  nxtWriteRawHS(&nDymmyData[0], 1);   // Send the carriage return
-	  sleep(10);
-	}
+    nxtWriteRawHS(&nDymmyData[0], 1);   // Send the carriage return
+    sleep(10);
+  }
   while(nxtGetAvailHSBytes()> 0){
     nxtReadRawHS(&nDymmyData[0], 1);    // Read the response.  Probably an error.
     EndTimeSlice();
   }
 }
-
 
 bool RS485sendString(string &data)
 {
@@ -274,8 +260,5 @@ bool RS485sendString(char *data)
 
 #endif // __RS485_H__
 
-/*
- * $Id: common-rs485.h $
- */
 /* @} */
 /* @} */

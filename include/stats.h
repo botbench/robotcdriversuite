@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: stats.h $
- */
-
 #ifndef __STATS_H__
 #define __STATS_H__
 /** \file stats.h
@@ -32,7 +28,6 @@
  * \example stats-test1.c
  */
 
-
 /**
  * Error Function, subject to catastrophic cancellation when z
  * is very close to 0
@@ -40,21 +35,21 @@
  * @return the value
  */
 float erf(float z) {
-	float t = 1.0 / (1.0 + 0.5 * abs(z));
+  float t = 1.0 / (1.0 + 0.5 * abs(z));
 
-	// use Horner's method
-	float ans = 1 - t * exp( -z*z   -   1.26551223 +
-																					t * ( 1.00002368 +
-																					t * ( 0.37409196 +
-																					t * ( 0.09678418 +
-																					t * (-0.18628806 +
-																					t * ( 0.27886807 +
-																					t * (-1.13520398 +
-																					t * ( 1.48851587 +
-																					t * (-0.82215223 +
-																					t * ( 0.17087277))))))))));
-	if (z >= 0) return  ans;
-	else        return -ans;
+  // use Horner's method
+  float ans = 1 - t * exp( -z*z   -   1.26551223 +
+                                          t * ( 1.00002368 +
+                                          t * ( 0.37409196 +
+                                          t * ( 0.09678418 +
+                                          t * (-0.18628806 +
+                                          t * ( 0.27886807 +
+                                          t * (-1.13520398 +
+                                          t * ( 1.48851587 +
+                                          t * (-0.82215223 +
+                                          t * ( 0.17087277))))))))));
+  if (z >= 0) return  ans;
+  else        return -ans;
 }
 
 /**
@@ -77,7 +72,6 @@ float Phi(float z, float mu, float sigma) {
   return Phi((z - mu) / sigma);
 }
 
-
 /**
  * Random number with standard Gaussian distribution
  * @return random number with standard Gaussian distribution
@@ -93,11 +87,7 @@ float gaussian(float mu, float sigma) {
   return mu + sigma * gaussian();
 }
 
-
 #endif // __STATS_H__
 
-/*
- * $Id: stats.h $
- */
 /* @} */
 /* @} */

@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: dexterind-temp.h $
- */
-
 #ifndef __DTMP_DRIVER_H__
 #define __DTMP_DRIVER_H__
 
@@ -47,7 +43,6 @@ bool DTMPreadTemp(tSensors link, float &temp);
 bool DTMPreadTempK(tSensors link, float &temp);
 bool DTMPreadTempF(tSensors link, float &temp);
 
-
 /**
  * Read the temperature in degrees Celcius.
  * @param link the DI Temp Sensor port number
@@ -62,7 +57,6 @@ bool DTMPreadTemp(tSensors link, float &temp) {
   temp = _tempK - 273;
   return true;
 }
-
 
 /**
  * Read the temperature in Kelvin.
@@ -100,7 +94,6 @@ bool DTMPreadTempK(tSensors link, float &temp) {
   return true;
 }
 
-
 /**
  * Read the temperature in Fahrenheit.
  * @param link the DI Temp Sensor port number
@@ -119,8 +112,5 @@ bool DTMPreadTempF(tSensors link, float &temp) {
 
 #endif // __DTMP_DRIVER_H__
 
-/*
- * $Id: dexterind-temp.h $
- */
 /* @} */
 /* @} */

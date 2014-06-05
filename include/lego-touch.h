@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: lego-touch.h $
- */
-
 #ifndef __LEGOTS_H__
 #define __LEGOTS_H__
 /** \file lego-touch.h
@@ -43,7 +39,6 @@ bool TSreadState(tSensors link);
 bool TSreadState(tMUXSensor muxsensor);
 #endif
 
-
 /**
  * Read the state of the touch sensor
  * @param link the Touch Sensor port number
@@ -59,7 +54,6 @@ bool TSreadState(tSensors link) {
   return (SensorRaw[link] < 500) ? true : false;
 }
 
-
 /**
  * Read the state of the touch sensor
  * @param muxsensor the SMUX sensor port number
@@ -71,11 +65,7 @@ bool TSreadState(tMUXSensor muxsensor) {
 }
 #endif
 
-
 #endif // __LEGOTS_H__
 
-/*
- * $Id: lego-touch.h $
- */
 /* @} */
 /* @} */

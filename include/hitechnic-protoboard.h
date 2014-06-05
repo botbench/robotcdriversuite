@@ -4,9 +4,6 @@
  * HiTechnic Prototype Board
  * @{
  */
-/*
- * $Id: hitechnic-protoboard.h $
- */
 
 #ifndef __HTPB_H__
 #define __HTPB_H__
@@ -106,7 +103,6 @@ ubyte HTPBreadIO(tSensors link, ubyte mask) {
   return HTPB_I2CReply[0] & mask;
 }
 
-
 /**
  * Read the values of the digital inputs as specified by the mask.
  * @param muxsensor the SMUX sensor port number
@@ -114,7 +110,7 @@ ubyte HTPBreadIO(tSensors link, ubyte mask) {
  */
 #ifdef __HTSMUX_SUPPORT__
 ubyte HTPBreadIO(tMUXSensor muxsensor, ubyte mask) {
-	memset(HTPB_I2CReply, 0, sizeof(tByteArray));
+  memset(HTPB_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
     HTSMUXconfigChannel(muxsensor, HTPB_config);
@@ -125,7 +121,6 @@ ubyte HTPBreadIO(tMUXSensor muxsensor, ubyte mask) {
   return HTPB_I2CReply[0] & mask;
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Write the values the digital outpus as specified by the mask.
@@ -141,10 +136,8 @@ bool HTPBwriteIO(tSensors link, ubyte mask) {
   HTPB_I2CRequest[2] = HTPB_OFFSET + HTPB_DIGOUT; // Start digital output read address
   HTPB_I2CRequest[3] = mask;                      // The specified digital ports
 
-
   return writeI2C(link, HTPB_I2CRequest);
 }
-
 
 /**
  * Configure the ports for input or output according to the mask.
@@ -162,7 +155,6 @@ bool HTPBsetupIO(tSensors link, ubyte mask) {
 
   return writeI2C(link, HTPB_I2CRequest);
 }
-
 
 /**
  * Read the value of the specified analogue channel.
@@ -195,7 +187,6 @@ short HTPBreadADC(tSensors link, byte channel, byte width) {
   return _adcVal;
 }
 
-
 /**
  * Read the value of the specified analogue channel.
  * @param muxsensor the SMUX sensor port number
@@ -206,7 +197,7 @@ short HTPBreadADC(tSensors link, byte channel, byte width) {
 #ifdef __HTSMUX_SUPPORT__
 short HTPBreadADC(tMUXSensor muxsensor, byte channel, byte width) {
   short _adcVal = 0;
-	memset(HTPB_I2CReply, 0, sizeof(tByteArray));
+  memset(HTPB_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
     HTSMUXconfigChannel(muxsensor, HTPB_config);
@@ -227,7 +218,6 @@ short HTPBreadADC(tMUXSensor muxsensor, byte channel, byte width) {
   return _adcVal;
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * This function read the value of all of the analogue channels.
@@ -271,7 +261,6 @@ bool HTPBreadAllADC(tSensors link, short &adch0, short &adch1, short &adch2, sho
   return true;
 }
 
-
 /**
  * This function read the value of all of the analogue channels.
  * @param muxsensor the SMUX sensor port number
@@ -285,7 +274,7 @@ bool HTPBreadAllADC(tSensors link, short &adch0, short &adch1, short &adch2, sho
  */
 #ifdef __HTSMUX_SUPPORT__
 bool HTPBreadAllADC(tMUXSensor muxsensor, short &adch0, short &adch1, short &adch2, short &adch3, short &adch4, byte width) {
-	memset(HTPB_I2CReply, 0, sizeof(tByteArray));
+  memset(HTPB_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
     HTSMUXconfigChannel(muxsensor, HTPB_config);
@@ -314,7 +303,6 @@ bool HTPBreadAllADC(tMUXSensor muxsensor, short &adch0, short &adch1, short &adc
   return true;
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * This function configured the time between samples. This value is not stored permanently.
@@ -346,8 +334,5 @@ bool HTPBsetSamplingTime(tSensors link, byte interval) {
 
 #endif // __HTPB_H__
 
-/*
- * $Id: hitechnic-protoboard.h $
- */
 /* @} */
 /* @} */

@@ -1,6 +1,4 @@
-/*
- * $Id: mainpage.h $
- */
+
 
 /** \mainpage ROBOTC Driver Suite
 *
@@ -19,7 +17,6 @@
 * Use the links on the left to navigate between the various drivers and test programs.
 *
 */
-
 
 /*! @defgroup common_includes Common functions
    Functions used by some or most drivers.
@@ -43,8 +40,4 @@
 
 /*! \defgroup other Other
    Drivers for other sensors.
- */
-
-/*
- * $Id: mainpage.h $
  */

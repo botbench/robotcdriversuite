@@ -1,6 +1,4 @@
-/*
- * $Id: firgelli-linearact-test1.c $
- */
+
 
 /**
  * firgelli-linearact.h provides an API for the Firgelli Linear Actuator.  This program
@@ -85,7 +83,3 @@ task main () {
   displayBigTextLine(1, "Done");
   sleep(2000);
 }
-
-/*
- * $Id: firgelli-linearact-test1.c $
- */

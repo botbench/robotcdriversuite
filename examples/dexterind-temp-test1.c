@@ -55,7 +55,6 @@ task main() {
         break;
     }
 
-
     displayCenteredBigTextLine(1, "Temp:");
     switch(state) {
       // if state: 0, display temp in degrees celcius

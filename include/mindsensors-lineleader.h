@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-lineleader.h $
- */
-
 #ifndef __MSLL_H__
 #define __MSLL_H__
 
@@ -18,7 +14,7 @@
  * mindsensors-lineleader.h provides an API for the Mindsensors Line Tracking Sensor.
  *
  * Changelog:
- *  - 0.1 Initial	TFR<br>
+ *  - 0.1 Initial  TFR<br>
  *  - 0.2 Added ability to read multi-ubyte values for raw, white and black thresholds.<br>
  *  - 0.3 Added PID factor registers (Read/Write), Added new commands 'S'napShot, 'R'eset,
  *      and changed function and method names to be more C++ like.<br>
@@ -44,29 +40,29 @@
 #pragma systemFile
 
 #ifndef __COMMON_H__
-	#include "common.h"
+  #include "common.h"
 #endif
 
 //*******************************************************************************
 // REGISTER LOCATIONS AND COMMANDS for the Line Leader Sensor
 //*******************************************************************************
-#define LL_I2C_ADDR   		0x02  /*!< I2C address used by the LL */
-#define LL_CMD_REG    		0x41  /*!< Register used for issuing commands */
+#define LL_I2C_ADDR       0x02  /*!< I2C address used by the LL */
+#define LL_CMD_REG        0x41  /*!< Register used for issuing commands */
 
 #define LL_SETPOINT       0x45  /*!< average value considered center of line (def=45) */
-#define LL_KP_VALUE 			0x46  /*!< P value of PID control */
-#define LL_KI_VALUE 			0X47  /*!< I value of PID control */
-#define LL_KD_VALUE 			0X48  /*!< D value of PID control */
+#define LL_KP_VALUE       0x46  /*!< P value of PID control */
+#define LL_KI_VALUE       0X47  /*!< I value of PID control */
+#define LL_KD_VALUE       0X48  /*!< D value of PID control */
 #define LL_KP_FACTOR      0x61  /*!< P factor for P value of PID control */
 #define LL_KI_FACTOR      0X62  /*!< I factor for I value of PID control */
 #define LL_KD_FACTOR      0X63  /*!< D factor for D value of PID control */
 
-#define LL_READ_STEERING 	0x42  /*!< steering value for simple mode line following */
-#define LL_READ_AVERAGE  	0X43  /*!< weighted average value for all sensors in array */
-#define LL_READ_RESULT   	0X44  /*!< 1 or 0 for line or no line for all 8 sensors */
-#define LL_SENSOR_RAW 		0X49  /*!< ubyte array (8) with raw value for each sensor */
-#define LL_WHITE_LIMIT 		0X51  /*!< ubyte array (8) with raw value of white calibration for each sensor */
-#define LL_BLACK_LIMIT		0X59  /*!< ubyte array (8) with raw value of black calibration for each sensor */
+#define LL_READ_STEERING   0x42  /*!< steering value for simple mode line following */
+#define LL_READ_AVERAGE    0X43  /*!< weighted average value for all sensors in array */
+#define LL_READ_RESULT     0X44  /*!< 1 or 0 for line or no line for all 8 sensors */
+#define LL_SENSOR_RAW     0X49  /*!< ubyte array (8) with raw value for each sensor */
+#define LL_WHITE_LIMIT     0X51  /*!< ubyte array (8) with raw value of white calibration for each sensor */
+#define LL_BLACK_LIMIT    0X59  /*!< ubyte array (8) with raw value of black calibration for each sensor */
 #define LL_SENSOR_UNCAL   0x74  /*!< ubyte array (16) with uncalibrated sensor data */
 
 tByteArray LL_I2CRequest;       /*!< Array to hold I2C command data */
@@ -76,11 +72,11 @@ ubyte oneByte;
 //*******************************************************************************
 // PUBLIC Line Leader functions
 //*******************************************************************************
-bool LLinit(tSensors link);		                            /*!< Set up Line Leader sensor type */
-bool LLwakeUp(tSensors link);					                    /*!< Wake sensor from sleep mode */
-bool LLsleep(tSensors link);					                    /*!< Sleep to conserve power when not in use */
+bool LLinit(tSensors link);                                /*!< Set up Line Leader sensor type */
+bool LLwakeUp(tSensors link);                              /*!< Wake sensor from sleep mode */
+bool LLsleep(tSensors link);                              /*!< Sleep to conserve power when not in use */
 
-bool LLinvertLineColor(tSensors link);	                  /*!< Inverts detected line color */
+bool LLinvertLineColor(tSensors link);                    /*!< Inverts detected line color */
 bool LLresetLineColor(tSensors link);                     /*!< Resets line color to dark on light bkgrnd */
 bool LLtakeSnapshot(tSensors link);                       /*!< takes a snapshot to determine line color */
 
@@ -104,8 +100,8 @@ short LLreadKdFactor(tSensors link);                        /*!< READ d factor v
 
 short LLreadSteering(tSensors link);                        /*!< Read internally calculated steering value */
 short LLreadAverage(tSensors link);                         /*!< Read weighted sensor array average value */
-short LLreadResult(tSensors link);			                    /*!< Read boolean sensor array values for all sensors */
-bool LLreadSensorRaw(tSensors link, tByteArray &pMsg); 	  /*!< Return array of raw light values (8 bytes) */
+short LLreadResult(tSensors link);                          /*!< Read boolean sensor array values for all sensors */
+bool LLreadSensorRaw(tSensors link, tByteArray &pMsg);     /*!< Return array of raw light values (8 bytes) */
 bool LLreadSensorUncalibrated (tSensors link, tIntArray &sensorValues);  /*!< Return array of raw uncalibrated light values (8 ints) */
 bool LLreadWhiteThresh(tSensors link, tByteArray &pMsg);  /*!< Return array of white thresholds (8 bytes) */
 bool LLreadBlackThresh(tSensors link, tByteArray &pMsg);  /*!< Return array of black thresholds (8 bytes) */
@@ -151,7 +147,6 @@ bool _lineLeader_cmd(tSensors link, ubyte cmd) {
   return writeI2C(link, LL_I2CRequest);
 }
 
-
 /**
  * This function writes data to a register in the LL sensor over I2C.
  *
@@ -165,14 +160,13 @@ bool _lineLeader_cmd(tSensors link, ubyte cmd) {
 bool _lineLeader_write(tSensors link, ubyte regToWrite, ubyte data) {
 
   memset(LL_I2CRequest, 0, sizeof(tByteArray));
-	LL_I2CRequest[0] = 3;             // Message size
+  LL_I2CRequest[0] = 3;             // Message size
   LL_I2CRequest[1] = LL_I2C_ADDR;   // I2C Address
   LL_I2CRequest[2] = regToWrite;    // Register address to set
   LL_I2CRequest[3] = data;          // value to place in register address
 
   return writeI2C(link, LL_I2CRequest);
 }
-
 
 /**
  * This function reads one ubyte from a register in the LL sensor over I2C.
@@ -184,10 +178,10 @@ bool _lineLeader_write(tSensors link, ubyte regToWrite, ubyte data) {
  * @return true if no error occured, false if it did
  */
 bool _lineLeader_read(tSensors link, ubyte regToRead, ubyte &retval) {
-	memset(LL_I2CRequest, 0, sizeof(LL_I2CRequest));
-	LL_I2CRequest[0] =  2;
-	LL_I2CRequest[1] =  LL_I2C_ADDR;
-	LL_I2CRequest[2] =  regToRead;
+  memset(LL_I2CRequest, 0, sizeof(LL_I2CRequest));
+  LL_I2CRequest[0] =  2;
+  LL_I2CRequest[1] =  LL_I2C_ADDR;
+  LL_I2CRequest[2] =  regToRead;
 
   if (!writeI2C(link, LL_I2CRequest, LL_I2CReply, 1))
     return false;
@@ -196,7 +190,6 @@ bool _lineLeader_read(tSensors link, ubyte regToRead, ubyte &retval) {
 
   return true;
 }
-
 
 /**
  * This function reads multiple bytes from a register in the LL sensor over I2C.
@@ -209,13 +202,12 @@ bool _lineLeader_read(tSensors link, ubyte regToRead, ubyte &retval) {
  * @return true if no error occured, false if it did
  */
 bool _lineLeader_read(tSensors link, ubyte regToRead, short numBytes, tByteArray &pDataMsg) {
-	memset(LL_I2CRequest, 0, sizeof(tByteArray));
-	memset(pDataMsg, 0, sizeof(tByteArray));
+  memset(LL_I2CRequest, 0, sizeof(tByteArray));
+  memset(pDataMsg, 0, sizeof(tByteArray));
 
-	LL_I2CRequest[0] =  2;
-	LL_I2CRequest[1] =  LL_I2C_ADDR;
-	LL_I2CRequest[2] =  regToRead;
-
+  LL_I2CRequest[0] =  2;
+  LL_I2CRequest[1] =  LL_I2C_ADDR;
+  LL_I2CRequest[2] =  regToRead;
 
   if (!writeI2C(link, LL_I2CRequest, LL_I2CReply, numBytes))
     return false;
@@ -225,7 +217,6 @@ bool _lineLeader_read(tSensors link, ubyte regToRead, short numBytes, tByteArray
   return true;
 }
 
-
 /**
  * This function initializes the line leader to prepare for use.
  * Issuing a command also wakes the line leader as needed.
@@ -233,15 +224,14 @@ bool _lineLeader_read(tSensors link, ubyte regToRead, short numBytes, tByteArray
  * @return true if no error occured, false if it did
  */
 bool LLinit(tSensors link) {
-	nI2CBytesReady[link] = 0;
-	SensorType[link] = sensorI2CCustom9V;
-	if (!LLwakeUp(link))
-	  return false;
-	if (!LLresetLineColor(link))
-	  return false;
-	return true;
+  nI2CBytesReady[link] = 0;
+  SensorType[link] = sensorI2CCustom9V;
+  if (!LLwakeUp(link))
+    return false;
+  if (!LLresetLineColor(link))
+    return false;
+  return true;
 }
-
 
 /**
  * This function wakes the line leader to prepare for use.
@@ -255,7 +245,6 @@ bool LLwakeUp(tSensors link) {
   return true;
 }
 
-
 /**
  * This function puts the line leader to sleep conserve power.
  * @param link the sensor port number
@@ -266,7 +255,6 @@ bool LLsleep(tSensors link) {
     return false;
   return true;
 }
-
 
 /**
  * the function toggles from dark line on light to light line on dark and back.
@@ -279,7 +267,6 @@ bool LLinvertLineColor(tSensors link) {
   return true;
 }
 
-
 /**
  * the function resets to default of sensing a dark line on light background
  * @param link the sensor port number
@@ -290,7 +277,6 @@ bool LLresetLineColor(tSensors link) {
     return false;
   return true;
 }
-
 
 /**
  * This function takes a snapshot of the line under the sensor
@@ -306,7 +292,6 @@ bool LLtakeSnapshot(tSensors link) {
   return true;
 }
 
-
 /**
  * This function calibrates the white threshold for each sensor in the array.
  * Place the array over the white surface with all sensors on the white
@@ -319,7 +304,6 @@ bool LLcalWhite(tSensors link) {
     return false;
   return true;
 }
-
 
 /**
  * This function calibrates the black threshold for each sensor in the array.
@@ -334,7 +318,6 @@ bool LLcalBlack(tSensors link) {
   return true;
 }
 
-
 /**
  * The set point is used by internally (or externally) by the sensor to
  * determine the middle of the sensor over a line.  This value is compared to
@@ -344,9 +327,8 @@ bool LLcalBlack(tSensors link) {
  * @return true if no error occured, false if it did
  */
 bool LLsetPoint(tSensors link, ubyte data){
-	return _lineLeader_write(link, LL_SETPOINT, data);
+  return _lineLeader_write(link, LL_SETPOINT, data);
 }
-
 
 /**
  * This function reads the setpoint value from the sensor
@@ -354,10 +336,9 @@ bool LLsetPoint(tSensors link, ubyte data){
  * @return value of setpoint
  */
 short LLsetPoint(tSensors link){
-	_lineLeader_read(link, LL_KP_VALUE, oneByte);
-	return (short)oneByte;
+  _lineLeader_read(link, LL_KP_VALUE, oneByte);
+  return (short)oneByte;
 }
-
 
 /*
  * The following parameters (kp,ki,kd) are specific
@@ -379,8 +360,6 @@ short LLsetPoint(tSensors link){
  * p:25/32,i:0, d:8/32
  */
 
-
-
 /**
  * Set the "Kp" value for the sensor's internal PID calculations.<br>
  * This value is usually set close to 1.0  default 25/32<br>
@@ -394,12 +373,11 @@ short LLsetPoint(tSensors link){
  * @return true if no error occured, false if it did
  */
 bool LLsetKp(tSensors link, ubyte data, ubyte factor){
-	_lineLeader_write(link, LL_KP_VALUE, data);
-	if ( factor == 0 ) factor = 1;
-	_lineLeader_write(link, LL_KP_FACTOR, factor);
+  _lineLeader_write(link, LL_KP_VALUE, data);
+  if ( factor == 0 ) factor = 1;
+  _lineLeader_write(link, LL_KP_FACTOR, factor);
   return true;
 }
-
 
 /**
  * Read the "Kp" value from the sensor.
@@ -407,10 +385,9 @@ bool LLsetKp(tSensors link, ubyte data, ubyte factor){
  * @return Kp value from the sensor
  */
 short LLreadKp(tSensors link) {
-	_lineLeader_read(link, LL_KP_VALUE, oneByte);
-	return (short) oneByte;
+  _lineLeader_read(link, LL_KP_VALUE, oneByte);
+  return (short) oneByte;
 }
-
 
 /**
  * Read the "Kp factor" value from the sensor.
@@ -418,12 +395,11 @@ short LLreadKp(tSensors link) {
  * @return Kp factor value from the sensor
  */
 short LLreadKpFactor(tSensors link) {
-	if (_lineLeader_read(link, LL_KP_FACTOR, oneByte))
-		return (short)oneByte;
-	else
-	  return 0;
+  if (_lineLeader_read(link, LL_KP_FACTOR, oneByte))
+    return (short)oneByte;
+  else
+    return 0;
 }
-
 
 /**
  * Set the "Ki" value for the sensor's internal PID calculations.<br>
@@ -439,11 +415,10 @@ short LLreadKpFactor(tSensors link) {
  */
 bool LLsetKi(tSensors link, ubyte data, ubyte factor){
   _lineLeader_write(link, LL_KI_VALUE, data);
-	if ( factor == 0 ) factor = 1;
-	_lineLeader_write(link, LL_KI_FACTOR, factor);
+  if ( factor == 0 ) factor = 1;
+  _lineLeader_write(link, LL_KI_FACTOR, factor);
   return true;
 }
-
 
 /**
  * Read the "Ki" value from the sensor.
@@ -451,10 +426,9 @@ bool LLsetKi(tSensors link, ubyte data, ubyte factor){
  * @return Ki value from the sensor
  */
 short LLreadKi(tSensors link) {
-	_lineLeader_read(link, LL_KI_VALUE, oneByte);
-	return (short)oneByte;
+  _lineLeader_read(link, LL_KI_VALUE, oneByte);
+  return (short)oneByte;
 }
-
 
 /**
  * Read the "Ki factor" value from the sensor.
@@ -462,12 +436,11 @@ short LLreadKi(tSensors link) {
  * @return Ki factor value from the sensor
  */
 short LLreadKiFactor(tSensors link) {
-	if (_lineLeader_read(link, LL_KI_FACTOR, oneByte))
-	  return (short)oneByte;
-	else
-	  return 0;
+  if (_lineLeader_read(link, LL_KI_FACTOR, oneByte))
+    return (short)oneByte;
+  else
+    return 0;
 }
-
 
 /**
  * Set the "Kd" value for the sensor's internal PID calculations.<br>
@@ -483,11 +456,10 @@ short LLreadKiFactor(tSensors link) {
  */
 bool LLsetKd(tSensors link, ubyte data, ubyte factor){
   _lineLeader_write(link, LL_KD_VALUE, data);
-	if ( factor == 0 ) factor = 1;
-	_lineLeader_write(link, LL_KD_FACTOR, factor);
+  if ( factor == 0 ) factor = 1;
+  _lineLeader_write(link, LL_KD_FACTOR, factor);
   return true;
 }
-
 
 /**
  * Read the "Kd" value from the sensor.
@@ -495,10 +467,9 @@ bool LLsetKd(tSensors link, ubyte data, ubyte factor){
  * @return Kd value from the sensor
  */
 short LLreadKd(tSensors link) {
-	_lineLeader_read(link, LL_KD_VALUE, oneByte);
-	return (short)oneByte;
+  _lineLeader_read(link, LL_KD_VALUE, oneByte);
+  return (short)oneByte;
 }
-
 
 /**
  * Read the "Kd factor" value from the sensor.
@@ -506,12 +477,11 @@ short LLreadKd(tSensors link) {
  * @return Kd factor value from the sensor
  */
 short LLreadKdFactor(tSensors link) {
-	if (_lineLeader_read(link, LL_KD_FACTOR, oneByte))
-	  return (short)oneByte;
-	else
-	  return 0;
+  if (_lineLeader_read(link, LL_KD_FACTOR, oneByte))
+    return (short)oneByte;
+  else
+    return 0;
 }
-
 
 /**
  * Read the "Steering" value from the sensor.  This value is calculated internally
@@ -521,12 +491,11 @@ short LLreadKdFactor(tSensors link) {
  * @return steering value from the sensor, -101 for error
  */
 short LLreadSteering(tSensors link) {
-	if (_lineLeader_read(link, LL_READ_STEERING, oneByte))
-	  return (short)(0xFF & oneByte);
-	else
-	  return -101;
+  if (_lineLeader_read(link, LL_READ_STEERING, oneByte))
+    return (short)(0xFF & oneByte);
+  else
+    return -101;
 }
-
 
 /**
  * Read the Weighted "Average" value from the sensor.  This value is calculated
@@ -544,12 +513,11 @@ short LLreadSteering(tSensors link) {
  * @return average sensor value or -1 for error
  */
 short LLreadAverage(tSensors link) {
-	if (_lineLeader_read(link, LL_READ_AVERAGE, oneByte))
-	  return (short)oneByte;
-	else
-	  return -1;
+  if (_lineLeader_read(link, LL_READ_AVERAGE, oneByte))
+    return (short)oneByte;
+  else
+    return -1;
 }
-
 
 /**
  * Read a ubyte with each bit equal to a sensor.<br>
@@ -568,7 +536,6 @@ short LLreadResult(tSensors link) {
   return (short)oneByte;
 }
 
-
 /**
  * Read the "Raw Sensor" values from the Line Leader.  Amount of light or dark
  * each sensor sees.  Typically between 0-20.  0=black, 100=white
@@ -577,9 +544,8 @@ short LLreadResult(tSensors link) {
  * @return true if no error occured, false if it did
  */
 bool LLreadSensorRaw(tSensors link, tByteArray &pMsg) {
-	return _lineLeader_read(link, LL_SENSOR_RAW, 8, pMsg);
+  return _lineLeader_read(link, LL_SENSOR_RAW, 8, pMsg);
 }
-
 
 /**
  * Read the uncalibrated sensor values from the Line Leader.  Each sensor returns a 16 bit
@@ -602,7 +568,6 @@ bool LLreadSensorUncalibrated (tSensors link, tIntArray &sensorValues) {
   return true;
 }
 
-
 /**
  * Read the "White Threshold" values from the Line Leader for each sensor.<br>
  * Each of the eight sensors has a value.  Raw values greater then this threshold
@@ -613,9 +578,8 @@ bool LLreadSensorUncalibrated (tSensors link, tIntArray &sensorValues) {
  * @return true if no error occured, false if it did
  */
 bool LLreadWhiteThresh(tSensors link, tByteArray &pMsg) {
-	return _lineLeader_read(link, LL_WHITE_LIMIT, 8, pMsg);
+  return _lineLeader_read(link, LL_WHITE_LIMIT, 8, pMsg);
 }
-
 
 /**
  * Read the "Black Threshold" values from the Line Leader for each sensor.<br>
@@ -627,14 +591,10 @@ bool LLreadWhiteThresh(tSensors link, tByteArray &pMsg) {
  * @return true if no error occured, false if it did
  */
 bool LLreadBlackThresh(tSensors link, tByteArray &pMsg) {
-	return _lineLeader_read(link, LL_BLACK_LIMIT, 8, pMsg);
+  return _lineLeader_read(link, LL_BLACK_LIMIT, 8, pMsg);
 }
-
 
 #endif // __MSLL_H__
 
-/*
- * $Id: mindsensors-lineleader.h $
- */
 /* @} */
 /* @} */

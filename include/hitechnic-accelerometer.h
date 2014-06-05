@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-accelerometer.h $
- */
-
 #ifndef __HTAC_H__
 #define __HTAC_H__
 /** \file hitechnic-accelerometer.h
@@ -102,7 +98,6 @@ bool HTACreadAllAxes(tSensors link, short &x, short &y, short &z) {
   return true;
 }
 
-
 /**
  * Read the value of all the axes registers return by reference
  * @param muxsensor the SMUX sensor port number
@@ -140,8 +135,5 @@ bool HTACreadAllAxes(tMUXSensor muxsensor, short &x, short &y, short &z) {
 
 #endif // __HTAC_H__
 
-/*
- * $Id: hitechnic-accelerometer.h $
- */
 /* @} */
 /* @} */

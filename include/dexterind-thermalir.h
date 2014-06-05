@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: dexterind-thermalir.h $
- */
-
 #ifndef __TIR_H__
 #define __TIR_H__
 /** \file dexterind-thermalir.h
@@ -61,7 +57,6 @@ typedef struct
   short emissivity;
 } tTIR, *tTIRPtr;
 
-
 bool initSensor(tTIRPtr tirPtr, tSensors port)
 {
   memset(tirPtr, 0, sizeof(tTIR));
@@ -75,7 +70,6 @@ bool initSensor(tTIRPtr tirPtr, tSensors port)
 
   return true;
 }
-
 
 bool readSensor(tTIRPtr tirPtr)
 {
@@ -103,7 +97,6 @@ bool readSensor(tTIRPtr tirPtr)
   return true;
 }
 
-
 /**
  * Set the current emissivity
  * @param link the tirPtr port number
@@ -123,7 +116,6 @@ bool setEmissivity(tTIRPtr tirPtr, short emissivity) {
   return writeI2C(&tirPtr->I2CData);
 }
 
-
 /**
  * Reset the sensor
  * @param link the tirPtr port number
@@ -141,9 +133,5 @@ bool resetSensor(tTIRPtr tirPtr) {
 
 #endif // __TIR_H__
 
-
-/*
- * $Id: dexterind-thermalir.h $
- */
 /* @} */
 /* @} */

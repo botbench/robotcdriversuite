@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-angle.h $
- */
-
 #ifndef __HTANG_H__
 #define __HTANG_H__
 /** \file hitechnic-angle.h
@@ -98,7 +94,6 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 //tByteArray HTANG_I2CRequest;             /*!< Array to hold I2C command data */
 //tByteArray HTANG_I2CReply;               /*!< Array to hold I2C reply data */
 
-
 ///**
 // * Return the current angle
 // * @param link the HTANG port number
@@ -117,7 +112,6 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 //  return (HTANG_I2CReply[0] * 2) + HTANG_I2CReply[1];
 //}
 
-
 ///**
 // * Return the current angle
 // * @param muxsensor the SMUX sensor port number
@@ -125,7 +119,7 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 // */
 //#ifdef __HTSMUX_SUPPORT__
 //short HTANGreadAngle(tMUXSensor muxsensor) {
-//	memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
+//  memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
 
 //  if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
 //    HTSMUXconfigChannel(muxsensor, HTANG_config);
@@ -137,7 +131,6 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 //  return (HTANG_I2CReply[0] * 2) + HTANG_I2CReply[1];
 //}
 //#endif // __HTSMUX_SUPPORT__
-
 
 ///**
 // * Return the accumulated angle (signed 32 bit value)
@@ -160,7 +153,6 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 //          HTANG_I2CReply[3];
 //}
 
-
 ///**
 // * Return the accumulated angle (signed 32 bit value)
 // * @param muxsensor the SMUX sensor port number
@@ -168,7 +160,7 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 // */
 //#ifdef __HTSMUX_SUPPORT__
 //long HTANGreadAccumulatedAngle(tMUXSensor muxsensor) {
-//	memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
+//  memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
 
 //  if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
 //    HTSMUXconfigChannel(muxsensor, HTANG_config);
@@ -183,7 +175,6 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 //          HTANG_I2CReply[3];
 //}
 //#endif // __HTSMUX_SUPPORT__
-
 
 ///**
 // * Return the rpm that the shaft is currently rotating at
@@ -203,7 +194,6 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 //  return (short)(HTANG_I2CReply[0] <<  8) +
 //          HTANG_I2CReply[1];
 //}
-
 
 ///**
 // * Return the rpm that the shaft is currently rotating at
@@ -228,7 +218,6 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 //}
 //#endif // __HTSMUX_SUPPORT__
 
-
 ///**
 // * Reset the 0 position to the current shaft angle.<br>
 // * Note: this will also reset the accumulated angle counter
@@ -239,7 +228,6 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 //  return _HTANGsendCommand(link, HTANG_CMD_RST_ANG);
 //}
 
-
 ///**
 // * Reset the accumulated angle
 // * @param link the HTANG port number
@@ -248,7 +236,6 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 //bool HTANGresetAccumulatedAngle(tSensors link) {
 //  return _HTANGsendCommand(link, HTANG_CMD_RST_ACC_ANG);
 //}
-
 
 ///**
 // * Send a command to the sensor
@@ -268,7 +255,6 @@ tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to ho
 
 //  return writeI2C(link, HTANG_I2CRequest);
 //}
-
 
 /**
  * Initialise the sensor's data struct and port
@@ -294,7 +280,6 @@ bool initSensor(tHTANGPtr htangPtr, tSensors port)
   return _sensorSendCommand(htangPtr);
 }
 
-
 /**
  * Initialise the sensor's data struct and MUX port
  *
@@ -308,7 +293,7 @@ bool initSensor(tHTANGPtr htangPtr, tMUXSensor muxsensor)
   htangPtr->I2CData.address = HTANG_I2C_ADDR;
   htangPtr->I2CData.type = sensorI2CCustom;
   htangPtr->smux = true;
-	htangPtr->smuxport = muxsensor;
+  htangPtr->smuxport = muxsensor;
 
   // Ensure the sensor is configured correctly
   if (SensorType[htangPtr->I2CData.port] != htangPtr->I2CData.type)
@@ -316,7 +301,6 @@ bool initSensor(tHTANGPtr htangPtr, tMUXSensor muxsensor)
 
   return HTSMUXconfigChannel(muxsensor, HTANG_config);
 }
-
 
 /**
  * Read all the sensor's data
@@ -326,37 +310,36 @@ bool initSensor(tHTANGPtr htangPtr, tMUXSensor muxsensor)
  */
 bool readSensor(tHTANGPtr htangPtr)
 {
-	memset(htangPtr->I2CData.request, 0, sizeof(htangPtr->I2CData.request));
+  memset(htangPtr->I2CData.request, 0, sizeof(htangPtr->I2CData.request));
 
-	if (htangPtr->smux)
-	{
-		if (!HTSMUXreadPort(htangPtr->smuxport, htangPtr->I2CData.reply, 8, HTANG_ANG2))
-			return false;
-	}
-	else
-	{
-	  // Read all of the data available on the sensor
-	  htangPtr->I2CData.request[0] = 2;                    // Message size
-	  htangPtr->I2CData.request[1] = htangPtr->I2CData.address; // I2C Address
-	  htangPtr->I2CData.request[2] = HTANG_OFFSET + HTANG_ANG2;
-	  htangPtr->I2CData.replyLen = 8;
-	  htangPtr->I2CData.requestLen = 2;
+  if (htangPtr->smux)
+  {
+    if (!HTSMUXreadPort(htangPtr->smuxport, htangPtr->I2CData.reply, 8, HTANG_ANG2))
+      return false;
+  }
+  else
+  {
+    // Read all of the data available on the sensor
+    htangPtr->I2CData.request[0] = 2;                    // Message size
+    htangPtr->I2CData.request[1] = htangPtr->I2CData.address; // I2C Address
+    htangPtr->I2CData.request[2] = HTANG_OFFSET + HTANG_ANG2;
+    htangPtr->I2CData.replyLen = 8;
+    htangPtr->I2CData.requestLen = 2;
 
-	  if (!writeI2C(&htangPtr->I2CData))
-	    return false;
-	}
+    if (!writeI2C(&htangPtr->I2CData))
+      return false;
+  }
 
-	// Populate the struct with the newly retrieved data
+  // Populate the struct with the newly retrieved data
   htangPtr->angle = (htangPtr->I2CData.reply[0] * 2) + htangPtr->I2CData.reply[1];
   htangPtr->accumlatedAngle = (htangPtr->I2CData.reply[2] << 24) +
-         											(htangPtr->I2CData.reply[3] << 16) +
-         											(htangPtr->I2CData.reply[4] <<  8) +
-          										 htangPtr->I2CData.reply[5];
+                               (htangPtr->I2CData.reply[3] << 16) +
+                               (htangPtr->I2CData.reply[4] <<  8) +
+                               htangPtr->I2CData.reply[5];
   htangPtr->rpm = (short)(htangPtr->I2CData.reply[6] <<  8) + htangPtr->I2CData.reply[7];
 
   return true;
 }
-
 
 /**
  * Send a command to the sensor
@@ -367,18 +350,17 @@ bool readSensor(tHTANGPtr htangPtr)
  */
 bool resetSensor(tHTANGPtr htangPtr)
 {
-	// Operation not supported on a SMUX
-	if (htangPtr->smux)
-		return false;
+  // Operation not supported on a SMUX
+  if (htangPtr->smux)
+    return false;
 
-	// First reset the accumulated angle
+  // First reset the accumulated angle
   if (!resetAccmulatedAngle(htangPtr))
-  	return false;
+    return false;
 
- 	// Next, reset the angle
+   // Next, reset the angle
   return resetAngle(htangPtr);
 }
-
 
 /**
  * Send a command to the sensor
@@ -389,14 +371,13 @@ bool resetSensor(tHTANGPtr htangPtr)
  */
 bool resetAccmulatedAngle(tHTANGPtr htangPtr)
 {
-	// Operation not supported on a SMUX
-	if (htangPtr->smux)
-		return false;
+  // Operation not supported on a SMUX
+  if (htangPtr->smux)
+    return false;
 
   htangPtr->_cmd = HTANG_CMD_RST_ACC_ANG;
   return _sensorSendCommand(htangPtr);
 }
-
 
 /**
  * Send a command to the sensor
@@ -407,9 +388,9 @@ bool resetAccmulatedAngle(tHTANGPtr htangPtr)
  */
 bool resetAngle(tHTANGPtr htangPtr)
 {
-	// Operation not supported on a SMUX
-	if (htangPtr->smux)
-		return false;
+  // Operation not supported on a SMUX
+  if (htangPtr->smux)
+    return false;
 
   htangPtr->_cmd = HTANG_CMD_RST_ANG;
   return _sensorSendCommand(htangPtr);
@@ -423,7 +404,7 @@ bool resetAngle(tHTANGPtr htangPtr)
  * @return true if no error occured, false if it did
  */
 bool _sensorSendCommand(tHTANGPtr htangPtr) {
-	bool retVal = false;
+  bool retVal = false;
 
   memset(htangPtr->I2CData.request, 0, sizeof(htangPtr->I2CData.request));
 
@@ -440,8 +421,5 @@ bool _sensorSendCommand(tHTANGPtr htangPtr) {
 
 #endif // __HTANG_H__
 
- /*
- * $Id: hitechnic-angle.h $
- */
 /* @} */
 /* @} */

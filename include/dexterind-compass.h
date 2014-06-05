@@ -5,10 +5,6 @@
 * @{
 */
 
-/*
-* $Id: dexterind-compass.h 133 2013-03-10 15:15:38Z xander $
-*/
-
 #ifndef __DIMC_H__
 #define __DIMC_H__
 /** \file dexterind-compass.h
@@ -63,7 +59,6 @@
 
 #define DIMC_STATUS_LOCK  2           /*!< Data output register lock active */
 #define DIMC_STATUS_RDY   1           /*!< Data is ready for reading */
-
 
 // HMC5883L configuration definitions
 // See pages 12, 13, 14 of HMC5883L.pdf
@@ -125,7 +120,7 @@
 // to make use of the generic calibration data file writing/reading
 typedef struct
 {
-	short _offsets[3];
+  short _offsets[3];
 } tDIMCCalData, *tDIMCCalDataptr;
 
 typedef struct
@@ -147,7 +142,6 @@ bool startCal(tDIMCptr dimcPtr);
 bool stopCal(tDIMCptr dimcPtr);
 bool _readCalVals(tDIMCptr dimcPtr);
 bool _writeCalVals(tDIMCptr dimcPtr);
-
 
 /**
  * Configure the Compass
@@ -201,7 +195,6 @@ bool initSensor(tDIMCptr dimcPtr, tSensors port)
   return _readCalVals(dimcPtr);
 }
 
-
 /**
  * Read all three axes of the Compass and calculate the current heading
  * @param tirPtr pointer to tTIR struct holding sensor info
@@ -245,7 +238,6 @@ bool readSensor(tDIMCptr dimcPtr)
   return true;
 }
 
-
 /**
  * Start calibration.  The robot should be made to rotate
  * about its axis at least twice to get an accurate result.
@@ -258,7 +250,6 @@ bool startCal(tDIMCptr dimcPtr)
   dimcPtr->_calibrating = true;
   return true;
 }
-
 
 /**
  * Stop calibration.  The appropriate offsets will be calculated for all
@@ -276,7 +267,6 @@ bool stopCal(tDIMCptr dimcPtr)
   _writeCalVals(dimcPtr);
   return true;
 }
-
 
 /**
  * Write the calibration values to a data file.
@@ -307,15 +297,15 @@ bool _writeCalVals(tDIMCptr dimcPtr)
 
   for (short i = 0; i < 3; i++)
   {
-	  WriteShort(hFileHandle, nIoResult, dimcPtr->calData._offsets[i]);
-	  if (nIoResult != ioRsltSuccess)
-	  {
+    WriteShort(hFileHandle, nIoResult, dimcPtr->calData._offsets[i]);
+    if (nIoResult != ioRsltSuccess)
+    {
       eraseDisplay();
-	    displayTextLine(3, "can't write offset");
-	    playSound(soundException);
-	    while(bSoundActive) EndTimeSlice();
-	    sleep(5000);
-	    stopAllTasks();
+      displayTextLine(3, "can't write offset");
+      playSound(soundException);
+      while(bSoundActive) EndTimeSlice();
+      sleep(5000);
+      stopAllTasks();
     }
   }
 
@@ -332,8 +322,6 @@ bool _writeCalVals(tDIMCptr dimcPtr)
   }
   return true;
 }
-
-
 
 /**
  * Read the calibration values from a data file.
@@ -356,33 +344,29 @@ bool _readCalVals(tDIMCptr dimcPtr)
 
     // Assign default values
     memset(dimcPtr->calData._offsets, 0, 3 * sizeof(short));
-		_writeCalVals(dimcPtr);
+    _writeCalVals(dimcPtr);
     return true;
   }
 
   for (short i = 0; i < 3; i++)
   {
-	  ReadShort(hFileHandle, nIoResult, (short)dimcPtr->calData._offsets[i]);
-	  // writeDebugStream("R offsets[%d][%d]:", i, j);
-	  // writeDebugStreamLine(" %d", DIMCoffsets[i][j]);
-	  if (nIoResult != ioRsltSuccess)
-	  {
-	    memset(dimcPtr->calData._offsets, 0, 3 * sizeof(short));
-		  _writeCalVals(dimcPtr);
-		  return true;
-		}
-	}
+    ReadShort(hFileHandle, nIoResult, (short)dimcPtr->calData._offsets[i]);
+    // writeDebugStream("R offsets[%d][%d]:", i, j);
+    // writeDebugStreamLine(" %d", DIMCoffsets[i][j]);
+    if (nIoResult != ioRsltSuccess)
+    {
+      memset(dimcPtr->calData._offsets, 0, 3 * sizeof(short));
+      _writeCalVals(dimcPtr);
+      return true;
+    }
+  }
 
   Close(hFileHandle, nIoResult);
   dimcPtr->_calibrated = true;
   return true;
 }
 
-
 #endif // __DIMC_H__
 
-/*
-* $Id: dexterind-compass.h 133 2013-03-10 15:15:38Z xander $
-*/
 /* @} */
 /* @} */

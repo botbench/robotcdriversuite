@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: common-light.h $
- */
-
 #ifndef __LIGHT_COMMON_H__
 #define __LIGHT_COMMON_H__
 
@@ -29,7 +25,6 @@
 
 #pragma systemFile
 
-
 /**
  * Convert RGB colors to HSV
  * @param red the red input value
@@ -42,9 +37,9 @@
  */
 void RGBtoHSV(float red, float green, float blue, float *hue, float *sat, float *value)
 {
-	*hue = 0;
-	*sat = 0;
-	*value = 0;
+  *hue = 0;
+  *sat = 0;
+  *value = 0;
 
   //   Value
   float rgb_max = max3(red, green, blue);
@@ -92,8 +87,5 @@ void RGBtoHSV(float red, float green, float blue, float *hue, float *sat, float 
 
 #endif __LIGHT_COMMON_H__
 
-/*
- * $Id: common-light.h $
- */
 /* @} */
 /* @} */

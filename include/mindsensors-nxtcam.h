@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-nxtcam.h $
- */
-
 #ifndef __NXTCAM_H__
 #define __NXTCAM_H__
 /** \file mindsensors-nxtcam.h
@@ -130,7 +126,6 @@ bool NXTCAMinit(tSensors link, ubyte address) {
   return true;
 }
 
-
 /**
  * This function initialises camera ready to track lines.
  * @param link the sensor port number
@@ -156,7 +151,6 @@ bool NXTCAMinitTL(tSensors link, ubyte address) {
   sleep(500);
   return true;
 }
-
 
 /**
  * This function fetches the blob data from the camera and merges the colliding ones.
@@ -371,7 +365,6 @@ void NXTCAMgetAverageCenter(blob_array &blobs, short nblobs, short colourindex, 
   y = _totalY / (_counter  -1);
 }
 
-
 /**
  * Calculate the center of a specified blob.
  *
@@ -388,8 +381,5 @@ void NXTCAMgetCenter(blob_array &blobs, short index, short &x, short &y) {
 
 #endif // __NXTCAM_H__
 
-/*
- * $Id: mindsensors-nxtcam.h $
- */
 /* @} */
 /* @} */

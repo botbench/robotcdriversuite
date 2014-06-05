@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: lego-sound.h $
- */
-
 /** \file lego-sound.h
  * \brief SMUX driver for the Lego Sound sensor.
  *
@@ -49,7 +45,6 @@ short SNDreadRaw(tMUXSensor muxsensor) {
   return 1023 - HTSMUXreadAnalogue(muxsensor);
 }
 
-
 /**
  * Get the processed value from the sensor.
  * @param muxsensor the SMUX sensor port number
@@ -60,7 +55,6 @@ short SNDreadNorm(tMUXSensor muxsensor) {
   return _val;
 }
 
-
 /**
  * Set the mode of the sensor to DBA, this is done
  * by switching off DIG0.
@@ -69,7 +63,6 @@ short SNDreadNorm(tMUXSensor muxsensor) {
 void SNDsetDBA(tMUXSensor muxsensor) {
   HTSMUXsetAnalogueInactive(muxsensor);
 }
-
 
 /**
  * Set the mode of the sensor to DB, this is done
@@ -81,8 +74,5 @@ void SNDsetDB(tMUXSensor muxsensor) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-/*
- * $Id: lego-sound.h $
- */
 /* @} */
 /* @} */

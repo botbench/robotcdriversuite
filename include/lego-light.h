@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: lego-light.h $
- */
-
 #ifndef __LEGOLS_H__
 #define __LEGOLS_H__
 /** \file lego-light.h
@@ -70,7 +66,6 @@ void _LScheckSensor(tSensors link);
 void _LSwriteCalVals();
 void _LSreadCalVals();
 
-
 /**
  * Read the raw value of the Light Sensor.
  * @param link the Light Sensor port number
@@ -81,7 +76,6 @@ short LSvalRaw(tSensors link) {
 
   return SensorRaw[link];
 }
-
 
 /**
  * Read the raw value of the Light Sensor.
@@ -118,7 +112,6 @@ short LSvalNorm(tSensors link) {
   return ((currval - lslow[link * 4]) * 100) / (lshigh[link * 4] - lslow[link * 4]);
 }
 
-
 /**
  * Read the normalised value of the Light Sensor, based on the low and high values.
  * @param muxsensor the SMUX sensor port number
@@ -154,7 +147,6 @@ void LScalLow(tSensors link) {
   _LSwriteCalVals();
 }
 
-
 /**
  * Calibrate the Light Sensor's low calibration value with the current raw sensor reading.
  * @param muxsensor the SMUX sensor port number
@@ -165,7 +157,6 @@ void LScalLow(tMUXSensor muxsensor) {
   _LSwriteCalVals();
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Calibrate the Light Sensor's high calibration value with the current raw sensor reading.
@@ -178,7 +169,6 @@ void LScalHigh(tSensors link) {
   _LSwriteCalVals();
 }
 
-
 /**
  * Calibrate the Light Sensor's high calibration value with the current raw sensor reading.
  * @param muxsensor the SMUX sensor port number
@@ -190,7 +180,6 @@ void LScalHigh(tMUXSensor muxsensor) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-
 /**
  * Configure the sensor as a LightActive sensor
  * @param link the Light Sensor port number
@@ -200,7 +189,6 @@ void LSsetActive(tSensors link) {
   SensorMode[link] = modeRaw;
   sleep(5);
 }
-
 
 /**
  * Configure the sensor as a LightActive sensor
@@ -212,7 +200,6 @@ void LSsetActive(tMUXSensor muxsensor) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-
 /**
  * Configure the sensor as a LightInactive sensor
  * @param link the Light Sensor port number
@@ -223,7 +210,6 @@ void LSsetInactive(tSensors link) {
   sleep(5);
 }
 
-
 /**
  * Configure the sensor as a LightInactive sensor
  * @param muxsensor the SMUX sensor port number
@@ -233,7 +219,6 @@ void LSsetInactive(tMUXSensor muxsensor) {
   HTSMUXsetAnalogueInactive(muxsensor);
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Check if the sensor is set to raw and that it's been configured as a
@@ -249,7 +234,6 @@ void _LScheckSensor(tSensors link) {
       LSsetInactive(link);
     }
 }
-
 
 /**
  * Write the low and high calibration values to a data file.
@@ -276,31 +260,31 @@ void _LSwriteCalVals() {
 
   // Write the low calibration value
   for (short i = 0; i < 16; i++) {
-	  WriteShort(hFileHandle, nIoResult, lslow[i]);
-	  // writeDebugStreamLine("W: lslow[%d]: %d", i, lslow[i]);
-	  if (nIoResult != ioRsltSuccess) {
-	    eraseDisplay();
-	    displayTextLine(3, "can't write lowval");
-	    playSound(soundException);
-	    while(bSoundActive) EndTimeSlice();
-	    sleep(5000);
-	    stopAllTasks();
-	  }
-	}
+    WriteShort(hFileHandle, nIoResult, lslow[i]);
+    // writeDebugStreamLine("W: lslow[%d]: %d", i, lslow[i]);
+    if (nIoResult != ioRsltSuccess) {
+      eraseDisplay();
+      displayTextLine(3, "can't write lowval");
+      playSound(soundException);
+      while(bSoundActive) EndTimeSlice();
+      sleep(5000);
+      stopAllTasks();
+    }
+  }
 
   // Write the low calibration value
   for (short i = 0; i < 16; i++) {
-	  WriteShort(hFileHandle, nIoResult, lshigh[i]);
-	  // writeDebugStreamLine("W lshigh[%d]: %d", i, lshigh[i]);
-	  if (nIoResult != ioRsltSuccess) {
-	    eraseDisplay();
-	    displayTextLine(3, "can't write highval");
-	    playSound(soundException);
-	    while(bSoundActive) EndTimeSlice();
-	    sleep(5000);
-	    stopAllTasks();
-	  }
-	}
+    WriteShort(hFileHandle, nIoResult, lshigh[i]);
+    // writeDebugStreamLine("W lshigh[%d]: %d", i, lshigh[i]);
+    if (nIoResult != ioRsltSuccess) {
+      eraseDisplay();
+      displayTextLine(3, "can't write highval");
+      playSound(soundException);
+      while(bSoundActive) EndTimeSlice();
+      sleep(5000);
+      stopAllTasks();
+    }
+  }
 
   // Close the file
   Close(hFileHandle, nIoResult);
@@ -330,48 +314,45 @@ void _LSreadCalVals() {
   if (nIoResult != ioRsltSuccess) {
     Close(hFileHandle, nIoResult);
     // Assign default values
-		memset(&lslow[0], 0, sizeof(lslow));
-		for (short i = 0; i < 16; i++) {
-		  lshigh[i] = 1023;
-		}
-		_LSwriteCalVals();
+    memset(&lslow[0], 0, sizeof(lslow));
+    for (short i = 0; i < 16; i++) {
+      lshigh[i] = 1023;
+    }
+    _LSwriteCalVals();
     return;
   }
 
   // Read the low calibration value
   for (short i = 0; i < 16; i++) {
-	  ReadShort(hFileHandle, nIoResult, (short)lslow[i]);
+    ReadShort(hFileHandle, nIoResult, (short)lslow[i]);
     // writeDebugStreamLine("R: lslow[%d]: %d", i, lslow[i]);
-	  if (nIoResult != ioRsltSuccess) {
-			memset(&lslow[0], 0, sizeof(lslow));
-			for (short i = 0; i < 16; i++) {
-			  lshigh[i] = 1023;
-			}
-			_LSwriteCalVals();
-			return;
-	  }
-	}
+    if (nIoResult != ioRsltSuccess) {
+      memset(&lslow[0], 0, sizeof(lslow));
+      for (short i = 0; i < 16; i++) {
+        lshigh[i] = 1023;
+      }
+      _LSwriteCalVals();
+      return;
+    }
+  }
 
   for (short i = 0; i < 16; i++) {
-	  ReadShort(hFileHandle, nIoResult, (short)lshigh[i]);
-	  // writeDebugStreamLine("R lshigh[%d]: %d", i, lshigh[i]);
-	  if (nIoResult != ioRsltSuccess) {
-			memset(&lslow[0], 0, sizeof(lslow));
-			for (short i = 0; i < 16; i++) {
-			  lshigh[i] = 1023;
-			}
-			_LSwriteCalVals();
-			return;
-	  }
-	}
+    ReadShort(hFileHandle, nIoResult, (short)lshigh[i]);
+    // writeDebugStreamLine("R lshigh[%d]: %d", i, lshigh[i]);
+    if (nIoResult != ioRsltSuccess) {
+      memset(&lslow[0], 0, sizeof(lslow));
+      for (short i = 0; i < 16; i++) {
+        lshigh[i] = 1023;
+      }
+      _LSwriteCalVals();
+      return;
+    }
+  }
 
   Close(hFileHandle, nIoResult);
 }
 
 #endif // __LEGOLS_H__
 
-/*
- * $Id: lego-light.h $
- */
 /* @} */
 /* @} */

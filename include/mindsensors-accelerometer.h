@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-accelerometer.h $
- */
-
 #ifndef __MSAC_H__
 #define __MSAC_H__
 /** \file mindsensors-accelerometer.h
@@ -66,7 +62,6 @@ bool MSACsetRange(tSensors link, short range);
 tByteArray MSAC_I2CRequest;       /*!< Array to hold I2C command data */
 tByteArray MSAC_I2CReply;         /*!< Array to hold I2C reply data */
 
-
 /**
  * Read tilt data from the sensor
  * @param link the sensor port number
@@ -86,12 +81,11 @@ bool MSACreadTilt(tSensors link, short &x_tilt, short &y_tilt, short &z_tilt) {
     return false;
 
   x_tilt = MSAC_I2CReply[0] - 128;
-	y_tilt = MSAC_I2CReply[1] - 128;
-	z_tilt = MSAC_I2CReply[2] - 128;
+  y_tilt = MSAC_I2CReply[1] - 128;
+  z_tilt = MSAC_I2CReply[2] - 128;
 
   return true;
 }
-
 
 /**
  * Read tilt data from the sensor
@@ -112,12 +106,11 @@ bool MSACreadAccel(tSensors link, short &x_accel, short &y_accel, short &z_accel
     return false;
 
   // Each result is made up of two bytes.
-	x_accel = MSAC_I2CReply[0] + (MSAC_I2CReply[1] << 8);
-	y_accel = MSAC_I2CReply[2] + (MSAC_I2CReply[3] << 8);
-	z_accel = MSAC_I2CReply[4] + (MSAC_I2CReply[5] << 8);
+  x_accel = MSAC_I2CReply[0] + (MSAC_I2CReply[1] << 8);
+  y_accel = MSAC_I2CReply[2] + (MSAC_I2CReply[3] << 8);
+  z_accel = MSAC_I2CReply[4] + (MSAC_I2CReply[5] << 8);
   return true;
 }
-
 
 /**
  * Send a command to the sensor
@@ -135,7 +128,6 @@ bool MSACsendCmd(tSensors link, byte command) {
 
   return writeI2C(link, MSAC_I2CRequest);
 }
-
 
 /**
  * Set sensitivity range of sensor.
@@ -158,8 +150,5 @@ bool MSACsetRange(tSensors link, short range) {
 
 #endif //__MSAC_H__
 
-/*
- * $Id: mindsensors-accelerometer.h $
- */
 /* @} */
 /* @} */

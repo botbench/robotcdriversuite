@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-magicwand.h $
- */
-
 #ifndef __MSMW_H__
 #define __MSMW_H__
 /** \file mindsensors-magicwand.h
@@ -62,7 +58,6 @@ bool MSMWsetLED(tSensors link, ubyte ledToChange, bool on)
   return PCF8574sendBytes(link, (on ? ledState & ~(1 << ledToChange) : ledState | (1 << ledToChange)) );
 }
 
-
 /**
  * Toggle a LED
  * @param link the Magic Wand port
@@ -78,7 +73,6 @@ bool MSMWtoggleLED(tSensors link, ubyte ledToChange)
   }
   return PCF8574sendBytes(link, ledState ^ (1 << ledToChange));
 }
-
 
 /**
  * Flash the LEDs and turn them off again.  Nice effect.
@@ -116,8 +110,5 @@ bool MSMWflashAndClear(tSensors link, short count)
 
 #endif //  __MSMW_H__
 
-/*
- * $Id: mindsensors-magicwand.h $
- */
 /* @} */
 /* @} */

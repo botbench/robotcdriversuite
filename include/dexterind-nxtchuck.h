@@ -4,9 +4,6 @@
 * Dexter Industries NXTChuck Sensor driver
 * @{
 */
-/*
- * $Id: dexterind-nxtchuck.h $
- */
 
 #ifndef __NXTCHUCK_H__
 #define __NXTCHUCK_H__
@@ -95,7 +92,6 @@ typedef struct
   ubyte buttons;
 } tNunchuck;
 
-
 typedef struct
 {
   byte stickLX;
@@ -121,7 +117,6 @@ typedef struct
   bool buttonZR;
   unsigned short buttons;
 } tClassicCtrl;
-
 
 ubyte NXTChuckIdentLookup[][] = {
   {0x00,0x00,0xA4,0x20,0x00,0x00}, // Nunchuk
@@ -191,7 +186,6 @@ bool __NXTChuckReadRaw(tSensors link, ubyte _reg, tByteArray &data){
   return writeI2C(link, NXTCHUCK_I2CRequest, data, 6);
 }
 
-
 /**
  * Identify the type of nunchuck sensor connected to the NXT.
  * @param link the nunchuck port number
@@ -238,7 +232,6 @@ bool NXTChuckreadIdent(tSensors link, tNunchuck &nunchuck){
   return false;                                                    // Communication error
 }
 
-
 /**
  * Read the data from the nunchuck.
  * @param link the nunchuck port number
@@ -263,7 +256,6 @@ bool NXTChuckreadSensor(tSensors link, tNunchuck &nunchuck){
   }
   return false;                                                  // Return error
 }
-
 
 /**
  * Read the data from the classic controller.
@@ -309,11 +301,7 @@ bool NXTChuckReadClassicController(tSensors link, tClassicCtrl &controller){
   return false;
 }
 
-
 #endif // __NXTCHUCK_H__
 
-/*
- * $Id: dexterind-nxtchuck.h $
- */
 /* @} */
 /* @} */

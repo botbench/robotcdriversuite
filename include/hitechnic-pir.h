@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-pir.h $
- */
-
 /** \file hitechnic-pir.h
  * \brief HiTechnic PIR Sensor Driver
  *
@@ -52,7 +48,6 @@ tConfigParams HTPIR_config = {HTSMUX_CHAN_I2C, 1, 0x02, 0x42}; /*!< Array to hol
 tByteArray HTPIR_I2CRequest;       /*!< Array to hold I2C command data */
 tByteArray HTPIR_I2CReply;         /*!< Array to hold I2C reply data */
 
-
 /**
  * The sensor element with the PIR sensor generates continuous noise.
  * The size of the deadband is set to minimize the number of false
@@ -78,7 +73,6 @@ bool HTPIRsetDeadband(tSensors link, short deadband) {
   // Start the calibration
   return writeI2C(link, HTPIR_I2CRequest);
 }
-
 
 /**
  * Read the current levels detected by the sensor
@@ -118,9 +112,5 @@ short HTPIRreadSensor(tMUXSensor muxsensor) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-
-/*
- * $Id: hitechnic-pir.h $
- */
 /* @} */
 /* @} */

@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-sumoeyes.h $
- */
-
 #ifndef __MSSUMO_H__
 #define __MSSUMO_H__
 /** \file mindsensors-sumoeyes.h
@@ -63,27 +59,26 @@ tObstacleZone MSSUMOreadZone(tSensors link) {
 
   sensordata = SensorValue[link];
 
- 	if ( sensordata > 30 && sensordata < 36 )
- 	{
-	  // obstacle is on left
+   if ( sensordata > 30 && sensordata < 36 )
+   {
+    // obstacle is on left
     return (MSSUMO_LEFT);
-	}
-	else if ( sensordata > 63 && sensordata < 69 )
-	{
-	  // obstacle is on right
+  }
+  else if ( sensordata > 63 && sensordata < 69 )
+  {
+    // obstacle is on right
     return (MSSUMO_RIGHT);
-	}
-	else if ( sensordata >= 74 && sensordata <= 80 )
-	{
-	  // obstacle is in front.
+  }
+  else if ( sensordata >= 74 && sensordata <= 80 )
+  {
+    // obstacle is in front.
     return (MSSUMO_FRONT);
-	}
-	else
-	{
-	  return (MSSUMO_NONE);
-	}
+  }
+  else
+  {
+    return (MSSUMO_NONE);
+  }
 }
-
 
 /**
  * Set the range of the sensor to short range, this is done
@@ -95,7 +90,6 @@ void MSSUMOsetShortRange(tSensors link) {
     SensorType[link] = MSSUMOSRType;
 }
 
-
 /**
  * Set the range of the sensor to long range, this is done
  * by configuring the sensor as sensorLightInactive
@@ -106,11 +100,7 @@ void MSSUMOsetLongRange(tSensors link) {
     SensorType[link] = MSSUMOLRType;
 }
 
-
 #endif // __MSSUMO_H__
 
-/*
- * $Id: mindsensors-sumoeyes.h $
- */
 /* @} */
 /* @} */

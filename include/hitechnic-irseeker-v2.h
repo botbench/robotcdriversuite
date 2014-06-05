@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-irseeker-v2.h $
- */
-
 #ifndef __HTIRS2_H__
 #define __HTIRS2_H__
 /** \file hitechnic-irseeker-v2.h
@@ -64,7 +60,6 @@
 #define HTIRS2_AC_SSTR4    0x0B      /*!< AC Sensor 3 signal strength above average */
 #define HTIRS2_AC_SSTR5    0x0C      /*!< AC Sensor 4 signal strength above average */
 
-
 /*!< AC DSP modes */
 typedef enum {
   DSP_1200 = 0,
@@ -119,7 +114,6 @@ short HTIRS2readDCDir(tSensors link) {
   return HTIRS2_I2CReply[0];
 }
 
-
 /**
  * Read the value of the DC Direction data register and return it.
  * @param muxsensor the SMUX sensor port number
@@ -127,7 +121,7 @@ short HTIRS2readDCDir(tSensors link) {
  */
 #ifdef __HTSMUX_SUPPORT__
 short HTIRS2readDCDir(tMUXSensor muxsensor) {
-	memset(HTIRS2_I2CReply, 0, sizeof(tByteArray));
+  memset(HTIRS2_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
     HTSMUXconfigChannel(muxsensor, HTIRS2_config);
@@ -139,7 +133,6 @@ short HTIRS2readDCDir(tMUXSensor muxsensor) {
   return HTIRS2_I2CReply[0];
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Read the value of the all of the internal DC sensors above average.
@@ -173,7 +166,6 @@ bool HTIRS2readAllDCStrength(tSensors link, short &dcS1, short &dcS2, short &dcS
   return true;
 }
 
-
 /**
  * Read the value of the all of the internal DC sensors above average.
  * @param muxsensor the SMUX sensor port number
@@ -205,7 +197,6 @@ bool HTIRS2readAllDCStrength(tMUXSensor muxsensor, short &dcS1, short &dcS2, sho
 }
 #endif // __HTSMUX_SUPPORT__
 
-
 /**
  * Read the value of the average data register and return it.
  * @param link the HTIRS2 port number
@@ -223,7 +214,6 @@ short HTIRS2readDCAverage(tSensors link) {
 
   return HTIRS2_I2CReply[0];
 }
-
 
 /**
  * Read the value of the average data register and return it.
@@ -244,7 +234,6 @@ short HTIRS2readDCAverage(tMUXSensor muxsensor) {
   return HTIRS2_I2CReply[0];
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 // ---------------------------- AC Signal processing -----------------------------
 
@@ -287,7 +276,6 @@ short HTIRS2readACDir(tSensors link) {
   return HTIRS2_I2CReply[0];
 }
 
-
 /**
  * Read the value of the AC Direction data register and return it.
  * @param muxsensor the SMUX sensor port number
@@ -307,7 +295,6 @@ short HTIRS2readACDir(tMUXSensor muxsensor) {
   return HTIRS2_I2CReply[0];
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Read the value of the all of the internal AC sensors and copy into specified buffer.
@@ -337,7 +324,6 @@ bool HTIRS2readAllACStrength(tSensors link, short &acS1, short &acS2, short &acS
 
   return true;
 }
-
 
 /**
  * Read the value of the all of the internal AC sensors and copy into specified buffer.
@@ -369,7 +355,6 @@ bool HTIRS2readAllACStrength(tMUXSensor muxsensor, short &acS1, short &acS2, sho
   return true;
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * This function calculates the strength and direction based on both the DC and AC
@@ -432,8 +417,8 @@ bool HTIRS2readEnhanced(tSensors  link, short &dir, short &strength)
     // Use AC Dir
     HTIRS2_I2CRequest[2] = HTIRS2_OFFSET + HTIRS2_AC_DIR; // Recycle rest of cmdBuf
 
-	  if (!writeI2C(link, HTIRS2_I2CRequest, HTIRS2_I2CReply, 6))
-	    return false;
+    if (!writeI2C(link, HTIRS2_I2CRequest, HTIRS2_I2CReply, 6))
+      return false;
 
     dir = HTIRS2_I2CReply[0];
 
@@ -523,8 +508,5 @@ bool HTIRS2readEnhanced(tMUXSensor muxsensor, short &dir, short &strength)
 
 #endif // __HTIRS2_H__
 
-/*
- * $Id: hitechnic-irseeker-v2.h $
- */
 /* @} */
 /* @} */

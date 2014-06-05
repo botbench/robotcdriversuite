@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-irlink-rcx.h $
- */
-
 #ifndef _HTRCX_H_
 #define _HTRCX_H_
 /** \file hitechnic-irlink-rcx.h
@@ -59,7 +55,6 @@ bool HTRCXmotorFwd(tSensors link, unsigned byte _motor);
 bool HTRCXmotorRev(tSensors link, unsigned byte _motor);
 bool HTRCXmotorPwr(tSensors link, unsigned byte _motor, unsigned byte power);
 
-
 /**
  * Sends the RCX IR message header with all the trimmings.
  *
@@ -83,7 +78,6 @@ bool HTRCXsendHeader(tSensors link) {
 
   return writeI2C(link, HTRCXI2CRequest);
 }
-
 
 /**
  * This encodes the message into the standard RCX format with
@@ -129,7 +123,6 @@ void HTRCXencode(tSensors link, tByteArray &iBuffer, tByteArray &oBuffer) {
   oBuffer[5 + (msgsize * 2) + 2] = 0x01;
 }
 
-
 /**
  * Read a message sent by the RCX.  You will need to poll frequently to
  * check if a message has been sent. The number of bytes received is
@@ -167,7 +160,6 @@ bool HTRCXreadResp(tSensors link, tByteArray &response) {
   return writeI2C(link, HTRCXI2CRequest);
 }
 
-
 /**
  * Tell the RCX to play a sound.  Sounds are numbered 0-5
  *
@@ -190,7 +182,6 @@ bool HTRCXplaySound(tSensors link, unsigned byte sound) {
 
   return true;
 }
-
 
 /**
  * Send a single byte message to the RCX
@@ -236,7 +227,6 @@ bool HTRCXsendWord(tSensors link, short data) {
   return true;
 }
 
-
 /**
  * Turn the specified motor on
  *
@@ -260,7 +250,6 @@ bool HTRCXmotorOn(tSensors link, unsigned byte _motor) {
 
   return true;
 }
-
 
 /**
  * Turn the specified motor off
@@ -286,7 +275,6 @@ bool HTRCXmotorOff(tSensors link, unsigned byte _motor) {
   return true;
 }
 
-
 /**
  * Move the specified motor forward
  *
@@ -311,7 +299,6 @@ bool HTRCXmotorFwd(tSensors link, unsigned byte _motor) {
   return true;
 }
 
-
 /**
  * Move the specified motor reverse
  *
@@ -335,7 +322,6 @@ bool HTRCXmotorRev(tSensors link, unsigned byte _motor) {
 
   return true;
 }
-
 
 /**
  * Set the motor power.
@@ -366,8 +352,5 @@ bool HTRCXmotorPwr(tSensors link, unsigned byte _motor, unsigned byte power) {
 
 #endif // _HTRCX_H_
 
-/*
- * $Id: hitechnic-irlink-rcx.h $
- */
 /* @} */
 /* @} */

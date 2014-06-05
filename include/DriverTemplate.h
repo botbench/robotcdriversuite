@@ -1,6 +1,4 @@
-/*
- * $Id: DriverTemplate.h $
- */
+
 
 /** \file <template>.h
  * \brief RobotC <device> Driver
@@ -25,8 +23,8 @@
 
 /*! arbStruct struct, <short explanation. */
 typedef struct {
-	short size;                 /*!< Number of bytes used */
-	short arr[DEF_SOMETHING];   /*!< Array containing data */
+  short size;                 /*!< Number of bytes used */
+  short arr[DEF_SOMETHING];   /*!< Array containing data */
 } arbStruct;
 
 /*
@@ -41,7 +39,3 @@ typedef struct {
 byte arbFunc(byte foo) {
   return foo;
 }
-
-/*
- * $Id: DriverTemplate.h $
- */

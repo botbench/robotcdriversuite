@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-force.h $
- */
-
 #ifndef HTF
 #define __HTF_H__
 /** \file hitechnic-force.h
@@ -66,7 +62,6 @@ bool readSensor(tHTFPtr htfPtr);
 //  return 1023 - SensorRaw[link];
 //}
 
-
 ///**
 // * Get the raw value from the sensor
 // * @param muxsensor the SMUX sensor port number
@@ -77,7 +72,6 @@ bool readSensor(tHTFPtr htfPtr);
 //  return 1023 - HTSMUXreadAnalogue(muxsensor);
 //}
 //#endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Initialise the sensor's data struct and port
@@ -100,7 +94,6 @@ bool initSensor(tHTFPtr htfPtr, tSensors port)
   return true;
 }
 
-
 /**
  * Initialise the sensor's data struct and MUX port
  *
@@ -113,7 +106,7 @@ bool initSensor(tHTFPtr htfPtr, tMUXSensor muxsensor)
   memset(htfPtr, 0, sizeof(tHTFPtr));
   htfPtr->I2CData.type = sensorI2CCustom;
   htfPtr->smux = true;
-	htfPtr->smuxport = muxsensor;
+  htfPtr->smuxport = muxsensor;
 
   // Ensure the sensor is configured correctly
   if (SensorType[htfPtr->I2CData.port] != htfPtr->I2CData.type)
@@ -121,7 +114,6 @@ bool initSensor(tHTFPtr htfPtr, tMUXSensor muxsensor)
 
   return HTSMUXsetAnalogueActive(muxsensor);
 }
-
 
 /**
  * Read all the sensor's data
@@ -131,21 +123,17 @@ bool initSensor(tHTFPtr htfPtr, tMUXSensor muxsensor)
  */
 bool readSensor(tHTFPtr htfPtr)
 {
-	memset(htfPtr->I2CData.request, 0, sizeof(htfPtr->I2CData.request));
+  memset(htfPtr->I2CData.request, 0, sizeof(htfPtr->I2CData.request));
 
-	if (htfPtr->smux)
-		htfPtr->force = 1023 - HTSMUXreadAnalogue(htfPtr->smuxport);
-	else
-	  htfPtr->force = 1023 - SensorValue[htfPtr->I2CData.port];
+  if (htfPtr->smux)
+    htfPtr->force = 1023 - HTSMUXreadAnalogue(htfPtr->smuxport);
+  else
+    htfPtr->force = 1023 - SensorValue[htfPtr->I2CData.port];
 
-	  return true;
+    return true;
 }
-
 
 #endif // __HTF_H__
 
-/*
- * $Id: hitechnic-force.h $
- */
 /* @} */
 /* @} */

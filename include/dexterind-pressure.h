@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: dexterind-pressure.h $
- */
-
 #ifndef __DPRESS_DRIVER_H__
 #define __DPRESS_DRIVER_H__
 
@@ -75,7 +71,6 @@ bool DPRESSreadPress250kPa(tSensors link, float &pressure) {
   return true;
 }
 
-
 /**
  * Read the pressure in kiloPascals\n
  * Note: This function is for the dPressure 250
@@ -86,7 +81,6 @@ bool DPRESSreadPress250kPa(tSensors link, float &pressure) {
 bool DPRESSreadPress250PSI(tSensors link, float &pressure) {
   return true;
 }
-
 
 /**
  * Read the pressure in kiloPascals\n
@@ -118,7 +112,6 @@ bool DPRESSreadPress500kPa(tSensors link, float &pressure) {
   return true;
 }
 
-
 /**
  * Read the pressure in kiloPascals\n
  * Note: This function is for the dPressure 500
@@ -130,11 +123,7 @@ bool DPRESSreadPress500PSI(tSensors link, float &pressure) {
   return true;
 }
 
-
 #endif // __DPRESS_DRIVER_H__
 
-/*
- * $Id: dexterind-pressure.h $
- */
 /* @} */
 /* @} */

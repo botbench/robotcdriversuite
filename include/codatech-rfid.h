@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: codatech-rfid.h $
- */
-
 #ifndef __CTRFID_driver_H__
 #define __CTRFID_driver_H__
 
@@ -102,7 +98,6 @@ tByteArray CTRFID_I2CReply;      /*!< Array to hold I2C reply data   */
 bool CTRFIDreadContinuous[4] = {false, false, false, false};  /*!< Is the sensor configured for Continuous mode? */
 bool CTRFIDinitialised[4] = {false, false, false, false};     /*!< Has the sensor been initialised? */
 
-
 /**
  * Send a command to the RFID sensor.
  *
@@ -124,7 +119,6 @@ bool _CTRFIDsendCommand(tSensors link, ubyte command) {
 
   return writeI2C(link, CTRFID_I2CRequest);
 }
-
 
 /**
  * Send a dummy I2C packet to the sensor to wake it up
@@ -175,7 +169,6 @@ bool _CTRFIDreadStatus(tSensors link, ubyte &_status) {
   return true;
 }
 
-
 /**
  * Configure the sensor for reading transponders
  * @param link the CTRFID port number,
@@ -189,7 +182,6 @@ bool CTRFIDinit(tSensors link) {
     return false;
   }
 }
-
 
 /**
  * Configure the sensor for reading transponders
@@ -209,7 +201,6 @@ bool CTRFIDsetContinuous(tSensors link) {
   }
 }
 
-
 /**
  * Configure the sensor for reading transponders
  * in single shot mode
@@ -226,7 +217,6 @@ bool CTRFIDsetSingleShot(tSensors link) {
     return false;
   }
 }
-
 
 /**
  * Read transponder ID's bytes. This function needs that a reading mode to be selected before using it.
@@ -284,8 +274,5 @@ bool CTRFIDreadTransponder(tSensors link, string &transponderID) {
 
 #endif // __CODATEX_RFID_driver_H__
 
-/*
- * $Id: codatech-rfid.h $
- */
 /* @} */
 /* @} */

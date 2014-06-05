@@ -26,7 +26,6 @@ notes using both O0 and O1.
 #define  TONE_B4   494
 #define  TONE_C5   523
 
-
 #include "hitechnic-superpro.h"
 
 task main() {

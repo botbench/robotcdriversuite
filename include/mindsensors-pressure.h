@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-pressure.h $
- */
-
 #ifndef __MSPPS_H__
 #define __MSPPS_H__
 /** \file mindsensors-pressure.h
@@ -71,7 +67,6 @@ bool MSPPSsetRefPressure(tSensors link, short refpressure);
 tByteArray MSPPS_I2CRequest;       /*!< Array to hold I2C command data */
 tByteArray MSPPS_I2CReply;         /*!< Array to hold I2C reply data */
 
-
 /**
  * Read the pressure from the sensor and return it in the
  * unit the sensor has been configured for.<br>
@@ -95,7 +90,6 @@ long MSPPSreadPressure(tSensors link, ubyte reg)
   return ((long)MSPPS_I2CReply[1] * 256) + MSPPS_I2CReply[0];
 }
 
-
 /**
  * Read the absolute pressure from the sensor and return it in the
  * unit the sensor has been configured for.
@@ -106,7 +100,6 @@ long MSPPSreadAbsPressure(tSensors link)
 {
   return MSPPSreadPressure(link, MSPPS_PRESS_ABS);
 }
-
 
 /**
  * Read the gauge pressure from the sensor and return it in the
@@ -120,7 +113,6 @@ long MSPPSreadGaugePressure(tSensors link)
   return MSPPSreadPressure(link, MSPPS_PRESS_GAUGE);
 }
 
-
 /**
  * Read the reference pressure from the sensor and return it in the
  * unit specified.
@@ -131,7 +123,6 @@ long MSPPSreadRefPressure(tSensors link)
 {
   return MSPPSreadPressure(link, MSPPS_PRESS_REF);
 }
-
 
 /**
  * Set the reference pressure to the value specified.
@@ -152,7 +143,6 @@ bool MSPPSsetRefPressure(tSensors link, short refpressure)
   return writeI2C(link, MSPPS_I2CRequest);
 }
 
-
 /**
  * Set the reference pressure to the current absolute pressure value.
  * @param link the sensor port number
@@ -162,7 +152,6 @@ bool MSPPSsetRefPressure(tSensors link)
 {
   return MSPPSsendCmd(link, MSPSS_CMD_SETREF);
 }
-
 
 /**
  * Send a command to the sensor
@@ -180,7 +169,6 @@ bool MSPPSsendCmd(tSensors link, ubyte command) {
 
   return writeI2C(link, MSPPS_I2CRequest);
 }
-
 
 /**
  * Set the unit of measurement to the one specified.
@@ -201,8 +189,5 @@ bool MSPPSsetUnit(tSensors link, ubyte unit) {
 
 #endif //__MSPPS_H__
 
-/*
- * $Id: mindsensors-pressure.h $
- */
 /* @} */
 /* @} */

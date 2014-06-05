@@ -1,6 +1,4 @@
-/*
- * $Id: timer-test1.c $
- */
+
 
 /** \file timer.h
  * \brief Additional timers for ROBOTC.
@@ -60,7 +58,3 @@ task main () {
     EndTimeSlice();
   }
 }
-
-/*
- * $Id: timer-test1.c $
- */

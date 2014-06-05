@@ -29,7 +29,6 @@
 
 #define DEBUG_WIFI 1
 
-
 long nRcvChars = 0;
 ubyte BytesRead[8];
 char linefeed[] = {0x0A};
@@ -39,7 +38,6 @@ char endmarker[] = {27, 'E', 0};
 long DWIFI_baudRates[] = {9600, 19200, 38400, 57600, 115200, 230400,460800, 921600};
 string DWIFIscratchString;
 tMassiveArray DWIFIscratchArray;
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -74,7 +72,6 @@ bool DWIFIcheckResult(tMassiveArray &readdata, char * caller = NULL)
   }
 }
 
-
 bool DWIFIcheckResult(tMassiveArray &readdata, short timeout, char * caller = NULL)
 {
   short len;
@@ -106,7 +103,6 @@ bool DWIFIcheckResult(tMassiveArray &readdata, short timeout, char * caller = NU
   }
 }
 
-
 short checkFailure() {
   ubyte currByte[] = {0};
   ubyte prevByte[] = {0};
@@ -124,7 +120,6 @@ short checkFailure() {
   }
   return 0;
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -153,7 +148,6 @@ void DWIFIsetEcho(bool on)
   RS485clearRead();
 }
 
-
 bool DWIFIsetVerbose(bool on)
 {
   bool res;
@@ -169,7 +163,6 @@ bool DWIFIsetVerbose(bool on)
 
   return DWIFIcheckResult(RS485rxbuffer, "DWIFIsetVerbose");
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -224,7 +217,6 @@ bool DWIFIsetAuthMode(short state)
     return RS485sendString("AT+WAUTH=1\n");
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //      WIFI:  Set WEP key.
@@ -248,7 +240,6 @@ bool DWIFIsetSSID(char *_ssid)
   return DWIFIcheckResult(RS485rxbuffer, 500, "DWIFIsetSSID");
 }
 
-
 bool DWIFIsetWEPKey(short keyindex, char *_wep_key)
 {
   writeDebugStreamLine("DWIFIsetWEPKey");
@@ -257,7 +248,6 @@ bool DWIFIsetWEPKey(short keyindex, char *_wep_key)
   sprintf(set_wep_psk_cmd, "AT+WWEP%d=%s\n", keyindex, _wep_key);
   return RS485sendString(set_wep_psk_cmd);
 }
-
 
 bool DWIFIsetWPAPSK(char *ssid, char *_wpa_key)
 {
@@ -290,7 +280,6 @@ bool getFW()
   writeDebugStreamLine("getFW");
   return RS485sendString("AT+VER=?\n");
 }
-
 
 bool getInfo() {
   writeDebugStreamLine("getInfo");
@@ -339,7 +328,6 @@ bool DWIFIsaveConfig() {
   RS485sendString("AT&Y0\n");
   return DWIFIcheckResult(RS485rxbuffer, "DWIFIsaveConfig Y0");
 }
-
 
 void DWIFIresetConfig()
 {
@@ -390,7 +378,6 @@ long DWIFIscanBaudRate() {
   RS485clearRead();
   return 0;
 }
-
 
 void DWIFIsetBAUDRate(long baudrate) {
   short index = 0;
@@ -486,11 +473,11 @@ void DWIFIwaitForIP()
           bpos = StringFind((char *)&tmp_array[0], token_begin);
           epos = StringFind((char *)&tmp_array[0], token_end);
           if (bpos > -1 && epos > -1)
-		      {
-		        writeDebugStreamLine("IP bpos: %d, epos: %d", bpos, epos);
-		        memcpy(IPscratch, (char *)&tmp_array[bpos], epos - bpos);
-		        writeDebugStreamLine("IPinfo: %s", IPscratch);
-		      }
+          {
+            writeDebugStreamLine("IP bpos: %d, epos: %d", bpos, epos);
+            memcpy(IPscratch, (char *)&tmp_array[bpos], epos - bpos);
+            writeDebugStreamLine("IPinfo: %s", IPscratch);
+          }
         }
       }
       else
@@ -502,5 +489,5 @@ void DWIFIwaitForIP()
       sleep(2000);
       playSound(soundBeepBeep);
     }
-	}
+  }
 }

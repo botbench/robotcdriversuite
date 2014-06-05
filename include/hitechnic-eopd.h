@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-eopd.h $
- */
-
 #ifndef __HTEOPD_H__
 #define __HTEOPD_H__
 /** \file hitechnic-eopd.h
@@ -74,7 +70,6 @@ short HTEOPDreadRaw(tSensors link) {
   return 1023 - SensorRaw[link];
 }
 
-
 /**
  * Get the raw value from the sensor
  * @param muxsensor the SMUX sensor port number
@@ -86,7 +81,6 @@ short HTEOPDreadRaw(tMUXSensor muxsensor) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-
 /**
  * Get the processed value from the sensor. This is obtained by using sqrt(raw value * 10)
  * @param link the HTEOPD port number
@@ -96,7 +90,6 @@ short HTEOPDreadProcessed(tSensors link) {
   short _val = sqrt(HTEOPDreadRaw(link) * 10);
   return _val;
 }
-
 
 /**
  * Get the processed value from the sensor. This is obtained by using sqrt(raw value * 10)
@@ -110,7 +103,6 @@ short HTEOPDreadProcessed(tMUXSensor muxsensor) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-
 /**
  * Set the range of the sensor to short range, this is done
  * by configuring the sensor as sensorRawValue
@@ -119,7 +111,6 @@ short HTEOPDreadProcessed(tMUXSensor muxsensor) {
 void HTEOPDsetShortRange(tSensors link) {
   SensorType[link] = HTEOPDSRType;
 }
-
 
 /**
  * Set the range of the sensor to short range, this is done
@@ -132,7 +123,6 @@ void HTEOPDsetShortRange(tMUXSensor muxsensor) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-
 /**
  * Set the range of the sensor to long range, this is done
  * by configuring the sensor as sensorLightActive and setting
@@ -142,7 +132,6 @@ void HTEOPDsetShortRange(tMUXSensor muxsensor) {
 void HTEOPDsetLongRange(tSensors link) {
   SensorType[link] = HTEOPDSRType;
 }
-
 
 /**
  * Set the range of the sensor to long range, this is done
@@ -157,8 +146,5 @@ void HTEOPDsetLongRange(tMUXSensor muxsensor) {
 
 #endif // __HTEOPD_H__
 
-/*
- * $Id: hitechnic-eopd.h $
- */
 /* @} */
 /* @} */

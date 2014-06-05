@@ -1,6 +1,4 @@
-/*
- * $Id: mightyboard.h $
- */
+
 
 #pragma systemFile            
 
@@ -26,21 +24,20 @@ short readSensor(byte _channel, byte _precision);
 short readSensor(tSensors _link, byte _channel);
 short readSensor(tSensors _link, byte _channel, byte _precision);
 
-
 // Initialise the board and configure the sensor port it is attached to
 void initBoard(tSensors _link) {
-	_board = _link;
+  _board = _link;
 }
 
 // Allows for sensors to be enabled and disabled according to the mask, 1 is on, 0 is off
 void enableSensors(byte _mask) {
-	_enabledSensors = _mask;
+  _enabledSensors = _mask;
   MCP23008setupIO(_board, MCP_I2C_ADDR, 0x0);
   MCP23008writeIO(_board, MCP_I2C_ADDR, _mask);
 }
 
 void enableSensors(tSensors _link, byte _mask) {
-	_enabledSensors = _mask;
+  _enabledSensors = _mask;
   MCP23008setupIO(_link, MCP_I2C_ADDR, 0x0);
   MCP23008writeIO(_link, MCP_I2C_ADDR, _mask);
 }
@@ -55,20 +52,15 @@ short readSensor(byte _channel, byte _precision) {
 }
 
 short readSensor(tSensors _link, byte _channel) {
-	return readSensor(_link, _channel, 12);
+  return readSensor(_link, _channel, 12);
 }
 
 short readSensor(tSensors _link, byte _channel, byte _precision) {
-	if ((_enabledSensors >> _channel) & 1) {
-	  return MAX127readChan(_link, MAX127_I2C_ADDR, _channel) >> (12 - _precision);
-	} else {
-		return -1;
-	}
+  if ((_enabledSensors >> _channel) & 1) {
+    return MAX127readChan(_link, MAX127_I2C_ADDR, _channel) >> (12 - _precision);
+  } else {
+    return -1;
+  }
 }
 
 #endif // __MIGHTYBOARD_H__
-
-/*
- * $Id: mightyboard.h $
- */
-

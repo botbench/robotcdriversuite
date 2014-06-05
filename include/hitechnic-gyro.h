@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-gyro.h $
- */
-
 #ifndef __HTGYRO_H__
 #define __HTGYRO_H__
 /** \file hitechnic-gyro.h
@@ -94,7 +90,6 @@ float HTGYROreadRot(tSensors link) {
   return (SensorValue[link] - HTGYRO_offsets[link][0]);
 }
 
-
 /**
  * Read the value of the gyro
  * @param muxsensor the SMUX sensor port number
@@ -105,7 +100,6 @@ float HTGYROreadRot(tMUXSensor muxsensor) {
   return HTSMUXreadAnalogue(muxsensor) - HTGYRO_offsets[SPORT(muxsensor)][MPORT(muxsensor)];
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Calibrate the gyro by calculating the average offset of 5 raw readings.
@@ -134,7 +128,6 @@ float HTGYROstartCal(tSensors link) {
   return HTGYRO_offsets[link][0];
 }
 
-
 /**
  * Calibrate the gyro by calculating the average offset of 50 raw readings.
  * @param muxsensor the SMUX sensor port number
@@ -158,7 +151,6 @@ float HTGYROstartCal(tMUXSensor muxsensor) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-
 /**
  * Override the current offset for the gyro manually
  * @param link the HTGYRO port number
@@ -168,7 +160,6 @@ float HTGYROstartCal(tMUXSensor muxsensor) {
 void HTGYROsetCal(tSensors link, short offset) {
   HTGYRO_offsets[link][0] = offset;
 }
-
 
 /**
  * Override the current offset for the gyro manually
@@ -182,7 +173,6 @@ void HTGYROsetCal(tMUXSensor muxsensor, short offset) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-
 /**
  * Retrieve the current offset for the gyro
  * @param link the HTGYRO port number
@@ -191,7 +181,6 @@ void HTGYROsetCal(tMUXSensor muxsensor, short offset) {
 float HTGYROreadCal(tSensors link) {
   return HTGYRO_offsets[link][0];
 }
-
 
 /**
  * Retrieve the current offset for the gyro
@@ -225,7 +214,6 @@ bool initSensor(tHTGYROPtr htgyroPtr, tSensors port)
   return true;
 }
 
-
 /**
  * Initialise the sensor's data struct and MUX port
  *
@@ -238,7 +226,7 @@ bool initSensor(tHTGYROPtr htgyroPtr, tMUXSensor muxsensor)
   memset(htgyroPtr, 0, sizeof(tHTGYROPtr));
   htgyroPtr->I2CData.type = sensorI2CCustom;
   htgyroPtr->smux = true;
-	htgyroPtr->smuxport = muxsensor;
+  htgyroPtr->smuxport = muxsensor;
 
   // Ensure the sensor is configured correctly
   if (SensorType[htgyroPtr->I2CData.port] != htgyroPtr->I2CData.type)
@@ -246,7 +234,6 @@ bool initSensor(tHTGYROPtr htgyroPtr, tMUXSensor muxsensor)
 
   return HTSMUXsetAnalogueActive(muxsensor);
 }
-
 
 /**
  * Read all the sensor's data
@@ -256,37 +243,34 @@ bool initSensor(tHTGYROPtr htgyroPtr, tMUXSensor muxsensor)
  */
 bool readSensor(tHTGYROPtr htgyroPtr)
 {
-	memset(htgyroPtr->I2CData.request, 0, sizeof(htgyroPtr->I2CData.request));
+  memset(htgyroPtr->I2CData.request, 0, sizeof(htgyroPtr->I2CData.request));
 
-	if (htgyroPtr->smux)
-		htgyroPtr->force = 1023 - HTSMUXreadAnalogue(htgyroPtr->smuxport);
-	else
-	  htgyroPtr->force = 1023 - SensorValue[htgyroPtr->I2CData.port];
+  if (htgyroPtr->smux)
+    htgyroPtr->force = 1023 - HTSMUXreadAnalogue(htgyroPtr->smuxport);
+  else
+    htgyroPtr->force = 1023 - SensorValue[htgyroPtr->I2CData.port];
 
-	  return true;
+    return true;
 }
 
 bool sensorCalibrate(tHTGYROPtr htgyroPtr)
 {
-	float avgdata = 0.0;
+  float avgdata = 0.0;
 
   // Take 50 readings and average them out
   for (short i = 0; i < 50; i++)
   {
-		if (htgyroPtr->smux)
-			avgdata += 1023 - HTSMUXreadAnalogue(htgyroPtr->smuxport);
-		else
-		  avgdata += 1023 - SensorValue[htgyroPtr->I2CData.port];
+    if (htgyroPtr->smux)
+      avgdata += 1023 - HTSMUXreadAnalogue(htgyroPtr->smuxport);
+    else
+      avgdata += 1023 - SensorValue[htgyroPtr->I2CData.port];
 
     sleep(50);
   }
- 	htgyroPtr->offset = avgdata / 50;
+   htgyroPtr->offset = avgdata / 50;
 }
 
 #endif // __HTGYRO_H__
 
-/*
- * $Id: hitechnic-gyro.h $
- */
 /* @} */
 /* @} */

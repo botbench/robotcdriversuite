@@ -1,6 +1,4 @@
-/*
- * $Id: hitechnic-colour-v2-test1.c $
- */
+
 
 /**
  * hitechnic-colour-v2.h provides an API for the HiTechnic Color V2 Sensor.  This program
@@ -64,7 +62,3 @@ task main () {
     sleep(100);
   }
 }
-
-/*
- * $Id: hitechnic-colour-v2-test1.c $
- */

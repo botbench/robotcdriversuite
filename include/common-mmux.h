@@ -5,11 +5,6 @@
  * @{
  */
 
-
-/*
- * $Id: common-mmux.h $
- */
-
 /** \file common-MMUX.h
  * \brief Commonly used types and defines used by Motor MUX drivers.
  *
@@ -54,7 +49,6 @@ typedef struct {
   byte ramping[4];      /*!< Ramp the motors, can be up, down, both */
 } mmuxDataT, tMMUXData;
 
-
 /*!< MUXmotor type, one for each permutation
  *
  * - mmotor_S1_1 means motor 1 connected to MMUX attached to sensor port 1
@@ -83,8 +77,5 @@ mmuxDataT mmuxData[4];  /*!< Holds all the MMUX info, one for each sensor port *
 
 #endif // __MMUX_H__
 
-/*
- * $Id: common-mmux.h $
- */
 /* @} */
 /* @} */

@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: eeprom.h $
- */
-
 /** \file eeprom.h
  * \brief RobotC EEPROM Driver
  *
@@ -50,7 +46,6 @@ bool EEPROMreadBytes(tSensors link, long address, tByteArray &data, short numbyt
 bool EEPROMwriteBytes(tSensors link, long address, tByteArray &data, short numbytes);
 bool _EEPROMwriteDummy(tSensors link, long address);
 
-
 /**
  * Read a number of bytes from address
  * @param link the EEPROM
@@ -75,7 +70,6 @@ bool EEPROMreadBytes(tSensors link, long address, tByteArray &data, short numbyt
   return true;
 }
 
-
 /**
  * Perform a dummy write to set address for next read
  *
@@ -94,7 +88,6 @@ bool _EEPROMwriteDummy(tSensors link, long address) {
 
   return writeI2C(link, EEPROM_I2CRequest);
 }
-
 
 /**
  * Write a single byte to address
@@ -122,8 +115,5 @@ bool EEPROMwriteBytes(tSensors link, long address, tByteArray &data, short numby
   return writeI2C(link, EEPROM_I2CRequest);
 }
 
-/*
- * $Id: eeprom.h $
- */
 /* @} */
 /* @} */

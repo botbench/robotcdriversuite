@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-colour-v2.h $
- */
-
 #ifndef __HTCS2_H__
 #define __HTCS2_H__
 /** \file hitechnic-colour-v2.h
@@ -81,7 +77,7 @@ typedef struct
   float hue;
   float saturation;
   float value;
-	ubyte _cmd;
+  ubyte _cmd;
   bool smux;
   tMUXSensor smuxport;
 } tHTCS2, *tHTCS2Ptr;
@@ -114,7 +110,6 @@ tByteArray HTCS2_I2CReply;             /*!< Array to hold I2C reply data */
 /*!< Array to hold sensor modes */
 signed byte active_mode[4] = {-1, -1, -1, -1};
 
-
 ///**
 // * Return the color number currently detected.
 // * @param link the HTCS2 port number
@@ -136,7 +131,6 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 //  return HTCS2_I2CReply[0];
 //}
 
-
 ///**
 // * Return the color number currently detected.
 // * @param muxsensor the SMUX sensor port number
@@ -156,7 +150,6 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 //  return HTCS2_I2CReply[0];
 //}
 //#endif // __HTSMUX_SUPPORT__
-
 
 ///**
 // * Get the detection levels for the three color components.
@@ -186,7 +179,6 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 //  return true;
 //}
 
-
 ///**
 // * Get the detection levels for the three color components.
 // * @param muxsensor the SMUX sensor port number
@@ -214,7 +206,6 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 //}
 //#endif // __HTSMUX_SUPPORT__
 
-
 ///**
 // * Get the detection levels for the hue, saturation, value components.
 // * @param link the HTCS port number
@@ -232,7 +223,6 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 
 //  return ret;
 //}
-
 
 ///**
 // * Get the detection levels for the hue, saturation, value components.
@@ -252,7 +242,6 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 //  return ret;
 //}
 //#endif // __HTSMUX_SUPPORT__
-
 
 ///**
 // * Get the detection level for the white channel.
@@ -277,7 +266,6 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 
 //  return true;
 //}
-
 
 ///**
 // * Get the normalised RGB readings. The normalization sets the highest
@@ -305,7 +293,6 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 
 //  return true;
 //}
-
 
 ///**
 // * Get the raw RGB readings, these are unsigned 16 bit values.
@@ -339,7 +326,6 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 //  return true;
 //}
 
-
 ///**
 // * Get the raw white channel reading, is and unsigned 16 bit value.
 // * This value will only fit in a long
@@ -368,7 +354,6 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 //  return true;
 //}
 
-
 ///**
 // * Return the color index number currently detected. This is a single
 // * 6 bit number color index. Bits 5 and 4 encode the red signal level,
@@ -392,7 +377,6 @@ signed byte active_mode[4] = {-1, -1, -1, -1};
 
 //  return HTCS2_I2CReply[0];
 //}
-
 
 ///**
 // * Send a command to the sensor to change its mode.
@@ -438,7 +422,6 @@ bool initSensor(tHTCS2Ptr htcs2Ptr, tSensors port)
   return _sensorSendCommand(htcs2Ptr);
 }
 
-
 /**
  * Initialise the sensor's data struct and MUX port
  *
@@ -452,7 +435,7 @@ bool initSensor(tHTCS2Ptr htcs2Ptr, tMUXSensor muxsensor)
   htcs2Ptr->I2CData.address = HTCS2_I2C_ADDR;
   htcs2Ptr->I2CData.type = sensorI2CCustom;
   htcs2Ptr->smux = true;
-	htcs2Ptr->smuxport = muxsensor;
+  htcs2Ptr->smuxport = muxsensor;
 
   // Ensure the sensor is configured correctly
   if (SensorType[htcs2Ptr->I2CData.port] != htcs2Ptr->I2CData.type)
@@ -460,7 +443,6 @@ bool initSensor(tHTCS2Ptr htcs2Ptr, tMUXSensor muxsensor)
 
   return HTSMUXconfigChannel(muxsensor, HTCS2_config);
 }
-
 
 /**
  * Read all the sensor's data
@@ -470,27 +452,27 @@ bool initSensor(tHTCS2Ptr htcs2Ptr, tMUXSensor muxsensor)
  */
 bool readSensor(tHTCS2Ptr htcs2Ptr)
 {
-	memset(htcs2Ptr->I2CData.request, 0, sizeof(htcs2Ptr->I2CData.request));
+  memset(htcs2Ptr->I2CData.request, 0, sizeof(htcs2Ptr->I2CData.request));
 
-	if (htcs2Ptr->smux)
-	{
-		if (!HTSMUXreadPort(htcs2Ptr->smuxport, htcs2Ptr->I2CData.reply, 4, HTCS2_COLNUM_REG))
-			return false;
-	}
-	else
-	{
-	  // Read all of the data available on the sensor
-	  htcs2Ptr->I2CData.request[0] = 2;                    // Message size
-	  htcs2Ptr->I2CData.request[1] = htcs2Ptr->I2CData.address; // I2C Address
-	  htcs2Ptr->I2CData.request[2] = HTCS2_OFFSET + HTCS2_COLNUM_REG;
-	  htcs2Ptr->I2CData.replyLen = 4;
-	  htcs2Ptr->I2CData.requestLen = 2;
+  if (htcs2Ptr->smux)
+  {
+    if (!HTSMUXreadPort(htcs2Ptr->smuxport, htcs2Ptr->I2CData.reply, 4, HTCS2_COLNUM_REG))
+      return false;
+  }
+  else
+  {
+    // Read all of the data available on the sensor
+    htcs2Ptr->I2CData.request[0] = 2;                    // Message size
+    htcs2Ptr->I2CData.request[1] = htcs2Ptr->I2CData.address; // I2C Address
+    htcs2Ptr->I2CData.request[2] = HTCS2_OFFSET + HTCS2_COLNUM_REG;
+    htcs2Ptr->I2CData.replyLen = 4;
+    htcs2Ptr->I2CData.requestLen = 2;
 
-	  if (!writeI2C(&htcs2Ptr->I2CData))
-	    return false;
-	}
+    if (!writeI2C(&htcs2Ptr->I2CData))
+      return false;
+  }
 
-	// Populate the struct with the newly retrieved data
+  // Populate the struct with the newly retrieved data
   htcs2Ptr->color = htcs2Ptr->I2CData.reply[0];
   htcs2Ptr->red = htcs2Ptr->I2CData.reply[1];
   htcs2Ptr->green = htcs2Ptr->I2CData.reply[2];
@@ -500,18 +482,15 @@ bool readSensor(tHTCS2Ptr htcs2Ptr)
   return true;
 }
 
-
 bool readSensorNorm(tHTCS2Ptr htcs2Ptr)
 {
-	return true;
+  return true;
 }
-
 
 bool readSensorRaw(tHTCS2Ptr htcs2Ptr)
 {
-	return true;
+  return true;
 }
-
 
 /**
  * Send a command to the sensor
@@ -521,7 +500,7 @@ bool readSensorRaw(tHTCS2Ptr htcs2Ptr)
  * @return true if no error occured, false if it did
  */
 bool _sensorSendCommand(tHTCS2Ptr htcs2Ptr) {
-	bool retVal = false;
+  bool retVal = false;
 
   memset(htcs2Ptr->I2CData.request, 0, sizeof(htcs2Ptr->I2CData.request));
 
@@ -536,11 +515,7 @@ bool _sensorSendCommand(tHTCS2Ptr htcs2Ptr) {
   return retVal;
 }
 
-
 #endif // __HTCS2_H__
 
-/*
- * $Id: hitechnic-colour-v2.h $
- */
 /* @} */
 /* @} */

@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-powermeter.h $
- */
-
 #ifndef __MSPM_H__
 #define __MSPM_H__
 
@@ -18,7 +14,7 @@
  * mindsensors-powermeter.h provides an API for the Mindsensors Power Meter Sensor.
  *
  * Changelog:
- *  - 0.1 Initial	release.
+ *  - 0.1 Initial  release.
  *
  * Credits:
  * - Big thanks to Mindsensors for providing me with the hardware necessary to write and test this.
@@ -36,23 +32,22 @@
 #pragma systemFile
 
 #ifndef __COMMON_H__
-	#include "common.h"
+  #include "common.h"
 #endif
 
 //*******************************************************************************
 // REGISTER LOCATIONS AND COMMANDS for the Power Meter sensor
 //*******************************************************************************
 #define MSPM_I2C_ADDR     0x12  /*!< I2C address used by the PM */
-#define MSPM_CMD_REG    	0x41  /*!< Register used for issuing commands */
+#define MSPM_CMD_REG      0x41  /*!< Register used for issuing commands */
 
 #define MSPM_PCURRENT     0x42  /*!< Present current reading in mA - 2 bytes */
-#define MSPM_PVOLTAGE 		0x44  /*!< Present current reading in mV - 2 bytes */
-#define MSPM_CAPUSED 			0x46  /*!< Capacity used since last reset in mAh - 2 bytes */
+#define MSPM_PVOLTAGE     0x44  /*!< Present current reading in mV - 2 bytes */
+#define MSPM_CAPUSED       0x46  /*!< Capacity used since last reset in mAh - 2 bytes */
 #define MSPM_TIME         0x56  /*!< Time since last reset  in ms - 4 bytes (long) */
 
 tByteArray MSPM_I2CRequest;       /*!< Array to hold I2C command data */
 tByteArray MSPM_I2CReply;         /*!< Array to hold I2C reply data */
-
 
 //*******************************************************************************
 // PUBLIC Power Meter functions
@@ -67,7 +62,6 @@ bool MSPMresetCounters(tSensors link, ubyte address = MSPM_I2C_ADDR);
 // INTERNAL USE ONLY - used by the above
 //*******************************************************************************
 bool _MSPMsendCommand(tSensors link, byte command, ubyte address);
-
 
 /**
  * This function sends a command to the Power Meter.
@@ -86,7 +80,6 @@ bool _MSPMsendCommand(tSensors link, byte command, ubyte address) {
 
   return writeI2C(link, MSPM_I2CRequest);
 }
-
 
 /**
  * Return the present current measured.
@@ -107,7 +100,6 @@ short MSPMreadCurrent(tSensors link, ubyte address) {
   return (MSPM_I2CReply[0] + (MSPM_I2CReply[1]<<8));
 }
 
-
 /**
  * Return the present voltage measured.
  * @param link the MSPM port number
@@ -126,7 +118,6 @@ short MSPMreadVoltage(tSensors link, ubyte address) {
 
   return (MSPM_I2CReply[0] + (MSPM_I2CReply[1]<<8));
 }
-
 
 /**
  * Return the present voltage and current measured.  This is a much more
@@ -172,7 +163,6 @@ long MSPMreadTime(tSensors link, ubyte address) {
   // return uByteToLong(MSPM_I2CReply[3], MSPM_I2CReply[2], MSPM_I2CReply[1], MSPM_I2CReply[0]);
 }
 
-
 /**
  * Reset all the counters.
  * @param link the MSPM port number
@@ -183,11 +173,7 @@ bool MSPMresetCounters(tSensors link, ubyte address) {
   return _MSPMsendCommand(link, 'R', address);
 }
 
-
 #endif // __MSLL_H__
 
-/*
- * $Id: mindsensors-powermeter.h $
- */
 /* @} */
 /* @} */

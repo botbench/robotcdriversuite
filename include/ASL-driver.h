@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: ASL-driver.h $
- */
-
 #ifndef __ASL_H__
 #define __ASL_H__
 /** \file ASL-driver.h
@@ -42,7 +38,6 @@
 #define REG_DYN_ANGLE 66
 #define REG_STAT_ANGLE 69
 
-
 #define ASL_I2C_ADDR        0x10      /*!< ASL I2C device address */
 #define ASL_REG_DYN_ANGLE   0x42      /*!< XXXXXXXXXXX */
 #define ASL_REG_STAT_ANGLE  0x45      /*!< XXXXXXXXXXX */
@@ -60,7 +55,6 @@ short ASLoldAngle[4] = {0, 0, 0, 0};
 
 tByteArray ASL_I2CRequest;    /*!< Array to hold I2C command data */
 tByteArray ASL_I2CReply;      /*!< Array to hold I2C reply data */
-
 
 /**
  * Read the angle value, 90 indicates no sound or sound straight ahead.
@@ -85,7 +79,6 @@ short ASLreadAngle(tSensors link, byte reg, bool reversed) {
   return angle;
 }
 
-
 /**
  * Read the static angle value, 90 indicates no sound or sound straight ahead.
  * @param link the ASL port number
@@ -96,9 +89,6 @@ short ASLreadStaticAngle(tSensors link, bool reversed) {
   return ASLreadAngle(link, ASL_REG_STAT_ANGLE, reversed);
 }
 
-
-
-
 /**
  * Read the dynamic angle value, 90 indicates no sound or sound straight ahead.
  * @param link the ASL port number
@@ -108,8 +98,6 @@ short ASLreadStaticAngle(tSensors link, bool reversed) {
 short ASLreadDynamicAngle(tSensors link, bool reversed) {
   return ASLreadAngle(link, ASL_REG_DYN_ANGLE, reversed);
 }
-
-
 
 short ASLreadThresholdAngle(tSensors link, ubyte threshold, bool reversed)
 {
@@ -129,7 +117,6 @@ short ASLreadThresholdAngle(tSensors link, ubyte threshold, bool reversed)
   return -1;
 }
 
-
 /**
  * Read the mic values.
  * @param link the ASL port number
@@ -143,26 +130,24 @@ bool ASLreadMICS(tSensors link, short &rmic, short &lmic, short &bmic, bool reve
 
   memset(ASL_I2CRequest, 0, sizeof(tByteArray));
 
-
   ASL_I2CRequest[0] = 2;                 // Message size
   ASL_I2CRequest[1] = ASL_I2C_ADDR;      // I2C Address
 
   // You can only read one byte at a time.
   for (short i = 0; i < 3; i++) {
-	  ASL_I2CRequest[2] = ASL_REG_RIGHT_MIC + i; // Read the appropriate mic register
+    ASL_I2CRequest[2] = ASL_REG_RIGHT_MIC + i; // Read the appropriate mic register
 
-	  if (!writeI2C(link, ASL_I2CRequest, ASL_I2CReply, 1))
-	    return false;
+    if (!writeI2C(link, ASL_I2CRequest, ASL_I2CReply, 1))
+      return false;
 
-	  micvalues[i] = (short)ASL_I2CReply[0] & 0xFF;
-	}
+    micvalues[i] = (short)ASL_I2CReply[0] & 0xFF;
+  }
 
   rmic = (reversed) ? micvalues[1] : micvalues[0];
   lmic = (reversed) ? micvalues[0] : micvalues[1];
   bmic = micvalues[2];
   return true;
 }
-
 
 short ASLcalibrateLevel(tSensors link)
 {
@@ -172,22 +157,19 @@ short ASLcalibrateLevel(tSensors link)
 
   ASL_I2CRequest[0] = 2;                 // Message size
   ASL_I2CRequest[1] = ASL_I2C_ADDR;      // I2C Address
-	ASL_I2CRequest[2] = ASL_REG_COMBO_MIC; // Read the appropriate mic register
+  ASL_I2CRequest[2] = ASL_REG_COMBO_MIC; // Read the appropriate mic register
 
-	for (short i = 0; i < 100; i++) {
-	  if (!writeI2C(link, ASL_I2CRequest, ASL_I2CReply, 1))
-	    return 0;
+  for (short i = 0; i < 100; i++) {
+    if (!writeI2C(link, ASL_I2CRequest, ASL_I2CReply, 1))
+      return 0;
 
-	  total += (short)ASL_I2CReply[0] & 0xFF;
-	  sleep(5);
-	}
-	return total / 100;
+    total += (short)ASL_I2CReply[0] & 0xFF;
+    sleep(5);
+  }
+  return total / 100;
 }
 
 #endif // __ASL_H__
 
-/*
- * $Id: ASL-driver.h $
- */
 /* @} */
 /* @} */

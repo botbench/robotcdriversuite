@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-touchpanel.h $
- */
-
 #ifndef __MSTP_H__
 #define __MSTP_H__
 
@@ -18,7 +14,7 @@
  * mindsensors-touchpanel.h provides an API for the Mindsensors TouchPanel.
  *
  * Changelog:
- *  - 0.1 Initial	release.
+ *  - 0.1 Initial  release.
  *
  * Credits:
  * - Big thanks to Mindsensors for providing me with the hardware necessary to write and test this.
@@ -36,7 +32,7 @@
 #pragma systemFile
 
 #ifndef __COMMON_H__
-	#include "common.h"
+  #include "common.h"
 #endif
 
 #define MSTP_I2C_ADDR     0x04
@@ -87,12 +83,10 @@ tByteArray MSTP_I2CReply;      /*!< Array to hold I2C reply data */
 #define isButtonR3Touched(X) (X >> BUTTON_R3) & 0x01  /*!< Check if the R3 button is pressed */
 #define isButtonR4Touched(X) (X >> BUTTON_R4) & 0x01  /*!< Check if the R4 button is pressed */
 
-
 bool MSTPgetTouch(tSensors link, short &x, short &y, ubyte &buttons, ubyte addr = MSTP_I2C_ADDR);
 bool MSTPsendCmd(tSensors link, ubyte cmd, ubyte addr = MSTP_I2C_ADDR);
 
 #define MSTPresetCalibration(x) MSTPsendCmd(tSensors link, ubyte cmd, ubyte addr = MSTP_I2C_ADDR);
-
 
 /**
  * Fetch all the information from the TouchPanel, including
@@ -122,7 +116,6 @@ bool MSTPgetTouch(tSensors link, short &x, short &y, ubyte &buttons, ubyte addr)
   return true;
 }
 
-
 /**
  * Send a command to the TouchPanel
  * @param link the TouchPanel port number
@@ -142,7 +135,6 @@ bool MSTPsendCmd(tSensors link, ubyte cmd, ubyte addr)
   return writeI2C(link, MSTP_I2CRequest);
 }
 
-
 /*
 short MSTPgetGesture(tSensors link)
 {
@@ -161,13 +153,9 @@ short MSTPgetGesture(tSensors link)
   if (MSTP_I2CReply[0] == 0)
     return 0;
 
-
 }
 */
 #endif // __MSTP_H__
 
-/*
- * $Id: mindsensors-touchpanel.h $
- */
 /* @} */
 /* @} */

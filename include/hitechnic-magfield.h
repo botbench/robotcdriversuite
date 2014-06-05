@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-magfield.h $
- */
-
 #ifndef __HTMAG_H__
 #define __HTMAG_H__
 /** \file hitechnic-magfield.h
@@ -73,7 +69,6 @@ short HTMAGreadVal(tSensors link) {
   return (SensorValue[link] - HTMAG_bias[link][0]);
 }
 
-
 /**
  * Read the value of the Magnetic Field Sensor
  * @param muxsensor the SMUX sensor port number
@@ -84,7 +79,6 @@ short HTMAGreadVal(tMUXSensor muxsensor) {
   return HTSMUXreadAnalogue(muxsensor) - HTMAG_bias[SPORT(muxsensor)][MPORT(muxsensor)];
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Read the raw value of the Magnetic Field Sensor
@@ -101,7 +95,6 @@ short HTMAGreadRaw(tSensors link) {
   return SensorValue[link];
 }
 
-
 /**
  * Read the raw value of the Magnetic Field Sensor
  * @param muxsensor the SMUX sensor port number
@@ -112,7 +105,6 @@ short HTMAGreadRaw(tMUXSensor muxsensor) {
   return HTSMUXreadAnalogue(muxsensor);
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Calibrate the sensor by calculating the average bias of 5 raw readings.
@@ -141,7 +133,6 @@ short HTMAGstartCal(tSensors link) {
   return HTMAG_bias[link][0];
 }
 
-
 /**
  * Calibrate the Magnetic Field Sensor by calculating the average bias of 5 raw readings.
  * @param muxsensor the SMUX sensor port number
@@ -165,7 +156,6 @@ short HTMAGstartCal(tMUXSensor muxsensor) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-
 /**
  * Override the current bias for the sensor manually
  * @param link the HTMAG port number
@@ -174,7 +164,6 @@ short HTMAGstartCal(tMUXSensor muxsensor) {
 void HTMAGsetCal(tSensors link, short bias) {
   HTMAG_bias[link][0] = bias;
 }
-
 
 /**
  * Override the current bias for the sensor manually
@@ -187,7 +176,6 @@ void HTMAGsetCal(tMUXSensor muxsensor, short bias) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-
 /**
  * Retrieve the current bias for the sensor
  * @param link the HTMAG port number
@@ -196,7 +184,6 @@ void HTMAGsetCal(tMUXSensor muxsensor, short bias) {
 short HTMAGreadCal(tSensors link) {
   return HTMAG_bias[link][0];
 }
-
 
 /**
  * Retrieve the current bias for the sensor
@@ -209,11 +196,7 @@ short HTMAGreadCal(tMUXSensor muxsensor) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-
 #endif // __HTMAG_H__
 
-/*
- * $Id: hitechnic-magfield.h $
- */
 /* @} */
 /* @} */

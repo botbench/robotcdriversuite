@@ -4,9 +4,6 @@
  * HiTechnic SuperPro Prototype Board
  * @{
  */
-/*
- * $Id: hitechnic-superpro.h $
- */
 
 #ifndef __HTSPB_H__
 #define __HTSPB_H__
@@ -62,7 +59,6 @@
 #define HTSPB_DACO0    0x10      /*!< Address of analog parameters output O0 */
 #define HTSPB_DACO1    0x15      /*!< Address of analog parameters output O1 */
 
-
 // SuperPro Analog output modes
 #define DAC_MODE_DCOUT        0 /*!< Steady (DC) voltage output. */
 #define DAC_MODE_SINEWAVE     1 /*!< Sine wave output. */
@@ -71,8 +67,6 @@
 #define DAC_MODE_SAWNEGWAVE   4 /*!< Negative going sawtooth output. */
 #define DAC_MODE_TRIANGLEWAVE 5 /*!< Triangle wave output. */
 #define DAC_MODE_PWMVOLTAGE   6 /*!< PWM square wave output. */
-
-
 
 tByteArray HTSPB_I2CRequest;    /*!< Array to hold I2C command data */
 tByteArray HTSPB_I2CReply;      /*!< Array to hold I2C reply data */
@@ -103,7 +97,6 @@ ubyte HTSPBreadIO(tSensors link, ubyte mask) {
   return HTSPB_I2CReply[0] & mask;
 }
 
-
 /**
  * Write the values the digital outpus as specified by the mask.
  * @param link the HTSPB port number
@@ -118,10 +111,8 @@ bool HTSPBwriteIO(tSensors link, ubyte mask) {
   HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_DIGOUT; // Start digital output read address
   HTSPB_I2CRequest[3] = mask;                      // The specified digital ports
 
-
   return writeI2C(link, HTSPB_I2CRequest);
 }
-
 
 /**
  * Configure the ports for input or output according to the mask.
@@ -139,7 +130,6 @@ bool HTSPBsetupIO(tSensors link, ubyte mask) {
 
   return writeI2C(link, HTSPB_I2CRequest);
 }
-
 
 /**
  * Read the value of the specified analogue channel.
@@ -171,8 +161,6 @@ short HTSPBreadADC(tSensors link, byte channel, byte width) {
 
   return _adcVal;
 }
-
-
 
 /**
  * This function read the value of all of the analogue channels.
@@ -213,8 +201,6 @@ bool HTSPBreadAllADC(tSensors link, short &adch0, short &adch1, short &adch2, sh
   return true;
 }
 
-
-
 /**
  * Write to the analog output.
  * @param link the HTSPB port number
@@ -239,12 +225,7 @@ bool HTSPBwriteAnalog(tSensors link, byte dac, byte mode, short freq, short volt
   return writeI2C(link, HTSPB_I2CRequest);
 }
 
-
-
 #endif // __HTSPB_H__
 
-/*
- * $Id: hitechnic-superpro.h $
- */
 /* @} */
 /* @} */

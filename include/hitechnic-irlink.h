@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-irlink.h $
- */
-
 #ifndef _HTIRL_H_
 #define _HTIRL_H_
 /** \file hitechnic-irlink.h
@@ -103,7 +99,6 @@ typedef enum {
   pfmotor_S4_C4_B,      /*!< Motor B, Channel 4, IR Link connected to S4 */
 } tPFmotor;
 
-
 /*!< PWM Mode commands */
 typedef enum {
   MOTOR_FLOAT = 0,      /*!< Float the motor */
@@ -144,7 +139,6 @@ void transmitIR(tSensors link, tByteArray &oBuffer, short channel);
 void decToBin(short number, short length, string &output);
 void debugIR(tByteArray &data);
 
-
 /**
  * Returns a binary representation in a string of an short with specified length
  *
@@ -162,7 +156,6 @@ void decToBin(short number, short length, string &output) {
     number = number << 1;
   }
 }
-
 
 /**
  * Print out the buffer in question to the screen using the following format:
@@ -191,7 +184,6 @@ void debugIR(tByteArray &data) {
   sleep(10000);
 }
 #endif // _DEBUG_DRIVER_
-
 
 /**
  * Control two motors using the ComboDirectMode.  This mode does not allow for fine grained
@@ -229,7 +221,6 @@ void PFcomboDirectMode(tSensors link, short channel, eCDMMotorCommand _motorB, e
 
   transmitIR(link, _oBuffer, channel);
 }
-
 
 /*
   =============================================================================
@@ -276,7 +267,6 @@ void PFcomboPwmMode(tSensors link, short channel, ePWMMotorCommand _motorB, ePWM
   transmitIR(link, _oBuffer, channel);
 }
 
-
 /*
   =============================================================================
   Single Pin Output Mode
@@ -322,7 +312,6 @@ void PFsinglePinOutputMode(tSensors link, ubyte channel, ubyte _motor, ePWMMotor
   transmitIR(link, _oBuffer, channel);
 }
 
-
 /**
  * Control one motor with no timeout. This mode allows for fine grained
  * speed control.
@@ -332,7 +321,6 @@ void PFsinglePinOutputMode(tSensors link, ubyte channel, ubyte _motor, ePWMMotor
 void PFMotor(tPFmotor pfmotor, ePWMMotorCommand _motorCmd) {
   PFsinglePinOutputMode((tSensors)PFSPORT(pfmotor), (ubyte)PFCHAN(pfmotor), (ubyte)PFMOT(pfmotor), _motorCmd);
 }
-
 
 /**
  * Encode the input buffer into a special format for the IRLink.
@@ -376,7 +364,6 @@ void encodeBuffer(tByteArray &iBuffer, tByteArray &oBuffer) {
   oBuffer[_oByteIdx] += (1 << _oBitIdx);
 
 }
-
 
 /**
  * Send the command to the IRLink Sensor for transmission.
@@ -428,8 +415,5 @@ void transmitIR(tSensors link, tByteArray &oBuffer, short channel) {
 
 #endif // _HTIRL_H_
 
-/*
- * $Id: hitechnic-irlink.h $
- */
 /* @} */
 /* @} */

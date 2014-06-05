@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: lego-ultrasound.h $
- */
-
 #ifndef __LEGOUS_H__
 #define __LEGOUS_H__
 /** \file lego-ultrasound.h
@@ -76,7 +72,6 @@ short USreadDist(tMUXSensor muxsensor) {
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
     HTSMUXconfigChannel(muxsensor, LEGOUS_config);
 
-
   if (!HTSMUXreadPort(muxsensor, LEGOUS_I2CReply, 1, 0)) {
     return 255;
   }
@@ -84,7 +79,6 @@ short USreadDist(tMUXSensor muxsensor) {
   return (short)LEGOUS_I2CReply[0];
 }
 #endif
-
 
 /**
  * Get the distance values from the sensor
@@ -103,7 +97,6 @@ short USreadDist(tSensors link) {
 
   return LEGOUS_I2CReply[0];
 }
-
 
 /**
  * Get the distance values from the sensor. The distances to the
@@ -126,7 +119,6 @@ bool USreadDistances(tSensors link, tByteArray &distances) {
   return true;
 }
 
-
 /**
  * Send a command to the US Sensor
  *
@@ -146,7 +138,6 @@ bool _USsendCmd(tSensors link, ubyte command) {
   return writeI2C(link, LEGOUS_I2CRequest);
 }
 
-
 /**
  * Configure the US sensor for Single Shot mode
  * @param link the US port number
@@ -155,7 +146,6 @@ bool _USsendCmd(tSensors link, ubyte command) {
 bool USsetSingleMode(tSensors link) {
   return _USsendCmd(link, LEGOUS_CMD_SSHOT);
 }
-
 
 /**
  * Configure the US sensor for Continuous Mode.  This is the default.
@@ -166,7 +156,6 @@ bool USsetContinuousMode(tSensors link) {
   return _USsendCmd(link, LEGOUS_CMD_CONT);
 }
 
-
 /**
  * Turn the sensor off.
  * @param link the US port number
@@ -176,7 +165,6 @@ bool USsetOff(tSensors link){
   return _USsendCmd(link, LEGOUS_CMD_OFF);
 }
 
-
 /**
  * Configure the US sensor for Event Capture mode
  * @param link the US port number
@@ -185,7 +173,6 @@ bool USsetOff(tSensors link){
 bool USsetEventCapture(tSensors link) {
   return _USsendCmd(link, LEGOUS_CMD_ECAPT);
 }
-
 
 /**
  * Request a warm reset of the sensor.
@@ -198,8 +185,5 @@ bool USreset(tSensors link) {
 
 #endif // __LEGOSNR_H__
 
-/*
- * $Id: lego-ultrasound.h $
- */
 /* @} */
 /* @} */

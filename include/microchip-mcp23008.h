@@ -5,11 +5,6 @@
  * @{
  */
 
-/*
- * $Id: microchip-mcp23008.h $
- */
-
-
 #ifndef __MCP23008_H__
 #define __MCP23008_H__
 /** \file microchip-mcp23008.h
@@ -186,8 +181,5 @@ bool MCP23008writeIO(tSensors link, byte addr, byte mask) {
 
 #endif // __MCP23008_H__
 
-/*
- * $Id: microchip-mcp23008.h $
- */
 /* @} */
 /* @} */

@@ -41,8 +41,8 @@ task main() {
   sleep(2000);
   eraseDisplay();
 
-	drawLine(0, 27, 99, 27);
-	drawLine(0, 52, 99, 52);
+  drawLine(0, 27, 99, 27);
+  drawLine(0, 52, 99, 52);
 
   while (true) {
     //eraseDisplay();

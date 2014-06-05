@@ -4,9 +4,6 @@
  * Firgelli Linear Actuator driver
  * @{
  */
-/*
- * $Id: firgelli-linearact.h $
- */
 
 #ifndef __FLAC_H__
 #define __FLAC_H__
@@ -44,7 +41,6 @@ long _motorHighPower[3] = {0, 0, 0};      /*!< High Power - top speed of the mot
 bool _stalled[3] = {false, false, false}; /*!< Are we stalling? - INTERNAL */
 bool _inverted[3] = {false, false, false};/*!< Are we reversing the motors? - INTERNAL */
 
-
 // tasks
 task _FLACcontrolTaskA();
 task _FLACcontrolTaskB();
@@ -61,7 +57,6 @@ void FLACtretractLA(tMotor _motor, short _highPower);
 void FLACtretractLA(tMotor _motor, short _highPower, short distance);
 void FLACmoveLA(tMotor _motor, short highpower, short pos);
 void FLACsetInverse(tMotor _motor);
-
 
 // Task to control motor A
 task _FLACcontrolTaskA() {
@@ -118,7 +113,6 @@ task _FLACcontrolTaskA() {
   motor[motorA] = 0; //turn motor off
 }
 
-
 // Task to control motor B
 task _FLACcontrolTaskB() {
   long _currentEncVal;                // _currentEncVal encoder value
@@ -173,7 +167,6 @@ task _FLACcontrolTaskB() {
   }
   motor[motorB] = 0; //turn motor off
 }
-
 
 // Task to control motor C
 task _FLACcontrolTaskC() {
@@ -230,7 +223,6 @@ task _FLACcontrolTaskC() {
   motor[motorC] = 0; //turn motor off
 }
 
-
 /**
  * Stop and start the motor control tasks and set their parameters.
  *
@@ -285,7 +277,6 @@ void _FLACcontrolTasks(tMotor _motor, short _highPower, long _encTarget) {
   }
 }
 
-
 /**
  * Stop the current operation
  * @param _motor the motor to be stopped
@@ -298,7 +289,6 @@ void FLACstopLA(tMotor _motor)
     case motorC: stopTask(_FLACcontrolTaskB); motor[_motor] = 0; break;
   }
 }
-
 
 /**
  * Check if the motor is done with the current operation
@@ -314,7 +304,6 @@ bool isDone(tMotor _motor) {
   return false;
 }
 
-
 /**
  * Check if the motor stalled on the last operation
  * @param _motor the motor to be checked
@@ -323,7 +312,6 @@ bool isDone(tMotor _motor) {
 bool isStalled(tMotor _motor) {
   return _stalled[_motor];
 }
-
 
 /**
  * Extend the Linear Actuator fully until stalled.
@@ -335,7 +323,6 @@ void FLACextendLA(tMotor _motor, short _highPower) {
   _FLACcontrolTasks(_motor, _highPower, -210);
   _stalled[_motor] = false;
 }
-
 
 /**
  * Extend the Linear Actuator.
@@ -349,7 +336,6 @@ void FLACextendLA(tMotor _motor, short _highPower, short distance) {
   _stalled[_motor] = false;
 }
 
-
 /**
  * Retract the Linear Actuator fully until stalled. It is wise to reset
  * the encoder count for that motor afterwards.
@@ -361,7 +347,6 @@ void FLACretractLA(tMotor _motor, short _highPower) {
   _FLACcontrolTasks(_motor, _highPower, distance);
  _stalled[_motor] = false;
 }
-
 
 /**
  * Retract the Linear Actuator.
@@ -375,7 +360,6 @@ void FLACtretractLA(tMotor _motor, short _highPower, short distance) {
   _stalled[_motor] = false;
 }
 
-
 /**
  * Move the Linear Actuator to an absolute position
  * @param _motor the motor to be controlled
@@ -385,7 +369,6 @@ void FLACtretractLA(tMotor _motor, short _highPower, short distance) {
 void FLACmoveLA(tMotor _motor, short highpower, short pos) {
   _FLACcontrolTasks(_motor, highpower, pos);
 }
-
 
 /**
  * Invert the LA's movement
@@ -397,11 +380,7 @@ void FLACsetInverse(tMotor _motor, bool invert)
   _inverted[_motor] = invert;
 }
 
-
 #endif // __FLAC_H__
 
-/*
- * $Id: firgelli-linearact.h $
- */
 /* @} */
 /* @} */

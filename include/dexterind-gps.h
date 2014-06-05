@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: dexterind-gps.h $
- */
-
 #ifndef __DGPS_H__
 #define __DGPS_H__
 /** \file dexterind-gps.h
@@ -54,7 +50,6 @@
 #define DGPS_CMD_SLAT   0x0B      /*!< Set latitude of destination */
 #define DGPS_CMD_SLONG  0x0C      /*!< Set longitude of destination */
 
-
 bool DGPSreadStatus(tSensors link);
 long DGPSreadUTC(tSensors link);
 long DGPSreadLatitude(tSensors link);
@@ -92,11 +87,9 @@ long _DGPSreadRegister(tSensors link, unsigned byte command, short replysize) {
   return 0;
 }
 
-
 bool DGPSreadStatus(tSensors link) {
   return (_DGPSreadRegister(link, DGPS_CMD_STATUS, 1) == 1) ? true : false;
 }
-
 
 /**
  * Read the time returned by the GPS in UTC.
@@ -107,7 +100,6 @@ long DGPSreadUTC(tSensors link) {
   return _DGPSreadRegister(link, DGPS_CMD_UTC, 4);
 }
 
-
 /**
  * Read the current location's latitude in decimal degree format
  * @param link the DGPS port number
@@ -116,7 +108,6 @@ long DGPSreadUTC(tSensors link) {
 long DGPSreadLatitude(tSensors link) {
   return _DGPSreadRegister(link, DGPS_CMD_LAT, 4);
 }
-
 
 /**
  * Read the current location's longitude in decimal degree format
@@ -127,7 +118,6 @@ long DGPSreadLongitude(tSensors link) {
   return _DGPSreadRegister(link, DGPS_CMD_LONG, 4);
 }
 
-
 /**
  * Read the current velocity in cm/s
  * @param link the DGPS port number
@@ -136,7 +126,6 @@ long DGPSreadLongitude(tSensors link) {
 short DGPSreadVelocity(tSensors link) {
   return _DGPSreadRegister(link, DGPS_CMD_VELO, 3);
 }
-
 
 /**
  * Read the current heading in degrees
@@ -147,7 +136,6 @@ short DGPSreadHeading(tSensors link) {
   return _DGPSreadRegister(link, DGPS_CMD_HEAD, 2);
 }
 
-
 /**
  * Angle to destination
  * @param link the DGPS port number
@@ -156,7 +144,6 @@ short DGPSreadHeading(tSensors link) {
 short DGPSreadRelHeading(tSensors link) {
   return _DGPSreadRegister(link, DGPS_CMD_ANGD, 2);
 }
-
 
 /**
  * Angle travelled since last request, resets the request coordinates on the
@@ -167,7 +154,6 @@ short DGPSreadRelHeading(tSensors link) {
 short DGPSreadTravHeading(tSensors link) {
   return _DGPSreadRegister(link, DGPS_CMD_ANGR, 2);
 }
-
 
 /**
  * Set the destination coordinates
@@ -204,7 +190,6 @@ bool DGPSsetDestination(tSensors link, long latitude, long longitude) {
   return writeI2C(link, DGPS_I2CRequest);
 }
 
-
 /**
  * Distance to destination in meters
  * @param link the DGPS port number
@@ -216,8 +201,5 @@ short DGPSreadDistToDestination(tSensors link) {
 
 #endif // __DGPS_H__
 
-/*
- * $Id: dexterind-gps.h $
- */
 /* @} */
 /* @} */

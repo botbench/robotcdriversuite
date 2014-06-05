@@ -38,94 +38,92 @@ long currEncMotorB = 0;
 long prevEncMotorC = 0;
 long currEncMotorC = 0;
 
-
 task updateScreen()
 {
-	while(true)
-	{
-		displayTextLine(0, "Stat: %s", connStatus);
-		displayTextLine(1, "%s",IPaddress);
-		displayTextLine(2, "-------------------");
-		displayTextLine(3, "%s", dataStrings[0]);
-		displayTextLine(4, "%s", dataStrings[1]);
-		displayTextLine(5, "%s", dataStrings[2]);
-		displayTextLine(6, "%s", dataStrings[3]);
-		displayTextLine(7, "%s", dataStrings[4]);
-		sleep(100);
-	}
+  while(true)
+  {
+    displayTextLine(0, "Stat: %s", connStatus);
+    displayTextLine(1, "%s",IPaddress);
+    displayTextLine(2, "-------------------");
+    displayTextLine(3, "%s", dataStrings[0]);
+    displayTextLine(4, "%s", dataStrings[1]);
+    displayTextLine(5, "%s", dataStrings[2]);
+    displayTextLine(6, "%s", dataStrings[3]);
+    displayTextLine(7, "%s", dataStrings[4]);
+    sleep(100);
+  }
 }
 
 void handleColour(ubyte state)
 {
-	switch (state)
-	{
-	case 3: SensorType[COLOUR] = sensorColorNxtFULL;
-		break;
-	case 4: SensorType[COLOUR] = sensorColorNxtRED;
-		break;
-	case 5: SensorType[COLOUR] = sensorColorNxtGREEN;
-		break;
-	case 6: SensorType[COLOUR] = sensorColorNxtBLUE;
-		break;
-	case 7: SensorType[COLOUR] = sensorColorNxtNONE;
-		break;
-	}
+  switch (state)
+  {
+  case 3: SensorType[COLOUR] = sensorColorNxtFULL;
+    break;
+  case 4: SensorType[COLOUR] = sensorColorNxtRED;
+    break;
+  case 5: SensorType[COLOUR] = sensorColorNxtGREEN;
+    break;
+  case 6: SensorType[COLOUR] = sensorColorNxtBLUE;
+    break;
+  case 7: SensorType[COLOUR] = sensorColorNxtNONE;
+    break;
+  }
 }
 
 void doStraight(ubyte state)
 {
-	motor[MOT_LEFT]  = state * DRIVESPEED;
-	motor[MOT_RIGHT] = state * DRIVESPEED;
+  motor[MOT_LEFT]  = state * DRIVESPEED;
+  motor[MOT_RIGHT] = state * DRIVESPEED;
 }
 
 void doRight(ubyte state)
 {
-	motor[MOT_LEFT]  = state *   TURNSPEED;
-	motor[MOT_RIGHT] = state * -TURNSPEED;
+  motor[MOT_LEFT]  = state *   TURNSPEED;
+  motor[MOT_RIGHT] = state * -TURNSPEED;
 }
 
 void doStop(ubyte state)
 {
-	motor[MOT_LEFT]  = 0;
-	motor[MOT_RIGHT] = 0;
+  motor[MOT_LEFT]  = 0;
+  motor[MOT_RIGHT] = 0;
 }
 
 void doLeft(ubyte state)
 {
-	motor[MOT_LEFT]  = state * -TURNSPEED;
-	motor[MOT_RIGHT] = state *  TURNSPEED;
+  motor[MOT_LEFT]  = state * -TURNSPEED;
+  motor[MOT_RIGHT] = state *  TURNSPEED;
 }
 
 void doReverse(ubyte state)
 {
-	motor[MOT_LEFT]  = state * -DRIVESPEED;
-	motor[MOT_RIGHT] = state * -DRIVESPEED;
+  motor[MOT_LEFT]  = state * -DRIVESPEED;
+  motor[MOT_RIGHT] = state * -DRIVESPEED;
 }
 
 void doAction(ubyte state)
 {
-	motor[MOT_ACTION] = state * SHOOTSPEED;
+  motor[MOT_ACTION] = state * SHOOTSPEED;
 }
-
 
 task main ()
 {
-	ubyte type;
-	ubyte ID;
-	ubyte state;
-	ubyte value;
-	string dataString;
-	string tmpString;
+  ubyte type;
+  ubyte ID;
+  ubyte state;
+  ubyte value;
+  string dataString;
+  string tmpString;
 
-	// initialise the port, etc
-	RS485initLib();
+  // initialise the port, etc
+  RS485initLib();
 
-	startTask(updateScreen);
+  startTask(updateScreen);
 
-	// Disconnect if already connected
-	N2WDisconnect();
-	N2WchillOut();
-	sleep(1000);
+  // Disconnect if already connected
+  N2WDisconnect();
+  N2WchillOut();
+  sleep(1000);
   if (!N2WCustomExist())
   {
     stopTask(updateScreen);
@@ -140,136 +138,136 @@ task main ()
 
   N2WLoad();
 
-	sleep(100);
+  sleep(100);
 
-	N2WConnect(true);
-	connStatus = "connecting";
+  N2WConnect(true);
+  connStatus = "connecting";
 
-	while (!N2WConnected()) sleep(100);
-	sleep(1000);
+  while (!N2WConnected()) sleep(100);
+  sleep(1000);
 
-	connStatus = "connected";
-	playSound(soundBeepBeep);
+  connStatus = "connected";
+  playSound(soundBeepBeep);
 
-	sleep(3000);
-	N2WgetIP(IPaddress);
+  sleep(3000);
+  N2WgetIP(IPaddress);
 
-	sleep(1000);
-	//                123456789012345
-	dataStrings[0] = "Tch | Snr | Clr";
-	//                on  | 011 |   1"
-	while (true)
-	{
-		if (N2WreadWS(type, ID, state, value))
-		{
-			writeDebugStreamLine("btn: %d, state: %d", ID, state);
-			switch (ID)
-			{
-			case 1: doStraight(state); break;
-			case 3: doRight(state); break;
-			case 4: doStop(state); break;
-			case 5: doLeft(state); break;
-			case 7: doReverse(state); break;
-			case 9: doAction(state); break;
-			case 11: handleColour(state); break;
-			default: break;
-			}
-		}
+  sleep(1000);
+  //                123456789012345
+  dataStrings[0] = "Tch | Snr | Clr";
+  //                on  | 011 |   1"
+  while (true)
+  {
+    if (N2WreadWS(type, ID, state, value))
+    {
+      writeDebugStreamLine("btn: %d, state: %d", ID, state);
+      switch (ID)
+      {
+      case 1: doStraight(state); break;
+      case 3: doRight(state); break;
+      case 4: doStop(state); break;
+      case 5: doLeft(state); break;
+      case 7: doReverse(state); break;
+      case 9: doAction(state); break;
+      case 11: handleColour(state); break;
+      default: break;
+      }
+    }
 
-		// All values are only updated when they've changed.
-		// This cuts backs drastically on the number of messages
-		// that have to be sent to the NXT2WIFI
+    // All values are only updated when they've changed.
+    // This cuts backs drastically on the number of messages
+    // that have to be sent to the NXT2WIFI
 
-		// Fetch the state of the Touch Sensor
-		// This value is displayed by field 0 (in0) on the page
-		currTouchState = SensorBoolean[TOUCH];
-		if (currTouchState != prevTouchState)
-		{
-		  memset(data, 0, sizeof(data));
-			data[0] = (currTouchState) ? '1' : '0';
-			N2WwriteWS(1, 0, data, 2);
-			prevTouchState = currTouchState;
-			N2WchillOut();
-		}
+    // Fetch the state of the Touch Sensor
+    // This value is displayed by field 0 (in0) on the page
+    currTouchState = SensorBoolean[TOUCH];
+    if (currTouchState != prevTouchState)
+    {
+      memset(data, 0, sizeof(data));
+      data[0] = (currTouchState) ? '1' : '0';
+      N2WwriteWS(1, 0, data, 2);
+      prevTouchState = currTouchState;
+      N2WchillOut();
+    }
 
-		// Fetch the currently detected colour.
-		// This value is displayed by field 1 (in1) on the page
-		currDetectedColour = SensorValue[COLOUR];
-		if (currDetectedColour != prevDetectedColour)
-		{
-			sprintf(dataString, "%d", currDetectedColour);
-			memcpy(data, dataString, strlen(dataString));
-			N2WwriteWS(1, 1, data, strlen(dataString));
-			prevDetectedColour = currDetectedColour;
-			N2WchillOut();
-		}
+    // Fetch the currently detected colour.
+    // This value is displayed by field 1 (in1) on the page
+    currDetectedColour = SensorValue[COLOUR];
+    if (currDetectedColour != prevDetectedColour)
+    {
+      sprintf(dataString, "%d", currDetectedColour);
+      memcpy(data, dataString, strlen(dataString));
+      N2WwriteWS(1, 1, data, strlen(dataString));
+      prevDetectedColour = currDetectedColour;
+      N2WchillOut();
+    }
 
-		// Fetch the distance detected by the sonar sensor
-		// This value is displayed by field 2 (in2) on the page
-		currSonarDistance = SensorValue[SONAR];
-		if (currSonarDistance != prevSonarDistance)
-		{
-			sprintf(dataString, "%d", currSonarDistance);
-			memcpy(data, dataString, strlen(dataString));
-			N2WwriteWS(1, 2, data, strlen(dataString));
-			prevSonarDistance = currSonarDistance;
-			N2WchillOut();
-		}
+    // Fetch the distance detected by the sonar sensor
+    // This value is displayed by field 2 (in2) on the page
+    currSonarDistance = SensorValue[SONAR];
+    if (currSonarDistance != prevSonarDistance)
+    {
+      sprintf(dataString, "%d", currSonarDistance);
+      memcpy(data, dataString, strlen(dataString));
+      N2WwriteWS(1, 2, data, strlen(dataString));
+      prevSonarDistance = currSonarDistance;
+      N2WchillOut();
+    }
 
-		// Fetch the tacho count for motor A
-		// This value is displayed by field 3 (in3) on the page
-		currEncMotorA = nMotorEncoder[MOT_ACTION];
-		if (currEncMotorA != prevEncMotorA)
-		{
-			sprintf(dataString, "%d", currEncMotorA);
-			memcpy(data, dataString, strlen(dataString));
-			N2WwriteWS(1, 3, data, strlen(dataString));
-			prevEncMotorA = currEncMotorA;
-			N2WchillOut();
-		}
+    // Fetch the tacho count for motor A
+    // This value is displayed by field 3 (in3) on the page
+    currEncMotorA = nMotorEncoder[MOT_ACTION];
+    if (currEncMotorA != prevEncMotorA)
+    {
+      sprintf(dataString, "%d", currEncMotorA);
+      memcpy(data, dataString, strlen(dataString));
+      N2WwriteWS(1, 3, data, strlen(dataString));
+      prevEncMotorA = currEncMotorA;
+      N2WchillOut();
+    }
 
-		// Fetch the tacho count for motor B
-		// This value is displayed by field 4 (in4) on the page
-		//currEncMotorB = nMotorEncoder[MOT_LEFT];
-		if (currEncMotorB != prevEncMotorB)
-		{
-			sprintf(dataString, "%d", currEncMotorB);
-			memcpy(data, dataString, strlen(dataString));
-			N2WwriteWS(1, 4, data, strlen(dataString));
-			prevEncMotorB = currEncMotorB;
-			N2WchillOut();
-		}
+    // Fetch the tacho count for motor B
+    // This value is displayed by field 4 (in4) on the page
+    //currEncMotorB = nMotorEncoder[MOT_LEFT];
+    if (currEncMotorB != prevEncMotorB)
+    {
+      sprintf(dataString, "%d", currEncMotorB);
+      memcpy(data, dataString, strlen(dataString));
+      N2WwriteWS(1, 4, data, strlen(dataString));
+      prevEncMotorB = currEncMotorB;
+      N2WchillOut();
+    }
 
-		// Fetch the tacho count for motor C
-		// This value is displayed by field 5 (in5) on the page
-		currEncMotorC = nMotorEncoder[MOT_RIGHT];
-		if (currEncMotorC != prevEncMotorC)
-		{
-			sprintf(dataString, "%d", currEncMotorC);
-			memcpy(data, dataString, strlen(dataString));
-			N2WwriteWS(1, 5, data, strlen(dataString));
-			prevEncMotorC = currEncMotorC;
-			N2WchillOut();
-		}
+    // Fetch the tacho count for motor C
+    // This value is displayed by field 5 (in5) on the page
+    currEncMotorC = nMotorEncoder[MOT_RIGHT];
+    if (currEncMotorC != prevEncMotorC)
+    {
+      sprintf(dataString, "%d", currEncMotorC);
+      memcpy(data, dataString, strlen(dataString));
+      N2WwriteWS(1, 5, data, strlen(dataString));
+      prevEncMotorC = currEncMotorC;
+      N2WchillOut();
+    }
 
-		// Fetch the current voltage level.  The average one
-		// works best, the other one jumps around too much.
-		// This value is displayed by field 6 (in6) on the page
+    // Fetch the current voltage level.  The average one
+    // works best, the other one jumps around too much.
+    // This value is displayed by field 6 (in6) on the page
 
-		currBatteryLevel = nAvgBatteryLevel;
-		if (currBatteryLevel != prevBatteryLevel)
-		{
-			sprintf(dataString, "%d", currBatteryLevel);
-			memcpy(data, dataString, strlen(dataString));
-			N2WwriteWS(1, 6, data, strlen(dataString));
-			prevBatteryLevel = currBatteryLevel;
-			N2WchillOut();
-		}
+    currBatteryLevel = nAvgBatteryLevel;
+    if (currBatteryLevel != prevBatteryLevel)
+    {
+      sprintf(dataString, "%d", currBatteryLevel);
+      memcpy(data, dataString, strlen(dataString));
+      N2WwriteWS(1, 6, data, strlen(dataString));
+      prevBatteryLevel = currBatteryLevel;
+      N2WchillOut();
+    }
 
-		sprintf(dataStrings[2], "A: %d", currEncMotorA);
-		sprintf(dataStrings[3], "B: %d", currEncMotorB);
-		sprintf(dataStrings[4], "C: %d", currEncMotorC);
-	  sprintf(tmpString, "%s | %3d", (currTouchState == 0) ? "off" : "on ", currSonarDistance);
-		sprintf(dataStrings[1], "%s | %3d", tmpString, currDetectedColour);
-	}
+    sprintf(dataStrings[2], "A: %d", currEncMotorA);
+    sprintf(dataStrings[3], "B: %d", currEncMotorB);
+    sprintf(dataStrings[4], "C: %d", currEncMotorC);
+    sprintf(tmpString, "%s | %3d", (currTouchState == 0) ? "off" : "on ", currSonarDistance);
+    sprintf(dataStrings[1], "%s | %3d", tmpString, currDetectedColour);
+  }
 }

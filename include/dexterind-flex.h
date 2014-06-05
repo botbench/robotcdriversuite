@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: dexterind-flex.h $
- */
-
 #ifndef __DFLEX_H__
 #define __DFLEX_H__
 /** \file dexterind-flex.h
@@ -43,7 +39,7 @@
 
 typedef struct
 {
-	short _offsets[3];
+  short _offsets[3];
 } tDIMCCalData, *tDIMCCalDataptr;
 
 typedef struct
@@ -84,7 +80,6 @@ void _DFLEXcheckSensor(tSensors link);
 void _DFLEXwriteCalVals(short lowval, short highval);
 void _DFLEXreadCalVals(short &lowval, short &highval);
 
-
 /**
  * Read the raw value of the dFlex Sensor.
  * @param link the dFlex Sensor port number
@@ -95,7 +90,6 @@ short DFLEXvalRaw(tSensors link) {
 
   return SensorRaw[link];
 }
-
 
 /**
  * Read the normalised value of the dFlex Sensor, based on the low and high values.
@@ -123,7 +117,6 @@ short DFLEXvalNorm(tSensors link) {
   return ((currval - dflexlow) * 100) / (dflexhigh - dflexlow);
 }
 
-
 /**
  * Calibrate the dFlex Sensor's low calibration value with the current raw sensor reading.
  * @param link the dFlex Sensor port number
@@ -135,7 +128,6 @@ void DFLEXcalLow(tSensors link) {
   _DFLEXwriteCalVals(dflexlow, dflexhigh);
 }
 
-
 /**
  * Calibrate the dFlex Sensor's low calibration value with the supplied value.
  * @param lowval the sensor's low calibration value
@@ -144,7 +136,6 @@ void DFLEXcalLow(short lowval) {
   dflexlow = lowval;
   _DFLEXwriteCalVals(dflexlow, dflexhigh);
 }
-
 
 /**
  * Calibrate the dFlex Sensor's high calibration value with the current raw sensor reading.
@@ -157,7 +148,6 @@ void DFLEXcalHigh(tSensors link) {
   _DFLEXwriteCalVals(dflexlow, dflexhigh);
 }
 
-
 /**
  * Calibrate the dFlex Sensor's high calibration value with the supplied value.
  * @param highval the sensor's high calibration value
@@ -166,7 +156,6 @@ void DFLEXcalHigh(short highval) {
   dflexhigh = highval;
   _DFLEXwriteCalVals(dflexlow, dflexhigh);
 }
-
 
 /**
  * Check if the sensor is set to raw and that it's been configured as a
@@ -181,7 +170,6 @@ void _DFLEXcheckSensor(tSensors link) {
   if (SensorType[link] != sensorAnalogInactive)
     SensorType[link] = sensorAnalogInactive;
 }
-
 
 /**
  * Write the low and high calibration values to a data file.
@@ -242,7 +230,6 @@ void _DFLEXwriteCalVals(short lowval, short highval) {
   }
 }
 
-
 /**
  * Read the low and high calibration values from a data file.
  *
@@ -288,8 +275,5 @@ void _DFLEXreadCalVals(short &lowval, short &highval) {
 
 #endif // __DFLEX_H__
 
-/*
- * $Id: dexterind-flex.h $
- */
 /* @} */
 /* @} */

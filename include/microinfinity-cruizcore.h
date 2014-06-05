@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: microinfinity-cruizcore.h $
- */
-
 #ifndef __MICC_H__
 #define __MICC_H__
 /** \file microinfinity-cruizcore.h
@@ -67,7 +63,6 @@ bool MICCsendCmd(tSensors link, ubyte command);
 tByteArray MICC_I2CRequest;       /*!< Array to hold I2C command data */
 tByteArray MICC_I2CReply;         /*!< Array to hold I2C reply data */
 
-
 /**
  * Return the current relative heading, value between -179 and 180 degrees.<br>
  * Angle is measured in 100th degrees.  So 12899 = 128.99 degrees.
@@ -84,9 +79,8 @@ short MICCreadRelativeHeading(tSensors link) {
     return 0;
 
   // Each result is made up of two bytes.
-	return (MICC_I2CReply[1] << 8) + MICC_I2CReply[0];
+  return (MICC_I2CReply[1] << 8) + MICC_I2CReply[0];
 }
-
 
 /**
  * Return the Rate of Turn in degrees per second
@@ -103,7 +97,7 @@ short MICCreadTurnRate(tSensors link) {
     return 0;
 
   // Each result is made up of two bytes.
-	return (MICC_I2CReply[1] << 8) + MICC_I2CReply[0];
+  return (MICC_I2CReply[1] << 8) + MICC_I2CReply[0];
 }
 
 /**
@@ -125,12 +119,11 @@ bool MICCreadAccel(tSensors link, short &x_accel, short &y_accel, short &z_accel
     return false;
 
   // Each result is made up of two bytes.
-	x_accel = (MICC_I2CReply[1] << 8) + MICC_I2CReply[0];
-	y_accel = (MICC_I2CReply[3] << 8) + MICC_I2CReply[2];
-	z_accel = (MICC_I2CReply[5] << 8) + MICC_I2CReply[4];
+  x_accel = (MICC_I2CReply[1] << 8) + MICC_I2CReply[0];
+  y_accel = (MICC_I2CReply[3] << 8) + MICC_I2CReply[2];
+  z_accel = (MICC_I2CReply[5] << 8) + MICC_I2CReply[4];
   return true;
 }
-
 
 /**
  * Send a command to the sensor
@@ -150,8 +143,5 @@ bool MICCsendCmd(tSensors link, ubyte command) {
 
 #endif //__MICC_H__
 
-/*
- * $Id: microinfinity-cruizcore.h $
- */
 /* @} */
 /* @} */

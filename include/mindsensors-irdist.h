@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-irdist.h $
- */
-
 #ifndef __MSDIST_H__
 #define __MSDIST_H__
 /** \file mindsensors-irdist.h
@@ -98,7 +94,6 @@ short MSDISTreadDist(tSensors link, ubyte address) {
   return (0x00FF & MSDIST_I2CReply[0]) + ((0x00FF & MSDIST_I2CReply[1]) <<8);
 }
 
-
 /**
  * Read tilt data from the sensor
  * @param link the sensor port number
@@ -118,7 +113,6 @@ short MSDISTreadVoltage(tSensors link, ubyte address) {
   // Each result is made up of two bytes.
   return (0x00FF & MSDIST_I2CReply[0]) + ((0x00FF & MSDIST_I2CReply[1]) <<8);
 }
-
 
 /**
  * Read minumum measuring distance from the sensor
@@ -140,7 +134,6 @@ short MSDISTreadMinDist(tSensors link, ubyte address) {
   return (0x00FF & MSDIST_I2CReply[0]) + ((0x00FF & MSDIST_I2CReply[1]) <<8);
 }
 
-
 /**
  * Read maximum measuring distance from the sensor
  * @param link the sensor port number
@@ -161,7 +154,6 @@ short MSDISTreadMaxDist(tSensors link, ubyte address) {
   return (0x00FF & MSDIST_I2CReply[0]) + ((0x00FF & MSDIST_I2CReply[1]) <<8);
 }
 
-
 /**
  * Read Sharp IR module type from the sensor
  * @param link the sensor port number
@@ -181,7 +173,6 @@ short MSDISTreadModuleType(tSensors link, ubyte address) {
   return 0x00FF & MSDIST_I2CReply[0];
 }
 
-
 /**
  * Send a command to the sensor
  * @param link the sensor port number
@@ -200,11 +191,7 @@ bool MSDISTsendCmd(tSensors link, byte command, ubyte address) {
   return writeI2C(link, MSDIST_I2CRequest);
 }
 
-
 #endif //__MSDIST_H__
 
-/*
- * $Id: mindsensors-irdist.h $
- */
 /* @} */
 /* @} */

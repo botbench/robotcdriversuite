@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-irseeker-v1.h $
- */
-
 #ifndef __HTIRS_H__
 #define __HTIRS_H__
 /** \file hitechnic-irseeker-v1.h
@@ -92,7 +88,6 @@ short HTIRSreadDir(tSensors link) {
   return (short)HTIRS_I2CReply[0];
 }
 
-
 /**
  * Read the value of the Direction data register and return it.
  * @param muxsensor the SMUX sensor port number
@@ -100,7 +95,7 @@ short HTIRSreadDir(tSensors link) {
  */
 #ifdef __HTSMUX_SUPPORT__
 short HTIRSreadDir(tMUXSensor muxsensor) {
-	memset(HTIRS_I2CReply, 0, sizeof(tByteArray));
+  memset(HTIRS_I2CReply, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
     HTSMUXconfigChannel(muxsensor, HTIRS_config);
@@ -111,7 +106,6 @@ short HTIRSreadDir(tMUXSensor muxsensor) {
   return (short)HTIRS_I2CReply[0];
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Read the value of the all of the internal sensors.
@@ -141,7 +135,6 @@ bool HTIRSreadAllStrength(tSensors link, short &dcS1, short &dcS2, short &dcS3, 
 
   return true;
 }
-
 
 /**
  * Read the value of the all of the internal sensors.
@@ -174,8 +167,5 @@ bool HTIRSreadAllStrength(tMUXSensor muxsensor, short &dcS1, short &dcS2, short 
 
 #endif // __HTIRS_H__
 
-/*
- * $Id: hitechnic-irseeker-v1.h $
- */
 /* @} */
 /* @} */

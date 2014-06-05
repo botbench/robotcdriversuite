@@ -1,6 +1,4 @@
-/*
- * $Id: hitechnic-compass-SMUX-test1.c $
- */
+
 
 /**
  * hitechnic-compass.h provides an API for the HiTechnic Compass Sensor.  This program
@@ -36,10 +34,10 @@ task main () {
 
   // Initialise and configure struct and port
   // The sensor is connected to the first port
-	// of the SMUX which is connected to the NXT port S1.
-	// To access that sensor, we must use msensor_S1_1.  If the sensor
-	// were connected to 3rd port of the SMUX connected to the NXT port S4,
-	// we would use msensor_S4_3
+  // of the SMUX which is connected to the NXT port S1.
+  // To access that sensor, we must use msensor_S1_1.  If the sensor
+  // were connected to 3rd port of the SMUX connected to the NXT port S4,
+  // we would use msensor_S4_3
   initSensor(&compass, msensor_S1_1);
 
   time1[T1] = 0;
@@ -53,9 +51,9 @@ task main () {
       sleep(500);
 
       // Read the data from the sensor
-    	readSensor(&compass);
+      readSensor(&compass);
 
-    	// Set the current heading as the value for the offset to be used as the
+      // Set the current heading as the value for the offset to be used as the
       // new zero-point for the relative heading returned by
       // compass.relativeHeading
       compass.offset = compass.heading;
@@ -68,8 +66,8 @@ task main () {
     // Get the true heading and relative heading from the sensor and
     // display them on the screen.
     while(nNxtButtonPressed != kEnterButton) {
-    	 // Read the data from the sensor
-    	readSensor(&compass);
+       // Read the data from the sensor
+      readSensor(&compass);
       eraseDisplay();
       displayTextLine(1, "Reading");
       displayTextLine(2, "Target: %4d", compass.offset);
@@ -81,7 +79,3 @@ task main () {
     }
   }
 }
-
-/*
- * $Id: hitechnic-compass-SMUX-test1.c $
- */

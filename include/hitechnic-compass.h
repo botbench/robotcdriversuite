@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-compass.h $
- */
-
 /** \file hitechnic-compass.h
  * \brief HiTechnic Magnetic Compass Sensor Driver
  *
@@ -46,7 +42,7 @@
 // I2C address + registers
 #define HTMC_I2C_ADDR       0x02  /*!< HTMC I2C device address */
 #define HTMC_MODE           0x41  /*!< HTMC Mode control */
-#define HTMC_OFFSET					0x42  /*!< Offset for data registers */
+#define HTMC_OFFSET          0x42  /*!< Offset for data registers */
 #define HTMC_HEAD_U         0x00  /*!< HTMC Heading Upper bits */
 #define HTMC_HEAD_L         0x43  /*!< HTMC Heading Lower bit */
 
@@ -92,7 +88,6 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 //                  {0, 0, 0, 0},
 //                  {0, 0, 0, 0}};
 
-
 ///**
 // * Start the calibration. The sensor should be rotated a little more than 360 along the
 // * horizontal plane in no less than 20 seconds.  After the sensor has been rotated,
@@ -113,7 +108,6 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 //  // Start the calibration
 //  return writeI2C(link, HTMC_I2CRequest);
 //}
-
 
 ///**
 // * Stop the calibration. This should be called no less than 20 seconds after
@@ -141,7 +135,6 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 //  return true;
 //}
 
-
 ///**
 // * Return the current absolute heading
 // * @param link the HTMC port number
@@ -160,7 +153,6 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 //  // Result is made up of two bytes.  Reassemble for final heading.
 //  return (HTMC_I2CReply[0] * 2) + HTMC_I2CReply[1];
 //}
-
 
 ///**
 // * Return the current absolute heading
@@ -183,7 +175,6 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 //}
 //#endif // __HTSMUX_SUPPORT__
 
-
 ///**
 // * Return the current relative heading, value between -179 and 180
 // * @param link the HTMC port number
@@ -195,7 +186,6 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 //  short _tmpHeading = HTMCreadHeading(link) - target[link][0] + 180;
 //  return (_tmpHeading >= 0 ? _tmpHeading % 360 : 359 - (-1 - _tmpHeading)%360) - 180;
 //}
-
 
 ///**
 // * Return the current relative heading, value between -179 and 180
@@ -213,7 +203,6 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 //}
 //#endif
 
-
 ///**
 // * Set the value for the offset to be used as the new zero-point
 // * for the relative heading returned by HTMCreadRelativeHeading()
@@ -225,7 +214,6 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 //  target[link][0] = (offset != 0) ? offset : HTMCreadHeading(link);
 //  return target[link][0];
 //}
-
 
 ///**
 // * Set the value for the offset to be used as the new zero-point
@@ -239,7 +227,6 @@ tConfigParams HTMC_config = {HTSMUX_CHAN_I2C, 2, 0x02, 0x42}; /*!< Array to hold
 //  return target[SPORT(muxsensor)][MPORT(muxsensor)];
 //}
 //#endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Initialise the sensor's data struct and port
@@ -255,7 +242,7 @@ bool initSensor(tHTMCPtr htmcPtr, tSensors port)
   htmcPtr->I2CData.port = port;
   htmcPtr->I2CData.type = sensorI2CCustom;
   htmcPtr->smux = false;
-	htmcPtr->offset = 0;
+  htmcPtr->offset = 0;
 
   // Ensure the sensor is configured correctly
   if (SensorType[htmcPtr->I2CData.port] != htmcPtr->I2CData.type)
@@ -263,7 +250,6 @@ bool initSensor(tHTMCPtr htmcPtr, tSensors port)
 
   return true;
 }
-
 
 /**
  * Initialise the sensor's data struct and MUX port
@@ -278,8 +264,8 @@ bool initSensor(tHTMCPtr htmcPtr, tMUXSensor muxsensor)
   htmcPtr->I2CData.address = HTMC_I2C_ADDR;
   htmcPtr->I2CData.type = sensorI2CCustom;
   htmcPtr->smux = true;
-	htmcPtr->smuxport = muxsensor;
-	htmcPtr->offset = 0;
+  htmcPtr->smuxport = muxsensor;
+  htmcPtr->offset = 0;
 
   // Ensure the sensor is configured correctly
   if (SensorType[htmcPtr->I2CData.port] != htmcPtr->I2CData.type)
@@ -287,7 +273,6 @@ bool initSensor(tHTMCPtr htmcPtr, tMUXSensor muxsensor)
 
   return HTSMUXconfigChannel(muxsensor, HTMC_config);
 }
-
 
 /**
  * Read all the sensor's data
@@ -297,30 +282,30 @@ bool initSensor(tHTMCPtr htmcPtr, tMUXSensor muxsensor)
  */
 bool readSensor(tHTMCPtr htmcPtr)
 {
-	short tempHeading = 0;
-	memset(htmcPtr->I2CData.request, 0, sizeof(htmcPtr->I2CData.request));
+  short tempHeading = 0;
+  memset(htmcPtr->I2CData.request, 0, sizeof(htmcPtr->I2CData.request));
 
-	if (htmcPtr->smux)
-	{
-		if (!HTSMUXreadPort(htmcPtr->smuxport, htmcPtr->I2CData.reply, 2, HTMC_HEAD_U))
-			return false;
-	}
-	else
-	{
-	  // Read all of the data available on the sensor
-	  htmcPtr->I2CData.request[0] = 2;                    // Message size
-	  htmcPtr->I2CData.request[1] = htmcPtr->I2CData.address; // I2C Address
-	  htmcPtr->I2CData.request[2] = HTMC_OFFSET + HTMC_HEAD_U;
-	  htmcPtr->I2CData.replyLen = 2;
-	  htmcPtr->I2CData.requestLen = 2;
+  if (htmcPtr->smux)
+  {
+    if (!HTSMUXreadPort(htmcPtr->smuxport, htmcPtr->I2CData.reply, 2, HTMC_HEAD_U))
+      return false;
+  }
+  else
+  {
+    // Read all of the data available on the sensor
+    htmcPtr->I2CData.request[0] = 2;                    // Message size
+    htmcPtr->I2CData.request[1] = htmcPtr->I2CData.address; // I2C Address
+    htmcPtr->I2CData.request[2] = HTMC_OFFSET + HTMC_HEAD_U;
+    htmcPtr->I2CData.replyLen = 2;
+    htmcPtr->I2CData.requestLen = 2;
 
-	  if (!writeI2C(&htmcPtr->I2CData))
-	    return false;
-	}
+    if (!writeI2C(&htmcPtr->I2CData))
+      return false;
+  }
 
-	// Populate the struct with the newly retrieved data
-	htmcPtr->heading = (htmcPtr->I2CData.reply[0] * 2) + htmcPtr->I2CData.reply[1];
-	tempHeading = htmcPtr->heading - htmcPtr->offset + 180;
+  // Populate the struct with the newly retrieved data
+  htmcPtr->heading = (htmcPtr->I2CData.reply[0] * 2) + htmcPtr->I2CData.reply[1];
+  tempHeading = htmcPtr->heading - htmcPtr->offset + 180;
   htmcPtr->relativeHeading = (tempHeading >= 0 ? tempHeading % 360 : 359 - (-1 - tempHeading)%360) - 180;
 
   return true;
@@ -328,11 +313,11 @@ bool readSensor(tHTMCPtr htmcPtr)
 
 bool sensorCalibrate(tHTMCPtr htmcPtr)
 {
-	// Operation not supported on a SMUX
-	if (htmcPtr->smux)
-		return false;
+  // Operation not supported on a SMUX
+  if (htmcPtr->smux)
+    return false;
 
-	memset(htmcPtr->I2CData.request, 0, sizeof(htmcPtr->I2CData.request));
+  memset(htmcPtr->I2CData.request, 0, sizeof(htmcPtr->I2CData.request));
 
   // Read all of the data available on the sensor
   htmcPtr->I2CData.request[0] = 3;                    // Message size
@@ -346,14 +331,13 @@ bool sensorCalibrate(tHTMCPtr htmcPtr)
   return writeI2C(&htmcPtr->I2CData);
 }
 
-
 bool sensorStopCalibrate(tHTMCPtr htmcPtr)
 {
-	// Operation not supported on a SMUX
-	if (htmcPtr->smux)
-		return false;
+  // Operation not supported on a SMUX
+  if (htmcPtr->smux)
+    return false;
 
-	memset(htmcPtr->I2CData.request, 0, sizeof(htmcPtr->I2CData.request));
+  memset(htmcPtr->I2CData.request, 0, sizeof(htmcPtr->I2CData.request));
 
   // Read all of the data available on the sensor
   htmcPtr->I2CData.request[0] = 3;                    // Message size
@@ -367,9 +351,5 @@ bool sensorStopCalibrate(tHTMCPtr htmcPtr)
   return (htmcPtr->I2CData.reply[0] == 2) ? false : true;
 }
 
-
-/*
- * $Id: hitechnic-compass.h $
- */
 /* @} */
 /* @} */

@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-rcxsensorsmux.h $
- */
-
 /** \file mindsensors-rcxsensorsmux.h
  * \brief Mindsensors MSRXMUX RCX Sensor MUX Sensor driver
  *
@@ -106,8 +102,5 @@ short MSRXMUXreadChan(tSensors link, byte chan) {
 
 #endif // __MSRXMUX_H__
 
-/*
- * $Id: mindsensors-rcxsensorsmux.h $
- */
 /* @} */
 /* @} */

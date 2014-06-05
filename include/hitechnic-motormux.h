@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-motormux.h $
- */
-
 #ifndef __HTMMUX_H__
 #define __HTMMUX_H__
 /** \file hitechnic-motormux.h
@@ -73,7 +69,6 @@
 tByteArray HTMMUX_I2CRequest;    /*!< Array to hold I2C command data */
 tByteArray HTMMUX_I2CReply;      /*!< Array to hold I2C reply data */
 
-
 // Function prototypes
 void HTMMUXinit();
 ubyte HTMMUXreadStatus(tSensors link, ubyte channel);
@@ -95,7 +90,6 @@ void MMotorSetBrake(tMUXmotor muxmotor);
 void MMotorSetFloat(tMUXmotor muxmotor);
 void MMotorSetPIDSpeedCtrl(tMUXmotor muxmotor, bool constspeed);
 
-
 /*
  * Initialise the mmuxData array needed for keeping track of motor settings
  */
@@ -107,7 +101,6 @@ void HTMMUXinit(){
     mmuxData[i].initialised = true;
   }
 }
-
 
 /**
  * Read the status and mode of the MMUX
@@ -138,7 +131,6 @@ ubyte HTMMUXreadStatus(tSensors link, ubyte channel) {
   return HTMMUX_I2CReply[0];
 }
 
-
 /**
  * Check if a status bit is set or not for a specified motor channel.
  *
@@ -162,7 +154,6 @@ bool HTMMUXreadStatus(tSensors link, ubyte channel, ubyte statusbit) {
   else
     return false;
 }
-
 
 /**
  * Send a command to the MMUX.
@@ -190,7 +181,6 @@ bool HTMMUXsendCommand(tSensors link, ubyte channel, byte command) {
 
   return writeI2C(link, HTMMUX_I2CRequest);
 }
-
 
 /**
  * Run motor with specified speed and command
@@ -261,7 +251,6 @@ bool HTMMUXMotorEncoderReset(tSensors link, ubyte channel) {
   return HTMMUXsendCommand(link, channel, HTMMUX_CMD_RESET_ENC);
 }
 
-
 /**
  * Fetch the current encoder value for specified motor channel
  *
@@ -285,7 +274,6 @@ long HTMMUXMotorEncoder(tSensors link, ubyte channel) {
           (short)HTMMUX_I2CReply[3];
 }
 
-
 /**
  * Stop the specified motor
  *
@@ -301,7 +289,6 @@ bool HTMMUXMotorStop(tSensors link, ubyte channel, bool brake) {
   else
     return HTMMUXsendCommand(link, channel, HTMMUX_CMD_FLOAT);
 }
-
 
 /**
  * Run motor with specified speed.
@@ -328,7 +315,6 @@ void MMotor(tMUXmotor muxmotor, byte power) {
   }
 }
 
-
 /**
  * Set encoder target for specified motor channel.
  *
@@ -341,7 +327,6 @@ void MMotorEncoderTarget(tMUXmotor muxmotor, long target) {
   mmuxData[SPORT(muxmotor)].runToTarget[MPORT(muxmotor)] = true;
 }
 
-
 /**
  * Fetch the current encoder value for specified motor channel
  *
@@ -352,7 +337,6 @@ void MMotorEncoderTarget(tMUXmotor muxmotor, long target) {
 long MMotorEncoder(tMUXmotor muxmotor) {
   return HTMMUXMotorEncoder((tSensors)SPORT(muxmotor), (ubyte)MPORT(muxmotor));
 }
-
 
 /**
  * Reset target encoder for specified motor channel, use only at
@@ -367,7 +351,6 @@ void MMotorEncoderReset(tMUXmotor muxmotor) {
   HTMMUXMotorEncoderReset((tSensors)SPORT(muxmotor), (ubyte)MPORT(muxmotor));
 }
 
-
 /**
  * Check if the specified motor is still busy doing a "run to and hold".
  *
@@ -379,7 +362,6 @@ bool MMotorBusy(tMUXmotor muxmotor) {
   return HTMMUXreadStatus((tSensors)SPORT(muxmotor), (ubyte)MPORT(muxmotor), HTMMUX_STAT_BUSY);
 }
 
-
 /**
  * Set the stopping method for the specified motor to brake.
  *
@@ -390,7 +372,6 @@ void MMotorSetBrake(tMUXmotor muxmotor) {
   mmuxData[SPORT(muxmotor)].brake[MPORT(muxmotor)] = true;
 }
 
-
 /**
  * Set the stopping method for the specified motor to float.
  *
@@ -400,7 +381,6 @@ void MMotorSetBrake(tMUXmotor muxmotor) {
 void MMotorSetFloat(tMUXmotor muxmotor) {
   mmuxData[SPORT(muxmotor)].brake[MPORT(muxmotor)] = false;
 }
-
 
 /**
  * Set the motor speed control.
@@ -415,8 +395,5 @@ void MMotorSetPIDSpeedCtrl(tMUXmotor muxmotor, bool constspeed) {
 
 #endif //  __HTMMUX_H__
 
-/*
- * $Id: hitechnic-motormux.h $
- */
 /* @} */
 /* @} */

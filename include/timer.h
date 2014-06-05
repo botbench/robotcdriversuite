@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: timer.h $
- */
-
 #ifndef __TMR_H__
 #define __TMR_H__
 /** \file timer.h
@@ -42,7 +38,6 @@
 #define MAX_TIMERS 10  /*!< Maximum number of _timers */
 #endif
 
-
 /*!< Struct for timer data */
 typedef struct {
   long startTime;
@@ -72,7 +67,6 @@ short TMRnewTimer() {
     return -1;
 }
 
-
 /**
  * Check if the timer has expired.
  * @param timerIdx the timer to be checked.
@@ -88,7 +82,6 @@ bool TMRisExpired(short timerIdx) {
   releaseCPU();
 }
 
-
 /**
  * Reset the timer, will also mark "expired" flag as false.\n
  * This function will also check if the TMRtask is running and
@@ -97,10 +90,9 @@ bool TMRisExpired(short timerIdx) {
  */
 void TMRreset(short timerIdx) {
   hogCPU();
-	_timers[timerIdx].startTime = nPgmTime;
-	releaseCPU();
+  _timers[timerIdx].startTime = nPgmTime;
+  releaseCPU();
 }
-
 
 /**
  * Reset the timer, will also mark "expired" flag as false.
@@ -110,10 +102,9 @@ void TMRreset(short timerIdx) {
 void TMRreset(short timerIdx, long duration) {
   hogCPU();
   _timers[timerIdx].duration = duration;
-	_timers[timerIdx].startTime = nPgmTime;
-	releaseCPU();
+  _timers[timerIdx].startTime = nPgmTime;
+  releaseCPU();
 }
-
 
 /**
  * Cause the timer to expire.
@@ -124,7 +115,6 @@ void TMRexpire(short timerIdx) {
   _timers[timerIdx].startTime = -1;
   releaseCPU();
 }
-
 
 /**
  * Configure the duration of the timer.
@@ -139,8 +129,5 @@ void TMRsetup(short timerIdx, long duration) {
 
 #endif // __TMR_H__
 
-/*
- * $Id: timer.h $
- */
 /* @} */
 /* @} */

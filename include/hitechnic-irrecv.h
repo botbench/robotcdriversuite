@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-irrecv.h $
- */
-
 #ifndef __HTIRR_H__
 #define __HTIRR_H__
 /** \file hitechnic-irrecv.h
@@ -64,7 +60,6 @@ bool HTIRRreadAllChannels(tSensors link, tsByteArray &motorSpeeds);
 tByteArray HTIRR_I2CRequest;           /*!< Array to hold I2C command data */
 tByteArray HTIRR_I2CReply;             /*!< Array to hold I2C reply data */
 
-
 /**
  * Get the speeds of the motors for a given channel.
  * @param link the HTIRR port number
@@ -89,7 +84,6 @@ bool HTIRRreadChannel(tSensors link, byte channel, sbyte &motA, sbyte &motB) {
   return true;
 }
 
-
 /**
  * Get the speeds of the motors for all channels.
  * @param link the HTIRR port number
@@ -112,8 +106,6 @@ bool HTIRRreadAllChannels(tSensors link, tsByteArray &motorSpeeds){
 }
 
 #endif // __HTIRR_H__
-/*
- * $Id: hitechnic-irrecv.h $
- */
+
 /* @} */
 /* @} */

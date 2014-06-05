@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: math-matrix.h $
- */
-
 #ifndef __MATH_MATRIX_FLOAT_H__
 #define __MATH_MATRIX_FLOAT_H__
 /** \file math-matrix.h
@@ -38,7 +34,6 @@
 
 #define MATRIX_MAX_SIZE 10
 
-
 /**
  * Prints a nicely formatted version of the matrix to the debugstream
  *
@@ -60,7 +55,6 @@ void matrixPrintF(float* matrix, short numRows, short numCols, char* label){
     writeDebugStreamLine("");
   }
 }
-
 
 /**
  * Prints a nicely formatted version of the matrix to the debugstream
@@ -84,7 +78,6 @@ void matrixPrintL(long* matrix, short numRows, short numCols, char* label){
   }
 }
 
-
 /**
  * Copies all the values from one matrix into another
  *
@@ -99,7 +92,6 @@ void matrixCopyF(float* source, short numRows, short numCols, float* destination
   memcpy(destination, source, numRows * numCols * sizeof(float));
 }
 
-
 /**
  * Copies all the values from one matrix into another
  *
@@ -113,7 +105,6 @@ void matrixCopyL(long* source, short numRows, short numCols, long* destination)
 {
   memcpy(destination, source, numRows * numCols * sizeof(long));
 }
-
 
 /**
  * Copies all the values from one matrix into another
@@ -138,7 +129,6 @@ void matrixMultF(float* matrixA, float* matrixB, short numRowsA, short numColsA,
   }
 }
 
-
 /**
  * Copies all the values from one matrix into another
  *
@@ -162,7 +152,6 @@ void matrixMultL(long* matrixA, long* matrixB, short numRowsA, short numColsA, s
   }
 }
 
-
 /**
  * Adds values of two matrices
  *
@@ -180,7 +169,6 @@ void matrixAddF(float* matrixA, float* matrixB, short numRowsA, short numColsA, 
     for(j = 0; j < numColsA; j++)
     matrixC[numColsA * i + j] = matrixA[numColsA * i + j] + matrixB[numColsA * i + j];
 }
-
 
 /**
  * Adds values of two matrices
@@ -200,7 +188,6 @@ void matrixAddL(long* matrixA, long* matrixB, short numRowsA, short numColsA, lo
     matrixC[numColsA * i + j] = matrixA[numColsA * i + j] + matrixB[numColsA * i + j];
 }
 
-
 /**
  * Adds values of two matrices
  *
@@ -218,7 +205,6 @@ void matrixSubtractF(float* matrixA, float* matrixB, short numRowsA, short numCo
     for(j = 0; j < numColsA; j++)
     matrixC[numColsA * i + j] = matrixA[numColsA * i +j ] - matrixB[numColsA * i + j];
 }
-
 
 /**
  * Adds values of two matrices
@@ -238,7 +224,6 @@ void matrixSubtractL(long* matrixA, long* matrixB, short numRowsA, short numCols
     matrixC[numColsA * i + j] = matrixA[numColsA * i +j ] - matrixB[numColsA * i + j];
 }
 
-
 /**
  * Transpose a matrix
  *
@@ -255,7 +240,6 @@ void matrixTransposeF(float* matrixA, short numRowsA, short numColsA, float* mat
     for(j = 0; j < numColsA; j++)
     matrixC[numRowsA * j + i] = matrixA[numColsA * i + j];
 }
-
 
 /**
  * Transpose a matrix
@@ -274,10 +258,7 @@ void matrixTransposeL(long* matrixA, short numRowsA, short numColsA, long* matri
     matrixC[numRowsA * j + i] = matrixA[numColsA * i + j];
 }
 
-
 #endif // __MATH_MATRIX_FLOAT_H__
-/*
- * $Id: math-matrix.h $
- */
+
 /* @} */
 /* @} */

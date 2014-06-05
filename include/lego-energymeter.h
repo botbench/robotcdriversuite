@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: lego-energymeter.h $
- */
-
 #ifndef __LEGOEM_DRIVER_H__
 #define __LEGOEM_DRIVER_H__
 
@@ -48,7 +44,6 @@
 #define LEGOEM_I2C_REG  0x0A /*!< Start of I2C registers that need to be read */
 #define LEGOEM_I2C_SIZE   14 /*!< Number of registers to read at once */
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Function prototypes
 bool LEGOEMreadData(tSensors link, float &voltageIn, float &currentIn, float &voltageOut, float &currentOut, short &joule, float &wattIn, float &wattOut);
@@ -59,7 +54,6 @@ tByteArray       LEGOEM_I2CRequest;    /*!< Array to hold I2C command data */
 tByteArray       LEGOEM_I2CReply;      /*!< Array to hold I2C reply data   */
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 /**
  * Read a snapshot of the current register values.  They must all be read at once to
@@ -97,8 +91,5 @@ bool LEGOEMreadData(tSensors link, float &voltageIn, float &currentIn, float &vo
 
 #endif // __LEGOEM_DRIVER_H__
 
-/*
- * $Id: lego-energymeter.h $
- */
 /* @} */
 /* @} */

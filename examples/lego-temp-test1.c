@@ -40,7 +40,6 @@ void accuracyToString(tLEGOTMPAccuracy _accuracy, string &text) {
   }
 }
 
-
 task main() {
   float temp;
   tLEGOTMPAccuracy accuracy;
@@ -53,7 +52,6 @@ task main() {
   displayCenteredTextLine(6, "to S1");
   sleep(2000);
   eraseDisplay();
-
 
   // Setup the sensor for continuous mode
   LEGOTMPsetContinuous(LEGOTMP);

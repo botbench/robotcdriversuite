@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-ps2ctrl-v4.h $
- */
-
 #ifndef __PSPV4_H__
 #define __PSPV4_H__
 /** \file mindsensors-ps2ctrl-v4.h
@@ -106,7 +102,6 @@ typedef struct
 
 tPSP pspController;
 
-
 /**
  * Initialise the sensor.
  *
@@ -127,12 +122,11 @@ bool _PSPV4init(tSensors link, ubyte address = PSPV4_I2C_ADDR)
     return false;
   }
 
-	sleep(100);                         // wait for the dongle to initialize
-	PSPV4initalised[link] = true;
+  sleep(100);                         // wait for the dongle to initialize
+  PSPV4initalised[link] = true;
 
-	return true;
+  return true;
 }
-
 
 /**
  * Read a byte from the sensor
@@ -163,7 +157,6 @@ ubyte _PSPV4readByte (tSensors link, ubyte reg, ubyte address = PSPV4_I2C_ADDR)
   return PSPV4_I2CReply[0];
 }
 
-
 /**
  * Read the button states.  Use PSPV4readButtonPressure() if you want
  * additional pressure values as well.
@@ -193,35 +186,34 @@ bool PSPV4readButtons(tSensors link, tPSP &controllerState, ubyte address = PSPV
   if (!writeI2C(link, PSPV4_I2CRequest, PSPV4_I2CReply, 6))
     return false;
 
-	b0 = ~PSPV4_I2CReply[0];
-	b1 = ~PSPV4_I2CReply[1];
+  b0 = ~PSPV4_I2CReply[0];
+  b1 = ~PSPV4_I2CReply[1];
 
-	controllerState.selectBtn         = (b0 >> 0) & 0x01;
-	controllerState.joystickLeftBtn   = (b0 >> 1) & 0x01;
-	controllerState.joystickRightBtn  = (b0 >> 2) & 0x01;
-	controllerState.startBtn          = (b0 >> 3) & 0x01;
-	controllerState.joypadUp          = (b0 >> 4) & 0x01;
-	controllerState.joypadRight       = (b0 >> 5) & 0x01;
-	controllerState.joypadDown        = (b0 >> 6) & 0x01;
-	controllerState.joypadLeft        = (b0 >> 7) & 0x01;
+  controllerState.selectBtn         = (b0 >> 0) & 0x01;
+  controllerState.joystickLeftBtn   = (b0 >> 1) & 0x01;
+  controllerState.joystickRightBtn  = (b0 >> 2) & 0x01;
+  controllerState.startBtn          = (b0 >> 3) & 0x01;
+  controllerState.joypadUp          = (b0 >> 4) & 0x01;
+  controllerState.joypadRight       = (b0 >> 5) & 0x01;
+  controllerState.joypadDown        = (b0 >> 6) & 0x01;
+  controllerState.joypadLeft        = (b0 >> 7) & 0x01;
 
-	controllerState.left2Btn          = (b1 >> 0) & 0x01;
-	controllerState.rigth2Btn         = (b1 >> 1) & 0x01;
-	controllerState.left1Btn          = (b1 >> 2) & 0x01;
-	controllerState.right1Btn         = (b1 >> 3) & 0x01;
-	controllerState.triangleBtn       = (b1 >> 4) & 0x01;
-	controllerState.circleBtn         = (b1 >> 5) & 0x01;
-	controllerState.crossBtn          = (b1 >> 6) & 0x01;
-	controllerState.squareBtn         = (b1 >> 7) & 0x01;
+  controllerState.left2Btn          = (b1 >> 0) & 0x01;
+  controllerState.rigth2Btn         = (b1 >> 1) & 0x01;
+  controllerState.left1Btn          = (b1 >> 2) & 0x01;
+  controllerState.right1Btn         = (b1 >> 3) & 0x01;
+  controllerState.triangleBtn       = (b1 >> 4) & 0x01;
+  controllerState.circleBtn         = (b1 >> 5) & 0x01;
+  controllerState.crossBtn          = (b1 >> 6) & 0x01;
+  controllerState.squareBtn         = (b1 >> 7) & 0x01;
 
-	controllerState.joystickLeft_x    = (((long)PSPV4_I2CReply[2] - 128) * 100)/128;
-	controllerState.joystickLeft_y    = (((long)PSPV4_I2CReply[3] - 128) * 100)/128;
-	controllerState.joystickRight_x   = (((long)PSPV4_I2CReply[4] - 128) * 100)/128;
-	controllerState.joystickRight_y   = (((long)PSPV4_I2CReply[5] - 128) * 100)/128;
+  controllerState.joystickLeft_x    = (((long)PSPV4_I2CReply[2] - 128) * 100)/128;
+  controllerState.joystickLeft_y    = (((long)PSPV4_I2CReply[3] - 128) * 100)/128;
+  controllerState.joystickRight_x   = (((long)PSPV4_I2CReply[4] - 128) * 100)/128;
+  controllerState.joystickRight_y   = (((long)PSPV4_I2CReply[5] - 128) * 100)/128;
 
-	return true;
+  return true;
 }
-
 
 /**
  * Read the button states with additional pressure values.  Use PSPV4readButtons() if you don't
@@ -252,7 +244,7 @@ bool PSPV4readButtonPressure(tSensors link, tPSP &controllerState,  ubyte addres
   if (!writeI2C(link, PSPV4_I2CRequest, PSPV4_I2CReply, 12))
     return false;
 
-	controllerState.joypadUp          = (PSPV4_I2CReply[0]  * 100) / 255;
+  controllerState.joypadUp          = (PSPV4_I2CReply[0]  * 100) / 255;
   controllerState.joypadRight       = (PSPV4_I2CReply[1]  * 100) / 255;
   controllerState.joypadDown        = (PSPV4_I2CReply[2]  * 100) / 255;
   controllerState.joypadLeft        = (PSPV4_I2CReply[3]  * 100) / 255;
@@ -285,7 +277,6 @@ byte PSPV4readRefSignal(tSensors link, ubyte address = PSPV4_I2C_ADDR)
   return _PSPV4readByte(link, PSPV4_REG_REF_SIGNAL_CODE, address);
 }
 
-
 /**
  * Signal Count - increments each time the sensor receives a signal from
  * the Referee (rolls over to 0 after 255)
@@ -298,7 +289,6 @@ byte PSPV4readRefSignalCount(tSensors link, ubyte address = PSPV4_I2C_ADDR)
   return _PSPV4readByte(link, PSPV4_REG_REF_SIGNAL_COUNT, address);
 }
 
-
 /**
  * Fetch the transmitter type.  Can be used to differentiate between
  * various transmitter type (TV remote vs Referee Transmitter)
@@ -310,7 +300,6 @@ byte PSPV4readRefTXType(tSensors link, ubyte address = PSPV4_I2C_ADDR)
 {
   return _PSPV4readByte(link, PSPV4_REG_REF_TX_TYPE, address);
 }
-
 
 /**
  * Get the raw data from the receiver.  This is useful if custom commands
@@ -339,12 +328,7 @@ long PSPV4readRawRefTXValue(tSensors link, ubyte address = PSPV4_I2C_ADDR)
   return PSPV4_I2CReply[0] + (PSPV4_I2CReply[1]<<8) + (PSPV4_I2CReply[2]<<16) + (PSPV4_I2CReply[3]<<24);
 }
 
-
-
 #endif // __PSPV4_H__
 
-/*
- * $Id: mindsensors-ps2ctrl-v4.h $
- */
 /* @} */
 /* @} */

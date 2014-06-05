@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-rcxmotormux.h $
- */
-
 /** \file mindsensors-rcxmotormux.h
  * \brief RobotC Mindsensors RCX Motor MUX Driver
  *
@@ -55,7 +51,6 @@ tByteArray MSMTRMX_I2CMessage;       /*!< Array to hold I2C command data */
 bool MSMTRMX_Control(tSensors link, tMSMTRMXMotors channel, short power, ubyte address = MSMTRMX_I2C_ADDR);
 bool MSMTRMX_Brake(tSensors link, tMSMTRMXMotors channel, unsigned byte brakeForce, ubyte address = MSMTRMX_I2C_ADDR);
 
-
 /**
  * This function sets the specified motor to the given power level,
  * with the motor floated at speed zero. The controller floats during
@@ -96,7 +91,6 @@ bool MSMTRMX_Control(tSensors link, tMSMTRMXMotors channel, short power, ubyte a
   return true;
 }
 
-
 /**
  * This function applies the specified braking power to the specified motor
  * @param link port number
@@ -121,10 +115,6 @@ bool MSMTRMX_Brake(tSensors link, tMSMTRMXMotors channel, unsigned byte brakeFor
 
   return true;
 }
-
-/*
- * $Id: mindsensors-rcxmotormux.h $
- */
 
 /* @} */
 /* @} */

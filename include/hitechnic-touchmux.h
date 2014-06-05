@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-touchmux.h $
- */
-
 #ifndef __HTTMUX_H__
 #define __HTTMUX_H__
 /** \file hitechnic-touchmux.h
@@ -80,8 +76,5 @@ bool HTTMUXisActive(tSensors link, short touch) {
 
 #endif // __HTTMUX_H__
 
-/*
- * $Id: hitechnic-touchmux.h $
- */
 /* @} */
 /* @} */

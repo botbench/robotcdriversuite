@@ -7,8 +7,6 @@
 
 #define __RS485_DEBUG__ 1
 
-
-
 #include "common.h"
 
 //tMassiveArray tmp_array;
@@ -47,7 +45,6 @@ void sendHeader(short cid) {
   index = RS485appendToBuff(RS485txbuffer, index, endmarker, 2);
   RS485write(RS485txbuffer, index);
 }
-
 
 void genResponse(short cid) {
   short power = motor[motorA];
@@ -116,7 +113,6 @@ void genResponse(short cid) {
   RS485clearRead();
 }
 
-
 void parseInput()
 {
   tMassiveArray tmp_array;
@@ -171,10 +167,8 @@ void parseInput()
       sleep(2000);
       playSound(soundBeepBeep);
     }
-	}
+  }
 }
-
-
 
 void startDemon() {
   DWIFIClose();
@@ -186,11 +180,11 @@ void startDemon() {
 
 task main()
 {
-	char *ssid = "Bazinga!";
-	char *wpa_psk = "xammy4ever";
+  char *ssid = "Bazinga!";
+  char *wpa_psk = "xammy4ever";
 
-	writeDebugStreamLine("ssid: %s", ssid);
-	writeDebugStreamLine("psk: %s", wpa_psk);
+  writeDebugStreamLine("ssid: %s", ssid);
+  writeDebugStreamLine("psk: %s", wpa_psk);
   short len = 100;
   eraseDisplay();
   bNxtLCDStatusDisplay = true; // Enable top status line display

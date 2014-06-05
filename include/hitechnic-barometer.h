@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-barometer.h $
- */
-
 #ifndef __HTBM_H__
 #define __HTBM_H__
 /** \file hitechnic-barometer.h
@@ -94,7 +90,6 @@ tConfigParams HTBM_config = {HTSMUX_CHAN_I2C, 4, 0x02, 0x42};  /*!< Array to hol
 //  return (HTBM_I2CReply[0] <<  8) + HTBM_I2CReply[1];
 //}
 
-
 ///**
 // * Read the current atmospheric pressure in hecto Pascal
 // * @param link the HTBM port number
@@ -104,7 +99,6 @@ tConfigParams HTBM_config = {HTSMUX_CHAN_I2C, 4, 0x02, 0x42};  /*!< Array to hol
 //  return HTBMreadMInHg(link) * mInHgtohPa;
 //}
 
-
 ///**
 // * Read the current atmospheric pressure in pounds per square inch
 // * @param link the HTBM port number
@@ -113,7 +107,6 @@ tConfigParams HTBM_config = {HTSMUX_CHAN_I2C, 4, 0x02, 0x42};  /*!< Array to hol
 //float HTBMreadPsi(tSensors link) {
 //  return (float)HTBMreadMInHg(link) * mInHgtoPsi;
 //}
-
 
 ///**
 // * Read the current air temperature in degrees Celcius
@@ -137,7 +130,6 @@ tConfigParams HTBM_config = {HTSMUX_CHAN_I2C, 4, 0x02, 0x42};  /*!< Array to hol
 //  return temp;
 //}
 
-
 ///**
 // * Read the current air temperature in degrees Fahrenheit
 // * @param link the HTBM port number
@@ -146,7 +138,6 @@ tConfigParams HTBM_config = {HTSMUX_CHAN_I2C, 4, 0x02, 0x42};  /*!< Array to hol
 //float HTBMreadTempF(tSensors link) {
 //  return (HTBMreadTemp(link) * 1.8) + 32;
 //}
-
 
 /**
  * Initialise the sensor's data struct and port
@@ -171,7 +162,6 @@ bool initSensor(tHTBMPtr htbmPtr, tSensors port)
   return true;
 }
 
-
 /**
  * Initialise the sensor's data struct and MUX port
  *
@@ -185,7 +175,7 @@ bool initSensor(tHTBMPtr htbmPtr, tMUXSensor muxsensor)
   htbmPtr->I2CData.address = HTBM_I2C_ADDR;
   htbmPtr->I2CData.type = sensorI2CCustom;
   htbmPtr->smux = true;
-	htbmPtr->smuxport = muxsensor;
+  htbmPtr->smuxport = muxsensor;
 
   // Ensure the sensor is configured correctly
   if (SensorType[htbmPtr->I2CData.port] != htbmPtr->I2CData.type)
@@ -193,7 +183,6 @@ bool initSensor(tHTBMPtr htbmPtr, tMUXSensor muxsensor)
 
   return HTSMUXconfigChannel(muxsensor, HTBM_config);
 }
-
 
 /**
  * Read all the sensor's data
@@ -203,45 +192,41 @@ bool initSensor(tHTBMPtr htbmPtr, tMUXSensor muxsensor)
  */
 bool readSensor(tHTBMPtr htbmPtr)
 {
-	memset(htbmPtr->I2CData.request, 0, sizeof(htbmPtr->I2CData.request));
+  memset(htbmPtr->I2CData.request, 0, sizeof(htbmPtr->I2CData.request));
 
-	if (htbmPtr->smux)
-	{
-		if (!HTSMUXreadPort(htbmPtr->smuxport, htbmPtr->I2CData.reply, 4, HTBM_TEMP_HIGH))
-			return false;
-	}
-	else
-	{
-	  // Read all of the data available on the sensor
-	  htbmPtr->I2CData.request[0] = 2;                    // Message size
-	  htbmPtr->I2CData.request[1] = htbmPtr->I2CData.address; // I2C Address
-	  htbmPtr->I2CData.request[2] = HTBM_OFFSET + HTBM_TEMP_HIGH;
-	  htbmPtr->I2CData.replyLen = 4;
-	  htbmPtr->I2CData.requestLen = 2;
+  if (htbmPtr->smux)
+  {
+    if (!HTSMUXreadPort(htbmPtr->smuxport, htbmPtr->I2CData.reply, 4, HTBM_TEMP_HIGH))
+      return false;
+  }
+  else
+  {
+    // Read all of the data available on the sensor
+    htbmPtr->I2CData.request[0] = 2;                    // Message size
+    htbmPtr->I2CData.request[1] = htbmPtr->I2CData.address; // I2C Address
+    htbmPtr->I2CData.request[2] = HTBM_OFFSET + HTBM_TEMP_HIGH;
+    htbmPtr->I2CData.replyLen = 4;
+    htbmPtr->I2CData.requestLen = 2;
 
-	  if (!writeI2C(&htbmPtr->I2CData))
-	    return false;
-	}
+    if (!writeI2C(&htbmPtr->I2CData))
+      return false;
+  }
 
-	// Populate the struct with the newly retrieved data
+  // Populate the struct with the newly retrieved data
 
-	// Get the temperature
-	htbmPtr->Celcius = ((htbmPtr->I2CData.reply[0] <<  8) + htbmPtr->I2CData.reply[1]) / 10;
-	htbmPtr->Fahrenheit = (htbmPtr->Celcius * 1.8) + 32;
+  // Get the temperature
+  htbmPtr->Celcius = ((htbmPtr->I2CData.reply[0] <<  8) + htbmPtr->I2CData.reply[1]) / 10;
+  htbmPtr->Fahrenheit = (htbmPtr->Celcius * 1.8) + 32;
 
-	// Get the pressure data
-	htbmPtr->mInHg = (htbmPtr->I2CData.reply[2] <<  8) + htbmPtr->I2CData.reply[3];
-	htbmPtr->hPa = (float)htbmPtr->mInHg * mInHgtohPa;
-	htbmPtr->Psi = (float)htbmPtr->mInHg * mInHgtoPsi;
+  // Get the pressure data
+  htbmPtr->mInHg = (htbmPtr->I2CData.reply[2] <<  8) + htbmPtr->I2CData.reply[3];
+  htbmPtr->hPa = (float)htbmPtr->mInHg * mInHgtohPa;
+  htbmPtr->Psi = (float)htbmPtr->mInHg * mInHgtoPsi;
 
   return true;
 }
 
-
 #endif // __HTBM_H__
 
-/*
- * $Id: hitechnic-barometer.h $
- */
 /* @} */
 /* @} */

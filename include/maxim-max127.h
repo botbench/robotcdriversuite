@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: maxim-max127.h $
- */
-
 #ifndef __MAX127_H__
 #define __MAX127_H__
 /** \file maxim-max127.h
@@ -74,8 +70,5 @@ short MAX127readChan(tSensors link, byte i2caddress, byte adcchannel) {
 }
 #endif // __MAX127_H__
 
-/*
- * $Id: maxim-max127.h $
- */
 /* @} */
 /* @} */

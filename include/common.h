@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: common.h $
- */
-
 /** \file common.h
  * \brief Commonly used functions used by drivers.
  *
@@ -86,30 +82,25 @@
 #define MAX_ARR_SIZE 17
 #endif
 
-
 /**
  * This define returns the smaller of the two numbers
  */
 #define min2(a, b) (a < b ? a : b)
-
 
 /**
  * This define returns the smallest of the three numbers
  */
 #define min3(a, b, c) (a < b) ? ((a < c) ? a : c) : ((b < c) ? b : c)
 
-
 /**
  * This function returns the bigger of the two numbers
  */
 #define max2(a, b) (a > b ? a : b)
 
-
 /**
  * This function returns the biggest of the three numbers
  */
 #define max3(a, b, c) (a > b) ? ((a > c) ? a : c) : ((b > c) ? b : c)
-
 
 /**
  * Returns x if it is between min and max. If outside the range,
@@ -151,7 +142,6 @@ bool waitForI2CBus(tSensors link);
 bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, short replylen);
 bool writeI2C(tSensors link, tByteArray &request);
 
-
 /**
  * Clear out the error state on I2C bus by sending a bunch of dummy
  * packets.
@@ -174,7 +164,6 @@ void clearI2CError(tI2CDataPtr data) {
     sleep(5);
   }
 }
-
 
 /**
  * Clear out the error state on I2C bus by sending a bunch of dummy
@@ -199,7 +188,6 @@ void clearI2CError(tSensors link, ubyte address) {
   }
 }
 
-
 /**
  * Wait for the I2C bus to be ready for the next message
  * @param link the port number
@@ -214,26 +202,25 @@ bool waitForI2CBus(tSensors link)
     switch (nI2CStatus[link])
     //switch(i2cstatus)
     {
-	    case NO_ERR:
-	      return true;
+      case NO_ERR:
+        return true;
 
-	    case STAT_COMM_PENDING:
-	      break;
+      case STAT_COMM_PENDING:
+        break;
 
-	    case ERR_COMM_CHAN_NOT_READY:
-	      break;
+      case ERR_COMM_CHAN_NOT_READY:
+        break;
 
-	    case ERR_COMM_BUS_ERR:
-	#ifdef __COMMON_H_DEBUG__
-	      playSound(soundLowBuzz);
-	      while (bSoundActive) {}
-	#endif // __COMMON_H_DEBUG__
+      case ERR_COMM_BUS_ERR:
+  #ifdef __COMMON_H_DEBUG__
+        playSound(soundLowBuzz);
+        while (bSoundActive) {}
+  #endif // __COMMON_H_DEBUG__
         return false;
     }
     EndTimeSlice();
   }
 }
-
 
 /**
  * Wait for the I2C bus to be ready for the next message
@@ -249,26 +236,25 @@ bool waitForI2CBus(tI2CDataPtr data)
     switch (nI2CStatus[data->port])
     //switch(i2cstatus)
     {
-	    case NO_ERR:
-	      return true;
+      case NO_ERR:
+        return true;
 
-	    case STAT_COMM_PENDING:
-	      break;
+      case STAT_COMM_PENDING:
+        break;
 
-	    case ERR_COMM_CHAN_NOT_READY:
-	      break;
+      case ERR_COMM_CHAN_NOT_READY:
+        break;
 
-	    case ERR_COMM_BUS_ERR:
-	#ifdef __COMMON_H_DEBUG__
-	      playSound(soundLowBuzz);
-	      while (bSoundActive) {}
-	#endif // __COMMON_H_DEBUG__
+      case ERR_COMM_BUS_ERR:
+  #ifdef __COMMON_H_DEBUG__
+        playSound(soundLowBuzz);
+        while (bSoundActive) {}
+  #endif // __COMMON_H_DEBUG__
         return false;
     }
     EndTimeSlice();
   }
 }
-
 
 bool writeI2C(tI2CDataPtr data) {
 
@@ -284,19 +270,19 @@ bool writeI2C(tI2CDataPtr data) {
     case sensorI2CCustomFastSkipStates9V: break;
     case sensorI2CCustomFastSkipStates:   break;
     default:
-	    hogCPU();
-	    playSound(soundException);
-	    eraseDisplay();
-	    displayCenteredTextLine(0, "Driver Suite");
-	    displayCenteredTextLine(1, "ERROR");
-	    displayCenteredTextLine(2, "You have not");
-	    displayCenteredTextLine(3, "setup the sensor");
-	    displayCenteredTextLine(4, "port correctly. ");
-	    displayCenteredTextLine(5, "Please refer to");
-	    displayCenteredTextLine(6, "one of the");
-	    displayCenteredTextLine(7, "examples.");
-	    sleep(10000);
-	    stopAllTasks();
+      hogCPU();
+      playSound(soundException);
+      eraseDisplay();
+      displayCenteredTextLine(0, "Driver Suite");
+      displayCenteredTextLine(1, "ERROR");
+      displayCenteredTextLine(2, "You have not");
+      displayCenteredTextLine(3, "setup the sensor");
+      displayCenteredTextLine(4, "port correctly. ");
+      displayCenteredTextLine(5, "Please refer to");
+      displayCenteredTextLine(6, "one of the");
+      displayCenteredTextLine(7, "examples.");
+      sleep(10000);
+      stopAllTasks();
   }
 #endif
 
@@ -328,7 +314,6 @@ bool writeI2C(tI2CDataPtr data) {
   return true;
 }
 
-
 /**
  * Write to the I2C bus. This function will clear the bus and wait for it be ready
  * before any bytes are sent.
@@ -350,19 +335,19 @@ bool writeI2C(tSensors link, tByteArray &request) {
     case sensorI2CCustomFastSkipStates9V: break;
     case sensorI2CCustomFastSkipStates:   break;
     default:
-	    hogCPU();
-	    playSound(soundException);
-	    eraseDisplay();
-	    displayCenteredTextLine(0, "3rd Party Driver");
-	    displayCenteredTextLine(1, "ERROR");
-	    displayCenteredTextLine(2, "You have not");
-	    displayCenteredTextLine(3, "setup the sensor");
-	    displayCenteredTextLine(4, "port correctly. ");
-	    displayCenteredTextLine(5, "Please refer to");
-	    displayCenteredTextLine(6, "one of the");
-	    displayCenteredTextLine(7, "examples.");
-	    sleep(10000);
-	    stopAllTasks();
+      hogCPU();
+      playSound(soundException);
+      eraseDisplay();
+      displayCenteredTextLine(0, "3rd Party Driver");
+      displayCenteredTextLine(1, "ERROR");
+      displayCenteredTextLine(2, "You have not");
+      displayCenteredTextLine(3, "setup the sensor");
+      displayCenteredTextLine(4, "port correctly. ");
+      displayCenteredTextLine(5, "Please refer to");
+      displayCenteredTextLine(6, "one of the");
+      displayCenteredTextLine(7, "examples.");
+      sleep(10000);
+      stopAllTasks();
   }
 #endif
 
@@ -385,7 +370,6 @@ bool writeI2C(tSensors link, tByteArray &request) {
   }
   return true;
 }
-
 
 /**
  * Write to the I2C bus. This function will clear the bus and wait for it be ready
@@ -411,19 +395,19 @@ bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, short reply
     case sensorI2CCustomFastSkipStates9V: break;
     case sensorI2CCustomFastSkipStates:   break;
     default:
-	    hogCPU();
-	    playSound(soundException);
-	    eraseDisplay();
-	    displayCenteredTextLine(0, "3rd Party Driver");
-	    displayCenteredTextLine(1, "ERROR");
-	    displayCenteredTextLine(2, "You have not");
-	    displayCenteredTextLine(3, "setup the sensor");
-	    displayCenteredTextLine(4, "port correctly. ");
-	    displayCenteredTextLine(5, "Please refer to");
-	    displayCenteredTextLine(6, "one of the");
-	    displayCenteredTextLine(7, "examples.");
-	    sleep(10000);
-	    stopAllTasks();
+      hogCPU();
+      playSound(soundException);
+      eraseDisplay();
+      displayCenteredTextLine(0, "3rd Party Driver");
+      displayCenteredTextLine(1, "ERROR");
+      displayCenteredTextLine(2, "You have not");
+      displayCenteredTextLine(3, "setup the sensor");
+      displayCenteredTextLine(4, "port correctly. ");
+      displayCenteredTextLine(5, "Please refer to");
+      displayCenteredTextLine(6, "one of the");
+      displayCenteredTextLine(7, "examples.");
+      sleep(10000);
+      stopAllTasks();
   }
 #endif
 
@@ -466,7 +450,6 @@ bool I2CreadInt(tSensors link, ubyte address, ubyte reg, short &retval, tByteArr
   return true;
 }
 
-
 bool I2CreadLong(tSensors link, ubyte address, ubyte reg, short &retval, tByteArray request, tByteArray reply, bool msbfirst = true)
 {
   request[0] = 2;            // Message size
@@ -484,7 +467,6 @@ bool I2CreadLong(tSensors link, ubyte address, ubyte reg, short &retval, tByteAr
   return true;
 }
 
-
 bool I2CreadSByte(tSensors link, ubyte address, ubyte reg, sbyte &retval, tByteArray request, tByteArray reply)
 {
   request[0] = 2;            // Message size
@@ -498,7 +480,6 @@ bool I2CreadSByte(tSensors link, ubyte address, ubyte reg, sbyte &retval, tByteA
 
   return true;
 }
-
 
 bool I2CreadUByte(tSensors link, ubyte address, ubyte reg, ubyte &retval, tByteArray request, tByteArray reply)
 {
@@ -529,7 +510,6 @@ long getUID() {
   // manufacturer (LEGO):  http://www.coffer.com/mac_find/?string=lego
    return (long)btAddr[5] + ((long)btAddr[4] << 8) + ((long)btAddr[3] << 16);
 }
-
 
 #define STRTOK_MAX_TOKEN_SIZE 20
 #define STRTOK_MAX_BUFFER_SIZE 50
@@ -579,11 +559,7 @@ bool strtok(char *buffer, char *token, char *seperator)
   return false;
 }
 
-
 #endif // __COMMON_H__
 
-/*
- * $Id: common.h $
- */
 /* @} */
 /* @} */

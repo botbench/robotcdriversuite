@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindsensors-sensormux.h $
- */
-
 #ifndef __MSSMUX_H__
 #define __MSSMUX_H__
 /** \file mindsensors-sensormux.h
@@ -43,13 +39,11 @@
 #define MSMX_REG_CHANSEL  0x42
 #define MSMX_REG_VOLTAGE  0x43
 
-
 tByteArray MSMX_I2CRequest;    /*!< Array to hold I2C command data */
 tByteArray MSMX_I2CReply;      /*!< Array to hold I2C reply data */
 
 void MSSMUXsetChan(tSensors link, short channel);
 short MSSMUXreadBattery(tSensors link);
-
 
 /**
  * Read the voltage level of the external battery.
@@ -137,8 +131,5 @@ void MSSMUXsetChan(tSensors link, short channel)
 
 #endif // __MSSMUX_H__
 
-/*
- * $Id: mindsensors-sensormux.h $
- */
 /* @} */
 /* @} */

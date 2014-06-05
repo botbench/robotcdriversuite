@@ -36,9 +36,9 @@ task main() {
     lightdelta = wlight - wolight;
 
     eraseDisplay();
-		displayTextLine(1, "L_On : %4d", wlight);
-		displayTextLine(2, "L_Off: %4d", wolight);
-		displayTextLine(4, "L_Delta: %4d", lightdelta);
+    displayTextLine(1, "L_On : %4d", wlight);
+    displayTextLine(2, "L_Off: %4d", wolight);
+    displayTextLine(4, "L_Delta: %4d", lightdelta);
     sleep(30);
   }
 }

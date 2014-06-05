@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-colour-v1.h $
- */
-
 #ifndef __HTCS_H__
 #define __HTCS_H__
 /** \file hitechnic-colour-v1.h
@@ -101,7 +97,6 @@ short HTCSreadColor(tSensors link) {
   return HTCS_I2CReply[0];
 }
 
-
 /**
  * Return the color number currently detected.
  * @param muxsensor the SMUX sensor port number
@@ -109,7 +104,7 @@ short HTCSreadColor(tSensors link) {
  */
 #ifdef __HTSMUX_SUPPORT__
 short HTCSreadColor(tMUXSensor muxsensor) {
-	memset(HTCS_I2CRequest, 0, sizeof(tByteArray));
+  memset(HTCS_I2CRequest, 0, sizeof(tByteArray));
 
   if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
     HTSMUXconfigChannel(muxsensor, HTCS_config);
@@ -121,7 +116,6 @@ short HTCSreadColor(tMUXSensor muxsensor) {
   return HTCS_I2CReply[0];
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Get the detection levels for the three color components.
@@ -147,7 +141,6 @@ bool HTCSreadRGB(tSensors link, short &red, short &green, short &blue) {
 
   return true;
 }
-
 
 /**
  * Get the detection levels for the three color components.
@@ -176,7 +169,6 @@ bool HTCSreadRGB(tMUXSensor muxsensor, short &red, short &green, short &blue) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-
 /**
  * Get the detection levels for the hue, saturation, value components.
  * @param link the HTCS port number
@@ -193,7 +185,6 @@ bool HTCSreadHSV(tSensors link, float &hue, float &saturation, float &value) {
 
   return ret;
 }
-
 
 /**
  * Get the detection levels for the hue, saturation, value components.
@@ -214,7 +205,6 @@ bool HTCSreadHSV(tMUXSensor muxsensor, float &hue, float &saturation, float &val
   return ret;
 }
 #endif // __HTSMUX_SUPPORT__
-
 
 /**
  * Get the normalised RGB readings. The normalization sets the highest
@@ -308,8 +298,5 @@ bool HTCScalWhite(tSensors link) {
 
 #endif // __HTCS_H__
 
-/*
- * $Id: hitechnic-colour-v1.h $
- */
 /* @} */
 /* @} */

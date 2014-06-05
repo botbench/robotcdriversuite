@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: hitechnic-sensormux.h $
- */
-
 #ifndef __HTSMUX_H__
 #define __HTSMUX_H__
 /** \file hitechnic-sensormux.h
@@ -73,7 +69,6 @@
 #define HTSMUX_I2C_BUF          0x40  /*!< I2C buffer register offset */
 #define HTSMUX_BF_ENTRY_SIZE    0x10  /*!< Number of registers per buffer */
 
-
 // Command fields
 #define HTSMUX_CMD_HALT         0x00  /*!< Halt multiplexer command */
 #define HTSMUX_CMD_AUTODETECT   0x01  /*!< Start auto-detect function command */
@@ -94,7 +89,6 @@
 #define HTSMUX_CHAN_DIG0_HIGH   0x04  /*!< Drive pin 0 high channel mode */
 #define HTSMUX_CHAN_DIG1_HIGH   0x08  /*!< Drive pin 1 high channel mode */
 #define HTSMUX_CHAN_I2C_SLOW    0x10  /*!< Set slow I2C rate channel mode */
-
 
 /*!< Sensor types as detected by SMUX */
 typedef enum {
@@ -132,8 +126,6 @@ typedef enum {
   msensor_S4_4 = 15
 } tMUXSensor;
 
-
-
 /*!< array to hold SMUX status info */
 ubyte HTSMUXstatus[4] = {HTSMUX_STAT_NOTHING, HTSMUX_STAT_NOTHING, HTSMUX_STAT_NOTHING, HTSMUX_STAT_NOTHING};
 
@@ -169,7 +161,6 @@ short HTSMUXreadAnalogue(tMUXSensor muxsensor);
 bool HTSMUXreadPowerStatus(tSensors link);
 bool HTSMUXconfigChannel(tMUXSensor muxsensor, tConfigParams &configparams);
 
-
 /**
  * Read the status of the SMUX
  *
@@ -196,7 +187,6 @@ byte HTSMUXreadStatus(tSensors link) {
   return HTSMUX_I2CReply[0];
 }
 
-
 /**
  * Get the sensor type attached to specified SMUX port
  * @param muxsensor the SMUX sensor port number
@@ -205,7 +195,6 @@ byte HTSMUXreadStatus(tSensors link) {
 HTSMUXSensorType HTSMUXreadSensorType(tMUXSensor muxsensor) {
   return HTSMUXSensorTypes[muxsensor];
 }
-
 
 /**
  * Set the mode of a SMUX channel.
@@ -228,11 +217,11 @@ bool HTSMUXsetMode(tMUXSensor muxsensor, byte mode) {
   if (HTSMUXstatus[link] == HTSMUX_STAT_BUSY) {
     return false;
   } else if (HTSMUXstatus[link] != HTSMUX_STAT_HALT) {
-	  // Always make sure the SMUX is in the halted state
-	  if (!HTSMUXsendCommand(link, HTSMUX_CMD_HALT))
-	    return false;
-	  sleep(50);
-	}
+    // Always make sure the SMUX is in the halted state
+    if (!HTSMUXsendCommand(link, HTSMUX_CMD_HALT))
+      return false;
+    sleep(50);
+  }
 
   memset(HTSMUX_I2CRequest, 0, sizeof(tByteArray));
 
@@ -243,7 +232,6 @@ bool HTSMUXsetMode(tMUXSensor muxsensor, byte mode) {
 
   return writeI2C(link, HTSMUX_I2CRequest);
 }
-
 
 /**
  * Set the mode of an analogue channel to Active (turn the light on)
@@ -260,7 +248,6 @@ bool HTSMUXsetAnalogueActive(tMUXSensor muxsensor) {
   return HTSMUXsendCommand((tSensors)SPORT(muxsensor), HTSMUX_CMD_RUN);
 }
 
-
 /**
  * Set the mode of an analogue channel to Inactive (turn the light off)
  * @param muxsensor the SMUX sensor port number
@@ -275,7 +262,6 @@ bool HTSMUXsetAnalogueInactive(tMUXSensor muxsensor) {
 
   return HTSMUXsendCommand((tSensors)SPORT(muxsensor), HTSMUX_CMD_RUN);
 }
-
 
 /**
  * Send a command to the SMUX.
@@ -313,7 +299,6 @@ bool HTSMUXsendCommand(tSensors link, byte command) {
   return writeI2C(link, HTSMUX_I2CRequest);
 }
 
-
 /**
  * Read the value returned by the sensor attached the SMUX. This function
  * is for I2C sensors.
@@ -343,7 +328,6 @@ bool HTSMUXreadPort(tMUXSensor muxsensor, tByteArray &result, short numbytes, sh
   return true;
 }
 
-
 /**
  * Read the value returned by the sensor attached the SMUX. This function
  * is for analogue sensors.
@@ -371,7 +355,6 @@ short HTSMUXreadAnalogue(tMUXSensor muxsensor) {
   return ((short)HTSMUX_I2CReply[0] * 4) + HTSMUX_I2CReply[1];
 }
 
-
 /**
  * Return a string for the sensor type.
  *
@@ -393,7 +376,6 @@ void HTSMUXsensorTypeToString(HTSMUXSensorType muxsensor, string &sensorName) {
   }
 }
 
-
 /**
  * Check if the battery is low
  *
@@ -406,7 +388,6 @@ bool HTSMUXreadPowerStatus(tSensors link) {
   else
     return false;
 }
-
 
 /**
  * Configure the SMUX for a specific sensor.\n
@@ -426,7 +407,7 @@ bool HTSMUXconfigChannel(tMUXSensor muxsensor, tConfigParams &configparams) {
   // Always make sure the SMUX is in the halted state
   if (!HTSMUXsendCommand((tSensors)SPORT(muxsensor), HTSMUX_CMD_HALT))
     return false;
-	sleep(50);
+  sleep(50);
 
   HTSMUX_I2CRequest[0] = 7;               // Message size
   HTSMUX_I2CRequest[1] = HTSMUX_I2C_ADDR; // I2C Address
@@ -444,10 +425,7 @@ bool HTSMUXconfigChannel(tMUXSensor muxsensor, tConfigParams &configparams) {
   return HTSMUXsendCommand((tSensors)SPORT(muxsensor), HTSMUX_CMD_RUN);
 }
 
-
 #endif // __HTSMUX_H__
-/*
- * $Id: hitechnic-sensormux.h $
- */
+
 /* @} */
 /* @} */

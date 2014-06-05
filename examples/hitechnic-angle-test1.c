@@ -1,6 +1,4 @@
-/*
- * $Id: hitechnic-angle-test1.c $
- */
+
 
 /**
  * hitechnic-angle.h provides an API for the HiTechnic Angle Sensor.  This program
@@ -59,7 +57,7 @@ task main () {
 
     // Reset the total accumulated angle to 0
     } else if (nNxtButtonPressed == kRightButton) {
-     	resetAccmulatedAngle(&angleSensor);
+       resetAccmulatedAngle(&angleSensor);
       while (nNxtButtonPressed != kNoButton) EndTimeSlice();
     }
 
@@ -73,8 +71,3 @@ task main () {
     sleep(50);
   }
 }
-
-
-/*
- * $Id: hitechnic-angle-test1.c $
- */

@@ -1,6 +1,4 @@
-/*
- * $Id: hitechnic-angle-SMUX-test1.c $
- */
+
 
 /**
  * hitechnic-angle.h provides an API for the HiTechnic Angle Sensor.  This program
@@ -44,10 +42,10 @@ task main () {
 
   // Initialise and configure struct and port
   // The sensor is connected to the first port
-	// of the SMUX which is connected to the NXT port S1.
-	// To access that sensor, we must use msensor_S1_1.  If the sensor
-	// were connected to 3rd port of the SMUX connected to the NXT port S4,
-	// we would use msensor_S4_3
+  // of the SMUX which is connected to the NXT port S1.
+  // To access that sensor, we must use msensor_S1_1.  If the sensor
+  // were connected to 3rd port of the SMUX connected to the NXT port S4,
+  // we would use msensor_S4_3
   initSensor(&angleSensor, msensor_S1_1);
 
   while (true) {
@@ -65,7 +63,7 @@ task main () {
 
     // Reset the total accumulated angle to 0
     } else if (nNxtButtonPressed == kRightButton) {
-     	resetAccmulatedAngle(&angleSensor);
+       resetAccmulatedAngle(&angleSensor);
       while (nNxtButtonPressed != kNoButton) EndTimeSlice();
     }
 
@@ -79,8 +77,3 @@ task main () {
     sleep(50);
   }
 }
-
-
-/*
- * $Id: hitechnic-angle-SMUX-test1.c $
- */

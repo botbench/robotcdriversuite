@@ -1,6 +1,4 @@
-/*
- * $Id: hitechnic-colour-v2-SMUX-test1.c $
- */
+
 
 /**
  * hitechnic-colour-v2.h provides an API for the HiTechnic Color V2 Sensor.  This program
@@ -42,15 +40,15 @@ task main () {
 
   // Initialise and configure struct and port
   // The sensor is connected to the first port
-	// of the SMUX which is connected to the NXT port S1.
-	// To access that sensor, we must use msensor_S1_1.  If the sensor
-	// were connected to 3rd port of the SMUX connected to the NXT port S4,
-	// we would use msensor_S4_3
+  // of the SMUX which is connected to the NXT port S1.
+  // To access that sensor, we must use msensor_S1_1.  If the sensor
+  // were connected to 3rd port of the SMUX connected to the NXT port S4,
+  // we would use msensor_S4_3
   initSensor(&colorSensor, msensor_S1_1);
 
   eraseDisplay();
   while (true)
- 	{
+   {
     // Read the currently detected colour and RGB/HSV data from the sensor
     if (!readSensor(&colorSensor)) {
       displayTextLine(4, "ERROR!!");
@@ -71,7 +69,3 @@ task main () {
     sleep(100);
   }
 }
-
-/*
- * $Id: hitechnic-colour-v2-SMUX-test1.c $
- */

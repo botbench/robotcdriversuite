@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: holitdata-motormux.h $
- */
-
 #ifndef __HDMMUX_H__
 #define __HDMMUX_H__
 /** \file holitdata-motormux.h
@@ -125,7 +121,6 @@ void HDMMUXinit(){
   }
 }
 
-
 /**
  * Read the status of the motors and tacho counts of the MMUX
  *
@@ -160,7 +155,6 @@ bool HDMMUXreadStatus(tSensors link, ubyte &motorStatus, long &tachoA, long &tac
   return true;
 }
 
-
 /**
  * Send a command to the MMUX.
  *
@@ -192,7 +186,6 @@ bool HDMMUXsendCommand(tSensors link, ubyte mode, ubyte channel, ubyte rotparams
   return writeI2C(link, HDMMUX_I2CRequest);
 }
 
-
 /**
  * Run motor with specified speed.
  *
@@ -220,7 +213,6 @@ bool HDMMotor(tMUXmotor muxmotor, byte power) {
   return retval;
 }
 
-
 /**
  * Stop the motor. Uses the brake method specified with HDMMotorSetBrake or HDMMotorSetFloat.
  * The default is to use braking.
@@ -243,7 +235,6 @@ bool HDMotorStop(tMUXmotor muxmotor) {
 
   return retval;
 }
-
 
 /**
  * Stop the motor. This function overrides the preconfigured braking method.
@@ -268,7 +259,6 @@ bool HDMotorStop(tMUXmotor muxmotor, bool brake) {
   return retval;
 }
 
-
 /**
  * Set rotation target for specified mux motor. Rotations can be specified in
  * increments of 0.01.  To rotate the motor 10.54 degrees, specify a value of 10.54.
@@ -281,7 +271,6 @@ void HDMMotorSetRotationTarget(tMUXmotor muxmotor, float rottarget) {
   mmuxData[SPORT(muxmotor)].target[MPORT(muxmotor)] = (long)(rottarget * 100);
   mmuxData[SPORT(muxmotor)].targetUnit[MPORT(muxmotor)] = HDMMUX_ROT_ROTATIONS;
 }
-
 
 /**
  * Set time target for specified mux motor. Seconds can be specified in
@@ -296,7 +285,6 @@ void HDMMotorSetTimeTarget(tMUXmotor muxmotor, float timetarget) {
   mmuxData[SPORT(muxmotor)].targetUnit[MPORT(muxmotor)] = HDMMUX_ROT_SECONDS;
 }
 
-
 /**
  * Set encoder target for specified mux motor.
  *
@@ -308,7 +296,6 @@ void HDMMotorSetEncoderTarget(tMUXmotor muxmotor, long enctarget) {
   mmuxData[SPORT(muxmotor)].target[MPORT(muxmotor)] = enctarget;
   mmuxData[SPORT(muxmotor)].targetUnit[MPORT(muxmotor)] = HDMMUX_ROT_DEGREES;
 }
-
 
 /**
  * Fetch the current encoder value for specified motor channel
@@ -333,7 +320,6 @@ long HDMMotorEncoder(tMUXmotor muxmotor) {
   return 0;
 }
 
-
 /**
  * Reset target encoder for specified motor channel, use only at
  * the start of your program.  If you are using the standard NXT wheels
@@ -354,7 +340,6 @@ bool HDMMotorEncoderReset(tMUXmotor muxmotor) {
 
   return HDMMUXsendCommand((tSensors)SPORT(muxmotor), mode, 0, 0, 0, 0, 0);
 }
-
 
 /**
  * Reset all encoders on the specified motor-MUX. Use only at
@@ -378,7 +363,6 @@ bool HDMMotorEncoderResetAll(tSensors link) {
   return true;
 }
 
-
 /**
  * Check if the specified motor is running or not.
  *
@@ -400,7 +384,6 @@ bool HDMMotorBusy(tMUXmotor muxmotor) {
   return true;
 }
 
-
 /**
  * Set the stopping method for the specified motor to brake.
  *
@@ -409,7 +392,6 @@ bool HDMMotorBusy(tMUXmotor muxmotor) {
 void HDMMotorSetBrake(tMUXmotor muxmotor) {
   mmuxData[SPORT(muxmotor)].brake[MPORT(muxmotor)] = true;
 }
-
 
 /**
  * Set the stopping method for the specified motor to float.
@@ -420,7 +402,6 @@ void HDMMotorSetFloat(tMUXmotor muxmotor) {
   mmuxData[SPORT(muxmotor)].brake[MPORT(muxmotor)] = false;
 }
 
-
 /**
  * Set the motor speed control for the specified motor.
  *
@@ -430,7 +411,6 @@ void HDMMotorSetFloat(tMUXmotor muxmotor) {
 void HDMMotorSetSpeedCtrl(tMUXmotor muxmotor, bool constspeed) {
   mmuxData[SPORT(muxmotor)].pidcontrol[MPORT(muxmotor)] = true;
 }
-
 
 /**
  * Set the motor ramping type the specified motor.
@@ -448,8 +428,5 @@ void HDMMotorSetRamping(tMUXmotor muxmotor, ubyte ramping) {
 
 #endif //  __HDMMUX_H__
 
-/*
- * $Id: holitdata-motormux.h $
- */
 /* @} */
 /* @} */

@@ -5,10 +5,6 @@
  * @{
  */
 
-/*
- * $Id: mindensors-servo.h $
- */
-
 #ifndef __NXTSERVO_H__
 #define __NXTSERVO_H__
 /** \file mindensors-servo.h
@@ -89,7 +85,6 @@ short NXTServoReadVoltage(tSensors link, ubyte address = NXTSERVO_I2C_ADDR);
 tByteArray NXTSERVO_I2CRequest;         /*!< Array to hold I2C command data */
 tByteArray NXTSERVO_I2CReply;           /*!< Array to hold I2C reply data */
 
-
 /**
  * Set the speed register for the specified servo.  This is the amount to increase
  * the current position by every 24ms when the servo position is changed.
@@ -110,7 +105,6 @@ bool NXTServoSetSpeed(tSensors link, ubyte servochan, ubyte speed, ubyte address
 
   return writeI2C(link, NXTSERVO_I2CRequest);
 }
-
 
 /**
  * Tell the servo to move to the specified position using the specified speed.
@@ -138,8 +132,6 @@ bool NXTServoSetPos(tSensors link, ubyte servochan, short position, ubyte speed,
 
   return writeI2C(link, NXTSERVO_I2CRequest);
 }
-
-
 
 /**
  * Tell the servo to move to the specified position using the specified speed.
@@ -170,7 +162,6 @@ bool NXTServoQSetPos(tSensors link, ubyte servochan, ubyte position, byte speed,
   return writeI2C(link, NXTSERVO_I2CRequest);
 }
 
-
 /**
  * Get the voltage level of the battery pack.
  * @param link the NXTServo port number
@@ -195,8 +186,6 @@ short NXTServoReadVoltage(tSensors link, ubyte address) {
 }
 
 #endif // __NXTSERVO_H__
-/*
- * $Id: mindensors-servo.h $
- */
+
 /* @} */
 /* @} */
