@@ -40,6 +40,7 @@
  */
 
 #pragma systemFile
+#include "hitechnic-sensormux.h"
 
 #ifndef __COMMON_H__
 #include "common.h"
@@ -48,6 +49,21 @@
 // This ensures the correct sensor types are used.
 TSensorTypes HTEOPDLRType = sensorAnalogActive;
 TSensorTypes HTEOPDSRType = sensorAnalogInactive;
+
+typedef struct
+{
+  tI2CData I2CData;
+  short processed;
+  short raw;
+  bool shortRange;
+  bool smux;
+  tMUXSensor smuxport;
+} tHTEOPD, *tHTEOPDPtr;
+
+bool initSensor(tHTEOPDPtr hteopdPtr, tSensors port);
+bool initSensor(tHTEOPDPtr hteopdPtr, tMUXSensor muxsensor);
+bool readSensor(tHTEOPDPtr hteopdPtr);
+bool configSensor(tHTEOPDPtr hteopdPtr);
 
 short HTEOPDreadRaw(tSensors link);
 short HTEOPDreadProcessed(tSensors link);
@@ -143,6 +159,93 @@ void HTEOPDsetLongRange(tMUXSensor muxsensor) {
   HTSMUXsetAnalogueActive(muxsensor);
 }
 #endif // __HTSMUX_SUPPORT__
+
+
+/**
+ * Initialise the sensor's data struct and port
+ *
+ * @param hteopdPtr pointer to the sensor's data struct
+ * @param port the sensor port
+ * @return true if no error occured, false if it did
+ */
+bool initSensor(tHTEOPDPtr hteopdPtr, tSensors port)
+{
+  memset(hteopdPtr, 0, sizeof(tHTEOPDPtr));
+  hteopdPtr->I2CData.port = port;
+  hteopdPtr->I2CData.type = HTEOPDSRType;
+  hteopdPtr->shortRange = true;
+  hteopdPtr->smux = false;
+
+  // Ensure the sensor is configured correctly
+  if (SensorType[hteopdPtr->I2CData.port] != hteopdPtr->I2CData.type)
+    SensorType[hteopdPtr->I2CData.port] = hteopdPtr->I2CData.type;
+
+  return true;
+}
+
+/**
+ * Initialise the sensor's data struct and MUX port
+ *
+ * @param hteopdPtr pointer to the sensor's data struct
+ * @param muxsensor the sensor MUX port
+ * @return true if no error occured, false if it did
+ */
+bool initSensor(tHTEOPDPtr hteopdPtr, tMUXSensor muxsensor)
+{
+  memset(hteopdPtr, 0, sizeof(tHTEOPDPtr));
+  hteopdPtr->I2CData.type = sensorI2CCustom;
+  hteopdPtr->shortRange = true;
+  hteopdPtr->smux = true;
+  hteopdPtr->smuxport = muxsensor;
+
+  // Ensure the sensor is configured correctly
+  if (SensorType[hteopdPtr->I2CData.port] != hteopdPtr->I2CData.type)
+    SensorType[hteopdPtr->I2CData.port] = hteopdPtr->I2CData.type;
+
+  // Configure as short range
+  return HTSMUXsetAnalogueInactive(muxsensor);
+}
+
+/**
+ * Read all the sensor's data
+ *
+ * @param hteopdPtr pointer to the sensor's data struct
+ * @return true if no error occured, false if it did
+ */
+bool readSensor(tHTEOPDPtr hteopdPtr)
+{
+  memset(hteopdPtr->I2CData.request, 0, sizeof(hteopdPtr->I2CData.request));
+
+  // Read the raw analogue data
+  if (hteopdPtr->smux)
+    hteopdPtr->raw = 1023 - HTSMUXreadAnalogue(hteopdPtr->smuxport);
+  else
+    hteopdPtr->raw = 1023 - SensorRaw[hteopdPtr->I2CData.port];
+
+  // Calculate the processed value
+	hteopdPtr->processed = round(sqrt((long)hteopdPtr->raw * 10));
+  return true;
+}
+
+
+bool configSensor(tHTEOPDPtr hteopdPtr)
+{
+	if (hteopdPtr->smux)
+	{
+		if (hteopdPtr->shortRange)
+			return HTSMUXsetAnalogueInactive(hteopdPtr->smuxport);
+		else
+			return HTSMUXsetAnalogueActive(hteopdPtr->smuxport);
+	}
+	else
+	{
+		if (hteopdPtr->shortRange)
+			SensorType[hteopdPtr->I2CData.port] = HTEOPDSRType;
+		else
+			SensorType[hteopdPtr->I2CData.port] = HTEOPDLRType;
+	}
+	return true;
+}
 
 #endif // __HTEOPD_H__
 
