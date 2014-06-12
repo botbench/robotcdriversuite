@@ -66,6 +66,9 @@ bool sensorCalibrate(tHTMCPtr htmcPtr);
 
 // Stop calibration - not always required
 bool sensorStopCalibrate(tHTMCPtr htmcPtr);
+
+// Configure a sensor for a new mode
+bool configSensor(tHTEOPDPtr hteopdPtr);
 ```
 If you're interested in seeing an actual example of this, take a look at the [HiTechnic Angle Sensor example program] [htangleexample].
 
