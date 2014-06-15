@@ -228,6 +228,12 @@ bool readSensor(tHTEOPDPtr hteopdPtr)
 }
 
 
+/**
+ * Configure the sensor for either short or long range mode
+ *
+ * @param hteopdPtr pointer to the sensor's data struct
+ * @return true if no error occured, false if it did
+ */
 bool configSensor(tHTEOPDPtr hteopdPtr)
 {
 	if (hteopdPtr->smux)
