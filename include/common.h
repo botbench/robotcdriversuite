@@ -58,6 +58,11 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
+// #define DISABLE_ERROR_REPORTING
+#ifndef DISABLE_ERROR_REPORTING
+#pragma debuggerWindows("debugStream");
+#endif // DISABLE_ERROR_REPORTING
+
 #undef __COMMON_H_DEBUG__
 //#define __COMMON_H_DEBUG__
 
@@ -195,13 +200,13 @@ void clearI2CError(tSensors link, ubyte address) {
  */
 bool waitForI2CBus(tSensors link)
 {
-  //TI2CStatus i2cstatus;
   while (true)
   {
     //i2cstatus = nI2CStatus[link];
     switch (nI2CStatus[link])
     //switch(i2cstatus)
     {
+#if defined(NXT)
       case NO_ERR:
         return true;
 
@@ -212,15 +217,28 @@ bool waitForI2CBus(tSensors link)
         break;
 
       case ERR_COMM_BUS_ERR:
+#else  // this must be an EV3
+      case i2cStatusNoError:
+        return true;
+
+      case i2cStatusPending:
+      case i2cStatusStartTransfer:
+        break;
+
+      case i2cStatusFailed:
+      case i2cStatusBadConfig:
+#endif
   #ifdef __COMMON_H_DEBUG__
         playSound(soundLowBuzz);
         while (bSoundActive) {}
   #endif // __COMMON_H_DEBUG__
         return false;
     }
-    EndTimeSlice();
+    sleep(1);
   }
 }
+
+
 
 /**
  * Wait for the I2C bus to be ready for the next message
@@ -229,13 +247,13 @@ bool waitForI2CBus(tSensors link)
  */
 bool waitForI2CBus(tI2CDataPtr data)
 {
-  //TI2CStatus i2cstatus;
   while (true)
   {
     //i2cstatus = nI2CStatus[link];
     switch (nI2CStatus[data->port])
     //switch(i2cstatus)
     {
+#ifdef NXT
       case NO_ERR:
         return true;
 
@@ -246,13 +264,24 @@ bool waitForI2CBus(tI2CDataPtr data)
         break;
 
       case ERR_COMM_BUS_ERR:
+#else  // this must be an EV3
+      case i2cStatusNoError:
+        return true;
+
+      case i2cStatusPending:
+      case i2cStatusStartTransfer:
+        break;
+
+      case i2cStatusFailed:
+      case i2cStatusBadConfig:
+#endif
   #ifdef __COMMON_H_DEBUG__
         playSound(soundLowBuzz);
         while (bSoundActive) {}
   #endif // __COMMON_H_DEBUG__
         return false;
     }
-    EndTimeSlice();
+    sleep(1);
   }
 }
 
@@ -265,22 +294,23 @@ bool writeI2C(tI2CDataPtr data) {
   {
     case sensorI2CCustom:                 break;
     case sensorI2CCustom9V:               break;
+#ifdef EV3
+		case sensorEV3_GenericI2C:						break;
+#else // This is an NXT
     case sensorI2CCustomFast:             break;
     case sensorI2CCustomFast9V:           break;
     case sensorI2CCustomFastSkipStates9V: break;
     case sensorI2CCustomFastSkipStates:   break;
+#endif // EV3/NXT
     default:
       hogCPU();
       playSound(soundException);
       eraseDisplay();
-      displayCenteredTextLine(0, "Driver Suite");
-      displayCenteredTextLine(1, "ERROR");
-      displayCenteredTextLine(2, "You have not");
-      displayCenteredTextLine(3, "setup the sensor");
-      displayCenteredTextLine(4, "port correctly. ");
-      displayCenteredTextLine(5, "Please refer to");
-      displayCenteredTextLine(6, "one of the");
-      displayCenteredTextLine(7, "examples.");
+#ifdef EV3
+			setLEDColor(ledRedPulse);
+#endif // EV3
+      writeDebugStreamLine("ERROR, You have not setup the sensor port correctly. ");
+      writeDebugStreamLine("Please refer to one of the examples.");
       sleep(10000);
       stopAllTasks();
   }
@@ -330,22 +360,23 @@ bool writeI2C(tSensors link, tByteArray &request) {
   {
     case sensorI2CCustom:                 break;
     case sensorI2CCustom9V:               break;
+#ifdef EV3
+		case sensorEV3_GenericI2C:						break;
+#else // This is an NXT
     case sensorI2CCustomFast:             break;
     case sensorI2CCustomFast9V:           break;
     case sensorI2CCustomFastSkipStates9V: break;
     case sensorI2CCustomFastSkipStates:   break;
+#endif // EV3/NXT
     default:
       hogCPU();
       playSound(soundException);
       eraseDisplay();
-      displayCenteredTextLine(0, "3rd Party Driver");
-      displayCenteredTextLine(1, "ERROR");
-      displayCenteredTextLine(2, "You have not");
-      displayCenteredTextLine(3, "setup the sensor");
-      displayCenteredTextLine(4, "port correctly. ");
-      displayCenteredTextLine(5, "Please refer to");
-      displayCenteredTextLine(6, "one of the");
-      displayCenteredTextLine(7, "examples.");
+#ifdef EV3
+			setLEDColor(ledRedPulse);
+#endif // EV3
+      writeDebugStreamLine("ERROR, You have not setup the sensor port correctly. ");
+      writeDebugStreamLine("Please refer to one of the examples.");
       sleep(10000);
       stopAllTasks();
   }
@@ -390,22 +421,23 @@ bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, short reply
   {
     case sensorI2CCustom:                 break;
     case sensorI2CCustom9V:               break;
+#ifdef EV3
+		case sensorEV3_GenericI2C:						break;
+#else // This is an NXT
     case sensorI2CCustomFast:             break;
     case sensorI2CCustomFast9V:           break;
     case sensorI2CCustomFastSkipStates9V: break;
     case sensorI2CCustomFastSkipStates:   break;
+#endif // EV3/NXT
     default:
       hogCPU();
       playSound(soundException);
       eraseDisplay();
-      displayCenteredTextLine(0, "3rd Party Driver");
-      displayCenteredTextLine(1, "ERROR");
-      displayCenteredTextLine(2, "You have not");
-      displayCenteredTextLine(3, "setup the sensor");
-      displayCenteredTextLine(4, "port correctly. ");
-      displayCenteredTextLine(5, "Please refer to");
-      displayCenteredTextLine(6, "one of the");
-      displayCenteredTextLine(7, "examples.");
+#ifdef EV3
+			setLEDColor(ledRedPulse);
+#endif // EV3
+      writeDebugStreamLine("ERROR, You have not setup the sensor port correctly. ");
+      writeDebugStreamLine("Please refer to one of the examples.");
       sleep(10000);
       stopAllTasks();
   }
@@ -435,66 +467,6 @@ bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, short reply
   return true;
 }
 
-/*
-bool I2CreadInt(tSensors link, ubyte address, ubyte reg, short &retval, tByteArray request, tByteArray reply, bool msbfirst = true)
-{
-  request[0] = 2;            // Message size
-  request[1] = address; // I2C Address
-  request[2] = reg;
-
-  if (!writeI2C(link, request, reply, 2))
-    return false;
-
-  retval = (msbfirst) ? reply[1] + (reply[0] << 8) : reply[0] + (reply[1] << 8);
-
-  return true;
-}
-
-bool I2CreadLong(tSensors link, ubyte address, ubyte reg, short &retval, tByteArray request, tByteArray reply, bool msbfirst = true)
-{
-  request[0] = 2;            // Message size
-  request[1] = address; // I2C Address
-  request[2] = reg;
-
-  if (!writeI2C(link, request, reply, 4))
-    return false;
-
-  if (msbfirst)
-    retval = (reply[0] << 24) + (reply[1] << 16) + (reply[2] <<  8) + reply[3];
-  else
-    retval = (reply[3] << 24) + (reply[2] << 16) + (reply[1] <<  8) + reply[0];
-
-  return true;
-}
-
-bool I2CreadSByte(tSensors link, ubyte address, ubyte reg, sbyte &retval, tByteArray request, tByteArray reply)
-{
-  request[0] = 2;            // Message size
-  request[1] = address; // I2C Address
-  request[2] = reg;
-
-  if (!writeI2C(link, request, reply, 1))
-    return false;
-
-  retval =  (reply[0] >= 128) ? (short)reply[0] - 256 : (short)reply[0];
-
-  return true;
-}
-
-bool I2CreadUByte(tSensors link, ubyte address, ubyte reg, ubyte &retval, tByteArray request, tByteArray reply)
-{
-  request[0] = 2;            // Message size
-  request[1] = address; // I2C Address
-  request[2] = reg;
-
-  if (!writeI2C(link, request, reply, 1))
-    return false;
-
-  retval =  reply[0];
-
-  return true;
-}
-*/
 
 /**
  * Create a unique ID (UID) for an NXT.  This based on the last 3 bytes
@@ -503,12 +475,16 @@ bool I2CreadUByte(tSensors link, ubyte address, ubyte reg, ubyte &retval, tByteA
  * @return a unique ID for the NXT.
  */
 long getUID() {
+#ifdef NXT
   TBTAddress btAddr;
   getBTAddress(btAddr);
 
   // Only last 3 bytes are unique in the BT address, the other three are for the
   // manufacturer (LEGO):  http://www.coffer.com/mac_find/?string=lego
-   return (long)btAddr[5] + ((long)btAddr[4] << 8) + ((long)btAddr[3] << 16);
+	return (long)btAddr[5] + ((long)btAddr[4] << 8) + ((long)btAddr[3] << 16);
+#else
+	return 0;
+#endif // NXT
 }
 
 #define STRTOK_MAX_TOKEN_SIZE 20
@@ -523,7 +499,7 @@ long getUID() {
  */
 bool strtok(char *buffer, char *token, char *seperator)
 {
-  short pos = StringFind(buffer, seperator);
+  short pos = stringFind(buffer, seperator);
   char t_buff[STRTOK_MAX_BUFFER_SIZE];
 
   // Make sure we zero out the buffer and token

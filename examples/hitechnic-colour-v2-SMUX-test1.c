@@ -63,7 +63,7 @@ task main () {
     fillRect( 0, 10, 30, 10 + (colorSensor.red+1)/8);
     fillRect(35, 10, 65, 10 + (colorSensor.green+1)/8);
     fillRect(70, 10, 99, 10 + (colorSensor.blue+1)/8);
-    StringFormat(_tmp, " %3d   %3d", colorSensor.red, colorSensor.green);
+    stringFormat(_tmp, " %3d   %3d", colorSensor.red, colorSensor.green);
     displayTextLine(7, "%s   %3d", _tmp, colorSensor.blue);
 
     sleep(100);

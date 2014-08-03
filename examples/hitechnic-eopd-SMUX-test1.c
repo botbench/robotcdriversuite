@@ -22,25 +22,9 @@
  * version 0.2
  */
 
-#include "hitechnic-sensormux.h"
 #include "hitechnic-eopd.h"
 
-// The sensor is connected to the first port
-// of the SMUX which is connected to the NXT port S1.
-// To access that sensor, we must use msensor_S1_1.  If the sensor
-// were connected to 3rd port of the SMUX connected to the NXT port S4,
-// we would use msensor_S4_3
-
-// Give the sensor a nice easy to use name
-const tMUXSensor HTEOPD = msensor_S1_1;
-
 task main() {
-  short _raw = 0;
-  short _processed = 0;
-
-  // Standard range is set to short range
-  bool shortrange = true;
-
   nNxtButtonTask  = -2;
 
   eraseDisplay();
@@ -58,23 +42,31 @@ task main() {
   sleep(2000);
   eraseDisplay();
 
-  // Set the sensor to short range
-  HTEOPDsetShortRange(HTEOPD);
+  // Create struct to hold sensor data
+  tHTEOPD eopdSensor;
+
+  // Initialise and configure struct and port
+  // The sensor is connected to the first port
+  // of the SMUX which is connected to the NXT port S1.
+  // To access that sensor, we must use msensor_S1_1.  If the sensor
+  // were connected to 3rd port of the SMUX connected to the NXT port S4,
+  // we would use msensor_S4_3
+  initSensor(&eopdSensor, msensor_S1_1);
 
   while(true) {
     if (time1[T1] > 1000) {
-      if (shortrange == false) {
+      if (eopdSensor.shortRange == false) {
         // set the sensor to short range and display this
-        HTEOPDsetShortRange(HTEOPD);
+      	eopdSensor.shortRange = true;
+      	configSensor(&eopdSensor);
         displayClearTextLine(1);
         displayTextLine(1, "Short range");
-        shortrange = true;
       } else {
         // set the sensor to long range and display this
-        HTEOPDsetLongRange(HTEOPD);
+      	eopdSensor.shortRange = false;
+      	configSensor(&eopdSensor);
         displayClearTextLine(1);
         displayTextLine(1, "Long range");
-        shortrange = false;
       }
       playSound(soundBeepBeep);
       while(bSoundActive)
@@ -82,17 +74,15 @@ task main() {
     }
 
     while(nNxtButtonPressed != kEnterButton) {
-      // Read the raw sensor value
-      _raw = HTEOPDreadRaw(HTEOPD);
+      // Read the sensor values, both the raw and the processed one,
+    	// which is linear with the distance detected.  Use the processed
+      // value when you want to determine distance to an object
+    	readSensor(&eopdSensor);
 
-      // read the processed value which is linear with
-      // the distance detected.  Use the processed value
-      // when you want to determine distance to an object
-      _processed = HTEOPDreadProcessed(HTEOPD);
       displayClearTextLine(3);
       displayClearTextLine(4);
-      displayTextLine(4, "Proc:  %4d", _processed);
-      displayTextLine(3, "Raw :  %4d", _raw);
+      displayTextLine(4, "Proc:  %4d", eopdSensor.processed);
+      displayTextLine(3, "Raw :  %4d", eopdSensor.raw);
       sleep(50);
     }
   }

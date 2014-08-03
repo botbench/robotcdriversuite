@@ -47,8 +47,13 @@
 #endif
 
 // This ensures the correct sensor types are used.
+#if defined(NXT)
 TSensorTypes HTEOPDLRType = sensorAnalogActive;
 TSensorTypes HTEOPDSRType = sensorAnalogInactive;
+#elif defined(EV3)
+//TSensorTypes HTEOPDLRType = sensorAnalogActive;
+//TSensorTypes HTEOPDSRType = sensorAnalogInactive;
+#endif
 
 typedef struct
 {
@@ -64,101 +69,6 @@ bool initSensor(tHTEOPDPtr hteopdPtr, tSensors port);
 bool initSensor(tHTEOPDPtr hteopdPtr, tMUXSensor muxsensor);
 bool readSensor(tHTEOPDPtr hteopdPtr);
 bool configSensor(tHTEOPDPtr hteopdPtr);
-
-short HTEOPDreadRaw(tSensors link);
-short HTEOPDreadProcessed(tSensors link);
-void HTEOPDsetShortRange(tSensors link);
-void HTEOPDsetLongRange(tSensors link);
-
-#ifdef __HTSMUX_SUPPORT__
-short HTEOPDreadRaw(tMUXSensor muxsensor);
-short HTEOPDreadProcessed(tMUXSensor muxsensor);
-void HTEOPDsetShortRange(tMUXSensor muxsensor);
-void HTEOPDsetLongRange(tMUXSensor muxsensor);
-#endif
-
-/**
- * Get the raw value from the sensor
- * @param link the HTEOPD port number
- * @return raw value of the sensor
- */
-short HTEOPDreadRaw(tSensors link) {
-  return 1023 - SensorRaw[link];
-}
-
-/**
- * Get the raw value from the sensor
- * @param muxsensor the SMUX sensor port number
- * @return raw value of the sensor
- */
-#ifdef __HTSMUX_SUPPORT__
-short HTEOPDreadRaw(tMUXSensor muxsensor) {
-  return 1023 - HTSMUXreadAnalogue(muxsensor);
-}
-#endif // __HTSMUX_SUPPORT__
-
-/**
- * Get the processed value from the sensor. This is obtained by using sqrt(raw value * 10)
- * @param link the HTEOPD port number
- * @return processed value of the sensor
- */
-short HTEOPDreadProcessed(tSensors link) {
-  short _val = sqrt(HTEOPDreadRaw(link) * 10);
-  return _val;
-}
-
-/**
- * Get the processed value from the sensor. This is obtained by using sqrt(raw value * 10)
- * @param muxsensor the SMUX sensor port number
- * @return processed value of the sensor
- */
-#ifdef __HTSMUX_SUPPORT__
-short HTEOPDreadProcessed(tMUXSensor muxsensor) {
-  short _val = sqrt((long)HTEOPDreadRaw(muxsensor) * (long)10);
-  return _val;
-}
-#endif // __HTSMUX_SUPPORT__
-
-/**
- * Set the range of the sensor to short range, this is done
- * by configuring the sensor as sensorRawValue
- * @param link the HTEOPD port number
- */
-void HTEOPDsetShortRange(tSensors link) {
-  SensorType[link] = HTEOPDSRType;
-}
-
-/**
- * Set the range of the sensor to short range, this is done
- * by switching off dig0
- * @param muxsensor the SMUX sensor port number
- */
-#ifdef __HTSMUX_SUPPORT__
-void HTEOPDsetShortRange(tMUXSensor muxsensor) {
-  HTSMUXsetAnalogueInactive(muxsensor);
-}
-#endif // __HTSMUX_SUPPORT__
-
-/**
- * Set the range of the sensor to long range, this is done
- * by configuring the sensor as sensorLightActive and setting
- * it to modeRaw
- * @param link the HTEOPD port number
- */
-void HTEOPDsetLongRange(tSensors link) {
-  SensorType[link] = HTEOPDSRType;
-}
-
-/**
- * Set the range of the sensor to long range, this is done
- * by setting dig0 high (1).
- * @param muxsensor the SMUX sensor port number
- */
-#ifdef __HTSMUX_SUPPORT__
-void HTEOPDsetLongRange(tMUXSensor muxsensor) {
-  HTSMUXsetAnalogueActive(muxsensor);
-}
-#endif // __HTSMUX_SUPPORT__
 
 
 /**
