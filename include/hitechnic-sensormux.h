@@ -91,7 +91,7 @@
 #define HTSMUX_CHAN_I2C_SLOW    0x10  /*!< Set slow I2C rate channel mode */
 
 /*!< Sensor types as detected by SMUX */
-typedef enum {
+typedef enum HTSMUXSensorType {
   HTSMUXAnalogue = 0x00,
   HTSMUXLegoUS = 0x01,
   HTSMUXCompass = 0x02,
@@ -107,7 +107,7 @@ typedef enum {
 } HTSMUXSensorType;
 
 /*!< Sensor and SMUX port combinations */
-typedef enum {
+typedef enum tMUXSensor {
   msensor_S1_1 = 0,
   msensor_S1_2 = 1,
   msensor_S1_3 = 2,

@@ -47,31 +47,6 @@ bool initSensor(tHTFPtr htfPtr, tSensors port);
 bool initSensor(tHTFPtr htfPtr, tMUXSensor muxsensor);
 bool readSensor(tHTFPtr htfPtr);
 
-//short HTFreadSensor(tSensors link);
-
-//#ifdef __HTSMUX_SUPPORT__
-//short HTFreadSensor(tMUXSensor muxsensor);
-//#endif
-
-///**
-// * Get the raw value from the sensor
-// * @param link the HTF port number
-// * @return raw value of the sensor
-// */
-//short HTFreadSensor(tSensors link) {
-//  return 1023 - SensorRaw[link];
-//}
-
-///**
-// * Get the raw value from the sensor
-// * @param muxsensor the SMUX sensor port number
-// * @return raw value of the sensor
-// */
-//#ifdef __HTSMUX_SUPPORT__
-//short HTFreadSensor(tMUXSensor muxsensor) {
-//  return 1023 - HTSMUXreadAnalogue(muxsensor);
-//}
-//#endif // __HTSMUX_SUPPORT__
 
 /**
  * Initialise the sensor's data struct and port
@@ -84,7 +59,11 @@ bool initSensor(tHTFPtr htfPtr, tSensors port)
 {
   memset(htfPtr, 0, sizeof(tHTFPtr));
   htfPtr->I2CData.port = port;
+#ifdef NXT
   htfPtr->I2CData.type = sensorAnalogActive;
+#else
+  htfPtr->I2CData.type = sensorLightActive;
+#endif
   htfPtr->smux = false;
 
   // Ensure the sensor is configured correctly
