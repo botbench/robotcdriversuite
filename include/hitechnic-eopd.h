@@ -51,8 +51,8 @@
 TSensorTypes HTEOPDLRType = sensorAnalogActive;
 TSensorTypes HTEOPDSRType = sensorAnalogInactive;
 #elif defined(EV3)
-//TSensorTypes HTEOPDLRType = sensorAnalogActive;
-//TSensorTypes HTEOPDSRType = sensorAnalogInactive;
+TSensorTypes HTEOPDLRType = sensorLightActive;
+TSensorTypes HTEOPDSRType = sensorLightInactive;
 #endif
 
 typedef struct

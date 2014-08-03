@@ -28,7 +28,9 @@
 
  */
 task main() {
+#ifdef NXT
   nNxtButtonTask  = -2;
+#endif
 
   eraseDisplay();
 
@@ -68,7 +70,11 @@ task main() {
       time1[T1] = 0;
     }
 
+#ifdef NXT
     while(nNxtButtonPressed != kEnterButton) {
+#else
+	  while(!getButtonPress(buttonEnter)) {
+#endif
       // Read the sensor values, both the raw and the processed one,
     	// which is linear with the distance detected.  Use the processed
       // value when you want to determine distance to an object
