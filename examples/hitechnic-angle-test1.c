@@ -23,7 +23,11 @@
 #include "hitechnic-angle.h"
 
 task main () {
+
+#ifdef NXT
   nNxtButtonTask  = -2;
+#endif
+
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "Angle");
   displayCenteredTextLine(3, "Test 1");
