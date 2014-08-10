@@ -261,9 +261,9 @@ bool sensorCalibrate(tHTGYROPtr htgyroPtr)
   for (short i = 0; i < 50; i++)
   {
     if (htgyroPtr->smux)
-      avgdata += 1023 - HTSMUXreadAnalogue(htgyroPtr->smuxport);
+      avgdata += HTSMUXreadAnalogue(htgyroPtr->smuxport);
     else
-      avgdata += 1023 - SensorValue[htgyroPtr->I2CData.port];
+      avgdata += SensorValue[htgyroPtr->I2CData.port];
 
     sleep(50);
   }
