@@ -153,5 +153,5 @@ task main () {
 #endif
 
   playSound(soundBeepBeep);
-  while(true) EndTimeSlice();
+  while(true) sleep(1);
 }

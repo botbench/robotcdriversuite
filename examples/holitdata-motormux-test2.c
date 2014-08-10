@@ -71,7 +71,7 @@ task main () {
 
     // Display the info.
     displayTextLine(6, "B: %5d (%s)", encB, motorAstatus);
-    EndTimeSlice();
+    sleep(1);
   }
   sleep(5000);
 }

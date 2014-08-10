@@ -50,7 +50,7 @@ task main () {
   // data won't be accurate.
   MICCreset(MICC);
 
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
 
   displayTextLine(0, "CruizCore XG1300L");
   while (true) {

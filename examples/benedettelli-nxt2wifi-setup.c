@@ -88,6 +88,6 @@ task main ()
   displayTextLine(0, "Stat: Connected");
   playSound(soundBeepBeep);
 
-  while(true) EndTimeSlice();
+  while(true) sleep(1);
 
 }

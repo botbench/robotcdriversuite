@@ -46,7 +46,7 @@ task main () {
   MSACsetRange(MSAC, MSAC_RANGE_10);
 
   playSound(soundBeepBeep);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
 
   while (true) {
     // Read the tilt data from the sensor

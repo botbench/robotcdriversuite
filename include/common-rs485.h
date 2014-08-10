@@ -57,14 +57,14 @@ bool RS485write(tMassiveArray &buf, ubyte len)
   }
 
   // Make sure we're not sending anymore
-  while (nxtHS_Status != HS_RECEIVING) EndTimeSlice();
+  while (nxtHS_Status != HS_RECEIVING) sleep(1);
 
 #ifdef __RS485_DEBUG__
   writeDebugStream("RS485write: ");
   for (ubyte datacounter = 0; datacounter < len; datacounter++)
   {
     writeDebugStream("%c", buf[datacounter]);
-    EndTimeSlice();
+    sleep(1);
   }
 #endif // __RS485_DEBUG__
 
@@ -72,7 +72,7 @@ bool RS485write(tMassiveArray &buf, ubyte len)
   if (res != ioRsltSuccess)
     return false;
 
-  while (nxtHS_Status != HS_RECEIVING) EndTimeSlice();
+  while (nxtHS_Status != HS_RECEIVING) sleep(1);
   return true;
 }
 
@@ -104,7 +104,7 @@ bool RS485read(tMassiveArray &buf, short &len, short timeout = 100) {
   for (short datacounter = 0; datacounter < bytesAvailable; datacounter++)
   {
     writeDebugStream("%c", buf[datacounter]);
-    EndTimeSlice();
+    sleep(1);
   }
   writeDebugStream("\n");
 #endif // __RS485_DEBUG__
@@ -151,7 +151,7 @@ bool RS485readLargeResponse(tMassiveArray &buf, short &len, short timeout = 100)
   for (short datacounter = 0; datacounter < len; datacounter++)
   {
     writeDebugStream("%c", buf[datacounter]);
-    EndTimeSlice();
+    sleep(1);
   }
 #endif // __RS485_DEBUG__
   return (nxtGetAvailHSBytes() == 0);
@@ -242,7 +242,7 @@ void RS485clearRead(bool sendnewline = false)
   }
   while(nxtGetAvailHSBytes()> 0){
     nxtReadRawHS(&nDymmyData[0], 1);    // Read the response.  Probably an error.
-    EndTimeSlice();
+    sleep(1);
   }
 }
 

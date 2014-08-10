@@ -59,7 +59,7 @@ task main () {
       compass.offset = compass.heading;
 
       playSound(soundBlip);
-      while(bSoundActive) EndTimeSlice();
+      while(bSoundActive) sleep(1);
       time1[T1] = 0;
     }
 

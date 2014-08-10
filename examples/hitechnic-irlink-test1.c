@@ -76,7 +76,7 @@ task main {
       if (mode > 2) mode = 0; // Make sure mode does not overflow
     }
     // Debounce the button
-    while (nNxtButtonPressed != kNoButton) EndTimeSlice();
+    while (nNxtButtonPressed != kNoButton) sleep(1);
 
     // Make sure speed is between 0 and 15
     if (speed < 0) speed = 0;
@@ -87,7 +87,7 @@ task main {
       case 1: doPFcomboDirectModeTest(speed); break;
       case 2: doPFsinglePinOutputModeTest(speed); break;
     }
-    while (nNxtButtonPressed == kNoButton) EndTimeSlice();
+    while (nNxtButtonPressed == kNoButton) sleep(1);
   }
 }
 

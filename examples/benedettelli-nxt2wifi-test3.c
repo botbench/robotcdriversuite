@@ -82,7 +82,7 @@ task main ()
     displayCenteredBigTextLine(1, "ERROR");
     displayTextLine(3, "No custom profile");
     displayTextLine(4, "configured!!");
-    while(true) EndTimeSlice();
+    while(true) sleep(1);
   }
 
   N2WLoad();
@@ -111,7 +111,7 @@ task main ()
   {
     writeDebugStreamLine("Err open port %d", BOFHport);
     playSound(soundException);
-    while(bSoundActive) EndTimeSlice();
+    while(bSoundActive) sleep(1);
     stopAllTasks();
   }
 

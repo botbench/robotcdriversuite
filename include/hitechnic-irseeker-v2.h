@@ -61,7 +61,7 @@
 #define HTIRS2_AC_SSTR5    0x0C      /*!< AC Sensor 4 signal strength above average */
 
 /*!< AC DSP modes */
-typedef enum {
+typedef enum tHTIRS2DSPMode {
   DSP_1200 = 0,
   DSP_600 = 1
 } tHTIRS2DSPMode;

@@ -64,7 +64,7 @@
 byte toggle[4] = {0, 0, 0, 0};
 
 /*!< Motor connections */
-typedef enum {
+typedef enum tPFmotor {
   pfmotor_S1_C1_A = 0,  /*!< Motor A, Channel 1, IR Link connected to S1 */
   pfmotor_S1_C1_B,      /*!< Motor B, Channel 1, IR Link connected to S1 */
   pfmotor_S1_C2_A,      /*!< Motor A, Channel 2, IR Link connected to S1 */
@@ -100,7 +100,7 @@ typedef enum {
 } tPFmotor;
 
 /*!< PWM Mode commands */
-typedef enum {
+typedef enum ePWMMotorCommand {
   MOTOR_FLOAT = 0,      /*!< Float the motor */
   MOTOR_FWD_PWM_1 = 1,  /*!< Forward speed 1 */
   MOTOR_FWD_PWM_2 = 2,  /*!< Forward speed 2 */
@@ -120,7 +120,7 @@ typedef enum {
 } ePWMMotorCommand;
 
 /*!< Combo Direct Mode commands */
-typedef enum {
+typedef enum eCDMMotorCommand {
   CDM_MOTOR_FLOAT = 0,      /*!< Float the motor */
   CDM_MOTOR_FWD = 1,        /*!< Forward */
   CDM_MOTOR_BAK = 2,        /*!< Reverse */
@@ -178,7 +178,7 @@ void debugIR(tByteArray &data) {
       eraseDisplay();
     }
     decToBin(data[i], 8, _output);
-    StringFormat(_output, "%2d %s", i, _output);
+    stringFormat(_output, "%2d %s", i, _output);
     displayTextLine(i % 8, "%s 0x%02x", _output, ubyteToInt(data[i]));
   }
   sleep(10000);

@@ -71,7 +71,7 @@
 
 string N2WscratchString;   /*!< string for tmp formatting, scratch data */
 
-intrinsic short StringFind(const char *sSrce, const char *pzFindString)   asm(opcdStringOps, strOpFind, variableRefCharPtr(sSrce), functionReturn, variableRefCharPtr(pzFindString));
+intrinsic short stringFind(const char *sSrce, const char *pzFindString)   asm(opcdStringOps, strOpFind, variableRefCharPtr(sSrce), functionReturn, variableRefCharPtr(pzFindString));
 
 /**
  * Parse the buffer and return the number in the NXT2WIFI response
@@ -86,7 +86,7 @@ short N2WgetNumericResponse(tMassiveArray &buf)
   {
     memset(N2WscratchString, 0, 20);
     memcpy(N2WscratchString, buf, 19);
-    pos = StringFind(N2WscratchString, "=");
+    pos = stringFind(N2WscratchString, "=");
     memset(N2WscratchString, 0, 20);
     memcpy(N2WscratchString, &buf[pos+1], sizeof(tMassiveArray) - (pos + 1));
     retval = atoi(N2WscratchString);
@@ -106,7 +106,7 @@ void N2WgetStringResponse(const tMassiveArray &buf, string &response)
 
   memset(N2WscratchString, 0, 20);
   memcpy(N2WscratchString, buf, 19);
-  pos = StringFind(N2WscratchString, "=");
+  pos = stringFind(N2WscratchString, "=");
   memset(N2WscratchString, 0, 20);
   memcpy(response, &buf[pos+1], 19);
 
@@ -614,7 +614,7 @@ bool N2WUDPWrite(short id, tHugeByteArray &data, short datalen) {
  * @return true if no error occured, false if it did
  */
 bool N2WUDPClose(short id) {
-  StringFormat(N2WscratchString, "$UDPX%d\n", id);
+  stringFormat(N2WscratchString, "$UDPX%d\n", id);
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;
@@ -628,7 +628,7 @@ bool N2WUDPClose(short id) {
  * @return true if no error occured, false if it did
  */
 bool N2WUDPFlush(short id) {
-  StringFormat(N2WscratchString, "$UDPF%d\n", id);
+  stringFormat(N2WscratchString, "$UDPF%d\n", id);
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;
@@ -728,7 +728,7 @@ bool N2WTCPDetachClient(short id) {
  * @return true if no error occured, false if it did
  */
 bool N2WTCPClose(short id) {
-  StringFormat(N2WscratchString, "$TCPX%d\n", id);
+  stringFormat(N2WscratchString, "$TCPX%d\n", id);
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;
@@ -742,7 +742,7 @@ bool N2WTCPClose(short id) {
  * @return true if no error occured, false if it did
  */
 bool N2WTCPFlush(short id) {
-  StringFormat(N2WscratchString, "$TCPF%d\n", id);
+  stringFormat(N2WscratchString, "$TCPF%d\n", id);
   memcpy(RS485txbuffer, N2WscratchString, strlen(N2WscratchString));
   if (!RS485write(RS485txbuffer, strlen(N2WscratchString)))
     return false;

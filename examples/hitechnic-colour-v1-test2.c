@@ -38,7 +38,7 @@ task main () {
   displayTextLine(5, "Press grey");
   displayTextLine(6, "button to exit.");
 
-  while(nNxtButtonPressed != kEnterButton) EndTimeSlice();
+  while(nNxtButtonPressed != kEnterButton) sleep(1);
   eraseDisplay();
   displayTextLine(3, "Starting");
   displayTextLine(4, "calibration.");

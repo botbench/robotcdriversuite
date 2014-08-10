@@ -56,6 +56,6 @@ task main {
     displayTextLine(7, "<  switch freq  >");
 
     // Debounce
-    while (nNxtButtonPressed != kNoButton) EndTimeSlice();
+    while (nNxtButtonPressed != kNoButton) sleep(1);
   }
 }

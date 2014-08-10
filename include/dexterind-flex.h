@@ -191,7 +191,7 @@ void _DFLEXwriteCalVals(short lowval, short highval) {
     eraseDisplay();
     displayTextLine(3, "W:can't cal file");
     playSound(soundException);
-    while(bSoundActive) EndTimeSlice();
+    while(bSoundActive) sleep(1);
     sleep(5000);
     stopAllTasks();
   }
@@ -202,7 +202,7 @@ void _DFLEXwriteCalVals(short lowval, short highval) {
     eraseDisplay();
     displayTextLine(3, "can't write lowval");
     playSound(soundException);
-    while(bSoundActive) EndTimeSlice();
+    while(bSoundActive) sleep(1);
     sleep(5000);
     stopAllTasks();
   }
@@ -213,7 +213,7 @@ void _DFLEXwriteCalVals(short lowval, short highval) {
     eraseDisplay();
     displayTextLine(3, "can't write highval");
     playSound(soundException);
-    while(bSoundActive) EndTimeSlice();
+    while(bSoundActive) sleep(1);
     sleep(5000);
     stopAllTasks();
   }
@@ -224,7 +224,7 @@ void _DFLEXwriteCalVals(short lowval, short highval) {
     eraseDisplay();
     displayTextLine(3, "Can't close");
     playSound(soundException);
-    while(bSoundActive) EndTimeSlice();
+    while(bSoundActive) sleep(1);
     sleep(5000);
     stopAllTasks();
   }

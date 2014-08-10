@@ -249,10 +249,10 @@ void stringToIp(const string address, tIPaddr &addr)
   for (short i = 0; i < 3; i++)
   {
     octet = "";
-    index = StringFind(copy, ".");
+    index = stringFind(copy, ".");
     memcpy(octet, copy, index);
     addr[i] = atoi(octet);
-    StringDelete(copy, 0, index+1);
+    stringDelete(copy, 0, index+1);
   }
   addr[3] = atoi(copy);
 }
@@ -513,7 +513,7 @@ bool HRWBreadSensorType (tSensors link, string &sType)
   if (!HRWBreadReg(link, HRWB_SENSORTYPE, 4))
     return false;
 
-  StringFromChars(sType, &HRWB_I2CReply[0]);
+  stringFromChars(sType, &HRWB_I2CReply[0]);
 
   return true;
 }
@@ -598,7 +598,7 @@ bool HRWBscanChannel(tSensors link, ubyte channel) {
   HRWBwriteReg(link, HRWB_WIFI_SCANSEL, channel);
   sleep(10);
   HRWBreadBigReg(link, HRWB_WIFI_SCANSSID, 64);
-  StringFromChars(tmpString, HRWB_HugeArray);
+  stringFromChars(tmpString, HRWB_HugeArray);
   writeDebugStream("Found [%d]: ", channel);
   writeDebugStreamLine(tmpString);
   return true;

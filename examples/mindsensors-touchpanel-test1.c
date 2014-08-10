@@ -62,6 +62,6 @@ task main () {
       playImmediateTone(y * multiplierY, 1);
       setPixel(x, y);
     }
-    EndTimeSlice();
+    sleep(1);
   }
 }

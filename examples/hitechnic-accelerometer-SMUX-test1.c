@@ -55,7 +55,7 @@ task main () {
   sleep(2000);
 
   playSound(soundBeepBeep);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
 
   eraseDisplay();
   while (true) {
@@ -69,9 +69,9 @@ task main () {
     displayTextLine(0,"HTAC Test 1");
 
     // We can't provide more than 2 parameters to displayTextLine(),
-    // so we'll do in two steps using StringFormat()
+    // so we'll do in two steps using stringFormat()
     displayTextLine(2, "   X    Y    Z");
-    StringFormat(_tmp, "%4d %4d", _x_axis, _y_axis);
+    stringFormat(_tmp, "%4d %4d", _x_axis, _y_axis);
     displayTextLine(3, "%s %4d", _tmp, _z_axis);
 
     sleep(100);

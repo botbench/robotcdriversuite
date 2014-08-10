@@ -9,5 +9,5 @@ task main () {
   x_Phi = Phi(X_val, X_mean, X_std);
 
   displayTextLine(2, "Phi(x): %f", x_Phi);
-  while(nNxtButtonPressed != kEnterButton) EndTimeSlice();
+  while(nNxtButtonPressed != kEnterButton) sleep(1);
 }

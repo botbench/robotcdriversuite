@@ -58,7 +58,7 @@ task main () {
 
       displayTextLine(2, "Offset: %f", gyroSensor.offset);
       playSound(soundBlip);
-      while(bSoundActive) EndTimeSlice();
+      while(bSoundActive) sleep(1);
       time1[T1] = 0;
     }
 

@@ -55,8 +55,8 @@ task main () {
   }
 
   playSound(soundBeepBeep);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
   eraseDisplay();
-  while(1) EndTimeSlice();
+  while(1) sleep(1);
 
 }

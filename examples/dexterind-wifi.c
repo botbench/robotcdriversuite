@@ -52,19 +52,19 @@ void genResponse(short cid) {
   string tmpString;
   short index = 0;
   ubyte linebuff[20];
-  StringFromChars(tmpString, &RS485rxbuffer[0]);
-  index = StringFind(tmpString, "/");
-  StringDelete(tmpString, 0, index);
-  index = StringFind(tmpString, "HTTP");
-  StringDelete(tmpString, index, strlen(tmpString));
+  stringFromChars(tmpString, &RS485rxbuffer[0]);
+  index = stringFind(tmpString, "/");
+  stringDelete(tmpString, 0, index);
+  index = stringFind(tmpString, "HTTP");
+  stringDelete(tmpString, index, strlen(tmpString));
   writeDebugStreamLine("Request:%s", tmpString);
   displayTextLine(2, "Request: ");
   displayTextLine(3, tmpString);
-  if (StringFind(tmpString, "MOTA") > 0) {
-    StringDelete(tmpString, 0, 6);
-    index = StringFind(tmpString, " ");
+  if (stringFind(tmpString, "MOTA") > 0) {
+    stringDelete(tmpString, 0, 6);
+    index = stringFind(tmpString, " ");
   if (index > -1)
-      StringDelete(tmpString, index, strlen(tmpString));
+      stringDelete(tmpString, index, strlen(tmpString));
     //power = RC_atoix(tmpString);
     power = clip(atoi(tmpString), -100, 100);
     writeDebugStreamLine("Power:%d", power);
@@ -82,11 +82,11 @@ void genResponse(short cid) {
   linebuff[1] = 'S'; // the CID;
   linebuff[2] = (ubyte)cid + 48; // the CID;
   index = RS485appendToBuff(RS485txbuffer, index, linebuff, 3);
-  StringFormat(tmpString, "MotorA=%d\n", power);
+  stringFormat(tmpString, "MotorA=%d\n", power);
   memcpy(linebuff, tmpString, strlen(tmpString));
   index = RS485appendToBuff(RS485txbuffer, index, linebuff, strlen(tmpString));
   DTMPreadTemp(DTMP, temp);
-  StringFormat(tmpString, "Temp: %2.2f C", temp);
+  stringFormat(tmpString, "Temp: %2.2f C", temp);
   memcpy(linebuff, tmpString, strlen(tmpString));
   index = RS485appendToBuff(RS485txbuffer, index, linebuff, strlen(tmpString));
   linebuff[0] = 27; // escape;
@@ -145,8 +145,8 @@ void parseInput()
     else if ((parsed == false) && (len == 0))
     {
       writeDebugStreamLine("Parsing buffer: %s", &tmp_array[0]);
-      bpos = StringFind((char *)&tmp_array[0], &beginmarker[0]);
-      epos = StringFind((char *)&tmp_array[0], &endmarker[0]);
+      bpos = stringFind((char *)&tmp_array[0], &beginmarker[0]);
+      epos = stringFind((char *)&tmp_array[0], &endmarker[0]);
       // we've found a start and end marker
       if (bpos > -1)
         writeDebugStreamLine("begin marker found: %d", bpos);

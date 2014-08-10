@@ -20,7 +20,7 @@
  * version 0.1
  */
 
-#define debounce() while (nNxtButtonPressed != kNoButton) EndTimeSlice()
+#define debounce() while (nNxtButtonPressed != kNoButton) sleep(1)
 
 #include "mindsensors-angle.h"
 
@@ -45,7 +45,7 @@ void calibrateScales()
   displayCenteredTextLine(4, "and press");
   displayCenteredTextLine(5, "[enter]");
   displayCenteredTextLine(6, "to calibrate");
-  while (nNxtButtonPressed != kEnterButton) EndTimeSlice();
+  while (nNxtButtonPressed != kEnterButton) sleep(1);
   debounce();
   eraseDisplay();
   calibrateWeight = weighObject();

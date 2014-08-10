@@ -154,7 +154,7 @@ void displayText(short nLineNumber, const string cChar, short nValueDC, short nV
 {
   string sTemp;
 
-  StringFormat(sTemp, "%4d %4d", nValueDC, nValueAC);
+  stringFormat(sTemp, "%4d %4d", nValueDC, nValueAC);
 
   // Check if the new line is the same as the previous one
   // Only update screen if it's different.
@@ -163,7 +163,7 @@ void displayText(short nLineNumber, const string cChar, short nValueDC, short nV
     string sTemp2;
 
     sTextLines[nLineNumber] = sTemp;
-    StringFormat(sTemp2, "%s:%s", cChar, sTemp);
+    stringFormat(sTemp2, "%s:%s", cChar, sTemp);
     displayTextLine(nLineNumber, sTemp2);
   }
 }
@@ -173,7 +173,7 @@ void displayText3(short nLineNumber, const string cChar, short nValueDC, short n
 {
   string sTemp;
 
-  StringFormat(sTemp, "%4d %4d %3d", nValueDC, nValueAC, nValueEnh);
+  stringFormat(sTemp, "%4d %4d %3d", nValueDC, nValueAC, nValueEnh);
 
   // Check if the new line is the same as the previous one
   // Only update screen if it's different.
@@ -182,7 +182,7 @@ void displayText3(short nLineNumber, const string cChar, short nValueDC, short n
     string sTemp2;
 
     sTextLines[nLineNumber] = sTemp;
-    StringFormat(sTemp2, "%s:%s", cChar, sTemp);
+    stringFormat(sTemp2, "%s:%s", cChar, sTemp);
     displayTextLine(nLineNumber, sTemp2);
   }
 }

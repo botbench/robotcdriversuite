@@ -38,7 +38,7 @@ task main () {
   EEPROMreadBytes(EEPROM, 0, data, 13);
   // Make sure the string is 0 terminated.
   data[13] = 0;
-  StringFromChars(r_string, &data[0]);
+  stringFromChars(r_string, &data[0]);
 
   displayTextLine(1, "%s", r_string);
   sleep(2000);

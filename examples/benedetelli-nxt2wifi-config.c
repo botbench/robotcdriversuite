@@ -128,5 +128,5 @@ task main ()
   N2WchillOut();
   N2WSave();
   playSound(soundBeepBeep);
-  while(true) EndTimeSlice();
+  while(true) sleep(1);
 }

@@ -28,7 +28,7 @@ void doTest(short channel) {
 
   // -------- testing motor A -----------------------
   playSound(soundBeepBeep);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
   displayTextLine(6, "Motor: A");
   displayTextLine(7, "Dir:   fwd");
   for (short speed = 1; speed < 8; speed++) {
@@ -56,7 +56,7 @@ void doTest(short channel) {
 
   // -------- testing motor B -----------------------
   playSound(soundBeepBeep);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
   displayTextLine(6, "Motor: B");
   displayTextLine(7, "Dir:   fwd");
   for (short speed = 1; speed < 8; speed++) {
@@ -82,7 +82,7 @@ void doTest(short channel) {
 
   // -------- testing motor A+B -----------------------
   playSound(soundBeepBeep);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
   displayTextLine(6, "Motor: A+B");
   displayTextLine(7, "Dir:   fwd+rev");
   for (short speed = 1; speed < 8; speed++) {

@@ -40,7 +40,7 @@ task main () {
     if (nNxtButtonPressed == kEnterButton)
     {
       MSANGresetAngle(MSANG);
-      while (nNxtButtonPressed != kNoButton) EndTimeSlice();
+      while (nNxtButtonPressed != kNoButton) sleep(1);
     }
 
     // Read the current angle, accumulated angle and RPM and display them

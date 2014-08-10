@@ -54,7 +54,7 @@ typedef struct {
  * - mmotor_S1_1 means motor 1 connected to MMUX attached to sensor port 1
  * - mmotor_S4_2 means motor 2 connedted to MMUX attached to sensor port 4
  */
-typedef enum {
+typedef enum tMUXmotor {
   mmotor_S1_1 = 0,
   mmotor_S1_2 = 1,
   mmotor_S1_3 = 2,

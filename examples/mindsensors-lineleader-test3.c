@@ -248,7 +248,7 @@ void doMainMenu () {
 // Here we handle the actual actions for each menu item.
 void doMenuItem(short activeOption) {
   playSound(soundBlip);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
 
   if (activeOption == 4) {
     doLineLead();
@@ -310,7 +310,7 @@ void doLineLead() {
     sleep(600);
   }
   playSound(soundFastUpwardTones);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
   startTask(drawSensors);
   startTask(followTheYellowBrickRoad);
   while(nNxtButtonPressed != kExitButton && keep_running != 0) {

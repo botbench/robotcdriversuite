@@ -28,7 +28,7 @@ bool scaleChanged = false;
 short vscale = 0;
 short cscale = 0;
 
-typedef enum {
+typedef enum tDisplayUnit {
   showvoltage,
   showcurrent
 } tDisplayUnit;

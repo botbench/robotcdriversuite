@@ -48,7 +48,7 @@ task main () {
   MSACsetRange(MSAC, MSAC_RANGE_10);
 
   playSound(soundBeepBeep);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
 
   while (true) {
     eraseDisplay();
@@ -70,9 +70,9 @@ task main () {
     displayTextLine(0,"MSAC Test 1");
 
     // We can't provide more than 2 parameters to displayTextLine(),
-    // so we'll do in two steps using StringFormat()
+    // so we'll do in two steps using stringFormat()
     displayTextLine(2, "Tilt X    Y    Z");
-    StringFormat(_tmp, "  %4d %4d", _x_tilt, _y_tilt);
+    stringFormat(_tmp, "  %4d %4d", _x_tilt, _y_tilt);
     displayTextLine(3, "%s %4d", _tmp, _z_tilt);
 
     displayTextLine(4, "Acceleration:");

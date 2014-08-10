@@ -39,14 +39,14 @@ task main () {
       case kLeftButton:
                         LScalLow(LEGOLS);
                         playSound(soundBeepBeep);
-                        while(bSoundActive) EndTimeSlice();
+                        while(bSoundActive) sleep(1);
                         break;
 
       // if the left button is pressed calibrate the white value for the sensor
       case kRightButton:
                         LScalHigh(LEGOLS);
                         playSound(soundBeepBeep);
-                        while(bSoundActive) EndTimeSlice();
+                        while(bSoundActive) sleep(1);
                         break;
     }
 

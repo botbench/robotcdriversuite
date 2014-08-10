@@ -38,7 +38,7 @@
 TSensorTypes MSSUMOLRType = sensorLightInactive;
 TSensorTypes MSSUMOSRType = sensorLightActive;
 
-typedef enum {
+typedef enum tObstacleZone {
   MSSUMO_NONE = 0,
   MSSUMO_FRONT = 1,
   MSSUMO_LEFT = 2,

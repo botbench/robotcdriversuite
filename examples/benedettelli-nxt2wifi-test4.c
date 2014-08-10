@@ -133,7 +133,7 @@ task main ()
     displayCenteredBigTextLine(1, "ERROR");
     displayTextLine(3, "No custom profile");
     displayTextLine(4, "configured!!");
-    while(true) EndTimeSlice();
+    while(true) sleep(1);
   }
 
   N2WLoad();

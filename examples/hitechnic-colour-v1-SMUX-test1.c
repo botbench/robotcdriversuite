@@ -82,7 +82,7 @@ task main () {
     fillRect( 0, 10, 30, 10 + (red+1)/8);
     fillRect(35, 10, 65, 10 + (green+1)/8);
     fillRect(70, 10, 99, 10 + (blue+1)/8);
-    StringFormat(_tmp, " %3d   %3d", red, green);
+    stringFormat(_tmp, " %3d   %3d", red, green);
     displayTextLine(7, "%s   %3d", _tmp, blue);
 
     sleep(100);

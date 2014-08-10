@@ -49,15 +49,15 @@ task main () {
 
   nMotorEncoderTarget[VERTICAL] = 200;
   motor[VERTICAL] = -20;
-  while((nMotorRunState[VERTICAL] != runStateIdle) && (nMotorRunState[VERTICAL] != runStateHoldPosition)) EndTimeSlice();
+  while((nMotorRunState[VERTICAL] != runStateIdle) && (nMotorRunState[VERTICAL] != runStateHoldPosition)) sleep(1);
   nMotorEncoderTarget[HORIZONTAL] = 360;
   motor[HORIZONTAL] = 20;
-  while((nMotorRunState[HORIZONTAL] != runStateIdle) && (nMotorRunState[HORIZONTAL] != runStateHoldPosition)) EndTimeSlice();
+  while((nMotorRunState[HORIZONTAL] != runStateIdle) && (nMotorRunState[HORIZONTAL] != runStateHoldPosition)) sleep(1);
   sleep(500);
   nMotorEncoder[HORIZONTAL] = 0;
   nMotorEncoder[VERTICAL] = 0;
   playSound(soundBeepBeep);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
   for (short i = 0; i < 80; i++) {
     sleep(500);
     X = 0;
@@ -88,7 +88,7 @@ task main () {
     writeDebugStreamLine("");
 
     while((nMotorRunState[HORIZONTAL] != runStateIdle) && (nMotorRunState[HORIZONTAL] != runStateHoldPosition))
-      EndTimeSlice();
+      sleep(1);
   }
   bFloatDuringInactiveMotorPWM = true;
   sleep(10);

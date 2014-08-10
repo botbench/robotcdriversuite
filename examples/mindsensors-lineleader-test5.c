@@ -103,7 +103,7 @@ short getNumber(tSensors link, short &_number, short numdigits=3, short timeout=
 
     if ((tmpnum >= 0) && (prevnum != tmpnum)) {
       playSound(soundBlip);
-      while(bSoundActive) EndTimeSlice();
+      while(bSoundActive) sleep(1);
       if ((counter == 0) && (tmpnum >= 0)) {
         _number = tmpnum;
         counter++;
@@ -126,9 +126,9 @@ short getNumber(tSensors link, short &_number, short numdigits=3, short timeout=
 //  while (true) {
 //    if (nAvgBatteryLevel < 6200) {
 //      playSound(soundBeepBeep);
-//      while(bSoundActive) EndTimeSlice();
+//      while(bSoundActive) sleep(1);
 //      playSound(soundBeepBeep);
-//      while(bSoundActive) EndTimeSlice();
+//      while(bSoundActive) sleep(1);
 //      stopAllTasks();
 //    }
 //    sleep(500);
@@ -262,7 +262,7 @@ void doMainMenu () {
   while (true) {
     menuHeader = "  2/8 => up/down";
 
-    //StringFormat(menuFooter, "%s", optionMainMenuFooter[activeOption]);
+    //stringFormat(menuFooter, "%s", optionMainMenuFooter[activeOption]);
     menuFooter = optionMainMenuFooter[activeOption];
 
     switch(MSNPscanKeys(NUMPAD)) {
@@ -274,7 +274,7 @@ void doMainMenu () {
               activeOption = 0;
             else
               activeOption++;
-            //StringFormat(menuFooter, "%s", optionMainMenuFooter[activeOption]);
+            //stringFormat(menuFooter, "%s", optionMainMenuFooter[activeOption]);
             menuFooter = optionMainMenuFooter[activeOption];
             sleep(300);
             break;
@@ -286,7 +286,7 @@ void doMainMenu () {
               activeOption = (MENUITEMS - 1);
             else
               activeOption--;
-            //StringFormat(menuFooter, "%s", optionMainMenuFooter[activeOption]);
+            //stringFormat(menuFooter, "%s", optionMainMenuFooter[activeOption]);
             menuFooter = optionMainMenuFooter[activeOption];
             sleep(300);
             break;
@@ -312,7 +312,7 @@ void doMenuItem(short activeOption) {
   short retval = 0;
 
   playSound(soundBlip);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
 
   if (activeOption == 4) {
     doLineLead();
@@ -378,7 +378,7 @@ void doLineLead() {
     sleep(600);
   }
   playSound(soundFastUpwardTones);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
   startTask(drawSensors);
   startTask(followTheYellowBrickRoad);
   while(nNxtButtonPressed != kExitButton && keep_running != 0) {

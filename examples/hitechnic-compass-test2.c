@@ -42,7 +42,7 @@ tHTMC compass;
 task timeMe() {
   sleep(20000);
   playSound(soundBeepBeep);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
 }
 
 // Pulse a big "*" at the bottom of the screen to show that it's
@@ -71,7 +71,7 @@ void startCalibration() {
     displayTextLine(4, "Check connection");
     displayTextLine(5, "and try again.");
     playSound(soundException);
-    while(bSoundActive) EndTimeSlice();
+    while(bSoundActive) sleep(1);
     sleep(5000);
     stopAllTasks();
   }
@@ -86,14 +86,14 @@ void stopCalibration() {
     displayTextLine(4, "Check connection");
     displayTextLine(5, "and try again.");
     playSound(soundException);
-    while(bSoundActive) EndTimeSlice();
+    while(bSoundActive) sleep(1);
     sleep(5000);
     stopAllTasks();
   } else {
     displayTextLine(1, "SUCCESS: ");
     displayTextLine(2, "Calibr. done.");
     playSound(soundUpwardTones);
-    while(bSoundActive) EndTimeSlice();
+    while(bSoundActive) sleep(1);
     sleep(5000);
   }
 }

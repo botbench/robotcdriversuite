@@ -32,7 +32,7 @@
 task main() {
   // Standard range is set to short range
   bool shortrange = true;
-  tObstacleZone zone = 0;
+  tObstacleZone zone = MSSUMO_NONE;
   nNxtButtonTask  = -2;
 
   eraseDisplay();

@@ -96,6 +96,6 @@ task main ()
   }
   playSound(soundBeepBeep);
   MoveRobot(0, 0, 0);
-  while (bSoundActive) EndTimeSlice();
+  while (bSoundActive) sleep(1);
   sleep(100);
 }

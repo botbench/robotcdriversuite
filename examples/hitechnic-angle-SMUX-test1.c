@@ -53,18 +53,18 @@ task main () {
     // Reset all the values in the sensor
     if (nNxtButtonPressed == kEnterButton) {
       resetSensor(&angleSensor);
-      while (nNxtButtonPressed != kNoButton) EndTimeSlice();
+      while (nNxtButtonPressed != kNoButton) sleep(1);
     }
 
     // If the left button is pressed, set the 0 point to the current angle
     else if (nNxtButtonPressed == kLeftButton) {
       resetAngle(&angleSensor);
-      while (nNxtButtonPressed != kNoButton) EndTimeSlice();
+      while (nNxtButtonPressed != kNoButton) sleep(1);
 
     // Reset the total accumulated angle to 0
     } else if (nNxtButtonPressed == kRightButton) {
        resetAccmulatedAngle(&angleSensor);
-      while (nNxtButtonPressed != kNoButton) EndTimeSlice();
+      while (nNxtButtonPressed != kNoButton) sleep(1);
     }
 
     // Read the data from the sensor

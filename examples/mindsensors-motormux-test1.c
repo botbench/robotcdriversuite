@@ -68,15 +68,15 @@ task main () {
     switch(nNxtButtonPressed) {
       case kLeftButton:
         MSMMotorEncoderReset(mmotor_S1_1);
-        while(nNxtButtonPressed != kNoButton) EndTimeSlice();
+        while(nNxtButtonPressed != kNoButton) sleep(1);
         break;
       case kRightButton:
         MSMMotorEncoderReset(mmotor_S1_2);
-        while(nNxtButtonPressed != kNoButton) EndTimeSlice();
+        while(nNxtButtonPressed != kNoButton) sleep(1);
         break;
       case kEnterButton:
         MSMMotorEncoderResetAll(MSMMUX);
-        while(nNxtButtonPressed != kNoButton) EndTimeSlice();
+        while(nNxtButtonPressed != kNoButton) sleep(1);
         break;
     }
 
@@ -94,5 +94,5 @@ task main () {
     sleep(20);
   }
 
-  while(true) EndTimeSlice();
+  while(true) sleep(1);
 }

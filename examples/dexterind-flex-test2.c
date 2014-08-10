@@ -48,14 +48,14 @@ task main () {
       case kLeftButton:
                         DFLEXcalLow(DFLEX);
                         playSound(soundBeepBeep);
-                        while(bSoundActive) EndTimeSlice();
+                        while(bSoundActive) sleep(1);
                         break;
 
       // if the left button is pressed calibrate the white value for the sensor
       case kRightButton:
                         DFLEXcalHigh(DFLEX);
                         playSound(soundBeepBeep);
-                        while(bSoundActive) EndTimeSlice();
+                        while(bSoundActive) sleep(1);
                         break;
     }
 

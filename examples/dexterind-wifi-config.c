@@ -48,7 +48,7 @@ task main()
   DWIFIsetBAUDRate(230400);
   DWIFIresetConfig();
   playSound(soundBlip);
-  while(nNxtButtonPressed != kEnterButton) EndTimeSlice();
+  while(nNxtButtonPressed != kEnterButton) sleep(1);
   DWIFIsetBAUDRate(230400);
 
   configureWiFi((char *)ssid, (char *)wpa_psk);

@@ -43,7 +43,7 @@ task main() {
       case kRightButton:
         if (++state > 2)
           state = 0;
-        while (nNxtButtonPressed != kNoButton) EndTimeSlice();
+        while (nNxtButtonPressed != kNoButton) sleep(1);
         break;
 
         // If the left button is pressed, cycle through the scales in reverse
@@ -51,7 +51,7 @@ task main() {
         if (--state < 0)
           state = 2;
         // debounce the button
-        while (nNxtButtonPressed != kNoButton) EndTimeSlice();
+        while (nNxtButtonPressed != kNoButton) sleep(1);
         break;
     }
 

@@ -30,7 +30,7 @@
 #define MSMTRMX_MOTOR_REG     0x42      /*!< Motor address */
 
 /*! motor settings struct, each motor can be set to one of these modes */
-typedef enum {
+typedef enum tMSMTRMXSettings {
   MSMTRMX_MODE_FLOAT = 0,
   MSMTRMX_MODE_FORWARD = 1,
   MSMTRMX_MODE_REVERSE = 2,
@@ -38,7 +38,7 @@ typedef enum {
 } tMSMTRMXSettings;
 
 /*! motors struct, these are the four motor channels on the MUX */
-typedef enum {
+typedef enum tMSMTRMXMotors {
   MSMTRMX_M1 = 0,
   MSMTRMX_M2 = 1,
   MSMTRMX_M3 = 2,

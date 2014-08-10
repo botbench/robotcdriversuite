@@ -39,7 +39,7 @@ task main () {
   sleep(2000);
 
   playSound(soundBeepBeep);
-  while(bSoundActive) EndTimeSlice();
+  while(bSoundActive) sleep(1);
   eraseDisplay();
 
   // Read the minimum distance the sensor can "see"

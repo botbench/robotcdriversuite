@@ -135,7 +135,7 @@ task main ()
     displayCenteredBigTextLine(1, "ERROR");
     displayTextLine(3, "No custom profile");
     displayTextLine(4, "configured!!");
-    while(true) EndTimeSlice();
+    while(true) sleep(1);
   }
 
   N2WLoad();
@@ -157,8 +157,8 @@ task main ()
 
   while (true)
   {
-    while (nNxtButtonPressed != kEnterButton) EndTimeSlice();
-    while (nNxtButtonPressed != kNoButton) EndTimeSlice();
+    while (nNxtButtonPressed != kEnterButton) sleep(1);
+    while (nNxtButtonPressed != kNoButton) sleep(1);
     if (N2WTCPOpenClient(1, BOFHserver, BOFHport)) {
       data[0] = 0x0A;
       N2WTCPWrite(1, data, 1);

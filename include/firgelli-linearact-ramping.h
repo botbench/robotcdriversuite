@@ -145,7 +145,7 @@ task _FLACcontrolTaskA() {
       motor[motorA] = (_reverse) ? -_motorPower : _motorPower;
     // update the _lastEncoderCount for the stall detection
     _lastEncoderCount = _currentEncVal;
-    EndTimeSlice();
+    sleep(1);
   }
   motor[motorA] = 0; //turn motor off
 }
@@ -245,7 +245,7 @@ task _FLACcontrolTaskB() {
 
     // update the _lastEncoderCount for the stall detection
     _lastEncoderCount = _currentEncVal;
-    EndTimeSlice();
+    sleep(1);
   }
   motor[motorB] = 0; //turn motor off
 }
@@ -345,7 +345,7 @@ task _FLACcontrolTaskC() {
 
     // update the _lastEncoderCount for the stall detection
     _lastEncoderCount = _currentEncVal;
-    EndTimeSlice();
+    sleep(1);
   }
   motor[motorC] = 0; //turn motor off
 }
@@ -363,7 +363,7 @@ void _FLACcontrolTasks(tMotor _motor, short _highPower, long _encTarget, bool _r
     case motorA:
       if (getTaskState(_FLACcontrolTaskA) == taskStateRunning) {
         stopTask(_FLACcontrolTaskA);
-        while(getTaskState(_FLACcontrolTaskA) != taskStateStopped) EndTimeSlice();
+        while(getTaskState(_FLACcontrolTaskA) != taskStateStopped) sleep(1);
         sleep(50);
         motor[motorA] = 0;
       }
@@ -376,13 +376,13 @@ void _FLACcontrolTasks(tMotor _motor, short _highPower, long _encTarget, bool _r
       _encoderTarget[_motor] = _encTarget;
 
       startTask(_FLACcontrolTaskA);
-      while(getTaskState(_FLACcontrolTaskA) != taskStateRunning) EndTimeSlice();
+      while(getTaskState(_FLACcontrolTaskA) != taskStateRunning) sleep(1);
       break;
 
     case motorB:
       if (getTaskState(_FLACcontrolTaskB) == taskStateRunning) {
         stopTask(_FLACcontrolTaskA);
-        while(getTaskState(_FLACcontrolTaskB) != taskStateStopped) EndTimeSlice();
+        while(getTaskState(_FLACcontrolTaskB) != taskStateStopped) sleep(1);
         sleep(50);
         motor[motorB] = 0;
       }
@@ -395,13 +395,13 @@ void _FLACcontrolTasks(tMotor _motor, short _highPower, long _encTarget, bool _r
       _encoderTarget[_motor] = _encTarget;
 
       startTask(_FLACcontrolTaskB);
-      while(getTaskState(_FLACcontrolTaskB) != taskStateRunning) EndTimeSlice();
+      while(getTaskState(_FLACcontrolTaskB) != taskStateRunning) sleep(1);
       break;
 
     case motorC:
       if (getTaskState(_FLACcontrolTaskC) == taskStateRunning) {
         stopTask(_FLACcontrolTaskC);
-        while(getTaskState(_FLACcontrolTaskC) != taskStateStopped) EndTimeSlice();
+        while(getTaskState(_FLACcontrolTaskC) != taskStateStopped) sleep(1);
         sleep(50);
         motor[motorC] = 0;
       }
@@ -414,7 +414,7 @@ void _FLACcontrolTasks(tMotor _motor, short _highPower, long _encTarget, bool _r
       _encoderTarget[_motor] = _encTarget;
 
       startTask(_FLACcontrolTaskC);
-      while(getTaskState(_FLACcontrolTaskC) != taskStateRunning) EndTimeSlice();
+      while(getTaskState(_FLACcontrolTaskC) != taskStateRunning) sleep(1);
       break;
   }
 }

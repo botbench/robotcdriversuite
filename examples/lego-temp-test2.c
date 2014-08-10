@@ -95,7 +95,7 @@ task main() {
         displayTextLine(0, "Accuracy: %s", strAcc);
 
         // debounce the button
-        while (nNxtButtonPressed != kNoButton) EndTimeSlice();
+        while (nNxtButtonPressed != kNoButton) sleep(1);
         break;
 
       // If the right button is pressed, increase the accuracy
@@ -115,7 +115,7 @@ task main() {
         displayTextLine(0, "Accuracy: %s", strAcc);
 
         // debounce the button
-        while (nNxtButtonPressed != kNoButton) EndTimeSlice();
+        while (nNxtButtonPressed != kNoButton) sleep(1);
         break;
     }
     if (!LEGOTMPreadTemp(LEGOTMP, temp)) {

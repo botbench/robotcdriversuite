@@ -290,7 +290,7 @@ bool _writeCalVals(tDIMCptr dimcPtr)
     eraseDisplay();
     displayTextLine(3, "W:can't cal file");
     playSound(soundException);
-    while(bSoundActive) EndTimeSlice();
+    while(bSoundActive) sleep(1);
     sleep(5000);
     stopAllTasks();
   }
@@ -303,7 +303,7 @@ bool _writeCalVals(tDIMCptr dimcPtr)
       eraseDisplay();
       displayTextLine(3, "can't write offset");
       playSound(soundException);
-      while(bSoundActive) EndTimeSlice();
+      while(bSoundActive) sleep(1);
       sleep(5000);
       stopAllTasks();
     }
@@ -316,7 +316,7 @@ bool _writeCalVals(tDIMCptr dimcPtr)
     eraseDisplay();
     displayTextLine(3, "Can't close");
     playSound(soundException);
-    while(bSoundActive) EndTimeSlice();
+    while(bSoundActive) sleep(1);
     sleep(5000);
     stopAllTasks();
   }

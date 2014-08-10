@@ -31,8 +31,8 @@ task main () {
   while(true) {
     // Increment the msg
     msg++;
-    while(nNxtButtonPressed != kEnterButton) EndTimeSlice();
-    while(nNxtButtonPressed != kNoButton) EndTimeSlice();
+    while(nNxtButtonPressed != kEnterButton) sleep(1);
+    while(nNxtButtonPressed != kNoButton) sleep(1);
     // Send the message to the RCX and display
     playSound(soundBlip);
     displayCenteredBigTextLine(2, "0x%04X", msg);

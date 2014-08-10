@@ -54,7 +54,7 @@ bool DWIFIcheckResult(tMassiveArray &readdata, char * caller = NULL)
   if (len < 1)
     return false;
 
-  if ((StringFind((char *)readdata, "OK") > -1) || (StringFind((char *)readdata, "0") > -1))
+  if ((stringFind((char *)readdata, "OK") > -1) || (stringFind((char *)readdata, "0") > -1))
   {
     if (caller != NULL)
       writeDebugStreamLine("DWIFIcheckResult %s SUCCESS", caller);
@@ -85,7 +85,7 @@ bool DWIFIcheckResult(tMassiveArray &readdata, short timeout, char * caller = NU
   if (len < 1)
     return false;
 
-  if ((StringFind((char *)readdata, "OK") > -1) || (StringFind((char *)readdata, "0") > -1))
+  if ((stringFind((char *)readdata, "OK") > -1) || (stringFind((char *)readdata, "0") > -1))
   {
     if (caller != NULL)
       writeDebugStreamLine("DWIFIcheckResult %s SUCCESS", caller);
@@ -301,7 +301,7 @@ bool DWIFIClose(short cid = -1) {
     res = RS485sendString("AT+NCLOSEALL\n");
   else
   {
-    StringFormat(DWIFIscratchString, "AT+NCLOSE=%d\n", cid);
+    stringFormat(DWIFIscratchString, "AT+NCLOSE=%d\n", cid);
     res = RS485sendString(DWIFIscratchString);
   }
 
@@ -315,7 +315,7 @@ bool DWIFIClose(short cid = -1) {
 
 //bool closeConn(short cid) {
 //  writeDebugStreamLine("closeConn");
-//  StringFormat(DWIFIscratchString, "AT+NCLOSE=%d\n", cid);
+//  stringFormat(DWIFIscratchString, "AT+NCLOSE=%d\n", cid);
 //  return RS485sendString(DWIFIscratchString);
 //}
 
@@ -341,7 +341,7 @@ void DWIFITCPOpenServer(long port) {
   short len = 0;
 
   string listen_cmd;
-  StringFormat(listen_cmd, "AT+NSTCP=%d\n", port);
+  stringFormat(listen_cmd, "AT+NSTCP=%d\n", port);
   RS485sendString(listen_cmd);
   RS485read(RS485rxbuffer, len, 100);
 }
@@ -398,7 +398,7 @@ void DWIFIsetBAUDRate(long baudrate) {
     return;
   }
 
-  StringFormat(baud_cmd, "ATB=%d\n", baudrate);
+  stringFormat(baud_cmd, "ATB=%d\n", baudrate);
   RS485sendString(baud_cmd);
 
   sleep(100);
@@ -459,7 +459,7 @@ void DWIFIwaitForIP()
     else if ((parsed == false) && (len == 0))
     {
       writeDebugStreamLine("Parsing buffer: %s", &tmp_array[0]);
-      epos = StringFind((char *)&tmp_array[0], &e_marker[0]);
+      epos = stringFind((char *)&tmp_array[0], &e_marker[0]);
       // we've found a start and end marker
 
       if (epos > -1)
@@ -470,8 +470,8 @@ void DWIFIwaitForIP()
           writeDebugStreamLine("nextTokenStart: %d", nextTokenStart);
           nextTokenStart = epos;
           memmove((char *)&tmp_array[0], (char *)&tmp_array[nextTokenStart], sizeof(tMassiveArray) - nextTokenStart);
-          bpos = StringFind((char *)&tmp_array[0], token_begin);
-          epos = StringFind((char *)&tmp_array[0], token_end);
+          bpos = stringFind((char *)&tmp_array[0], token_begin);
+          epos = stringFind((char *)&tmp_array[0], token_end);
           if (bpos > -1 && epos > -1)
           {
             writeDebugStreamLine("IP bpos: %d, epos: %d", bpos, epos);

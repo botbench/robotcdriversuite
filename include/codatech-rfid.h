@@ -267,7 +267,7 @@ bool CTRFIDreadTransponder(tSensors link, string &transponderID) {
   strcpy(transponderID, "");
   for (short i=0;i<5;i++) {
     // "%02x"  will pad the hex number with a zero to make it two digits long at all times.
-    StringFormat(transponderID, "%s%02x", transponderID, CTRFID_I2CReply[i]);
+    stringFormat(transponderID, "%s%02x", transponderID, CTRFID_I2CReply[i]);
   }
   return true;
 }

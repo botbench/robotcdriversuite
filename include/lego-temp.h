@@ -49,7 +49,7 @@
 
 // ---------------------------- Definitions --------------------------------------
 /*!< Command modes definition */
-typedef enum {
+typedef enum tLEGOTMPAccuracy {
   A_MIN   = 8, // 0.5,   * 16 (typedef needs integer...)
   A_MEAN1 = 4, // 0.25   * 16 (so *16 here...)
   A_MEAN2 = 2, // 0.125  * 16 (... and /16 in functions)
