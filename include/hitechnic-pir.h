@@ -24,6 +24,7 @@
  */
 
 #pragma systemFile
+#include "hitechnic-sensormux.h"
 
 #ifndef __COMMON_H__
 #include "common.h"
@@ -32,21 +33,83 @@
 // I2C address + registers
 #define HTPIR_I2C_ADDR       0x02  /*!< HTPIR I2C device address */
 #define HTPIR_DEADBAND       0x41  /*!< HTPIR Mode control */
-#define HTPIR_READING        0x42  /*!< HTPIR Heading Upper bits */
+#define HTPIR_OFFSET         0x42  /*!< Offset for data registers */
+
+// Values contained by registers in active mode
+#define HTPIR_MSB           0x00  /*!< MSB register */
 
 #define HTPIR_DEFAULT_DEADBAND 12
 
-bool HTPIRsetDeadband(tSensors link, short deadband);
-short HTPIRreadSensor(tSensors link);
+typedef struct
+{
+  tI2CData I2CData;
+  long value;
+  long deadband;
+} tHTPIR, *tHTPIRPtr;
 
-#ifdef __HTSMUX_SUPPORT__
-short HTPIRreadSensor(tMUXSensor muxsensor);
+bool initSensor(tHTPIRPtr htpirPtr, tSensors port);
+bool readSensor(tHTPIRPtr htpirPtr);
+bool resetSensor(tHTPIRPtr htpirPtr);
+bool sensorCalibrate(tHTPIRPtr htpirPtr);
 
-tConfigParams HTPIR_config = {HTSMUX_CHAN_I2C, 1, 0x02, 0x42}; /*!< Array to hold SMUX config data for sensor */
-#endif // __HTSMUX_SUPPORT__
 
-tByteArray HTPIR_I2CRequest;       /*!< Array to hold I2C command data */
-tByteArray HTPIR_I2CReply;         /*!< Array to hold I2C reply data */
+/**
+ * Initialise the sensor's data struct and port
+ *
+ * @param htpirPtr pointer to the sensor's data struct
+ * @param port the sensor port
+ * @return true if no error occured, false if it did
+ */
+bool initSensor(tHTPIRPtr htpirPtr, tSensors port)
+{
+  memset(htpirPtr, 0, sizeof(tHTPIRPtr));
+  htpirPtr->I2CData.address = HTPIR_I2C_ADDR;
+  htpirPtr->I2CData.port = port;
+  htpirPtr->deadband = HTPIR_DEFAULT_DEADBAND;
+#if defined(NXT)
+  htpirPtr->I2CData.type = sensorI2CCustom;
+#else
+	htpirPtr->I2CData.type = sensorEV3_GenericI2C;
+#endif
+
+  // Ensure the sensor is configured correctly
+  if (SensorType[htpirPtr->I2CData.port] != htpirPtr->I2CData.type)
+    SensorType[htpirPtr->I2CData.port] = htpirPtr->I2CData.type;
+
+  sleep(50);
+  writeDebugStreamLine("type: %d", SensorType[htpirPtr->I2CData.port]);
+  // Make sure the sensor is in the measurement mode
+  return sensorCalibrate(htpirPtr);
+}
+
+
+/**
+ * Read all the sensor's data
+ *
+ * @param htpirPtr pointer to the sensor's data struct
+ * @return true if no error occured, false if it did
+ */
+bool readSensor(tHTPIRPtr htpirPtr)
+{
+  memset(htpirPtr->I2CData.request, 0, sizeof(htpirPtr->I2CData.request));
+
+
+  // Read all of the data available on the sensor
+  htpirPtr->I2CData.request[0] = 2;                    // Message size
+  htpirPtr->I2CData.request[1] = htpirPtr->I2CData.address; // I2C Address
+  htpirPtr->I2CData.request[2] = HTPIR_OFFSET + HTPIR_MSB;
+  htpirPtr->I2CData.replyLen = 1;
+  htpirPtr->I2CData.requestLen = 2;
+
+  if (!writeI2C(&htpirPtr->I2CData))
+    return false;
+
+  // Populate the struct with the newly retrieved data
+  htpirPtr->value = (htpirPtr->I2CData.reply[0] >= 128) ? (short)htpirPtr->I2CData.reply[0] - 256 : (short)htpirPtr->I2CData.reply[0];
+
+  return true;
+}
+
 
 /**
  * The sensor element with the PIR sensor generates continuous noise.
@@ -56,61 +119,20 @@ tByteArray HTPIR_I2CReply;         /*!< Array to hold I2C reply data */
  * deadband threshold and will appear as actual non-zero readings. \n
  * The Deadband field may be set from 0 to 47 to define the half width
  * of the deadband. The default value is 12.
- * @param link the HTPIR port number
- * @param deadband the amount
+ * @param htpirPtr pointer to the sensor's data struct
  * @return true if no error occured, false if it did
  */
-bool HTPIRsetDeadband(tSensors link, short deadband) {
-  memset(HTPIR_I2CRequest, 0, sizeof(tByteArray));
-  // Ensure the values are valid
-  deadband = clip(deadband, 0, 47);
+bool sensorCalibrate(tHTPIRPtr htpirPtr)
+{
+  memset(htpirPtr->I2CData.request, 0, sizeof(htpirPtr->I2CData.request));
 
-  HTPIR_I2CRequest[0] = 3;                  // Number of bytes in I2C command
-  HTPIR_I2CRequest[1] = HTPIR_I2C_ADDR;     // I2C address of PIR sensor
-  HTPIR_I2CRequest[2] = HTPIR_DEADBAND;     // Set write address to sensor mode register
-  HTPIR_I2CRequest[3] = deadband;           // The calibration mode command
+  htpirPtr->I2CData.request[0] = 3;              // Message size
+  htpirPtr->I2CData.request[1] = HTPIR_I2C_ADDR; // I2C Address
+  htpirPtr->I2CData.request[2] = HTPIR_DEADBAND;  // Command register
+  htpirPtr->I2CData.request[3] =  (ubyte)(htpirPtr->deadband & 0x000000FF);        // Cdeadband to configure
 
-  // Start the calibration
-  return writeI2C(link, HTPIR_I2CRequest);
+  return writeI2C(&htpirPtr->I2CData);
 }
-
-/**
- * Read the current levels detected by the sensor
- * @param link the HTPIR port number
- * @return level detected by sensor, will be between -128 and 127.
- */
-short HTPIRreadSensor(tSensors link) {
-  memset(HTPIR_I2CRequest, 0, sizeof(tByteArray));
-
-  HTPIR_I2CRequest[0] = 2;               // Number of bytes in I2C command
-  HTPIR_I2CRequest[1] = HTPIR_I2C_ADDR;   // I2C address of PIR sensor
-  HTPIR_I2CRequest[2] = HTPIR_READING;     // Set write address to sensor mode register
-
-  if (!writeI2C(link, HTPIR_I2CRequest, HTPIR_I2CReply, 1))
-    return -1;
-
-  return (HTPIR_I2CReply[0] >= 128) ? (short)HTPIR_I2CReply[0] - 256 : (short)HTPIR_I2CReply[0];
-}
-
-/**
- * Read the current levels detected by the sensor
- * @param muxsensor the SMUX sensor port number
- * @return level detected by sensor, will be between -128 and 127.
- */
-#ifdef __HTSMUX_SUPPORT__
-short HTPIRreadSensor(tMUXSensor muxsensor) {
-  memset(HTPIR_I2CReply, 0, sizeof(tByteArray));
-
-  if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
-    HTSMUXconfigChannel(muxsensor, HTPIR_config);
-
-  if (!HTSMUXreadPort(muxsensor, HTPIR_I2CReply, 1)) {
-    return -1;
-  }
-
-  return (HTPIR_I2CReply[0] >= 128) ? (short)HTPIR_I2CReply[0] - 256 : (short)HTPIR_I2CReply[0];
-}
-#endif // __HTSMUX_SUPPORT__
 
 /* @} */
 /* @} */
