@@ -48,15 +48,15 @@ typedef struct
 {
   tI2CData I2CData;
   float rotation;
-  float offset
+  float offset;
   bool smux;
   tMUXSensor smuxport;
-} HTGYRO, *tHTGYROPtr;
+} tHTGYRO, *tHTGYROPtr;
 
 bool initSensor(tHTGYROPtr htgyroPtr, tSensors port);
 bool initSensor(tHTGYROPtr htgyroPtr, tMUXSensor muxsensor);
 bool readSensor(tHTGYROPtr htgyroPtr);
-bool sensorCalibrate(tHTMCPtr htmcPtr)
+bool sensorCalibrate(tHTGYROPtr htgyroPtr);
 
 float HTGYROreadRot(tSensors link);
 float HTGYROstartCal(tSensors link);
@@ -246,9 +246,9 @@ bool readSensor(tHTGYROPtr htgyroPtr)
   memset(htgyroPtr->I2CData.request, 0, sizeof(htgyroPtr->I2CData.request));
 
   if (htgyroPtr->smux)
-    htgyroPtr->force = 1023 - HTSMUXreadAnalogue(htgyroPtr->smuxport);
+    htgyroPtr->rotation = HTSMUXreadAnalogue(htgyroPtr->smuxport) - htgyroPtr->offset;
   else
-    htgyroPtr->force = 1023 - SensorValue[htgyroPtr->I2CData.port];
+    htgyroPtr->rotation = SensorValue[htgyroPtr->I2CData.port] - htgyroPtr->offset;
 
     return true;
 }
@@ -267,7 +267,9 @@ bool sensorCalibrate(tHTGYROPtr htgyroPtr)
 
     sleep(50);
   }
-   htgyroPtr->offset = avgdata / 50;
+  htgyroPtr->offset = avgdata / 50;
+
+	return true;
 }
 
 #endif // __HTGYRO_H__
