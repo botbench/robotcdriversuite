@@ -169,42 +169,42 @@ bool HTCSreadRGB(tMUXSensor muxsensor, short &red, short &green, short &blue) {
 }
 #endif // __HTSMUX_SUPPORT__
 
-/**
- * Get the detection levels for the hue, saturation, value components.
- * @param link the HTCS port number
- * @param hue the hue output value (from 0 to 365, or -1 if n/a)
- * @param saturation the saruration output value (from 0 to 100, or -1 if n/a)
- * @param value the value output value (from 0 to 100)
- * @return true if no error occured, false if it did
- */
-bool HTCSreadHSV(tSensors link, float &hue, float &saturation, float &value) {
+///**
+// * Get the detection levels for the hue, saturation, value components.
+// * @param link the HTCS port number
+// * @param hue the hue output value (from 0 to 365, or -1 if n/a)
+// * @param saturation the saruration output value (from 0 to 100, or -1 if n/a)
+// * @param value the value output value (from 0 to 100)
+// * @return true if no error occured, false if it did
+// */
+//bool HTCSreadHSV(tSensors link, float &hue, float &saturation, float &value) {
 
-  short red,green,blue;
-  bool ret = HTCSreadRGB(link, red, green, blue);
-  RGBtoHSV(red,green,blue, hue, saturation, value);
+//  short red,green,blue;
+//  bool ret = HTCSreadRGB(link, red, green, blue);
+//  RGBtoHSV(red,green,blue, hue, saturation, value);
 
-  return ret;
-}
+//  return ret;
+//}
 
-/**
- * Get the detection levels for the hue, saturation, value components.
- * @param muxsensor the SMUX sensor port number
- * @param hue the hue output value (from 0 to 365, or -1 if n/a)
- * @param saturation the saruration output value (from 0 to 100, or -1 if n/a)
- * @param value the value output value (from 0 to 100)
- * @return true if no error occured, false if it did
- */
-#ifdef __HTSMUX_SUPPORT__
-bool HTCSreadHSV(tMUXSensor muxsensor, float &hue, float &saturation, float &value) {
+///**
+// * Get the detection levels for the hue, saturation, value components.
+// * @param muxsensor the SMUX sensor port number
+// * @param hue the hue output value (from 0 to 365, or -1 if n/a)
+// * @param saturation the saruration output value (from 0 to 100, or -1 if n/a)
+// * @param value the value output value (from 0 to 100)
+// * @return true if no error occured, false if it did
+// */
+//#ifdef __HTSMUX_SUPPORT__
+//bool HTCSreadHSV(tMUXSensor muxsensor, float &hue, float &saturation, float &value) {
 
-  short red,green,blue;
+//  short red,green,blue;
 
-  bool ret = HTCSreadRGB(muxsensor, red, green, blue);
-  RGBtoHSV(red,green,blue, hue, saturation, value);
+//  bool ret = HTCSreadRGB(muxsensor, red, green, blue);
+//  RGBtoHSV(red,green,blue, hue, saturation, value);
 
-  return ret;
-}
-#endif // __HTSMUX_SUPPORT__
+//  return ret;
+//}
+//#endif // __HTSMUX_SUPPORT__
 
 /**
  * Get the normalised RGB readings. The normalization sets the highest
