@@ -535,6 +535,37 @@ bool strtok(char *buffer, char *token, char *seperator)
   return false;
 }
 
+typedef enum tXButton
+{
+#if defined(EV3)
+  xButtonLeft = buttonLeft,
+  xButtonRight = buttonRight,
+  xButtonBack = buttonBack,
+  xButtonEnter = buttonEnter,
+  xButtonAny  = buttonAny
+#elif defined(NXT)
+  xButtonLeft = kLeftButton,
+  xButtonRight = kRightButton,
+  xButtonBack = kExitButton,
+  xButtonEnter = kEnterButton,
+  xButtonAny  = 100
+#endif
+} tXButton;
+
+bool getXbuttonValue(tXButton button)
+{
+  tXButton currButton;
+#if defined(EV3)
+  return getButtonPress((TEV3Buttons)button);
+#elif defined(NXT)
+  currButton = (tXButton)nNxtButtonPressed;
+  if ((button == xButtonAny) && (currButton != kNoButton))
+    return true;
+  else
+    return (currButton == button) ? true : false;
+#endif
+}
+
 #endif // __COMMON_H__
 
 /* @} */
