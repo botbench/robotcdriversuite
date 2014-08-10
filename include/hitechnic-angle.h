@@ -38,7 +38,7 @@
 #include "common.h"
 #endif
 
-#define HTANG_I2C_ADDR         0x02      /*!< HTCS2 I2C device address */
+#define HTANG_I2C_ADDR         0x02      /*!< HTANG I2C device address */
 #define HTANG_CMD_REG          0x41      /*!< Command register */
 #define HTANG_OFFSET           0x42      /*!< Offset for data registers */
 
@@ -76,185 +76,7 @@ bool resetAccmulatedAngle(tHTANGPtr htangPtr);
 bool resetAngle(tHTANGPtr htangPtr);
 bool _sensorSendCommand(tHTANGPtr htangPtr);
 
-//short HTANGreadAngle(tSensors link);
-//long HTANGreadAccumulatedAngle(tSensors link);
-//short HTANGreadRPM(tSensors link);
-//bool HTANGresetAngle(tSensors link);
-//bool HTANGresetAccumulatedAngle(tSensors link);
-//bool _HTANGsendCommand(tSensors link, byte command);
-
-//#ifdef __HTSMUX_SUPPORT__
-//short HTANGreadAngle(tMUXSensor muxsensor);
-//long HTANGreadAccumulatedAngle(tMUXSensor muxsensor);
-//short HTANGreadRPM(tMUXSensor muxsensor);
-
 tConfigParams HTANG_config = {HTSMUX_CHAN_I2C, 8, 0x02, 0x42};  /*!< Array to hold SMUX config data for sensor */
-//#endif // __HTSMUX_SUPPORT__
-
-//tByteArray HTANG_I2CRequest;             /*!< Array to hold I2C command data */
-//tByteArray HTANG_I2CReply;               /*!< Array to hold I2C reply data */
-
-///**
-// * Return the current angle
-// * @param link the HTANG port number
-// * @return current angle or -1 if an error occurred.
-// */
-//short HTANGreadAngle(tSensors link) {
-//  memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
-
-//  HTANG_I2CRequest[0] = 2;                         // Message size
-//  HTANG_I2CRequest[1] = HTANG_I2C_ADDR;            // I2C Address
-//  HTANG_I2CRequest[2] = HTANG_OFFSET + HTANG_ANG2; // Start Current angle
-
-//  if (!writeI2C(link, HTANG_I2CRequest, HTANG_I2CReply, 2))
-//    return -1;
-
-//  return (HTANG_I2CReply[0] * 2) + HTANG_I2CReply[1];
-//}
-
-///**
-// * Return the current angle
-// * @param muxsensor the SMUX sensor port number
-// * @return current angle or -1 if an error occurred.
-// */
-//#ifdef __HTSMUX_SUPPORT__
-//short HTANGreadAngle(tMUXSensor muxsensor) {
-//  memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
-
-//  if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
-//    HTSMUXconfigChannel(muxsensor, HTANG_config);
-
-//  if (!HTSMUXreadPort(muxsensor, HTANG_I2CReply, 2, HTANG_ANG2)) {
-//    return -1;
-//  }
-
-//  return (HTANG_I2CReply[0] * 2) + HTANG_I2CReply[1];
-//}
-//#endif // __HTSMUX_SUPPORT__
-
-///**
-// * Return the accumulated angle (signed 32 bit value)
-// * @param link the HTANG port number
-// * @return current angle or -1 if an error occurred.
-// */
-//long HTANGreadAccumulatedAngle(tSensors link) {
-//  memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
-
-//  HTANG_I2CRequest[0] = 2;                                // Message size
-//  HTANG_I2CRequest[1] = HTANG_I2C_ADDR;                   // I2C Address
-//  HTANG_I2CRequest[2] = HTANG_OFFSET + HTANG_ACC_ANG_B4;  // Start accumulated angle
-
-//  if (!writeI2C(link, HTANG_I2CRequest, HTANG_I2CReply, 4))
-//    return -1;
-
-//  return (HTANG_I2CReply[0] << 24) +
-//         (HTANG_I2CReply[1] << 16) +
-//         (HTANG_I2CReply[2] <<  8) +
-//          HTANG_I2CReply[3];
-//}
-
-///**
-// * Return the accumulated angle (signed 32 bit value)
-// * @param muxsensor the SMUX sensor port number
-// * @return current angle or -1 if an error occurred.
-// */
-//#ifdef __HTSMUX_SUPPORT__
-//long HTANGreadAccumulatedAngle(tMUXSensor muxsensor) {
-//  memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
-
-//  if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
-//    HTSMUXconfigChannel(muxsensor, HTANG_config);
-
-//  if (!HTSMUXreadPort(muxsensor, HTANG_I2CReply, 4, HTANG_ACC_ANG_B4)) {
-//    return -1;
-//  }
-
-//  return (HTANG_I2CReply[0] << 24) +
-//         (HTANG_I2CReply[1] << 16) +
-//         (HTANG_I2CReply[2] <<  8) +
-//          HTANG_I2CReply[3];
-//}
-//#endif // __HTSMUX_SUPPORT__
-
-///**
-// * Return the rpm that the shaft is currently rotating at
-// * @param link the HTANG port number
-// * @return the current rpm of the shaft or -1 if an error occurred.
-// */
-//short HTANGreadRPM(tSensors link) {
-//  memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
-
-//  HTANG_I2CRequest[0] = 2;                           // Message size
-//  HTANG_I2CRequest[1] = HTANG_I2C_ADDR;              // I2C Address
-//  HTANG_I2CRequest[2] = HTANG_OFFSET + HTANG_RPM_H;  // Start of rpm
-
-//  if (!writeI2C(link, HTANG_I2CRequest, HTANG_I2CReply, 2))
-//    return -1;
-
-//  return (short)(HTANG_I2CReply[0] <<  8) +
-//          HTANG_I2CReply[1];
-//}
-
-///**
-// * Return the rpm that the shaft is currently rotating at
-// * @param muxsensor the SMUX sensor port number
-// * @return the current rpm of the shaft or -1 if an error occurred.
-// */
-//#ifdef __HTSMUX_SUPPORT__
-//short HTANGreadRPM(tMUXSensor muxsensor) {
-//  memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
-
-//  if (HTSMUXSensorTypes[muxsensor] != HTSMUXSensorCustom)
-//    HTSMUXconfigChannel(muxsensor, HTANG_config);
-
-//  if (!HTSMUXreadPort(muxsensor, HTANG_I2CReply, 2, HTANG_RPM_H)) {
-//    return -1;
-//  }
-
-//  // return HTANG_I2CReply[0] * 2 + HTANG_I2CReply[1];
-
-//  return (HTANG_I2CReply[0] <<  8) +
-//          HTANG_I2CReply[1];
-//}
-//#endif // __HTSMUX_SUPPORT__
-
-///**
-// * Reset the 0 position to the current shaft angle.<br>
-// * Note: this will also reset the accumulated angle counter
-// * @param link the HTANG port number
-// * @return true if no error occured, false if it did
-// */
-//bool HTANGresetAngle(tSensors link) {
-//  return _HTANGsendCommand(link, HTANG_CMD_RST_ANG);
-//}
-
-///**
-// * Reset the accumulated angle
-// * @param link the HTANG port number
-// * @return true if no error occured, false if it did
-// */
-//bool HTANGresetAccumulatedAngle(tSensors link) {
-//  return _HTANGsendCommand(link, HTANG_CMD_RST_ACC_ANG);
-//}
-
-///**
-// * Send a command to the sensor
-// *
-// * Note: this is an internal function and should not be called directly.
-// * @param link the HTANG port number
-// * @param command the command to be sent to the sensor
-// * @return true if no error occured, false if it did
-// */
-//bool _HTANGsendCommand(tSensors link, byte command) {
-//  memset(HTANG_I2CRequest, 0, sizeof(tByteArray));
-
-//  HTANG_I2CRequest[0] = 3;              // Message size
-//  HTANG_I2CRequest[1] = HTANG_I2C_ADDR; // I2C Address
-//  HTANG_I2CRequest[2] = HTANG_CMD_REG;  // Command register
-//  HTANG_I2CRequest[3] = command;        // Command to be sent
-
-//  return writeI2C(link, HTANG_I2CRequest);
-//}
 
 /**
  * Initialise the sensor's data struct and port
@@ -268,7 +90,11 @@ bool initSensor(tHTANGPtr htangPtr, tSensors port)
   memset(htangPtr, 0, sizeof(tHTANGPtr));
   htangPtr->I2CData.address = HTANG_I2C_ADDR;
   htangPtr->I2CData.port = port;
+#if defined(NXT)
   htangPtr->I2CData.type = sensorI2CCustom;
+#else
+	htangPtr->I2CData.type = sensorEV3_GenericI2C;
+#endif
   htangPtr->_cmd = HTANG_CMD_MEASURE;
   htangPtr->smux = false;
 
@@ -276,6 +102,8 @@ bool initSensor(tHTANGPtr htangPtr, tSensors port)
   if (SensorType[htangPtr->I2CData.port] != htangPtr->I2CData.type)
     SensorType[htangPtr->I2CData.port] = htangPtr->I2CData.type;
 
+  sleep(50);
+  writeDebugStreamLine("type: %d", SensorType[htangPtr->I2CData.port]);
   // Make sure the sensor is in the measurement mode
   return _sensorSendCommand(htangPtr);
 }
