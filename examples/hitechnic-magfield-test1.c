@@ -23,10 +23,6 @@
 #include "hitechnic-magfield.h"
 
 task main () {
-
-  short magFieldValue = 0;
-  short calibrationValue = 0;
-
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "MAGNETIC");
   displayCenteredTextLine(3, "Field Sensor");
@@ -41,6 +37,13 @@ task main () {
 
   sleep(2000);
   eraseDisplay();
+
+  // Create struct to hold sensor data
+  tHTMAG magneticSensor;
+
+  // Initialise and configure struct and port
+  initSensor(&magneticSensor, S1);
+
   while(true) {
     eraseDisplay();
     displayTextLine(1, "Resetting");
@@ -48,28 +51,26 @@ task main () {
     sleep(500);
 
     // Start the calibration and display the offset
-    calibrationValue = HTMAGstartCal(HTMAG);
-    displayTextLine(2, "Bias: %4d", calibrationValue);
-    playSound(soundBlip);
-    while(bSoundActive) EndTimeSlice();
-    while(nNxtButtonPressed != kNoButton) EndTimeSlice();
+    sensorCalibrate(&magneticSensor);
 
-    while(nNxtButtonPressed != kEnterButton) {
+    displayTextLine(2, "Bias: %4d", magneticSensor.bias);
+    playSound(soundBlip);
+    while(bSoundActive) sleep(1);
+    while(getXbuttonValue(xButtonAny)) sleep(1);
+
+    while(!getXbuttonValue(xButtonEnter)) {
       eraseDisplay();
 
-      // Read the current calibration offset
-      calibrationValue = HTMAGreadCal(HTMAG);
-
-      // Read the current magnetic field strength
-      magFieldValue = HTMAGreadVal(HTMAG);
+      // Read the sensor data
+      readSensor(&magneticSensor);
 
       displayTextLine(1, "Reading");
       // Display the current calibration value
-      displayTextLine(2, "Bias: %4d", calibrationValue);
+      displayTextLine(2, "Bias: %4d", magneticSensor.bias);
 
       displayClearTextLine(4);
       // Display the current magnetic field strength
-      displayTextLine(4, "Mag:   %4d", magFieldValue);
+      displayTextLine(4, "Mag:   %4d", magneticSensor.strength);
       displayTextLine(6, "Press enter");
       displayTextLine(7, "to recalibrate");
       sleep(100);

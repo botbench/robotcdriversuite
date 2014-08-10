@@ -30,171 +30,115 @@
  */
 
 #pragma systemFile
+#include "hitechnic-sensormux.h"
 
 #ifndef __COMMON_H__
 #include "common.h"
 #endif
 
-short HTMAGreadVal(tSensors link);
-short HTMAGreadRaw(tSensors link);
-short HTMAGstartCal(tSensors link);
-short HTMAGreadCal(tSensors link);
-void HTMAGsetCal(tSensors link, short bias);
+typedef struct
+{
+  tI2CData I2CData;
+  long strength;
+  long bias;
+  bool smux;
+  tMUXSensor smuxport;
+} tHTMAG, *tHTMAGPtr;
 
-#ifdef __HTSMUX_SUPPORT__
-short HTMAGreadVal(tMUXSensor muxsensor);
-short HTMAGreadRaw(tMUXSensor muxsensor);
-short HTMAGstartCal(tMUXSensor muxsensor);
-short HTMAGreadCal(tMUXSensor muxsensor);
-void HTMAGsetCal(tMUXSensor muxsensor, short bias);
+bool initSensor(tHTMAGPtr htmagPtr, tSensors port);
+bool initSensor(tHTMAGPtr htmagPtr, tMUXSensor muxsensor);
+bool readSensor(tHTMAGPtr htmagPtr);
+bool sensorCalibrate(tHTMAGPtr htmagPtr);
+
+
+/**
+ * Initialise the sensor's data struct and port
+ *
+ * @param htmagPtr pointer to the sensor's data struct
+ * @param port the sensor port
+ * @return true if no error occured, false if it did
+ */
+bool initSensor(tHTMAGPtr htmagPtr, tSensors port)
+{
+  memset(htmagPtr, 0, sizeof(tHTMAGPtr));
+  htmagPtr->I2CData.port = port;
+  htmagPtr->bias = 512;
+
+#ifdef NXT
+  htmagPtr->I2CData.type = sensorRawValue;
+#else
+  htmagPtr->I2CData.type = sensorRawValue;
 #endif
+  htmagPtr->smux = false;
 
-short HTMAG_bias[][] = {{512, 512, 512, 512}, /*!< Array for bias values.  Default is 512 */
-                          {512, 512, 512, 512},
-                          {512, 512, 512, 512},
-                          {512, 512, 512, 512}};
+  // Ensure the sensor is configured correctly
+  if (SensorType[htmagPtr->I2CData.port] != htmagPtr->I2CData.type)
+    SensorType[htmagPtr->I2CData.port] = htmagPtr->I2CData.type;
 
-/**
- * Read the value of the Magnetic Field Sensor
- * @param link the HTMAG port number
- * @return the value of the Magnetic Field Sensor (-200 to +200)
- */
-short HTMAGreadVal(tSensors link) {
-  // Make sure the sensor is configured as type sensorRawValue
-  if (SensorType[link] != sensorRawValue) {
-    SensorType[link] = sensorRawValue;
-    sleep(100);
-  }
-
-  return (SensorValue[link] - HTMAG_bias[link][0]);
+  return true;
 }
 
-/**
- * Read the value of the Magnetic Field Sensor
- * @param muxsensor the SMUX sensor port number
- * @return the value of the Magnetic Field Sensor (-200 to +200)
- */
-#ifdef __HTSMUX_SUPPORT__
-short HTMAGreadVal(tMUXSensor muxsensor) {
-  return HTSMUXreadAnalogue(muxsensor) - HTMAG_bias[SPORT(muxsensor)][MPORT(muxsensor)];
-}
-#endif // __HTSMUX_SUPPORT__
 
 /**
- * Read the raw value of the Magnetic Field Sensor
- * @param link the HTMAG port number
- * @return the value of the Magnetic Field Sensor (approx 300 to 700)
+ * Initialise the sensor's data struct and MUX port
+ *
+ * @param htmagPtr pointer to the sensor's data struct
+ * @param muxsensor the sensor MUX port
+ * @return true if no error occured, false if it did
  */
-short HTMAGreadRaw(tSensors link) {
-  // Make sure the sensor is configured as type sensorRawValue
-  if (SensorType[link] != sensorRawValue) {
-    SensorType[link] = sensorRawValue;
-    sleep(100);
-  }
+bool initSensor(tHTMAGPtr htmagPtr, tMUXSensor muxsensor)
+{
+  memset(htmagPtr, 0, sizeof(tHTMAGPtr));
+  htmagPtr->I2CData.type = sensorI2CCustom;
+  htmagPtr->smux = true;
+  htmagPtr->smuxport = muxsensor;
+  htmagPtr->bias = 512;
 
-  return SensorValue[link];
+  // Ensure the sensor is configured correctly
+  if (SensorType[htmagPtr->I2CData.port] != htmagPtr->I2CData.type)
+    SensorType[htmagPtr->I2CData.port] = htmagPtr->I2CData.type;
+
+  return HTSMUXsetAnalogueActive(muxsensor);
 }
 
+
 /**
- * Read the raw value of the Magnetic Field Sensor
- * @param muxsensor the SMUX sensor port number
- * @return the value of the Magnetic Field Sensor (approx 300 to 700)
+ * Read all the sensor's data
+ *
+ * @param htmagPtr pointer to the sensor's data struct
+ * @return true if no error occured, false if it did
  */
-#ifdef __HTSMUX_SUPPORT__
-short HTMAGreadRaw(tMUXSensor muxsensor) {
-  return HTSMUXreadAnalogue(muxsensor);
+bool readSensor(tHTMAGPtr htmagPtr)
+{
+  memset(htmagPtr->I2CData.request, 0, sizeof(htmagPtr->I2CData.request));
+
+  if (htmagPtr->smux)
+    htmagPtr->strength = HTSMUXreadAnalogue(htmagPtr->smuxport) - htmagPtr->bias;
+  else
+    htmagPtr->strength = 1023 - SensorValue[htmagPtr->I2CData.port] - htmagPtr->bias;
+
+    return true;
 }
-#endif // __HTSMUX_SUPPORT__
 
-/**
- * Calibrate the sensor by calculating the average bias of 5 raw readings.
- * @param link the HTMAG port number
- * @return the new bias value for the sensor
- */
-short HTMAGstartCal(tSensors link) {
-  short _avgdata = 0;
 
-  // Make sure the sensor is configured as type sensorRawValue
-  if (SensorType[link] != sensorRawValue) {
-    SensorType[link] = sensorRawValue;
-    sleep(100);
-  }
+bool sensorCalibrate(tHTMAGPtr htmagPtr)
+{
+  long avgdata = 0.0;
 
-  // Take 5 readings and average them out
-  for (short i = 0; i < 5; i++) {
-    _avgdata += SensorValue[link];
+  // Take 50 readings and average them out
+  for (short i = 0; i < 50; i++)
+  {
+    if (htmagPtr->smux)
+      avgdata += HTSMUXreadAnalogue(htmagPtr->smuxport);
+    else
+      avgdata += SensorValue[htmagPtr->I2CData.port];
+
     sleep(50);
   }
+  htmagPtr->bias = avgdata / 50;
 
-  // Store new bias
-  HTMAG_bias[link][0] = (_avgdata / 5);
-
-  // Return new bias value
-  return HTMAG_bias[link][0];
+	return true;
 }
-
-/**
- * Calibrate the Magnetic Field Sensor by calculating the average bias of 5 raw readings.
- * @param muxsensor the SMUX sensor port number
- * @return the new bias value for the Magnetic Field Sensor
- */
-#ifdef __HTSMUX_SUPPORT__
-short HTMAGstartCal(tMUXSensor muxsensor) {
-  short _avgdata = 0;
-
-  // Take 5 readings and average them out
-  for (short i = 0; i < 5; i++) {
-    _avgdata += HTSMUXreadAnalogue(muxsensor);
-    sleep(50);
-  }
-
-  // Store new bias
-  HTMAG_bias[SPORT(muxsensor)][MPORT(muxsensor)] = (_avgdata / 5);
-
-  // Return new bias value
-  return HTMAG_bias[SPORT(muxsensor)][MPORT(muxsensor)];
-}
-#endif // __HTSMUX_SUPPORT__
-
-/**
- * Override the current bias for the sensor manually
- * @param link the HTMAG port number
- * @param bias the new bias to be used
- */
-void HTMAGsetCal(tSensors link, short bias) {
-  HTMAG_bias[link][0] = bias;
-}
-
-/**
- * Override the current bias for the sensor manually
- * @param muxsensor the SMUX sensor port number
- * @param bias the new bias to be used
- */
-#ifdef __HTSMUX_SUPPORT__
-void HTMAGsetCal(tMUXSensor muxsensor, short bias) {
-  HTMAG_bias[SPORT(muxsensor)][MPORT(muxsensor)] = bias;
-}
-#endif // __HTSMUX_SUPPORT__
-
-/**
- * Retrieve the current bias for the sensor
- * @param link the HTMAG port number
- * @return the bias value for the sensor
- */
-short HTMAGreadCal(tSensors link) {
-  return HTMAG_bias[link][0];
-}
-
-/**
- * Retrieve the current bias for the sensor
- * @param muxsensor the SMUX sensor port number
- * @return the bias value for the sensor
- */
-#ifdef __HTSMUX_SUPPORT__
-short HTMAGreadCal(tMUXSensor muxsensor) {
-  return HTMAG_bias[SPORT(muxsensor)][MPORT(muxsensor)];
-}
-#endif // __HTSMUX_SUPPORT__
 
 #endif // __HTMAG_H__
 

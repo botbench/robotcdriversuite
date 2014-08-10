@@ -20,20 +20,9 @@
  * version 0.1
  */
 
-#include "hitechnic-sensormux.h"
 #include "hitechnic-magfield.h"
 
-// The sensor is connected to the first port
-// of the SMUX which is connected to the NXT port S1.
-// To access that sensor, we must use msensor_S1_1.  If the sensor
-// were connected to 3rd port of the SMUX connected to the NXT port S4,
-// we would use msensor_S4_3
-
-// Give the sensor a nice easy to use name
-const tMUXSensor HTMAG = msensor_S1_1;
-
 task main () {
-
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "MAGNETIC");
   displayCenteredTextLine(3, "Field Sensor");
@@ -41,10 +30,27 @@ task main () {
   displayCenteredTextLine(5, "Connect SMUX to");
   displayCenteredTextLine(6, "S1 and sensor to");
   displayCenteredTextLine(7, "SMUX Port 1");
+
   sleep(2000);
 
+  displayCenteredTextLine(5, "Press enter");
+  displayCenteredTextLine(6, "to set bias");
+
+  sleep(2000);
   eraseDisplay();
-  time1[T1] = 0;
+
+  // Create struct to hold sensor data
+  tHTMAG magneticSensor;
+
+	// The sensor is connected to the first port
+	// of the SMUX which is connected to the NXT port S1.
+	// To access that sensor, we must use msensor_S1_1.  If the sensor
+	// were connected to 3rd port of the SMUX connected to the NXT port S4,
+	// we would use msensor_S4_3
+
+  // Initialise and configure struct and port
+  initSensor(&magneticSensor, msensor_S1_1);
+
   while(true) {
     eraseDisplay();
     displayTextLine(1, "Resetting");
@@ -52,21 +58,26 @@ task main () {
     sleep(500);
 
     // Start the calibration and display the offset
-    displayTextLine(2, "Bias: %4d", HTMAGstartCal(HTMAG));
-    playSound(soundBlip);
-    while(bSoundActive) EndTimeSlice();
-    while(nNxtButtonPressed != kNoButton) EndTimeSlice();
+    sensorCalibrate(&magneticSensor);
 
-    while(nNxtButtonPressed != kEnterButton) {
+    displayTextLine(2, "Bias: %4d", magneticSensor.bias);
+    playSound(soundBlip);
+    while(bSoundActive) sleep(1);
+    while(getXbuttonValue(xButtonAny)) sleep(1);
+
+    while(!getXbuttonValue(xButtonEnter)) {
       eraseDisplay();
 
+      // Read the sensor data
+      readSensor(&magneticSensor);
+
       displayTextLine(1, "Reading");
-      // Read the current calibration offset and display it
-      displayTextLine(2, "Bias: %4d", HTMAGreadCal(HTMAG));
+      // Display the current calibration value
+      displayTextLine(2, "Bias: %4d", magneticSensor.bias);
 
       displayClearTextLine(4);
-      // Read the current rotational speed and display it
-      displayTextLine(4, "Mag:   %4d", HTMAGreadVal(HTMAG));
+      // Display the current magnetic field strength
+      displayTextLine(4, "Mag:   %4d", magneticSensor.strength);
       displayTextLine(6, "Press enter");
       displayTextLine(7, "to recalibrate");
       sleep(100);
