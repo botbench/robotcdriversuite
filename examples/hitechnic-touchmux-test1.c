@@ -30,27 +30,33 @@ task main () {
   displayCenteredTextLine(5, "This is for the");
   displayCenteredTextLine(6, "Touch MUX");
   sleep(2000);
+
+  // Create struct to hold sensor data
+  tHTTMUX touchMUX;
+
+  // Initialise and configure struct and port
+  initSensor(&touchMUX, S1);
+
   while (true) {
     eraseDisplay();
     displayTextLine(0, "HT Touch MUX");
 
-    // Get the raw data from the sensor, this is not processed
-    // by the driver in any way.
-    displayTextLine(1, "Raw: %d", SensorValue[HTTMUX]);
+    // Read the data from the sensor
+    readSensor(&touchMUX);
 
     // Go through each possible touch switch attached to the TMUX
     // and display whether or not is active (pressed)
-    for (short i = 1; i < 5; i++) {
-      if (HTTMUXisActive(HTTMUX, i))
-        displayTextLine(i+2, "Touch %d: on", i);
+    for (short i = 0; i < 4; i++) {
+      if (touchMUX.status[i])
+        displayTextLine(i+2, "Touch %d: on", i+1);
       else
-        displayTextLine(i+2, "Touch %d: off", i);
+        displayTextLine(i+2, "Touch %d: off", i+1);
     }
 
     // Display the binary value of the active touch switches
     // 0 = no touch, 1 = touch 1 active, 2 = touch 2 active, etc.
     // touch 1 + touch 2 active = 1 + 2 = 3.
-    displayTextLine(7, "Status: %d", HTTMUXgetActive(HTTMUX));
+    displayTextLine(7, "Mask: %d", touchMUX.statusMask);
     sleep(50);
   }
 }

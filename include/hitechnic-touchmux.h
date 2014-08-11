@@ -30,50 +30,69 @@
 
 #pragma systemFile
 
-short HTTMUXgetActive(tSensors link);
-bool HTTMUXisActive(tSensors link, short touch);
+#ifndef __COMMON_H__
+#include "common.h"
+#endif
+
+typedef struct
+{
+  tI2CData I2CData;
+  ubyte statusMask;
+  bool status[4];
+} tHTTMUX, *tHTTMUXPtr;
+
+bool initSensor(tHTTMUXPtr httmuxPtr, tSensors port);
+bool readSensor(tHTTMUXPtr httmuxPtr);
+
 
 /**
- * Read the value of all of the currently connected touch sensors.  The status is logically OR'd
- * together. Touch 1 = 1, Touch 2 = 2, Touch 3 = 4, Touch 4 = 8.  If Touch 1 and 3 are active,
- * the return value will be 1 + 4 == 5.
- * @param link the HTTMUX port number
- * @return the value of the switches status
+ * Initialise the sensor's data struct and port
+ *
+ * @param httmuxPtr pointer to the sensor's data struct
+ * @param port the sensor port
+ * @return true if no error occured, false if it did
  */
-short HTTMUXgetActive(tSensors link) {
+bool initSensor(tHTTMUXPtr httmuxPtr, tSensors port)
+{
+  memset(httmuxPtr, 0, sizeof(tHTTMUXPtr));
+  httmuxPtr->I2CData.port = port;
+  httmuxPtr->I2CData.type = sensorRawValue;
+
+  // Ensure the sensor is configured correctly
+  if (SensorType[httmuxPtr->I2CData.port] != httmuxPtr->I2CData.type)
+    SensorType[httmuxPtr->I2CData.port] = httmuxPtr->I2CData.type;
+
+  return true;
+}
+
+
+/**
+ * Read all the sensor's data
+ *
+ * @param httmuxPtr pointer to the sensor's data struct
+ * @return true if no error occured, false if it did
+ */
+bool readSensor(tHTTMUXPtr httmuxPtr)
+{
   long muxvalue = 0;
   long switches = 0;
 
-  // Make sure the sensor is configured as type sensorRawValue
-  if (SensorType[link] != sensorRawValue) {
-    SensorType[link] = sensorRawValue;
-    sleep(100);
-  }
-
   // Voodoo magic starts here.  This is taken straight from the Touch MUX pamphlet.
   // No small furry animals were hurt during the calculation of this algorithm.
-  muxvalue = 1023 - SensorRaw[link];
+  muxvalue = 1023 - SensorRaw[httmuxPtr->I2CData.port];
   switches = 339 * muxvalue;
   switches /= (1023 - muxvalue);
   switches += 5;
   switches /= 10;
 
-  return (short)switches;
-}
+  httmuxPtr->statusMask = switches;
+  for (int i = 0; i < 4; i++)
+  {
+  	httmuxPtr->status[i] = (httmuxPtr->statusMask & (1 << i)) ? true : false;
+  }
 
-/**
- * Read the value of specific touch sensor.
- * @param link the HTTMUX port number
- * @param touch the touch sensor to be checked, numbered 1 to 4.
- * @return the value of the switches status
- */
-bool HTTMUXisActive(tSensors link, short touch) {
-  if (HTTMUXgetActive(link) & (1 << (touch - 1)))
-    return true;
-  else
-    return false;
+  return true;
 }
-
 #endif // __HTTMUX_H__
 
 /* @} */
