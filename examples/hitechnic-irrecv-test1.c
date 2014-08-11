@@ -30,9 +30,6 @@
 
  */
 task main {
-  sbyte _motA = 0;
-  sbyte _motB = 0;
-
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "IR Recv");
   displayCenteredTextLine(3, "Test 1");
@@ -41,12 +38,24 @@ task main {
   sleep(2000);
   eraseDisplay();
 
+  // Create struct to hold sensor data
+  tHTIRR irReceiver;
+
+  // Initialise and configure struct and port
+  initSensor(&irReceiver, S1);
+
   while (true) {
-    for (short i = 1; i < 5; i++) {
+    // Read the data from the sensor
+    if (!readSensor(&irReceiver)) {
+      displayTextLine(4, "ERROR!!");
+      sleep(2000);
+      stopAllTasks();
+    }
+
+    for (short i = 0; i < 4; i++) {
       // Read the motor powers sent by the remote on the specified channel
       // and display them.
-      HTIRRreadChannel(HTIRR, i, _motA, _motB);
-      displayTextLine(i, "%4d, %4d", _motA, _motB);
+      displayTextLine(i, "%4d, %4d", irReceiver.motA[i], irReceiver.motB[i]);
       sleep(10);
     }
   }

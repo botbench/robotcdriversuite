@@ -51,57 +51,120 @@
 /*! Some define. */
 #define HTIRR_MOTOR_BRAKE     -128      /*!< Motor brake */
 
+typedef struct
+{
+  tI2CData I2CData;
+  short motA[4];
+  short motB[4];
+} tHTIRR, *tHTIRRPtr;
+
+bool initSensor(tHTIRRPtr htirrPtr, tSensors port);
+bool readSensor(tHTIRRPtr htirrPtr);
+
+
 /*
 <function prototypes>
 */
 bool HTIRRreadChannel(tSensors link, byte channel, sbyte &motA, sbyte &motB);
 bool HTIRRreadAllChannels(tSensors link, tsByteArray &motorSpeeds);
 
-tByteArray HTIRR_I2CRequest;           /*!< Array to hold I2C command data */
-tByteArray HTIRR_I2CReply;             /*!< Array to hold I2C reply data */
+//tByteArray HTIRR_I2CRequest;           /*!< Array to hold I2C command data */
+//tByteArray HTIRR_I2CReply;             /*!< Array to hold I2C reply data */
+
+///**
+// * Get the speeds of the motors for a given channel.
+// * @param link the HTIRR port number
+// * @param channel the channel number (1 to 4)
+// * @param motA the speed for Motor A (-100 to +100, -128 = brake)
+// * @param motB the speed for Motor B (-100 to +100, -128 = brake)
+// * @return true if no error occured, false if it did
+// */
+//bool HTIRRreadChannel(tSensors link, byte channel, sbyte &motA, sbyte &motB) {
+//  memset(HTIRR_I2CRequest, 0, sizeof(tByteArray));
+
+//  HTIRR_I2CRequest[0] = 2;                                // Message size
+//  HTIRR_I2CRequest[1] = HTIRR_I2C_ADDR;                   // I2C Address
+//  HTIRR_I2CRequest[2] = HTIRR_OFFSET + ((channel - 1) * 2); // Start of speed registry
+
+//  if (!writeI2C(link, HTIRR_I2CRequest, HTIRR_I2CReply, 2))
+//    return false;
+
+//  motA = (HTIRR_I2CReply[0] >= 128) ? (short)HTIRR_I2CReply[0] - 256 : (short)HTIRR_I2CReply[0];
+//  motB = (HTIRR_I2CReply[1] >= 128) ? (short)HTIRR_I2CReply[1] - 256 : (short)HTIRR_I2CReply[1];
+
+//  return true;
+//}
+
+///**
+// * Get the speeds of the motors for all channels.
+// * @param link the HTIRR port number
+// * @param motorSpeeds the speeds for all the motors (-100 to +100, -128 = brake)
+// * @return true if no error occured, false if it did
+// */
+//bool HTIRRreadAllChannels(tSensors link, tsByteArray &motorSpeeds){
+//  memset(motorSpeeds, 0, sizeof(tsByteArray));
+//  memset(HTIRR_I2CRequest, 0, sizeof(tByteArray));
+
+//  HTIRR_I2CRequest[0] = 2;                // Message size
+//  HTIRR_I2CRequest[1] = HTIRR_I2C_ADDR;   // I2C Address
+//  HTIRR_I2CRequest[2] = HTIRR_OFFSET;     // Start of speed registry
+
+//  if (!writeI2C(link, HTIRR_I2CRequest, HTIRR_I2CReply, 8))
+//    return false;
+
+//  memcpy(motorSpeeds, HTIRR_I2CReply, 8);
+//  return true;
+//}
 
 /**
- * Get the speeds of the motors for a given channel.
- * @param link the HTIRR port number
- * @param channel the channel number (1 to 4)
- * @param motA the speed for Motor A (-100 to +100, -128 = brake)
- * @param motB the speed for Motor B (-100 to +100, -128 = brake)
+ * Initialise the sensor's data struct and port
+ *
+ * @param htirrPtr pointer to the sensor's data struct
+ * @param port the sensor port
  * @return true if no error occured, false if it did
  */
-bool HTIRRreadChannel(tSensors link, byte channel, sbyte &motA, sbyte &motB) {
-  memset(HTIRR_I2CRequest, 0, sizeof(tByteArray));
+bool initSensor(tHTIRRPtr htirrPtr, tSensors port)
+{
+  memset(htirrPtr, 0, sizeof(tHTIRRPtr));
+  htirrPtr->I2CData.address = HTIRR_I2C_ADDR;
+  htirrPtr->I2CData.port = port;
+  htirrPtr->I2CData.type = sensorI2CCustom;
 
-  HTIRR_I2CRequest[0] = 2;                                // Message size
-  HTIRR_I2CRequest[1] = HTIRR_I2C_ADDR;                   // I2C Address
-  HTIRR_I2CRequest[2] = HTIRR_OFFSET + ((channel - 1) * 2); // Start of speed registry
+  // Ensure the sensor is configured correctly
+  if (SensorType[htirrPtr->I2CData.port] != htirrPtr->I2CData.type)
+    SensorType[htirrPtr->I2CData.port] = htirrPtr->I2CData.type;
 
-  if (!writeI2C(link, HTIRR_I2CRequest, HTIRR_I2CReply, 2))
-    return false;
-
-  motA = (HTIRR_I2CReply[0] >= 128) ? (short)HTIRR_I2CReply[0] - 256 : (short)HTIRR_I2CReply[0];
-  motB = (HTIRR_I2CReply[1] >= 128) ? (short)HTIRR_I2CReply[1] - 256 : (short)HTIRR_I2CReply[1];
-
-  return true;
+	return true;
 }
 
+
 /**
- * Get the speeds of the motors for all channels.
- * @param link the HTIRR port number
- * @param motorSpeeds the speeds for all the motors (-100 to +100, -128 = brake)
+ * Read all the sensor's data
+ *
+ * @param htirrPtr pointer to the sensor's data struct
  * @return true if no error occured, false if it did
  */
-bool HTIRRreadAllChannels(tSensors link, tsByteArray &motorSpeeds){
-  memset(motorSpeeds, 0, sizeof(tsByteArray));
-  memset(HTIRR_I2CRequest, 0, sizeof(tByteArray));
+bool readSensor(tHTIRRPtr htirrPtr)
+{
+  memset(htirrPtr->I2CData.request, 0, sizeof(htirrPtr->I2CData.request));
 
-  HTIRR_I2CRequest[0] = 2;                // Message size
-  HTIRR_I2CRequest[1] = HTIRR_I2C_ADDR;   // I2C Address
-  HTIRR_I2CRequest[2] = HTIRR_OFFSET;     // Start of speed registry
+  // Read all of the data available on the sensor
+  htirrPtr->I2CData.request[0] = 2;                    // Message size
+  htirrPtr->I2CData.request[1] = htirrPtr->I2CData.address; // I2C Address
+  htirrPtr->I2CData.request[2] = HTIRR_OFFSET + HTIRR_MOTOR_1A;
+  htirrPtr->I2CData.replyLen = 8;
+  htirrPtr->I2CData.requestLen = 2;
 
-  if (!writeI2C(link, HTIRR_I2CRequest, HTIRR_I2CReply, 8))
+  if (!writeI2C(&htirrPtr->I2CData))
     return false;
 
-  memcpy(motorSpeeds, HTIRR_I2CReply, 8);
+  // Populate the struct with the newly retrieved data
+  for (int i = 0; i < 4; i++)
+  {
+		htirrPtr->motA[i] = (htirrPtr->I2CData.reply[(i*2)+0] >= 128) ? (short)htirrPtr->I2CData.reply[(i*2)+0] - 256 : (short)htirrPtr->I2CData.reply[(i*2)+0];
+		htirrPtr->motB[i] = (htirrPtr->I2CData.reply[(i*2)+1] >= 128) ? (short)htirrPtr->I2CData.reply[(i*2)+1] - 256 : (short)htirrPtr->I2CData.reply[(i*2)+1];
+  }
+
   return true;
 }
 
