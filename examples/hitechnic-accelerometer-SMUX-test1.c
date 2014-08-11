@@ -27,53 +27,47 @@
  * version 0.5
  */
 
-#include "hitechnic-sensormux.h"
 #include "hitechnic-accelerometer.h"
 
-// The sensor is connected to the first port
-// of the SMUX which is connected to the NXT port S1.
-// To access that sensor, we must use msensor_S1_1.  If the sensor
-// were connected to 3rd port of the SMUX connected to the NXT port S4,
-// we would use msensor_S4_3
-
-// Give the sensor a nice easy to use name
-const tMUXSensor HTAC = msensor_S1_1;
-
 task main () {
-  short _x_axis = 0;
-  short _y_axis = 0;
-  short _z_axis = 0;
-
-  string _tmp;
-
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "Accel");
   displayCenteredTextLine(3, "Test 1");
-  displayCenteredTextLine(5, "Connect SMUX to");
-  displayCenteredTextLine(6, "S1 and Accel to");
-  displayCenteredTextLine(7, "SMUX Port 1");
+  displayCenteredTextLine(5, "Connect sensor");
+  displayCenteredTextLine(6, "to S1");
   sleep(2000);
 
   playSound(soundBeepBeep);
   while(bSoundActive) sleep(1);
 
-  eraseDisplay();
+  // Create struct to hold sensor data
+  tHTAC accelerometer;
+
+	// The sensor is connected to the first port
+	// of the SMUX which is connected to the NXT port S1.
+	// To access that sensor, we must use msensor_S1_1.  If the sensor
+	// were connected to 3rd port of the SMUX connected to the NXT port S4,
+	// we would use msensor_S4_3
+
+  // Initialise and configure struct and port
+  initSensor(&accelerometer, msensor_S1_1);
+
   while (true) {
+    eraseDisplay();
+
     // Read all of the axes at once
-    if (!HTACreadAllAxes(HTAC, _x_axis, _y_axis, _z_axis)) {
+    if (!readSensor(&accelerometer)) {
       displayTextLine(4, "ERROR!!");
       sleep(2000);
       stopAllTasks();
     }
 
     displayTextLine(0,"HTAC Test 1");
-
-    // We can't provide more than 2 parameters to displayTextLine(),
-    // so we'll do in two steps using stringFormat()
     displayTextLine(2, "   X    Y    Z");
-    stringFormat(_tmp, "%4d %4d", _x_axis, _y_axis);
-    displayTextLine(3, "%s %4d", _tmp, _z_axis);
 
+    displayTextLine(3, "%4d %4d %4d", accelerometer.x, accelerometer.y, accelerometer.z);
+		// Alternatively, you can read them like this:
+    displayTextLine(4, "%4d %4d %4d", accelerometer.axes[0], accelerometer.axes[1], accelerometer.axes[2]);
     sleep(100);
   }
 }

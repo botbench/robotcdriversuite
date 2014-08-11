@@ -28,12 +28,6 @@
 #include "hitechnic-accelerometer.h"
 
 task main () {
-  short _x_axis = 0;
-  short _y_axis = 0;
-  short _z_axis = 0;
-
-  string _tmp;
-
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "Accel");
   displayCenteredTextLine(3, "Test 1");
@@ -44,24 +38,28 @@ task main () {
   playSound(soundBeepBeep);
   while(bSoundActive) sleep(1);
 
+  // Create struct to hold sensor data
+  tHTAC accelerometer;
+
+  // Initialise and configure struct and port
+  initSensor(&accelerometer, S1);
+
   while (true) {
     eraseDisplay();
 
     // Read all of the axes at once
-    if (!HTACreadAllAxes(HTAC, _x_axis, _y_axis, _z_axis)) {
+    if (!readSensor(&accelerometer)) {
       displayTextLine(4, "ERROR!!");
       sleep(2000);
       stopAllTasks();
     }
 
     displayTextLine(0,"HTAC Test 1");
-
-    // We can't provide more than 2 parameters to displayTextLine(),
-    // so we'll do in two steps using stringFormat()
     displayTextLine(2, "   X    Y    Z");
-    stringFormat(_tmp, "%4d %4d", _x_axis, _y_axis);
-    displayTextLine(3, "%s %4d", _tmp, _z_axis);
 
+    displayTextLine(3, "%4d %4d %4d", accelerometer.x, accelerometer.y, accelerometer.z);
+		// Alternatively, you can read them like this:
+    displayTextLine(4, "%4d %4d %4d", accelerometer.axes[0], accelerometer.axes[1], accelerometer.axes[2]);
     sleep(100);
   }
 }
