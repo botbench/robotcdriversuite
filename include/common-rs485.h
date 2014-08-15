@@ -25,6 +25,14 @@
 
 #pragma systemFile
 
+#if defined(EV3)
+#error "----------------------------------------"
+#error ""
+#error "The EV3 platform does not support RS485!"
+#error ""
+#error "----------------------------------------"
+#endif
+
 #ifndef __RS485_H__
 #define __RS485_H__
 
