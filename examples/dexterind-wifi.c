@@ -180,8 +180,8 @@ void startDemon() {
 
 task main()
 {
-  char *ssid = "Bazinga!";
-  char *wpa_psk = "xammy4ever";
+  char *ssid = "YOURSSID";
+  char *wpa_psk = "YOURWPAEY";
 
   writeDebugStreamLine("ssid: %s", ssid);
   writeDebugStreamLine("psk: %s", wpa_psk);
