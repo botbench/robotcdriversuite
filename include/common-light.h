@@ -30,7 +30,7 @@
  * @param red the red input value
  * @param green the green input value
  * @param blue the blue input value
- * @param hue the hue output value (from 0 to 365, or -1 if n/a)
+ * @param hue the hue output value (from 0 to 360, or -1 if n/a)
  * @param sat the saruration output value (from 0 to 100, or -1 if n/a)
  * @param value the value output value (from 0 to 100)
  * @return void
