@@ -48,7 +48,7 @@
 
 long MSANGreadAngle(tSensors link);
 short MSANGreadRPM(tSensors link);
-short MSANGreadRaw(tSensors link);
+long MSANGreadRaw(tSensors link);
 bool MSANGresetAngle(tSensors link);
 
 tByteArray MSANG_I2CRequest;             /*!< Array to hold I2C command data */
@@ -77,7 +77,7 @@ long MSANGreadAngle(tSensors link) {
  * @param link the MSANG port number
  * @return current raw value or -1 if an error occurred.
  */
-short MSANGreadRaw(tSensors link) {
+long MSANGreadRaw(tSensors link) {
   memset(MSANG_I2CRequest, 0, sizeof(tByteArray));
 
   MSANG_I2CRequest[0] = 2;                         // Message size
