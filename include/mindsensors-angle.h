@@ -46,7 +46,7 @@
 // Various commands
 #define MSANG_CMD_RST_ANG      0x72      /*!< Resets 0 position to current shaft angle */
 
-short MSANGreadAngle(tSensors link);
+long MSANGreadAngle(tSensors link);
 short MSANGreadRPM(tSensors link);
 short MSANGreadRaw(tSensors link);
 bool MSANGresetAngle(tSensors link);
@@ -59,7 +59,7 @@ tByteArray MSANG_I2CReply;               /*!< Array to hold I2C reply data */
  * @param link the MSANG port number
  * @return current angle or -1 if an error occurred.
  */
-short MSANGreadAngle(tSensors link) {
+long MSANGreadAngle(tSensors link) {
   memset(MSANG_I2CRequest, 0, sizeof(tByteArray));
 
   MSANG_I2CRequest[0] = 2;                         // Message size
