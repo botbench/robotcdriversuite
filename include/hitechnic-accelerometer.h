@@ -105,6 +105,7 @@ bool initSensor(tHTACPtr htacPtr, tSensors port)
 bool initSensor(tHTACPtr htacPtr, tMUXSensor muxsensor)
 {
   memset(htacPtr, 0, sizeof(tHTACPtr));
+  htacPtr->I2CData.port = (tSensors)SPORT(muxsensor);
   htacPtr->I2CData.address = HTAC_I2C_ADDR;
   htacPtr->I2CData.type = sensorI2CCustom;
   htacPtr->smux = true;

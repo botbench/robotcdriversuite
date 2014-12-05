@@ -125,6 +125,7 @@ bool initSensor(tHTCS2Ptr htcs2Ptr, tSensors port)
 bool initSensor(tHTCS2Ptr htcs2Ptr, tMUXSensor muxsensor)
 {
   memset(htcs2Ptr, 0, sizeof(tHTCS2Ptr));
+  htcs2Ptr->I2CData.port = (tSensors)SPORT(muxsensor);
   htcs2Ptr->I2CData.address = HTCS2_I2C_ADDR;
   htcs2Ptr->I2CData.type = sensorI2CCustom;
   htcs2Ptr->smux = true;

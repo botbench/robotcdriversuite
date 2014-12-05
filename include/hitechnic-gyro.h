@@ -224,6 +224,7 @@ bool initSensor(tHTGYROPtr htgyroPtr, tSensors port)
 bool initSensor(tHTGYROPtr htgyroPtr, tMUXSensor muxsensor)
 {
   memset(htgyroPtr, 0, sizeof(tHTGYROPtr));
+  htgyroPtr->I2CData.port = (tSensors)SPORT(muxsensor);
   htgyroPtr->I2CData.type = sensorI2CCustom;
   htgyroPtr->smux = true;
   htgyroPtr->smuxport = muxsensor;

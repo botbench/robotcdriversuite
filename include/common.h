@@ -311,6 +311,7 @@ bool writeI2C(tI2CDataPtr data) {
 #endif // EV3
       writeDebugStreamLine("ERROR, You have not setup the sensor port correctly. ");
       writeDebugStreamLine("Please refer to one of the examples.");
+      writeDebugStreamLine("Detected SensorType: %d", SensorType[data->port]);
       sleep(10000);
       stopAllTasks();
   }

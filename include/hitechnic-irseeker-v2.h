@@ -123,6 +123,7 @@ bool initSensor(tHTIRS2Ptr htirs2Ptr, tSensors port)
 bool initSensor(tHTIRS2Ptr htirs2Ptr, tMUXSensor muxsensor)
 {
   memset(htirs2Ptr, 0, sizeof(tHTIRS2Ptr));
+  htirs2Ptr->I2CData.port = (tSensors)SPORT(muxsensor);
   htirs2Ptr->I2CData.address = HTIRS2_I2C_ADDR;
   htirs2Ptr->I2CData.type = sensorI2CCustom;
   htirs2Ptr->mode = DSP_1200;

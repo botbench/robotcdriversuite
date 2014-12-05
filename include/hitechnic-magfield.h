@@ -89,6 +89,7 @@ bool initSensor(tHTMAGPtr htmagPtr, tSensors port)
 bool initSensor(tHTMAGPtr htmagPtr, tMUXSensor muxsensor)
 {
   memset(htmagPtr, 0, sizeof(tHTMAGPtr));
+  htmagPtr->I2CData.port = (tSensors)SPORT(muxsensor);
   htmagPtr->I2CData.type = sensorI2CCustom;
   htmagPtr->smux = true;
   htmagPtr->smuxport = muxsensor;
