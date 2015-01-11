@@ -65,7 +65,7 @@ task main () {
 
     // Get the true heading and relative heading from the sensor and
     // display them on the screen.
-    while(nNxtButtonPressed != kEnterButton) {
+    while(!getXbuttonValue(xButtonEnter)) {
        // Read the data from the sensor
       readSensor(&compass);
       eraseDisplay();
