@@ -33,14 +33,6 @@
 
 #define __HTSMUX_SUPPORT__
 
-#ifndef SPORT
-#define SPORT(X)  (X / 4)         /*!< Convert tMUXSensor to sensor port number */
-#endif
-
-#ifndef MPORT
-#define MPORT(X)  (X % 4)         /*!< Convert tMUXSensor to MUX port number */
-#endif
-
 #ifndef MAX_ARR_SIZE
 /**
  * Maximum buffer size for byte_array, can be overridden in your own program.
@@ -105,26 +97,6 @@ typedef enum HTSMUXSensorType {
   HTSMUXSensorCustom = 0x0E,
   HTSMUXSensorNone = 0x0F
 } HTSMUXSensorType;
-
-/*!< Sensor and SMUX port combinations */
-typedef enum tMUXSensor {
-  msensor_S1_1 = 0,
-  msensor_S1_2 = 1,
-  msensor_S1_3 = 2,
-  msensor_S1_4 = 3,
-  msensor_S2_1 = 4,
-  msensor_S2_2 = 5,
-  msensor_S2_3 = 6,
-  msensor_S2_4 = 7,
-  msensor_S3_1 = 8,
-  msensor_S3_2 = 9,
-  msensor_S3_3 = 10,
-  msensor_S3_4 = 11,
-  msensor_S4_1 = 12,
-  msensor_S4_2 = 13,
-  msensor_S4_3 = 14,
-  msensor_S4_4 = 15
-} tMUXSensor;
 
 /*!< array to hold SMUX status info */
 ubyte HTSMUXstatus[4] = {HTSMUX_STAT_NOTHING, HTSMUX_STAT_NOTHING, HTSMUX_STAT_NOTHING, HTSMUX_STAT_NOTHING};

@@ -113,6 +113,35 @@
  */
 #define clip(a, b, c) min2(c, max2(b, a))
 
+
+#ifndef SPORT
+#define SPORT(X)  (X / 4)         /*!< Convert tMUXSensor to sensor port number */
+#endif
+
+#ifndef MPORT
+#define MPORT(X)  (X % 4)         /*!< Convert tMUXSensor to MUX port number */
+#endif
+
+/*!< Sensor and SMUX port combinations */
+typedef enum tMUXSensor {
+  msensor_S1_1 = 0,
+  msensor_S1_2 = 1,
+  msensor_S1_3 = 2,
+  msensor_S1_4 = 3,
+  msensor_S2_1 = 4,
+  msensor_S2_2 = 5,
+  msensor_S2_3 = 6,
+  msensor_S2_4 = 7,
+  msensor_S3_1 = 8,
+  msensor_S3_2 = 9,
+  msensor_S3_3 = 10,
+  msensor_S3_4 = 11,
+  msensor_S4_1 = 12,
+  msensor_S4_2 = 13,
+  msensor_S4_3 = 14,
+  msensor_S4_4 = 15
+} tMUXSensor;
+
 typedef struct
 {
   ubyte request[17];
@@ -140,9 +169,11 @@ typedef ubyte tIPaddr[4];                     /*!< Struct for holding an IP addr
  * a function.
  */
 typedef short tIntArray[MAX_ARR_SIZE];
-
+#ifdef NXT
 void clearI2CError(tSensors link, ubyte address);
 void clearI2Cbus(tSensors link);
+#endif
+
 bool waitForI2CBus(tSensors link);
 bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, short replylen);
 bool writeI2C(tSensors link, tByteArray &request);
@@ -153,6 +184,7 @@ bool writeI2C(tSensors link, tByteArray &request);
  * @param link the port number
  * @param address the I2C address we're sending to
  */
+#ifdef NXT
 void clearI2CError(tI2CDataPtr data) {
   ubyte error_array[2];
   error_array[0] = 1;           // Message size
@@ -169,6 +201,7 @@ void clearI2CError(tI2CDataPtr data) {
     sleep(5);
   }
 }
+#endif
 
 /**
  * Clear out the error state on I2C bus by sending a bunch of dummy
@@ -176,6 +209,7 @@ void clearI2CError(tI2CDataPtr data) {
  * @param link the port number
  * @param address the I2C address we're sending to
  */
+#ifdef NXT
 void clearI2CError(tSensors link, ubyte address) {
   ubyte error_array[2];
   error_array[0] = 1;           // Message size
@@ -192,6 +226,7 @@ void clearI2CError(tSensors link, ubyte address) {
     sleep(5);
   }
 }
+#endif
 
 /**
  * Wait for the I2C bus to be ready for the next message
@@ -202,9 +237,10 @@ bool waitForI2CBus(tSensors link)
 {
   while (true)
   {
-    //i2cstatus = nI2CStatus[link];
-    switch (nI2CStatus[link])
-    //switch(i2cstatus)
+    TI2CStatus i2cstatus = nI2CStatus[link];
+    writeDebugStreamLine("nI2CStatus[%d]: %d", link, i2cstatus);
+    //switch (nI2CStatus[link])
+    switch(i2cstatus)
     {
 #if defined(NXT)
       case NO_ERR:
@@ -218,6 +254,7 @@ bool waitForI2CBus(tSensors link)
 
       case ERR_COMM_BUS_ERR:
 #else  // this must be an EV3
+			case i2cStatusStopped:
       case i2cStatusNoError:
         return true;
 
@@ -265,6 +302,7 @@ bool waitForI2CBus(tI2CDataPtr data)
 
       case ERR_COMM_BUS_ERR:
 #else  // this must be an EV3
+			case i2cStatusStopped:
       case i2cStatusNoError:
         return true;
 
@@ -286,17 +324,17 @@ bool waitForI2CBus(tI2CDataPtr data)
 }
 
 bool writeI2C(tI2CDataPtr data) {
-
+	//writeDebugStreamLine("writeI2C(tI2CDataPtr data) called"); sleep(200);
 #if (__COMMON_H_SENSOR_CHECK__ == 1)
   //TSensorTypes type = SensorType[link];
 
   switch (SensorType[data->port])
   {
-    case sensorI2CCustom:                 break;
-    case sensorI2CCustom9V:               break;
 #ifdef EV3
 		case sensorEV3_GenericI2C:						break;
 #else // This is an NXT
+    case sensorI2CCustom:                 break;
+    case sensorI2CCustom9V:               break;
     case sensorI2CCustomFast:             break;
     case sensorI2CCustomFast9V:           break;
     case sensorI2CCustomFastSkipStates9V: break;
@@ -311,38 +349,55 @@ bool writeI2C(tI2CDataPtr data) {
 #endif // EV3
       writeDebugStreamLine("ERROR, You have not setup the sensor port correctly. ");
       writeDebugStreamLine("Please refer to one of the examples.");
-      writeDebugStreamLine("Detected SensorType: %d", SensorType[data->port]);
+      writeDebugStreamLine("Detected SensorType on port[%d]: %d", data->port, SensorType[data->port]);
       sleep(10000);
       stopAllTasks();
   }
 #endif
 
-  if (!waitForI2CBus(data->port)) {
-    clearI2CError(data);
+//  if (!waitForI2CBus(data->port)) {
+//  	writeDebugStreamLine("waiting for the bus");
+//#ifdef EV3
+//		// do nothing special for the EV3
+//		return false;
+//#else
+//    clearI2CError(data);
 
-    // Let's try the bus again, see if the above packets flushed it out
-    // clearI2CBus(link);
-    if (!waitForI2CBus(data->port))
-      return false;
-  }
+//    // Let's try the bus again, see if the above packets flushed it out
+//    // clearI2CBus(link);
+//    if (!waitForI2CBus(data->port))
+//      return false;
+//#endif
+//  }
 //#ifdef DEBUG_COMMON_H
-  writeDebugStreamLine("port: %d, addr: %d, len: %d", data->port, data->address, data->requestLen);
+  //writeDebugStreamLine("writeI2C: port: %d, addr: 0x%02X, len: %d", data->port, data->address, data->requestLen); sleep(200);
   sendI2CMsg(data->port, &data->request[0], data->replyLen);
 
   if (!waitForI2CBus(data)) {
+#ifdef EV3
+		writeDebugStreamLine("waiting for the bus has failed");	 sleep(200);
+		// do nothing special for the EV3
+		return false;
+#else
     clearI2CError(data);
     sendI2CMsg(data->port, &data->request[0], data->replyLen);
     if (!waitForI2CBus(data))
       return false;
+#endif
   }
 
   if (data->replyLen == 0)
     return true;
 
+  //writeDebugStreamLine("writeI2C: initiating read: data->replyLen: %d", data->replyLen); sleep(200);
   // ask for the input to put into the data array
   readI2CReply(data->port, &data->reply[0], data->replyLen);
 
-  return true;
+#ifdef EV3
+	return waitForI2CBus(data);
+#else
+	return true;
+#endif // EV3
 }
 
 /**
@@ -359,11 +414,11 @@ bool writeI2C(tSensors link, tByteArray &request) {
 
   switch (SensorType[link])
   {
-    case sensorI2CCustom:                 break;
-    case sensorI2CCustom9V:               break;
 #ifdef EV3
 		case sensorEV3_GenericI2C:						break;
 #else // This is an NXT
+    case sensorI2CCustom:                 break;
+    case sensorI2CCustom9V:               break;
     case sensorI2CCustomFast:             break;
     case sensorI2CCustomFast9V:           break;
     case sensorI2CCustomFastSkipStates9V: break;
@@ -380,26 +435,38 @@ bool writeI2C(tSensors link, tByteArray &request) {
       writeDebugStreamLine("Please refer to one of the examples.");
       sleep(10000);
       stopAllTasks();
-  }
 #endif
+	}
+
 
   if (!waitForI2CBus(link)) {
+#ifdef EV3
+		// do nothing special for the EV3
+		return false;
+#else
     clearI2CError(link, request[1]);
 
     // Let's try the bus again, see if the above packets flushed it out
     // clearI2CBus(link);
     if (!waitForI2CBus(link))
       return false;
+#endif
   }
+
 
   sendI2CMsg(link, &request[0], 0);
 
   if (!waitForI2CBus(link)) {
+#ifdef EV3
+		return false;
+#else
     clearI2CError(link, request[1]);
     sendI2CMsg(link, &request[0], 0);
     if (!waitForI2CBus(link))
       return false;
+#endif
   }
+
   return true;
 }
 
@@ -420,11 +487,11 @@ bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, short reply
 
   switch (SensorType[link])
   {
-    case sensorI2CCustom:                 break;
-    case sensorI2CCustom9V:               break;
 #ifdef EV3
 		case sensorEV3_GenericI2C:						break;
 #else // This is an NXT
+    case sensorI2CCustom:                 break;
+    case sensorI2CCustom9V:               break;
     case sensorI2CCustomFast:             break;
     case sensorI2CCustomFast9V:           break;
     case sensorI2CCustomFastSkipStates9V: break;
@@ -441,31 +508,46 @@ bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, short reply
       writeDebugStreamLine("Please refer to one of the examples.");
       sleep(10000);
       stopAllTasks();
-  }
 #endif
+  }
+
 
   if (!waitForI2CBus(link)) {
+#ifdef EV3
+		// do nothing special for the EV3
+		return false;
+#else
     clearI2CError(link, request[1]);
 
     // Let's try the bus again, see if the above packets flushed it out
     // clearI2CBus(link);
     if (!waitForI2CBus(link))
       return false;
+#endif
   }
+
 
   sendI2CMsg(link, &request[0], replylen);
 
   if (!waitForI2CBus(link)) {
+#ifdef EV3
+		return false;
+#else
     clearI2CError(link, request[1]);
     sendI2CMsg(link, &request[0], replylen);
     if (!waitForI2CBus(link))
       return false;
+#endif
   }
 
   // ask for the input to put into the data array
   readI2CReply(link, &reply[0], replylen);
 
-  return true;
+#ifdef EV3
+	return waitForI2CBus(link);
+#else
+	return true;
+#endif // EV3
 }
 
 
