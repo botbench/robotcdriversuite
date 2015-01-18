@@ -209,7 +209,7 @@ void clearI2CError(tI2CDataPtr data) {
  * @param link the port number
  * @param address the I2C address we're sending to
  */
-#ifdef NXT
+//#ifdef NXT
 void clearI2CError(tSensors link, ubyte address) {
   ubyte error_array[2];
   error_array[0] = 1;           // Message size
@@ -226,7 +226,7 @@ void clearI2CError(tSensors link, ubyte address) {
     sleep(5);
   }
 }
-#endif
+//#endif
 
 /**
  * Wait for the I2C bus to be ready for the next message
@@ -238,8 +238,9 @@ bool waitForI2CBus(tSensors link)
   while (true)
   {
     TI2CStatus i2cstatus = nI2CStatus[link];
+#ifdef DEBUG_COMMON_H
     writeDebugStreamLine("nI2CStatus[%d]: %d", link, i2cstatus);
-    //switch (nI2CStatus[link])
+#endif // DEBUG_COMMON_H
     switch(i2cstatus)
     {
 #if defined(NXT)
@@ -324,7 +325,10 @@ bool waitForI2CBus(tI2CDataPtr data)
 }
 
 bool writeI2C(tI2CDataPtr data) {
-	//writeDebugStreamLine("writeI2C(tI2CDataPtr data) called"); sleep(200);
+#ifdef DEBUG_COMMON_H
+	writeDebugStreamLine("writeI2C(tI2CDataPtr data) called"); sleep(200);
+#endif // DEBUG_COMMON_H
+
 #if (__COMMON_H_SENSOR_CHECK__ == 1)
   //TSensorTypes type = SensorType[link];
 
@@ -355,43 +359,64 @@ bool writeI2C(tI2CDataPtr data) {
   }
 #endif
 
-//  if (!waitForI2CBus(data->port)) {
-//  	writeDebugStreamLine("waiting for the bus");
-//#ifdef EV3
-//		// do nothing special for the EV3
-//		return false;
-//#else
-//    clearI2CError(data);
+  if (!waitForI2CBus(data->port)) {
+#ifdef DEBUG_COMMON_H
+  	writeDebugStreamLine("waiting for the bus");
+#endif // DEBUG_COMMON_H
 
-//    // Let's try the bus again, see if the above packets flushed it out
-//    // clearI2CBus(link);
-//    if (!waitForI2CBus(data->port))
-//      return false;
+//#ifdef EV3
+		// do nothing special for the EV3
+		//return false;
+//#else
+    clearI2CError(data->port, data->address);
+
+    // Let's try the bus again, see if the above packets flushed it out
+    // clearI2CBus(link);
+    if (!waitForI2CBus(data->port))
+      return false;
 //#endif
-//  }
-//#ifdef DEBUG_COMMON_H
-  //writeDebugStreamLine("writeI2C: port: %d, addr: 0x%02X, len: %d", data->port, data->address, data->requestLen); sleep(200);
+  }
+#ifdef DEBUG_COMMON_H
+  writeDebugStreamLine("writeI2C: port: %d, addr: 0x%02X, len: %d", data->port, data->address, data->requestLen); sleep(200);
+#endif
+
+
+	//memcpy(txdata, data->request, data->requestLen);
+#ifdef DEBUG_COMMON_H
+  writeDebugStream("writeI2C: data->request: ");
+	for (int i = 0; i < (data->requestLen + 1); i++)
+	{
+		writeDebugStream("0x%02X ", data->request[i]);
+	}
+	writeDebugStream("\n");
+#endif // DEBUG_COMMON_H
   sendI2CMsg(data->port, &data->request[0], data->replyLen);
+  //sendI2CMsg(data->port, &txdata[0], data->replyLen);
 
   if (!waitForI2CBus(data)) {
-#ifdef EV3
-		writeDebugStreamLine("waiting for the bus has failed");	 sleep(200);
+//#ifdef EV3
+		//writeDebugStreamLine("waiting for the bus has failed");	 sleep(200);
 		// do nothing special for the EV3
-		return false;
-#else
-    clearI2CError(data);
+		//return false;
+//#else
+    clearI2CError(data->port, data->address);
+
     sendI2CMsg(data->port, &data->request[0], data->replyLen);
+    //sendI2CMsg(data->port, &txdata[0], data->replyLen);
     if (!waitForI2CBus(data))
       return false;
-#endif
+//#endif
   }
 
   if (data->replyLen == 0)
     return true;
-
-  //writeDebugStreamLine("writeI2C: initiating read: data->replyLen: %d", data->replyLen); sleep(200);
+#ifdef DEBUG_COMMON_H
+  writeDebugStreamLine("writeI2C: initiating read: data->replyLen: %d", data->replyLen); sleep(200);
+#endif // DEBUG_COMMON_H
   // ask for the input to put into the data array
   readI2CReply(data->port, &data->reply[0], data->replyLen);
+  //readI2CReply(data->port, &rxdata[0], data->replyLen);
+  //memcpy(&data->reply[0], rxdata, data->replyLen);
 
 #ifdef EV3
 	return waitForI2CBus(data);
@@ -440,31 +465,31 @@ bool writeI2C(tSensors link, tByteArray &request) {
 
 
   if (!waitForI2CBus(link)) {
-#ifdef EV3
+//#ifdef EV3
 		// do nothing special for the EV3
-		return false;
-#else
+		//return false;
+//#else
     clearI2CError(link, request[1]);
 
     // Let's try the bus again, see if the above packets flushed it out
     // clearI2CBus(link);
     if (!waitForI2CBus(link))
       return false;
-#endif
+//#endif
   }
 
 
   sendI2CMsg(link, &request[0], 0);
 
   if (!waitForI2CBus(link)) {
-#ifdef EV3
-		return false;
-#else
+//#ifdef EV3
+		//return false;
+//#else
     clearI2CError(link, request[1]);
     sendI2CMsg(link, &request[0], 0);
     if (!waitForI2CBus(link))
       return false;
-#endif
+//#endif
   }
 
   return true;
