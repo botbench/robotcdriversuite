@@ -100,10 +100,13 @@ bool initSensor(tHTANGPtr htangPtr, tSensors port)
 
   // Ensure the sensor is configured correctly
   if (SensorType[htangPtr->I2CData.port] != htangPtr->I2CData.type)
+  {
+  	writeDebugStreamLine("Port not configured properly, reconfiguring");
     SensorType[htangPtr->I2CData.port] = htangPtr->I2CData.type;
+		sleep(1000);
+		writeDebugStreamLine("type: %d", SensorType[htangPtr->I2CData.port]);
+	}
 
-  sleep(50);
-  writeDebugStreamLine("type: %d", SensorType[htangPtr->I2CData.port]);
   // Make sure the sensor is in the measurement mode
   return _sensorSendCommand(htangPtr);
 }
