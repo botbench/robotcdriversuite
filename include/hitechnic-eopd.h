@@ -59,7 +59,7 @@ typedef struct
 {
   tI2CData I2CData;
   short processed;
-  short raw;
+  long raw;
   bool shortRange;
   bool smux;
   tMUXSensor smuxport;
@@ -131,10 +131,19 @@ bool readSensor(tHTEOPDPtr hteopdPtr)
   if (hteopdPtr->smux)
     hteopdPtr->raw = 1023 - HTSMUXreadAnalogue(hteopdPtr->smuxport);
   else
+#ifdef NXT
     hteopdPtr->raw = 1023 - SensorRaw[hteopdPtr->I2CData.port];
+#else // EV3
+		hteopdPtr->raw = 4095 - SensorRaw[hteopdPtr->I2CData.port];
+#endif
+
 
   // Calculate the processed value
-	hteopdPtr->processed = round(sqrt((long)hteopdPtr->raw * 10));
+#ifdef NXT
+	hteopdPtr->processed = round(sqrt(hteopdPtr->raw * 10));
+#else // EV3
+	hteopdPtr->processed = round(sqrt((hteopdPtr->raw / 4) * 10));
+#endif
   return true;
 }
 
