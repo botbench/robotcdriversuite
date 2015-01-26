@@ -33,6 +33,14 @@
 
 #pragma systemFile
 
+#ifdef EV3
+#error "----------------------------------------"
+#error ""
+#error "THIS DRIVER IS NOT SUPPORTED ON EV3"
+#error ""
+#error "----------------------------------------"
+#endif
+
 #ifndef __COMMON_H__
 #include "common.h"
 #endif
