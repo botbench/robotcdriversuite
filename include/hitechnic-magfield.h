@@ -36,6 +36,13 @@
 #include "common.h"
 #endif
 
+// This ensures the correct sensor types are used.
+#if defined(NXT)
+TSensorTypes HTMAGType = sensorRawValue;
+#elif defined(EV3)
+TSensorTypes HTMAGType = sensorLightInactive;
+#endif
+
 typedef struct
 {
   tI2CData I2CData;
@@ -63,12 +70,7 @@ bool initSensor(tHTMAGPtr htmagPtr, tSensors port)
   memset(htmagPtr, 0, sizeof(tHTMAGPtr));
   htmagPtr->I2CData.port = port;
   htmagPtr->bias = 512;
-
-#ifdef NXT
-  htmagPtr->I2CData.type = sensorRawValue;
-#else
-  htmagPtr->I2CData.type = sensorRawValue;
-#endif
+  htmagPtr->I2CData.type = HTMAGType;
   htmagPtr->smux = false;
 
   // Ensure the sensor is configured correctly

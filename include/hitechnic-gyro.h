@@ -44,6 +44,13 @@
 #include "common.h"
 #endif
 
+// This ensures the correct sensor types are used.
+#if defined(NXT)
+TSensorTypes HTGyroType = sensorAnalogInactive;
+#elif defined(EV3)
+TSensorTypes HTGyroType = sensorLightInactive;
+#endif
+
 typedef struct
 {
   tI2CData I2CData;
@@ -82,8 +89,8 @@ float HTGYRO_offsets[][] = {{620.0, 620.0, 620.0, 620.0}, /*!< Array for offset 
  */
 float HTGYROreadRot(tSensors link) {
   // Make sure the sensor is configured as type sensorRawValue
-  if (SensorType[link] != sensorAnalogInactive) {
-    SensorType[link] = sensorAnalogInactive;
+  if (SensorType[link] != HTGyroType) {
+    SensorType[link] = HTGyroType;
     sleep(100);
   }
 
@@ -110,8 +117,8 @@ float HTGYROstartCal(tSensors link) {
   long _avgdata = 0;
 
   // Make sure the sensor is configured as type sensorRawValue
-  if (SensorType[link] != sensorAnalogInactive) {
-    SensorType[link] = sensorAnalogInactive;
+  if (SensorType[link] != HTGyroType) {
+    SensorType[link] = HTGyroType;
     sleep(100);
   }
 
@@ -204,7 +211,7 @@ bool initSensor(tHTGYROPtr htgyroPtr, tSensors port)
 {
   memset(htgyroPtr, 0, sizeof(tHTGYROPtr));
   htgyroPtr->I2CData.port = port;
-  htgyroPtr->I2CData.type = sensorAnalogActive;
+  htgyroPtr->I2CData.type = HTGyroType;
   htgyroPtr->smux = false;
 
   // Ensure the sensor is configured correctly
