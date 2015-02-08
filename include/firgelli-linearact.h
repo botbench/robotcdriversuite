@@ -33,6 +33,12 @@
 
 #pragma systemFile
 
+#warning "----------------------------------------"
+#warning ""
+#warning "This driver is no longer actively maintained."
+#warning ""
+#warning "----------------------------------------"
+
 #define STALL_TIME_SLOW   1200             /*!< Counter to check if motor is stalled when motor speeds are < 50 */
 #define STALL_TIME_FAST   800              /*!< Counter to check if motor is stalled when motor speeds are >= 50 */
 

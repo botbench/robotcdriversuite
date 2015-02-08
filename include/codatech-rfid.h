@@ -39,6 +39,12 @@
 
 #pragma systemFile
 
+#warning "----------------------------------------"
+#warning ""
+#warning "This driver is no longer actively maintained."
+#warning ""
+#warning "----------------------------------------"
+
 #ifdef EV3
 #error "----------------------------------------"
 #error ""
