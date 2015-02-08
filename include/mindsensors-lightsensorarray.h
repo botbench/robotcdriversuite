@@ -37,11 +37,11 @@
 #define MSLSA_CMD_REG            0x41  /*!< Register used for issuing commands */
 
 #define MSLSA_CALIBRATED        0x42  /*!< Calibrated Sensor reading */
-#define MSLSA_WHITE_LIMIT        0x4A  /*!< White Reading Limit */
+#define MSLSA_WHITE_LIMIT       0x4A  /*!< White Reading Limit */
 #define MSLSA_BLACK LIMIT       0x52  /*!< Black Reading Limit */
 #define MSLSA_WHITE_CALIB_DATA  0x5A  /*!< White Calibration data */
 #define MSLSA_BLACK_CALIB_DATA  0x62  /*!< Black Calibration data */
-#define MSLSA_UNCALIBRATED       0x6A  /*!< Uncalibrated sensor voltage  */
+#define MSLSA_UNCALIBRATED      0x6A  /*!< Uncalibrated sensor voltage  */
 
 #define MSLSA_CMD_FREQ_US       'A'   /*!< American frequency compensation  */
 #define MSLSA_CMD_CALIB_BLACK   'B'   /*!< Calibrate black values  */
@@ -62,6 +62,7 @@ tByteArray MSLSA_I2CReply;         /*!< Array to hold I2C reply data */
 #define MSLSAsetUS(X)     _MSLSAsendCommand(X, MSLSA_CMD_FREQ_US)     /*!< Calibrate the black value */
 #define MSLSAsetUni(X)    _MSLSAsendCommand(X, MSLSA_CMD_FREQ_UNI)    /*!< Calibrate the black value */
 
+void MSLSAinit(tSensors link);
 bool MSLSAreadSensors(tSensors link, ubyte *values);
 bool MSLSAreadRawSensors(tSensors link, short *values);
 bool _MSLSAsendCommand(tSensors link, ubyte cmd);                      /*!< Send a command to the LightSensorArray */
@@ -140,6 +141,17 @@ bool MSLSAreadRawSensors(tSensors link, short *values)
   }
 
   return true;
+}
+
+
+void MSLSAinit(tSensors link)
+{
+	tByteArray signalstr;
+	for (int i = 0; i < 2; i++)
+	{
+		MSLSAwakeUp(link);
+		sleep(10);
+	}
 }
 
 #endif // __MSLSA_H__
