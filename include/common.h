@@ -667,7 +667,7 @@ bool getXbuttonValue(tXButton button)
 #endif
 }
 
-void resetSensor(tSensors link)
+void resetSensorConn(tSensors link)
 {
 #if defined (EV3)
 	setSensorAutoID(link, false);
