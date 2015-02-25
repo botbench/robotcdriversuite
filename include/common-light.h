@@ -45,7 +45,7 @@ void RGBtoHSV(float red, float green, float blue, float *hue, float *sat, float 
   float rgb_max = max3(red, green, blue);
   float rgb_min;
   *value = rgb_max / 2.56;
-  if (value == 0){
+  if ((value == 0) || (rgb_max == 0)){
     *hue = -1;
     *sat = -1;
     return;
