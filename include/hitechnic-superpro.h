@@ -20,7 +20,7 @@
  *
  * License: You may use this code as you wish, provided you give credit where its due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER. 
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER.
 
  * \author Gustav Jansson (gus_at_hitechnic.com)
  * \date 10 October 2011
@@ -72,6 +72,21 @@
 #define DAC_MODE_TRIANGLEWAVE 5 /*!< Triangle wave output. */
 #define DAC_MODE_PWMVOLTAGE   6 /*!< PWM square wave output. */
 
+// Analog port ID's to make code easier for non-programmers to read
+#define A0 0
+#define A1 1
+#define A2 2
+#define A3 3
+
+//Defines to make digital port access easier
+#define B0  0b00000001
+#define B1  0b00000010
+#define B2  0b00000100
+#define B3  0b00001000
+#define B4  0b00010000
+#define B5  0b00100000
+#define B6  0b01000000
+#define B7  0b10000000
 
 
 tByteArray HTSPB_I2CRequest;    /*!< Array to hold I2C command data */
