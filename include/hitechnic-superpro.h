@@ -291,7 +291,8 @@ bool HTSPBwriteAnalog(tSensors link, byte dac, byte mode, int freq, int volt) {
   HTSPB_I2CRequest[7] = volt&3;                     // Low 2 bits of voltage
 
   bool result =  writeI2C(link, HTSPB_I2CRequest);
-  semaphoreUnlock(test);
+  if ( bDoesTaskOwnSemaphore(test) )
+  	semaphoreUnlock(test);
   return result;
 }
 
