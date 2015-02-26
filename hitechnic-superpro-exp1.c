@@ -8,7 +8,7 @@ Read the status of a switch and display the status on an LED
 
 */
 
-#include "hitechnic-superpro.h"
+#include "include/hitechnic-superpro.h"
 
 task main() {
   int inputdata;
@@ -18,7 +18,7 @@ task main() {
 
   while(true) {
     // Read a 10bit wide analogue value from A0
-    inputdata = HTSPBreadADC(HTSPB, 0, 10);
+    inputdata = HTSPBreadADC(HTSPB, A0, 10);
     nxtDisplayTextLine(1, "A0: %d", inputdata);
 
     // If A0 is less than 50% of the max value
