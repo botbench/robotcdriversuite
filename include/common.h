@@ -356,7 +356,7 @@ bool writeI2C(tI2CDataPtr data) {
       sleep(10000);
       stopAllTasks();
   }
-#endif
+#endif // __COMMON_H_SENSOR_CHECK__
 
 #ifdef NXT
   if (!waitForI2CBus(data->port)) {
@@ -453,8 +453,8 @@ bool writeI2C(tSensors link, tByteArray &request) {
       writeDebugStreamLine("Detected SensorType on port[%d]: %d", link, SensorType[link]);
       sleep(10000);
       stopAllTasks();
+    }
 #endif
-	}
 
 // This is not required for the EV3
 #ifdef NXT
@@ -466,7 +466,7 @@ bool writeI2C(tSensors link, tByteArray &request) {
     if (!waitForI2CBus(link))
       return false;
   }
-#endif
+#endif // __COMMON_H_SENSOR_CHECK__
 
   sendI2CMsg(link, &request[0], 0);
 
@@ -527,8 +527,8 @@ bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, short reply
       writeDebugStreamLine("Detected SensorType on port[%d]: %d", link, SensorType[link]);
       sleep(10000);
       stopAllTasks();
-#endif
   }
+#endif // __COMMON_H_SENSOR_CHECK__
 
 // This is not required for the EV3
 #ifdef NXT
