@@ -45,7 +45,7 @@
 
 #define DIMU_GYRO_RANGE_250     0x00  /*!< 250 dps range */
 #define DIMU_GYRO_RANGE_500     0x10  /*!< 500 dps range */
-#define DIMU_GYRO_RANGE_2000    0x30  /*!< 2000 dps range */
+#define DIMU_GYRO_RANGE_2000    0x20  /*!< 2000 dps range */
 #define DIMU_CTRL4_BLOCKDATA    0x80
 
 #define DIMU_GYRO_CTRL_REG1     0x20  /*!< CTRL_REG1 for Gyro */
@@ -99,6 +99,7 @@ typedef struct
 
 float DIMU_Gyro_divisor[4] = {0.0, 0.0, 0.0, 0.0}; /*!< Array to hold divisor data for 8 bit measurements */
 float DIMU_Accel_divisor[4] = {0.0, 0.0, 0.0, 0.0}; /*!< Array to hold divisor data for 8 bit measurements */
+float DIMU_Gyro_offset[12] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
 tByteArray DIMU_I2CRequest;    /*!< Array to hold I2C command data */
 tByteArray DIMU_I2CReply;      /*!< Array to hold I2C reply data */
@@ -106,6 +107,7 @@ tByteArray DIMU_I2CReply;      /*!< Array to hold I2C reply data */
 bool DIMUconfigGyro(tSensors link, ubyte range, bool lpfenable=true);
 float DIMUreadGyroAxis(tSensors link, ubyte axis);
 void DIMUreadGyroAxes(tSensors link, float &_x, float &_y, float &_z);
+void _DIMUcalcOffset(tSensors link);
 bool DIMUconfigAccel(tSensors link, ubyte range);
 float DIMUreadAccelAxis8Bit(tSensors link, ubyte axis);
 bool DIMUsetAccelAxisOffset(tSensors link, ubyte drift_reg, ubyte drift_LSB, ubyte drift_MSB);
@@ -178,11 +180,13 @@ bool DIMUconfigGyro(tSensors link, ubyte range, bool lpfenable){
   // into scaled values.
   ///////////////////////////////////////////////////////////////////////////
   if(range == 0)
-    DIMU_Gyro_divisor[link] = 114.28571;      // Full scale range is 250 dps.
+    DIMU_Gyro_divisor[link] = 8.75/1000;  // Full scale range is 250 dps.
   else if (range == 0x10)
-    DIMU_Gyro_divisor[link] = 57.142857;       // Full scale range is 500 dps.
-  else if (range == 0x30)
-    DIMU_Gyro_divisor[link] = 14.285714;       // Full scale range is 2000 dps.
+    DIMU_Gyro_divisor[link] = 17.5/1000;	// Full scale range is 500 dps.
+  else if (range == 0x20)
+    DIMU_Gyro_divisor[link] = 70/1000;    // Full scale range is 2000 dps.
+
+	_DIMUcalcOffset(link);
 
   return true;
 }
@@ -227,10 +231,43 @@ void DIMUreadGyroAxes(tSensors link, float &_x, float &_y, float &_z){
     return;
   }
 
-  _y = (DIMU_I2CReply[0]+((long)(DIMU_I2CReply[1]<<8)))/DIMU_Gyro_divisor[link];
-  _x = (DIMU_I2CReply[2]+((long)(DIMU_I2CReply[3]<<8)))/DIMU_Gyro_divisor[link];
-  _z = (DIMU_I2CReply[4]+((long)(DIMU_I2CReply[5]<<8)))/DIMU_Gyro_divisor[link];
+  _y = (DIMU_I2CReply[0]+((word)(DIMU_I2CReply[1]<<8)))*DIMU_Gyro_divisor[link];
+  _x = (DIMU_I2CReply[2]+((word)(DIMU_I2CReply[3]<<8)))*DIMU_Gyro_divisor[link];
+  _z = (DIMU_I2CReply[4]+((word)(DIMU_I2CReply[5]<<8)))*DIMU_Gyro_divisor[link];
+
+  _x -= DIMU_Gyro_offset[(link*3)+0];
+  _y -= DIMU_Gyro_offset[(link*3)+1];
+  _z -= DIMU_Gyro_offset[(link*3)+2];
+
 }
+
+
+// Internal function.
+void _DIMUcalcOffset(tSensors link)
+{
+	const int numSamples = 10;
+
+	float totalX, totalY, totalZ = 0;
+	float x, y, z;
+
+	for (int i = 0; i < numSamples; i++)
+	{
+		DIMUreadGyroAxes(link, x, y, z);
+		totalX += x;
+		totalY += y;
+		totalZ += z;
+		sleep(50);
+	}
+
+	totalX /= numSamples;
+	totalY /= numSamples;
+	totalZ /= numSamples;
+
+	DIMU_Gyro_offset[(link*3)+0] = x;
+	DIMU_Gyro_offset[(link*3)+1] = y;
+	DIMU_Gyro_offset[(link*3)+2] = z;
+}
+
 
 /**
  * Wait for the I2C bus to be ready for the next message
@@ -318,7 +355,6 @@ float DIMUreadAccelAxis10Bit(tSensors link, ubyte axis, bool calibrate){
   short drift_offset = 0;
 
   if (calibrate == true) {
-    writeDebugStreamLine("axis: %d", axis);
     DIMUsetAccelAxisOffset(link, 0x10 + axis, 0x00, 0x00);
     sleep(50);
   }
@@ -437,11 +473,11 @@ bool DIMUconfigGyro(tDIMUptr sensor, ubyte range, bool lpfenable)
   // into scaled values.
   ///////////////////////////////////////////////////////////////////////////
   if(range == 0)
-    DIMU_Gyro_divisor[link] = 114.28571;      // Full scale range is 250 dps.
+    DIMU_Gyro_divisor[link] = 8.75/1000;      // Full scale range is 250 dps.
   else if (range == 0x10)
-    DIMU_Gyro_divisor[link] = 57.142857;       // Full scale range is 500 dps.
+    DIMU_Gyro_divisor[link] = 17.5/1000;       // Full scale range is 500 dps.
   else if (range == 0x30)
-    DIMU_Gyro_divisor[link] = 14.285714;       // Full scale range is 2000 dps.
+    DIMU_Gyro_divisor[link] = 70/1000;       // Full scale range is 2000 dps.
 
   return true;
 }
