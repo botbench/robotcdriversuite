@@ -140,12 +140,14 @@ bool initSensor(tDIMCptr dimcPtr, tSensors port);
 bool readSensor(tDIMCptr dimcPtr);
 bool startCal(tDIMCptr dimcPtr);
 bool stopCal(tDIMCptr dimcPtr);
+#ifdef NXT
 bool _readCalVals(tDIMCptr dimcPtr);
 bool _writeCalVals(tDIMCptr dimcPtr);
+#endif // NXT
 
 /**
  * Configure the Compass
- * @param tirPtr pointer to tTIR struct holding sensor info
+ * @param dimcPtr pointer to tDIMC struct holding sensor info
  * @param port the port number
  * @return true if no error occured, false if it did
  */
@@ -154,7 +156,11 @@ bool initSensor(tDIMCptr dimcPtr, tSensors port)
   memset(dimcPtr, 0, sizeof(tDIMC));
   dimcPtr->I2CData.address = DIMC_I2C_ADDR;
   dimcPtr->I2CData.port = port;
+#ifdef NXT
   dimcPtr->I2CData.type = sensorI2CCustomFastSkipStates;
+#else
+	dimcPtr->I2CData.type = sensorEV3_GenericI2C;
+#endif
 
   // Set the file name for the calibration data
   sprintf(dimcPtr->_calibrationFile, "dimc%d.dat", dimcPtr->I2CData.port);
@@ -192,12 +198,16 @@ bool initSensor(tDIMCptr dimcPtr, tSensors port)
   if (!writeI2C(&dimcPtr->I2CData))
     return false;
 
+#ifdef NXT
   return _readCalVals(dimcPtr);
+#else
+	return true;
+#endif // NXT
 }
 
 /**
  * Read all three axes of the Compass and calculate the current heading
- * @param tirPtr pointer to tTIR struct holding sensor info
+ * @param dimcPtr pointer to tDIMC struct holding sensor info
  * @return true if no error occured, false if it did
  */
 bool readSensor(tDIMCptr dimcPtr)
@@ -242,7 +252,7 @@ bool readSensor(tDIMCptr dimcPtr)
  * Start calibration.  The robot should be made to rotate
  * about its axis at least twice to get an accurate result.
  * Stop the calibration with stopCal()
- * @param tirPtr pointer to tTIR struct holding sensor info
+ * @param dimcPtr pointer to tDIMC struct holding sensor info
  * @return true if no error occured, false if it did
  */
 bool startCal(tDIMCptr dimcPtr)
@@ -254,11 +264,15 @@ bool startCal(tDIMCptr dimcPtr)
 /**
  * Stop calibration.  The appropriate offsets will be calculated for all
  * the axes.
- * @param tirPtr pointer to tTIR struct holding sensor info
+ * @param dimcPtr pointer to tDIMC struct holding sensor info
  * @return true if no error occured, false if it did
  */
 bool stopCal(tDIMCptr dimcPtr)
 {
+#ifdef EV3
+#warning "Calibration values cannot currently be saved on the EV3"
+	return true;
+#else
   dimcPtr->_calibrating = false;
   for (short i = 0; i < 3; i++)
   {
@@ -266,15 +280,17 @@ bool stopCal(tDIMCptr dimcPtr)
   }
   _writeCalVals(dimcPtr);
   return true;
+#endif // EV3
 }
 
 /**
  * Write the calibration values to a data file.
  *
  * Note: this is an internal function and should not be called directly
- * @param tirPtr pointer to tTIR struct holding sensor info
+ * @param dimcPtr pointer to tDIMC struct holding sensor info
  * @return true if no error occured, false if it did
  */
+#ifdef NXT
 bool _writeCalVals(tDIMCptr dimcPtr)
 {
   TFileHandle hFileHandle;
@@ -322,14 +338,16 @@ bool _writeCalVals(tDIMCptr dimcPtr)
   }
   return true;
 }
+#endif // NXT
 
 /**
  * Read the calibration values from a data file.
  *
  * Note: this is an internal function and should not be called directly
- * @param tirPtr pointer to tTIR struct holding sensor info
+ * @param dimcPtr pointer to tDIMC struct holding sensor info
  * @return true if no error occured, false if it did
  */
+#ifdef NXT
 bool _readCalVals(tDIMCptr dimcPtr)
 {
   TFileHandle hFileHandle;
@@ -365,7 +383,7 @@ bool _readCalVals(tDIMCptr dimcPtr)
   dimcPtr->_calibrated = true;
   return true;
 }
-
+#endif // NXT
 #endif // __DIMC_H__
 
 /* @} */
