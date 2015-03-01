@@ -166,7 +166,7 @@ bool DGPSsetDestination(tSensors link, long latitude, long longitude) {
   memset(DGPS_I2CRequest, 0, sizeof(tByteArray));
 
   // First we send the latitude
-  DGPS_I2CRequest[0] = 2;               // Message size
+  DGPS_I2CRequest[0] = 6;               // Message size
   DGPS_I2CRequest[1] = DGPS_I2C_ADDR;   // I2C Address
   DGPS_I2CRequest[2] = DGPS_CMD_SLAT;
   DGPS_I2CRequest[3] = (latitude >> 24) & 0xFF;
@@ -179,7 +179,7 @@ bool DGPSsetDestination(tSensors link, long latitude, long longitude) {
   sleep(100);
 
   // Then send longitude
-  DGPS_I2CRequest[0] = 2;               // Message size
+  DGPS_I2CRequest[0] = 6;               // Message size
   DGPS_I2CRequest[1] = DGPS_I2C_ADDR;   // I2C Address
   DGPS_I2CRequest[2] = DGPS_CMD_SLONG;
   DGPS_I2CRequest[3] = (longitude >> 24) & 0xFF;
