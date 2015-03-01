@@ -336,6 +336,7 @@ bool writeI2C(tI2CDataPtr data) {
     case sensorI2CCustom:                 break;
     case sensorI2CCustom9V:               break;
 #ifdef EV3
+		case sensorEV3_EnergyMeter:						break;  // for some reason, some I2C sensors are identified as this
 		case sensorEV3_GenericI2C:						break;
 #else // This is an NXT
     case sensorI2CCustomFast:             break;
@@ -434,6 +435,7 @@ bool writeI2C(tSensors link, tByteArray &request) {
     case sensorI2CCustom:                 break;
     case sensorI2CCustom9V:               break;
 #ifdef EV3
+		case sensorEV3_EnergyMeter:						break;  // for some reason, some I2C sensors are identified as this
 		case sensorEV3_GenericI2C:						break;
 #else // This is an NXT
     case sensorI2CCustomFast:             break;
@@ -508,6 +510,7 @@ bool writeI2C(tSensors link, tByteArray &request, tByteArray &reply, short reply
     case sensorI2CCustom:                 break;
     case sensorI2CCustom9V:               break;
 #ifdef EV3
+		case sensorEV3_EnergyMeter:						break;  // for some reason, some I2C sensors are identified as this
 		case sensorEV3_GenericI2C:						break;
 #else // This is an NXT
     case sensorI2CCustomFast:             break;
