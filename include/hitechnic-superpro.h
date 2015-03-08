@@ -124,7 +124,7 @@ ubyte HTSPBreadIO(tSensors link, ubyte mask) {
 
 	  if (!writeI2C(link, HTSPB_I2CRequest, HTSPB_I2CReply, 1))
 	  {
-	  		semaphoreUnlock(test);
+	  	semaphoreUnlock(test);
 	    return 0;
 	  }
 
@@ -198,7 +198,7 @@ bool HTSPBsetupIO(tSensors link, ubyte mask) {
  */
 int HTSPBreadADC(tSensors link, byte channel, byte width) {
 	semaphoreLock(test,1000);
-	if ( bDoesTaskOwnSemaphore(test) )
+  if ( bDoesTaskOwnSemaphore(test) )
 	{
 	  memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
 
@@ -210,7 +210,7 @@ int HTSPBreadADC(tSensors link, byte channel, byte width) {
 	  if (!writeI2C(link, HTSPB_I2CRequest, HTSPB_I2CReply, 2))
 	  {
 
-	  		semaphoreUnlock(test);
+	  	semaphoreUnlock(test);
 	    return -1;
 	  }
 

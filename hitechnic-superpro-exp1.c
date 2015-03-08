@@ -8,16 +8,28 @@ task analogThread() {
 		 inputdata = HTSPBreadADC(HTSPB, A0, 10);
 	}
 }
+byte bits
+int a=0;
+int goodCount = 0;
+int badCount = 0;
+float bad = 0;
 task digitalThread() {
 	// Set B0 for output
-  HTSPBsetupIO(HTSPB, 0x1);
+  a = HTSPBsetupIO(HTSPB, 0b00000001);
 
   while(true) {
-
-    wait1Msec(50);
+		bits = HTSPBreadIO(HTSPB,0b11111110);
+		if(bits == 6)
+		{
+			goodCount++;
+		}
+		else
+		{
+			badCount++;
+		}
+		bad = (badCount/(float)(goodCount+badCount))*100;
   }
 }
-
 
 task main() {
   HTSPBEnable(); //require to initialize semaphore
