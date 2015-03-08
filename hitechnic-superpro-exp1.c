@@ -11,7 +11,7 @@ Read the status of a switch and display the status on an LED
 #include "hitechnic-superpro.h"
 
 task main() {
-  short inputdata;
+  int inputdata;
 
   // Set B0 for output
   HTSPBsetupIO(HTSPB, 0x1);
@@ -19,7 +19,7 @@ task main() {
   while(true) {
     // Read a 10bit wide analogue value from A0
     inputdata = HTSPBreadADC(HTSPB, 0, 10);
-    displayTextLine(1, "A0: %d", inputdata);
+    nxtDisplayTextLine(1, "A0: %d", inputdata);
 
     // If A0 is less than 50% of the max value
     // turn off the LED, otherwise switch it on
@@ -28,6 +28,6 @@ task main() {
     else
       HTSPBwriteIO(HTSPB, 0x01);
 
-    sleep(50);
+    wait1Msec(50);
   }
 }
