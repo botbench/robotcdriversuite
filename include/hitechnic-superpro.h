@@ -20,7 +20,7 @@
  *
  * License: You may use this code as you wish, provided you give credit where its due.
  *
- * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER. 
+ * THIS CODE WILL ONLY WORK WITH ROBOTC VERSION 3.59 AND HIGHER.
 
  * \author Gustav Jansson (gus_at_hitechnic.com)
  * \date 10 October 2011
@@ -72,8 +72,23 @@
 #define DAC_MODE_TRIANGLEWAVE 5 /*!< Triangle wave output. */
 #define DAC_MODE_PWMVOLTAGE   6 /*!< PWM square wave output. */
 
+// Analog port ID's to make code easier for non-programmers to read
+#define A0 0
+#define A1 1
+#define A2 2
+#define A3 3
 
+//Defines to make digital port access easier
+#define B0  0b00000001
+#define B1  0b00000010
+#define B2  0b00000100
+#define B3  0b00001000
+#define B4  0b00010000
+#define B5  0b00100000
+#define B6  0b01000000
+#define B7  0b10000000
 
+TSemaphore test;
 tByteArray HTSPB_I2CRequest;    /*!< Array to hold I2C command data */
 tByteArray HTSPB_I2CReply;      /*!< Array to hold I2C reply data */
 
@@ -83,6 +98,13 @@ bool HTSPBsetupIO(tSensors link, ubyte mask);
 int HTSPBreadADC(tSensors link, byte channel, byte width);
 bool HTSPBreadAllADC(tSensors link, int &adch0, int &adch1, int &adch2, int &adch3, int &adch4, byte width);
 bool HTSPBsetSamplingTime(tSensors link, byte interval);
+void HTSPBEnable();
+
+void HTSPBEnable() {
+	semaphoreInitialize(test);
+	if ( bDoesTaskOwnSemaphore(test) )
+		semaphoreUnlock(test);
+}
 
 /**
  * Read the values of the digital inputs as specified by the mask.
@@ -91,16 +113,26 @@ bool HTSPBsetSamplingTime(tSensors link, byte interval);
  * @return 8 bits representing the state of the specified IOs
  */
 ubyte HTSPBreadIO(tSensors link, ubyte mask) {
-  memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
+	semaphoreLock(test,1000);
+	if (bDoesTaskOwnSemaphore(test))
+	{
+	  memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
 
-  HTSPB_I2CRequest[0] = 2;                         // Message size
-  HTSPB_I2CRequest[1] = HTSPB_I2C_ADDR;             // I2C Address
-  HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_DIGIN;  // Start digital output read address
+	  HTSPB_I2CRequest[0] = 2;                         // Message size
+	  HTSPB_I2CRequest[1] = HTSPB_I2C_ADDR;             // I2C Address
+	  HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_DIGIN;  // Start digital output read address
 
-  if (!writeI2C(link, HTSPB_I2CRequest, HTSPB_I2CReply, 1))
-    return 0;
+	  if (!writeI2C(link, HTSPB_I2CRequest, HTSPB_I2CReply, 1))
+	  {
+	  	semaphoreUnlock(test);
+	    return 0;
+	  }
 
-  return HTSPB_I2CReply[0] & mask;
+	  ubyte result = HTSPB_I2CReply[0] & mask;
+	  semaphoreUnlock(test);
+	  return result;
+	}
+	return -1; //Return error if can't lock semaphore
 }
 
 
@@ -111,15 +143,23 @@ ubyte HTSPBreadIO(tSensors link, ubyte mask) {
  * @return true if no error occured, false if it did
  */
 bool HTSPBwriteIO(tSensors link, ubyte mask) {
-  memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
+	semaphoreLock(test,1000);
+	if(bDoesTaskOwnSemaphore(test))
+	{
+	  memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
 
-  HTSPB_I2CRequest[0] = 3;                         // Message size
-  HTSPB_I2CRequest[1] = HTSPB_I2C_ADDR;             // I2C Address
-  HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_DIGOUT; // Start digital output read address
-  HTSPB_I2CRequest[3] = mask;                      // The specified digital ports
+	  HTSPB_I2CRequest[0] = 3;                         // Message size
+	  HTSPB_I2CRequest[1] = HTSPB_I2C_ADDR;             // I2C Address
+	  HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_DIGOUT; // Start digital output read address
+	  HTSPB_I2CRequest[3] = mask;                      // The specified digital ports
 
 
-  return writeI2C(link, HTSPB_I2CRequest);
+	  bool result = writeI2C(link, HTSPB_I2CRequest);
+
+	  	semaphoreUnlock(test);
+	  return result;
+	}
+	return -1;
 }
 
 
@@ -130,14 +170,22 @@ bool HTSPBwriteIO(tSensors link, ubyte mask) {
  * @return true if no error occured, false if it did
  */
 bool HTSPBsetupIO(tSensors link, ubyte mask) {
-  memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
+	semaphoreLock(test,1000);
+	if ( bDoesTaskOwnSemaphore(test) )
+	{
+	  memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
 
-  HTSPB_I2CRequest[0] = 3;                           // Message size
-  HTSPB_I2CRequest[1] = HTSPB_I2C_ADDR;               // I2C Address
-  HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_DIGCTRL;  // Start digital input/output control address
-  HTSPB_I2CRequest[3] = mask;                        // The specified digital ports
+	  HTSPB_I2CRequest[0] = 3;                           // Message size
+	  HTSPB_I2CRequest[1] = HTSPB_I2C_ADDR;               // I2C Address
+	  HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_DIGCTRL;  // Start digital input/output control address
+	  HTSPB_I2CRequest[3] = mask;                        // The specified digital ports
 
-  return writeI2C(link, HTSPB_I2CRequest);
+	  bool result = writeI2C(link, HTSPB_I2CRequest);
+
+	  	semaphoreUnlock(test);
+	  return result;
+	}
+	return -1;
 }
 
 
@@ -149,27 +197,38 @@ bool HTSPBsetupIO(tSensors link, ubyte mask) {
  * @return the value of the ADC channel, or -1 if an error occurred
  */
 int HTSPBreadADC(tSensors link, byte channel, byte width) {
-  memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
+	semaphoreLock(test,1000);
+  if ( bDoesTaskOwnSemaphore(test) )
+	{
+	  memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
 
-  int _adcVal = 0;
-  HTSPB_I2CRequest[0] = 2;                                       // Message size
-  HTSPB_I2CRequest[1] = HTSPB_I2C_ADDR;                           // I2C Address
-  HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_A0_U + (channel * 2); // Start digital output read address
-                                                                    // with channel offset
-  if (!writeI2C(link, HTSPB_I2CRequest, HTSPB_I2CReply, 2))
-    return -1;
+	  int _adcVal = 0;
+	  HTSPB_I2CRequest[0] = 2;                                       // Message size
+	  HTSPB_I2CRequest[1] = HTSPB_I2C_ADDR;                           // I2C Address
+	  HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_A0_U + (channel * 2); // Start digital output read address
+	                                                                    // with channel offset
+	  if (!writeI2C(link, HTSPB_I2CRequest, HTSPB_I2CReply, 2))
+	  {
 
-  // Convert the bytes into and int
-  // 1st byte contains bits 9-2 of the channel's value
-  // 2nd byte contains bits 1-0 of the channel's value
-  // We'll need to shift the 1st byte left by 2 and or 2nd byte onto it.
-  // If 8 bits is all we want, we just return the first byte and be done with it.
-  if (width == 8)
-    _adcVal = HTSPB_I2CReply[0];
-  else
-    _adcVal = (HTSPB_I2CReply[0] * 4) + HTSPB_I2CReply[1];
+	  	semaphoreUnlock(test);
+	    return -1;
+	  }
 
-  return _adcVal;
+	  // Convert the bytes into and int
+	  // 1st byte contains bits 9-2 of the channel's value
+	  // 2nd byte contains bits 1-0 of the channel's value
+	  // We'll need to shift the 1st byte left by 2 and or 2nd byte onto it.
+	  // If 8 bits is all we want, we just return the first byte and be done with it.
+
+	  if (width == 8)
+	    _adcVal = HTSPB_I2CReply[0];
+	  else
+	    _adcVal = (HTSPB_I2CReply[0] * 4) + HTSPB_I2CReply[1];
+	  int result = _adcVal;
+	  semaphoreUnlock(test);
+	  return result;
+	}
+	return -1; //return error
 }
 
 
@@ -185,6 +244,7 @@ int HTSPBreadADC(tSensors link, byte channel, byte width) {
  * @return true if no error occured, false if it did
  */
 bool HTSPBreadAllADC(tSensors link, int &adch0, int &adch1, int &adch2, int &adch3, byte width) {
+	semaphoreLock(test,1000);
   memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
 
   HTSPB_I2CRequest[0] = 2;                       // Message size
@@ -192,7 +252,11 @@ bool HTSPBreadAllADC(tSensors link, int &adch0, int &adch1, int &adch2, int &adc
   HTSPB_I2CRequest[2] = HTSPB_OFFSET + HTSPB_A0_U; // Start digital output read address
 
   if (!writeI2C(link, HTSPB_I2CRequest, HTSPB_I2CReply, 10))
+  {
+  	if ( bDoesTaskOwnSemaphore(test) )
+  		semaphoreUnlock(test);
     return false;
+  }
 
   // Convert the bytes into and int
   // 1st byte contains bits 9-2 of the channel's value
@@ -210,6 +274,8 @@ bool HTSPBreadAllADC(tSensors link, int &adch0, int &adch1, int &adch2, int &adc
     adch2 = ((int)HTSPB_I2CReply[4] << 2) + (int)HTSPB_I2CReply[5];
     adch3 = ((int)HTSPB_I2CReply[6] << 2) + (int)HTSPB_I2CReply[7];
   }
+  if ( bDoesTaskOwnSemaphore(test) )
+  	semaphoreUnlock(test);
   return true;
 }
 
@@ -225,6 +291,7 @@ bool HTSPBreadAllADC(tSensors link, int &adch0, int &adch1, int &adch2, int &adc
  * @return true if no error occured, false if it did
  */
 bool HTSPBwriteAnalog(tSensors link, byte dac, byte mode, int freq, int volt) {
+	semaphoreLock(test,1000);
   memset(HTSPB_I2CRequest, 0, sizeof(tByteArray));
 
   HTSPB_I2CRequest[0] = 7;                          // Message size
@@ -236,7 +303,10 @@ bool HTSPBwriteAnalog(tSensors link, byte dac, byte mode, int freq, int volt) {
   HTSPB_I2CRequest[6] = volt/4;                     // High 8 bits of voltage
   HTSPB_I2CRequest[7] = volt&3;                     // Low 2 bits of voltage
 
-  return writeI2C(link, HTSPB_I2CRequest);
+  bool result =  writeI2C(link, HTSPB_I2CRequest);
+  if ( bDoesTaskOwnSemaphore(test) )
+  	semaphoreUnlock(test);
+  return result;
 }
 
 
