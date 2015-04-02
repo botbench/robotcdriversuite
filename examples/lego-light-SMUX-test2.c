@@ -21,6 +21,12 @@
 #include "hitechnic-sensormux.h"
 #include "lego-light.h"
 
+#ifdef EV3
+#error ""
+#error "  Calibration on the EV3 for this sensor is currently not supported!"
+#error ""
+#endif // EV3
+
 // The sensor is connected to the first port
 // of the SMUX which is connected to the NXT port S1.
 // To access that sensor, we must use msensor_S1_1.  If the sensor

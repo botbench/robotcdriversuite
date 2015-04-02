@@ -38,8 +38,6 @@ task main() {
   // Turn the light on
   LSsetActive(LEGOLS);
 
-  nNxtButtonTask  = -2;
-
   displayCenteredTextLine(0, "Lego");
   displayCenteredBigTextLine(1, "LIGHT");
   displayCenteredTextLine(3, "SMUX Test");
@@ -56,7 +54,8 @@ task main() {
   while (true) {
     // The enter button has been pressed, switch
     // to the other mode
-    if (nNxtButtonPressed == kEnterButton) {
+  	if (getXbuttonValue(xButtonEnter))
+  	{
       active = !active;
       if (!active)
         LSsetInactive(LEGOLS);

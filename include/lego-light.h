@@ -241,6 +241,7 @@ void _LScheckSensor(tSensors link) {
  * Note: this is an internal function and should not be called directly
  */
 void _LSwriteCalVals() {
+#ifdef NXT
   TFileHandle hFileHandle;
   TFileIOResult nIoResult;
   short nFileSize = 64;
@@ -296,6 +297,7 @@ void _LSwriteCalVals() {
     sleep(5000);
     stopAllTasks();
   }
+#endif // NXT
 }
 
 /**
@@ -304,6 +306,7 @@ void _LSwriteCalVals() {
  * Note: this is an internal function and should not be called directly
  */
 void _LSreadCalVals() {
+#ifdef NXT
   TFileHandle hFileHandle;
   TFileIOResult nIoResult;
   short nFileSize;
@@ -350,6 +353,15 @@ void _LSreadCalVals() {
   }
 
   Close(hFileHandle, nIoResult);
+#elif defined (EV3)
+  legols_calibrated = true;
+
+	memset(&lslow[0], 0, sizeof(lslow));
+
+  for (short i = 0; i < 16; i++) {
+    lshigh[i] = 1023;
+  }
+#endif
 }
 
 #endif // __LEGOLS_H__
