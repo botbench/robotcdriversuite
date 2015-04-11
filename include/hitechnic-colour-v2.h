@@ -168,9 +168,9 @@ bool readSensor(tHTCS2Ptr htcs2Ptr)
 
   // Populate the struct with the newly retrieved data
   htcs2Ptr->color = htcs2Ptr->I2CData.reply[0];
-  htcs2Ptr->red = htcs2Ptr->I2CData.reply[1];
-  htcs2Ptr->green = htcs2Ptr->I2CData.reply[2];
-  htcs2Ptr->blue = htcs2Ptr->I2CData.reply[3];
+  htcs2Ptr->red 	= (short)htcs2Ptr->I2CData.reply[1];
+  htcs2Ptr->green = (short)htcs2Ptr->I2CData.reply[2];
+  htcs2Ptr->blue	= (short)htcs2Ptr->I2CData.reply[3];
   RGBtoHSV(htcs2Ptr->red, htcs2Ptr->green, htcs2Ptr->blue, &htcs2Ptr->hue, &htcs2Ptr->saturation, &htcs2Ptr->value);
 
   return true;

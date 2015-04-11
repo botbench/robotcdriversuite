@@ -23,9 +23,8 @@
 
 #include "hitechnic-colour-v2.h"
 
-task main () {
-  string _tmp;
-
+task main ()
+{
   displayCenteredTextLine(0, "HiTechnic");
   displayCenteredBigTextLine(1, "Color V2");
   displayCenteredTextLine(3, "Test 1");
@@ -56,9 +55,8 @@ task main () {
     fillRect( 0, 10, 30, 10 + (colorSensor.red+1)/8);
     fillRect(35, 10, 65, 10 + (colorSensor.green+1)/8);
     fillRect(70, 10, 99, 10 + (colorSensor.blue+1)/8);
-    stringFormat(_tmp, " %3d   %3d", colorSensor.red, colorSensor.green);
-    displayTextLine(7, "%s   %3d", _tmp, colorSensor.blue);
-
+    displayTextLine(7, " %3d   %3d   %3d", colorSensor.red, colorSensor.green, colorSensor.blue);
+		writeDebugStreamLine("R: %d, G: %d, B: %d", colorSensor.red, colorSensor.green, colorSensor.blue);
     sleep(100);
   }
 }
