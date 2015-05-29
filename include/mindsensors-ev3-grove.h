@@ -251,7 +251,7 @@ bool configSensor(tGROVEPtr grovePtr)
 		if (!writeI2C(&grovePtr->I2CData))
 			return false;
 
-		// Finally, configure the Grove adapter to read the grove sensor
+		// Configure the Grove adapter to read the grove sensor
 	  grovePtr->I2CData.request[0] = 5;	// Message size
 	  grovePtr->I2CData.request[1] = grovePtr->I2CData.address; // I2C Address
 	  grovePtr->I2CData.request[2] = GROVE_I2C_RD_ADDR;
@@ -263,6 +263,19 @@ bool configSensor(tGROVEPtr grovePtr)
 
 		if (!writeI2C(&grovePtr->I2CData))
 			return false;
+
+		// Now tell the adapter to start reading
+	  grovePtr->I2CData.request[0] = 4;	// Message size
+	  grovePtr->I2CData.request[1] = grovePtr->I2CData.address; // I2C Address
+	  grovePtr->I2CData.request[2] = GROVE_COMMAND;
+	  grovePtr->I2CData.request[3] = GROVE_CMD_READ_I2C;
+	  grovePtr->I2CData.request[4] = GROVE_MODE_I2C;
+	  grovePtr->I2CData.replyLen = 0;
+	  grovePtr->I2CData.requestLen = 4;
+
+		if (!writeI2C(&grovePtr->I2CData))
+			return false;
+
 	}
 
 	return true;
