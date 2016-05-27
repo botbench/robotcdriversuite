@@ -7,7 +7,7 @@
 
 #ifndef __MSIR_H__
 #define __MSIR_H__
-/** \file mindsensors-accelerometer.h
+/** \file mindsensors-irthermometer.h
  * \brief Mindsensors IRThermo driver
  *
  * mindsensors-irthermometer.h provides an API for the Mindsensors IR Thermometer driver
