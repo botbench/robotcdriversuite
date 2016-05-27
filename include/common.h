@@ -221,7 +221,7 @@ void clearI2CError(tSensors link, ubyte address) {
 
   for (short i = 0; i < 5; i++) {
     sendI2CMsg(link, &error_array[0], 0);
-    sleep(10);
+    waitForI2CBus(link);
   }
 }
 //#endif
