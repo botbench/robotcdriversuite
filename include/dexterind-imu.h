@@ -179,11 +179,11 @@ bool DIMUconfigGyro(tSensors link, ubyte range, bool lpfenable){
   // Set DIMU_Gyro_divisor so that the output of our gyro axis readings can be turned
   // into scaled values.
   ///////////////////////////////////////////////////////////////////////////
-  if(range == 0)
+  if(range == DIMU_GYRO_RANGE_250)
     DIMU_Gyro_divisor[link] = 8.75/1000;  // Full scale range is 250 dps.
-  else if (range == 0x10)
+  else if (range == DIMU_GYRO_RANGE_500)
     DIMU_Gyro_divisor[link] = 17.5/1000;	// Full scale range is 500 dps.
-  else if (range == 0x20)
+  else if (range == DIMU_GYRO_RANGE_2000)
     DIMU_Gyro_divisor[link] = 70/1000;    // Full scale range is 2000 dps.
 
 	_DIMUcalcOffset(link);
@@ -201,6 +201,8 @@ float DIMUreadGyroAxis(tSensors link, ubyte axis){
   // ubyte _msb = 0;
   // ubyte _lsb = 0;
 
+	word tmpAxis;
+
   DIMU_I2CRequest[0] = 2;                   // Message size
   DIMU_I2CRequest[1] = DIMU_GYRO_I2C_ADDR;  // I2C Address
   DIMU_I2CRequest[2] = axis + 0x80;            // Register address
@@ -210,7 +212,9 @@ float DIMUreadGyroAxis(tSensors link, ubyte axis){
     return 0;
   }
 
-  return (DIMU_I2CReply[0]+((long)(DIMU_I2CReply[1]<<8)))/DIMU_Gyro_divisor[link];
+  tmpAxis = DIMU_I2CReply[0]+(DIMU_I2CReply[1]<<8);
+  return (float)tmpAxis * DIMU_Gyro_divisor[link] - DIMU_Gyro_offset[(link*3)+axis];
+  //return (DIMU_I2CReply[0]+((word)(DIMU_I2CReply[1]<<8)))/DIMU_Gyro_divisor[link];
 }
 
 /**
@@ -472,12 +476,12 @@ bool DIMUconfigGyro(tDIMUptr sensor, ubyte range, bool lpfenable)
   // Set DIMU_Gyro_divisor so that the output of our gyro axis readings can be turned
   // into scaled values.
   ///////////////////////////////////////////////////////////////////////////
-  if(range == 0)
-    DIMU_Gyro_divisor[link] = 8.75/1000;      // Full scale range is 250 dps.
-  else if (range == 0x10)
-    DIMU_Gyro_divisor[link] = 17.5/1000;       // Full scale range is 500 dps.
-  else if (range == 0x30)
-    DIMU_Gyro_divisor[link] = 70/1000;       // Full scale range is 2000 dps.
+  if(range == DIMU_GYRO_RANGE_250)
+    DIMU_Gyro_divisor[link] = 8.75/1000;  // Full scale range is 250 dps.
+  else if (range == DIMU_GYRO_RANGE_500)
+    DIMU_Gyro_divisor[link] = 17.5/1000;	// Full scale range is 500 dps.
+  else if (range == DIMU_GYRO_RANGE_2000)
+    DIMU_Gyro_divisor[link] = 70/1000;    // Full scale range is 2000 dps.
 
   return true;
 }
