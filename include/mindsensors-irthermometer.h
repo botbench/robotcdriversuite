@@ -69,8 +69,11 @@ bool initSensor(tMSIRPtr MSIRPtr, tSensors port, bool bUseCelcius)
   memset(MSIRPtr, 0, sizeof(tMSIRPtr));
   MSIRPtr->I2CData.address = MSIR_I2C_ADDR;
   MSIRPtr->I2CData.port = port;
+#ifdef EV3
   MSIRPtr->I2CData.type = sensorEV3_GenericI2C;
-
+#elif defined(NXT)
+  MSIRPtr->I2CData.type = sensorI2CCustom;
+#endif
   // Ensure the sensor is configured correctly
   if (SensorType[MSIRPtr->I2CData.port] != MSIRPtr->I2CData.type)
     SensorType[MSIRPtr->I2CData.port] = MSIRPtr->I2CData.type;
