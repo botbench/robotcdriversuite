@@ -41,6 +41,13 @@
 #include "common.h"
 #endif
 
+#ifdef NXTCAMV5
+#warning "Driver has been compiled with enhanced NXTCam V5 support"
+#else
+#warning "Driver has been compiled without enhanced NCTCam V5 support."
+#warning "To enable, please add \"#define NXTCAMV5\" above the driver include line in your program."
+#endif // NXTCAMv5
+
 #define MAX_BLOBS         8     /*!< Maximum number of blobs returned by the NXTCam */
 #define NXTCAM_I2C_ADDR   0x02  /*!< I2C address used by the NXTCam */
 #define NXTCAM_CMD_REG    0x41  /*!< Register used for issuing commands */
@@ -67,7 +74,15 @@ tByteArray NXTCAM_I2CReply;      /*!< Array to hold I2C reply data */
 
 // "public" functions
 bool NXTCAMinit(tSensors link, ubyte address = NXTCAM_I2C_ADDR);
-bool NXTCAMinitTL(tSensors link, ubyte address = NXTCAM_I2C_ADDR);
+bool NXTCaminitLine(tSensors link, ubyte address = NXTCAM_I2C_ADDR);
+#define NXTCamInitTL(X, Y) NXTCaminitLine(X, Y) // for backwards compatibility
+#ifdef NXTCAMV5
+bool NXTCaminitEyes(tSensors link, ubyte address = NXTCAM_I2C_ADDR);
+bool NXTCaminitFace(tSensors link, ubyte address = NXTCAM_I2C_ADDR);
+bool NXTCamCaptureStill(tSensors link, ubyte address = NXTCAM_I2C_ADDR);
+bool NXTCamCaptureMovie(tSensors link, ubyte address = NXTCAM_I2C_ADDR);
+#endif // NXTCAMv5
+
 short NXTCAMgetBlobs(tSensors link, blob_array &blobs, bool mergeBlobs, ubyte address = NXTCAM_I2C_ADDR);
 short NXTCAMgetBlobs(tSensors link, blob_array &blobs, ubyte address = NXTCAM_I2C_ADDR);
 
@@ -76,7 +91,7 @@ bool _camera_cmd(tSensors link, byte cmd, ubyte address);
 short _mergeBlobs(short blob1, short blob2, short nblobs, blob_array &blobs);
 short _merge(short nblobs, blob_array &blobs);
 void _sortBlobs(short nblobs, blob_array &blobs);
-void NXTCAMgetAverageCenter(blob_array &blobs, short nblobs, short colourindex, short &x, short &y);
+void NXTCAMgetAverageCenter(blob_array &blobs, long nblobs, long colourindex, long &x, long &y);
 void NXTCAMgetCenter(blob_array &blobs, short index, short &x, short &y);
 
 /*! boolean to signal if there are still blobs that might qualify for merging */
@@ -107,6 +122,19 @@ bool _camera_cmd(tSensors link, byte cmd, ubyte address) {
  * @return true if no error occured, false if it did
  */
 bool NXTCAMinit(tSensors link, ubyte address) {
+#if defined (EV3)
+	TSensorTypes linkType = sensorEV3_GenericI2C;
+#elif defined (NXT)
+	TSensorTypes linkType = sensorI2CCustomFastSkipStates;
+#else
+#error "This driver is only for NXT or EV3"
+#endif
+
+  // Ensure the sensor is configured correctly
+  if (SensorType[link] != linkType)
+    SensorType[link] = linkType;
+
+#ifndef NXTCAMV5
   if (!_camera_cmd(link, 'D', address)) // Stop object tracking
     return false;
   sleep(500);
@@ -114,14 +142,17 @@ bool NXTCAMinit(tSensors link, ubyte address) {
   if (!_camera_cmd(link, 'A', address)) // Sort by size
     return false;
   sleep(500);
+#endif // NXTCAMV5
 
-  if (!_camera_cmd(link,'B', address))  // Set object tracking mode
+	if (!_camera_cmd(link,'B', address))  // Set object tracking mode
     return false;
   sleep(500);
 
+#ifndef NXTCAMV5
   if (!_camera_cmd(link,'E', address))  // Start object tracking
     return false;
   sleep(500);
+#endif // NXTCAMV5
 
   return true;
 }
@@ -132,7 +163,7 @@ bool NXTCAMinit(tSensors link, ubyte address) {
  * @param address the I2C address to use, optional, defaults to 0x02
  * @return true if no error occured, false if it did
  */
-bool NXTCAMinitTL(tSensors link, ubyte address) {
+bool NXTCAMinitLine(tSensors link, ubyte address) {
   if (!_camera_cmd(link, 'D', address)) // Stop object tracking
     return false;
   sleep(500);
@@ -151,6 +182,62 @@ bool NXTCAMinitTL(tSensors link, ubyte address) {
   sleep(500);
   return true;
 }
+
+#ifdef NXTCAMV5
+/**
+ * This function initialises camera ready to track faces. (NXTCam V5 only)
+ * @param link the sensor port number
+ * @param address the I2C address to use, optional, defaults to 0x02
+ * @return true if no error occured, false if it did
+ */
+bool NXTCAMinitFace(tSensors link, ubyte address) {
+  if (!_camera_cmd(link, 'F', address)) // Stop object tracking
+    return false;
+  sleep(500);
+  return true;
+}
+
+/**
+ * This function initialises camera ready to track eyes. (NXTCam V5 only)
+ * @param link the sensor port number
+ * @param address the I2C address to use, optional, defaults to 0x02
+ * @return true if no error occured, false if it did
+ */
+bool NXTCAMinitEyes(tSensors link, ubyte address) {
+  if (!_camera_cmd(link, 'e', address)) // Stop object tracking
+    return false;
+  sleep(500);
+  return true;
+}
+
+/**
+ * This function captures a still image. (NXTCam V5 only)
+ * @param link the sensor port number
+ * @param address the I2C address to use, optional, defaults to 0x02
+ * @return true if no error occured, false if it did
+ */
+bool NXTCamCaptureStill(tSensors link, ubyte address) {
+  if (!_camera_cmd(link, 'P', address)) // Stop object tracking
+    return false;
+  sleep(100);
+  return true;
+}
+
+/**
+ * This function captures a short movie. (NXTCam V5 only)
+ * @param link the sensor port number
+ * @param address the I2C address to use, optional, defaults to 0x02
+ * @return true if no error occured, false if it did
+ */
+bool NXTCamCaptureMovie(tSensors link, ubyte address) {
+  if (!_camera_cmd(link, 'M', address)) // Stop object tracking
+    return false;
+  sleep(100);
+  return true;
+}
+
+#endif // NXTCAMV5
+
 
 /**
  * This function fetches the blob data from the camera and merges the colliding ones.
@@ -176,6 +263,12 @@ short NXTCAMgetBlobs(tSensors link, blob_array &blobs, bool mergeBlobs, ubyte ad
  */
 short NXTCAMgetBlobs(tSensors link, blob_array &blobs, ubyte address) {
   short _nblobs = 0;
+
+#ifdef NXTCAMV5
+  if (!_camera_cmd(link, 'J', address)) // Lock the buffer
+    return 0;
+  sleep(25);
+#endif // NXTCAMV5
 
   // clear the array used for the blobs
   memset(blobs, 0, sizeof(blob_array));
@@ -212,6 +305,12 @@ short NXTCAMgetBlobs(tSensors link, blob_array &blobs, ubyte address) {
     blobs[_i].y2        = (short)NXTCAM_I2CReply[4];
     blobs[_i].size      = abs(blobs[_i].x2 - blobs[_i].x1) * abs(blobs[_i].y2 - blobs[_i].y1);
   }
+
+#ifdef NXTCAMV5
+  if (!_camera_cmd(link, 'K', address)) // Unlock the buffer
+    return 0;
+#endif // NXTCAMV5
+
   return _nblobs;
 }
 
@@ -346,23 +445,32 @@ void _sortBlobs(short nblobs, blob_array &blobs) {
  * @param blobs the array of blobs
  * @param nblobs the number of blobs
  * @param colourindex the colour of the blobs of which the average center is to be calculated
+ * @param threshold minimal size of blobs, before they are considered
  * @param x x-coordinate of the center
  * @param y y-coordinate of the center
  */
-void NXTCAMgetAverageCenter(blob_array &blobs, short nblobs, short colourindex, short &x, short &y) {
+void NXTCAMgetAverageCenter(blob_array &blobs, long nblobs, long colourindex, long threshold, long &x, long &y) {
   long _totalX = 0;
   long _totalY = 0;
-  short _counter = 0;
+  long _counter = 0;
 
   for (short i = 0; i < nblobs; i++){
-    if ((blobs[i].colour == colourindex) && (blobs[i].size > 400)) {
+    if ((blobs[i].colour == colourindex) && (blobs[i].size > threshold)) {
       _totalX += SIDE_CENTER(blobs[i].x1, blobs[i].x2);
       _totalY += SIDE_CENTER(blobs[i].y1, blobs[i].y2);
       _counter++;
     }
   }
-  x = _totalX / (_counter - 1);
-  y = _totalY / (_counter  -1);
+  if (_counter > 0)
+  {
+	  x = _totalX / _counter;
+	  y = _totalY /_counter;
+	}
+	else
+	{
+		x = 0;
+		y = 0;
+	}
 }
 
 /**
